@@ -1,9 +1,9 @@
 [gd_scene load_steps=4 format=3]
-[ext_resource type="Script" path="res://scripts/bosses/warlord_boss.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/bosses/tomb_guardian_beast.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/combat/health.gd" id="2"]
 [sub_resource type="CircleShape2D" id="shape"]
-radius = 32.0
-[node name="JinbeiWarlordCorpse" type="CharacterBody2D"]
+radius = 34.0
+[node name="TombGuardianBeast" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1")

@@ -20,7 +20,7 @@ func definition(id: StringName) -> RelicDefinition:
 func boss_fight() -> void:
 	var world: RoomController = test.session.world
 	var room := world.current_room
-	var boss := room.boss_encounter.boss
+	var boss := room.boss_encounter.boss as WarlordBoss
 	var ticks: int = 0
 	var saw_charge: bool = false
 	var saw_shockwave: bool = false
@@ -166,8 +166,10 @@ func run() -> void:
 	# 第二层占位房边界：直接进入但仍真实弹丸清除全部普通敌人。
 	world._switch_room(world.layout.boss_id,-1)
 	await test.frames(2)
-	test.check(world.current_room.boss_encounter == null and world.current_room.enemy_spawner.get_child_count() > 0 and not world.hud.boss_display.visible, "Floor2 BOSS uses ordinary enemies, never formal warlord")
-	await driver.fight()
+	test.check(world.current_room.boss_encounter.boss is TombGuardianBeast and world.current_room.enemy_spawner.get_child_count() == 0 and world.hud.boss_display.visible, "Floor2 BOSS replaces old placeholder with one formal beast")
+	var beast_driver = preload("res://tests/beast_fight_driver.gd").new(test)
+	await beast_driver.run()
+	test.check(beast_driver.completed and world.current_room.has_node("RunExit"), "Second formal Boss clears and offers RunExit")
 	test.check(not world.current_room.has_node("FloorExit") and not session.request_next_floor(), "Floor2 victory creates no third-floor exit")
 	await test.reset(KEY_R)
 	world = session.world

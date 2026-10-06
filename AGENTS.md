@@ -2,7 +2,7 @@
 
 ## 范围与阶段
 
-本项目是 Godot 4.x / GDScript / Windows 的原创 2D 俯视角 Roguelite《大盗墓时代》。阅读 README、PROJECT_PLAN、ARCHITECTURE、GAME_DESIGN 后再修改。用户指令优先；每次只执行明确授权的 Phase。当前授权 Phase 6：晋北大帅尸与两层推进。分支 codex/phase-6-boss-floor-transition，完成后提交并push，禁止合并main；不开发第二Boss、第三层或古董。下文旧阶段边界仅为历史记录，当前规则以Phase6为准。
+本项目是 Godot 4.x / GDScript / Windows 的原创 2D 俯视角 Roguelite《大盗墓时代》。阅读 README、PROJECT_PLAN、ARCHITECTURE、GAME_DESIGN 后再修改。用户指令优先；每次只执行明确授权的 Phase。当前授权Phase6.5：镇墓兽与两层Demo结局。分支codex/phase-6-5-tomb-beast-finale，从main d833efe创建，验证后提交并push，禁止合并main；不开发第三层、第三Boss或古董。旧阶段条款仅为历史，当前以Phase6.5为准。
 
 每阶段保持可运行入口，结束前检查导入解析、启动和阶段相关行为。报告修改文件、架构变化、验证命令与真实结果、已知限制及下一阶段范围。未执行的检查必须明确标注，不能把规划写成已实现。
 
@@ -53,7 +53,7 @@ godot --headless --path . --script res://tests/phase_3_smoke.gd
 - 图为 8～12 房的正交树；START 在 (0,0)，Boss 为最深叶子且距离至少 5，ANTIQUE 距离至少 2。
 - 候选遍历与签名必须显式稳定排序，StringName 应转字符串后排序；检查跨进程复现，不能只验证同进程重复调用。
 - R 保留当前 Seed；N 用独立 Seed 来源获得新布局。生成版本、配置、模板池和引擎版本影响复现结果。
-- START 为安全出生房，忽略模板 spawns 并立即清场开门；第一层BOSS为正式Boss，第二层BOSS为普通占位，ANTIQUE自动清场。当前Phase6范围经用户改为晋北大帅尸与两层推进；古董另待授权。
+- START 为安全出生房，忽略模板 spawns 并立即清场开门；第一层BOSS为正式Boss，第二层BOSS为镇墓兽，ANTIQUE自动清场。当前Phase6范围经用户改为晋北大帅尸与两层推进；古董另待授权。
 - Phase 2 固定图仅保留在 tests/fixtures；改旧测试时保留原始行为断言，不通过删除断言掩盖回归。
 
 ## Phase 4 敌人约定
@@ -65,7 +65,7 @@ godot --headless --path . --script res://tests/phase_3_smoke.gd
 - 真正生成敌人的战斗房入房默认 0.35 秒观察期，暂缓 AI 移动和攻击；模板生成点距四入口至少 180 像素。不得跳过攻击前摇补偿难度。
 - 必跑 Phase 1～4 smoke，保留旧功能断言。人工试玩与程序驱动图形验证分开报告。
 - Phase 5 准备仅文档规划，不提前实现遗物、Boss、古董、黑市或存档。
-START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场景、不修改共享 spawns；START 不调用 EnemySpawner，因此不应用观察期。COMBAT 的 180px 入口间距、0.35 秒观察期和攻击前摇保持；第一层BOSS为正式晋北大帅尸，第二层BOSS仍普通敌人占位，ANTIQUE自动清场。
+START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场景、不修改共享 spawns；START 不调用 EnemySpawner，因此不应用观察期。COMBAT 的 180px 入口间距、0.35 秒观察期和攻击前摇保持；第一层BOSS为正式晋北大帅尸，第二层BOSS为镇墓兽，ANTIQUE自动清场。
 
 ## Phase 5A 遗物框架约定
 
@@ -116,3 +116,13 @@ HP倍率仍1.00/1.15/1.30；伤害倍率改1.00/1.15/1.35。三Tier实际咬击1
 - 同Run保持唯一RewardService、2/4/7进度/sequence/_seen；第二层room_id加F2前缀。层Seed确定性派生并有限16次空间差异检查；N的独立随机Seed源不参与下一层。
 - 第一层offset0，第二层offset3；只缩放实例HP/伤害，现有Tier倍率不变。R任何层都回同Seed第一层、80HP空Build零奖励；N新Run。
 - 必跑导入、启动、Phase1～5B与Phase6 smoke；完整流程必须真实Weapon/Projectile击杀Boss和真实Door/E过层。单项直接设HP/状态与完整流程须分开记录。人工手感不能由自动测试替代。
+
+## Phase 6.5 当前规则
+
+BossDefinition.boss_scene选择Enemy根场景，BossEncounter/HUD只依赖Enemy，无Boss ID条件；大帅尸AI脚本和数值保持。Boss场景不反向引用其Definition，避免Resource→Scene→Resource循环；Encounter在入树前注入只读数据。
+
+Session.boss_for_floor映射1大帅尸/2镇墓兽，其他null；Room.final_floor只决定胜利出口。两层都忽略模板spawns，复用同Room场景。镇墓兽固定扑击→扇弹→地刺，不用全局RNG；伤害仍实例scaled_damage，临时弹丸/地刺由Boss弱引用管理并在停止/死亡清除，禁止隔墙落地伤害。
+
+RunExit与FloorExit职责区分：第二层只有RunExit，64px内E一次才run_completed；Boss死亡只清房与计数，不立即通关。显式boss_defeated信号按层去重，不能用房数猜。结算RunResult只持数值与名称，不保存Effect或节点；完成冻结输入/Room traversal/弹丸生成，R/N重置结果界面、Build/HP/进度/击杀。
+
+必跑Phase1～6.5。改Phase6第二层占位断言时保留真实第二层清场与无第三层覆盖，新增正式Boss真实战斗；至少一次正常拾取遗物、真实Door/E、真实两Boss武器击杀到结算。人工试玩单独记录，不把程序驾驶时间当人工25～45秒验收。禁止第三层、第三Boss、古董经济、背包、黑市、存档或新普通敌人。

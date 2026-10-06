@@ -19,7 +19,7 @@ func run() -> void:
 	await test.frames(2)
 	var room := world.current_room
 	var encounter := room.boss_encounter
-	var boss := encounter.boss
+	var boss := encounter.boss as WarlordBoss
 	var player := world.player
 	var data := boss.boss_data
 	test.check(not room.enemy_spawner.started and room.enemy_spawner.get_child_count() == 0 and room.definition.spawns.size() > 0, "Formal BOSS ignores nonempty template spawns")

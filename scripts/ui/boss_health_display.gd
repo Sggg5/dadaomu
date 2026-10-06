@@ -21,7 +21,7 @@ func _ready() -> void:
 	hide()
 
 
-func bind_boss(boss: WarlordBoss) -> void:
+func bind_boss(boss: Enemy) -> void:
 	show()
 	update_hp(boss.health.current_hp, boss.health.max_hp, boss.definition.display_name)
 	boss.health.changed.connect(update_hp.bind(boss.definition.display_name))

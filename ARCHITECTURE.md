@@ -2,7 +2,7 @@
 
 ## 当前实现
 
-Godot 4.6.2 / GDScript / 2D / Compatibility。`project.godot` 启动 `scenes/main/dungeon_test.tscn`。DungeonSession 调用纯数据生成器，向 RoomController 注入 DungeonLayout，再复用现有玩家、战斗、Door、Room 和 RoomState。无Autoload或第三方插件；Phase6已增加第一层正式Boss与两层推进，古董未实现。下文保留旧阶段架构记录，当前生命周期以Phase6章节为准。
+Godot 4.6.2 / GDScript / 2D / Compatibility。`project.godot` 启动 `scenes/main/dungeon_test.tscn`。DungeonSession 调用纯数据生成器，向 RoomController 注入 DungeonLayout，再复用现有玩家、战斗、Door、Room 和 RoomState。无Autoload或第三方插件；Phase6.5已增加两只正式Boss与通关结算，古董未实现。下文保留旧阶段架构记录，当前生命周期以Phase6.5章节为准。
 
 ### Phase 3 数据与职责
 
@@ -37,7 +37,7 @@ Session 的 R 回到相同run_seed第一层并重建整Run；N 使用独立随�
 
 RoomDefinition 的历史 `room_id` 是模板标识；`map_position` 只在 Phase 2 旧回归夹具读取，随机系统不读它。DungeonRoom 的类型、坐标和 ID 才是地图语义。Type 枚举在末尾增加 START，保留已有类型序号。
 
-Controller 将模板、运行状态、已连接方向和实际节点类型注入 Room.configure。Room 原有普通战斗生命周期不重写；仅增加占位进入规则：START 忽略模板 spawns，经 ACTIVE → CLEARED 同次进入即开门；第一层BOSS使用正式Boss，第二层BOSS使用普通占位；ANTIQUE自动清场。没有古董奖励/背包；MERCHANT/TRAP/SECRET 尚无规则。
+Controller 将模板、运行状态、已连接方向和实际节点类型注入 Room.configure。Room 原有普通战斗生命周期不重写；仅增加占位进入规则：START 忽略模板 spawns，经 ACTIVE → CLEARED 同次进入即开门；第一层BOSS使用正式Boss，第二层BOSS使用镇墓兽；ANTIQUE自动清场。没有古董奖励/背包；MERCHANT/TRAP/SECRET 尚无规则。
 
 ### 小地图与回归夹具
 
@@ -150,7 +150,7 @@ EnemyProjectile 继承 Projectile 的扫掠、寿命与消费流程，仅覆盖�
 入口公平性：真正生成敌人的战斗房默认 0.35 秒观察期内不推进 AI 状态机、不移动、不攻击；外观暂时变浅。每模板出生点距四入口至少 180 像素。观察期结束后攻击仍必须完整前摇；这不是玩家无敌或完整难度平衡系统。
 
 墙体绕行仅短射线检测后沿法线切向移动，并短暂保持方向避免抖动；没有导航网格，复杂凹形障碍可能卡住。Phase 5 仅准备在既有攻击请求/受击接口周围设计可卸载的遗物效果，Phase 5A 已增加玩家局部 Runtime，见下文。
-START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场景、不修改共享 spawns；START 不调用 EnemySpawner，因此不应用观察期。COMBAT 的 180px 入口间距、0.35 秒观察期和攻击前摇保持；第一层BOSS为正式晋北大帅尸，第二层BOSS仍普通敌人占位，ANTIQUE自动清场。
+START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场景、不修改共享 spawns；START 不调用 EnemySpawner，因此不应用观察期。COMBAT 的 180px 入口间距、0.35 秒观察期和攻击前摇保持；第一层BOSS为正式晋北大帅尸，第二层BOSS为镇墓兽，ANTIQUE自动清场。
 
 ## Phase 5A：单局遗物与战斗 Hook
 
@@ -236,3 +236,13 @@ Session新Run卸载World/RewardService重建两者。下一层只卸载旧World�
 层Seed：floor1=run_seed；floor2=(run_seed XOR (2*104729))+attempt*7919。独立Generator，固定候选顺序，最多16次空间签名比较。若全部失败拒绝切换，保留旧局。R从任意层回同Run第一层，N新Run；两者都80HP空Build零奖励。
 
 HP恢复使用Health.restore，clamp0..max并更新is_dead，只通知changed；不制造受伤/死亡Hook。跨层Effect重新安装，旧Runtime离树完整uninstall；不带走DOT、计数、纸鸢充能、武器冷却。难度解析在Controller用local_distance+(floor-1)*3，仍注入实例，共享Definition不改。
+
+## Phase 6.5：Boss场景泛化与Run结局
+
+BossDefinition增加boss_scene；TombBeastDefinition仅增加镇墓兽参数。BossEncounter按场景实例化Enemy、配置Spawn、统一Health/killed/targets/defeated；只有声明summon_requested的Boss才连接通用召唤请求，不读取Boss ID。HUD签名也改为Enemy。大帅尸AI文件未修改；其tres新增场景引用，scene移除反向tres引用防循环。
+
+TombGuardianBeast独立状态机，复用Enemy，不复制大帅尸AI。TombSpike只持OwnerBoss/Player与预警/一次爆发/视觉生命周期，归Room.Projectiles，Boss弱引用跟踪所有地刺/弹丸/落地反馈；stop_ai禁用并释放，Room退出也自然释放。扑击和地刺伤害用World LOS阻止隔墙；弹幕直接AttackRequest→EnemyProjectile，不经过Player Runtime。
+
+Session.boss_for_floor(1/2)解析Boss，注入Controller；Controller再注入Room。Room.final_floor区分FloorExit与RunExit，首次Boss死亡明确boss_defeated信号→Controller→Session按floor去重计数；重访已清Boss只恢复对应出口，不重复计数。
+
+RunExit 64px内E→run_complete_requested→Session.request_run_complete验证第二层CLEARED且两Boss已击败。置run_completed/world.run_finished，停止Player/战斗/奖励，再构建RunResult只读快照，RunCompleteScreen只展示快照。Controller同时阻断过门与_spawn_projectile，防手动发射请求绕过Player控制冻结。R/N沿既有新Run路径释放旧界面、重置完成标记/HP/Build/Service/Boss计数。未加计时器、Campaign、存档或经济。

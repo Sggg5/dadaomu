@@ -58,7 +58,7 @@ func show_death() -> void:
 	damage_button.disabled = true
 
 
-func show_boss(boss: WarlordBoss) -> void:
+func show_boss(boss: Enemy) -> void:
 	$Root/Title.hide()
 	boss.killed.connect($Root/Title.show)
 	boss_display.bind_boss(boss)

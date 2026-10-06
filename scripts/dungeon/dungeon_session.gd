@@ -3,7 +3,8 @@ extends Node2D
 ## 新Run重置所有状态；下一层更换World并保留Run奖励。
 const WORLD_SCENE: PackedScene = preload("res://scenes/main/room_test.tscn")
 const DEFAULT_CONFIG: DungeonConfig = preload("res://data/tombs/default_dungeon_config.tres")
-const BOSS_DATA: BossDefinition = preload("res://data/enemies/jinbei_warlord_corpse.tres")
+const WARLORD_BOSS: BossDefinition = preload("res://data/enemies/jinbei_warlord_corpse.tres")
+const TOMB_BEAST: BossDefinition = preload("res://data/enemies/tomb_guardian_beast.tres")
 @export var config: DungeonConfig = DEFAULT_CONFIG
 @export var seed_value: int = 192034
 var run_seed: int
@@ -11,6 +12,10 @@ var floor_number: int = 1
 var current_floor_seed: int
 var world: RoomController
 var rewards: RelicRewardService
+var run_completed: bool = false
+var bosses_defeated: int = 0
+var complete_screen: RunCompleteScreen
+var _defeated_floors: Dictionary[int, bool] = {}
 var _changing: bool = false
 var _seed_rng := RandomNumberGenerator.new()
 
@@ -61,6 +66,10 @@ func _drop_world() -> void:
 
 func _start_new_run(layout: DungeonLayout) -> void:
 	assert(layout != null)
+	if is_instance_valid(complete_screen): complete_screen.queue_free()
+	run_completed = false
+	bosses_defeated = 0
+	_defeated_floors.clear()
 	_drop_world()
 	if is_instance_valid(rewards):
 		remove_child(rewards)
@@ -82,7 +91,10 @@ func _assemble_world(layout: DungeonLayout) -> void:
 	world.rewards = rewards
 	world.floor_number = floor_number
 	world.floor_offset = (floor_number - 1) * 3
-	world.boss_definition = BOSS_DATA if floor_number == 1 else null
+	world.boss_definition = boss_for_floor(floor_number)
+	world.final_floor = floor_number == 2
+	world.boss_defeated.connect(_on_boss_defeated)
+	world.run_complete_requested.connect(request_run_complete)
 	world.restart_requested.connect(_restart_current)
 	world.floor_exit_requested.connect(request_next_floor)
 	add_child(world)
@@ -99,6 +111,7 @@ func next_floor_layout() -> DungeonLayout:
 
 
 func request_next_floor() -> bool:
+	if run_completed: return false
 	if _changing or floor_number != 1 or world.player.health.is_dead or world.current_room.room_type != RoomDefinition.Type.BOSS or world.current_room.room_state.status != RoomState.Status.CLEARED:
 		return false
 	var layout := next_floor_layout()
@@ -117,3 +130,38 @@ func _enter_next_floor(layout: DungeonLayout, carry: RunCarryState) -> void:
 	_assemble_world(layout)
 	carry.apply(world.player)
 	_changing = false
+
+
+func boss_for_floor(floor: int) -> BossDefinition:
+	match floor:
+		1: return WARLORD_BOSS
+		2: return TOMB_BEAST
+		_: return null
+
+
+func _on_boss_defeated() -> void:
+	if _defeated_floors.has(floor_number): return
+	_defeated_floors[floor_number] = true
+	bosses_defeated += 1
+
+
+func request_run_complete() -> bool:
+	if run_completed or _changing or floor_number != 2 or world.player.health.is_dead or world.current_room.room_type != RoomDefinition.Type.BOSS or world.current_room.room_state.status != RoomState.Status.CLEARED or bosses_defeated != 2: return false
+	run_completed = true
+	world.run_finished = true
+	world.player.set_controls_enabled(false)
+	world.current_room.stop_combat()
+	rewards.stop()
+	world.hud.hide_boss()
+	var result := RunResult.new()
+	result.run_seed = run_seed
+	result.floors_cleared = 2
+	result.current_hp = world.player.health.current_hp
+	result.max_hp = world.player.health.max_hp
+	result.combat_clears = rewards.combat_clears
+	result.bosses_defeated = bosses_defeated
+	for id in world.player.relics.inventory.ids(): result.relic_names.append(world.player.relics.inventory.get_effect(id).definition.display_name)
+	complete_screen = RunCompleteScreen.new()
+	complete_screen.result = result
+	add_child(complete_screen)
+	return true

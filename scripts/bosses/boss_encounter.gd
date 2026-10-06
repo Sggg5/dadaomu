@@ -4,12 +4,11 @@ extends Node2D
 signal defeated
 signal enemy_killed(enemy: Node2D)
 signal remaining_changed(count: int)
-const BOSS: PackedScene = preload("res://scenes/enemies/warlord_boss.tscn")
 const SCARAB: PackedScene = preload("res://scenes/enemies/scarab_enemy.tscn")
 const SCARAB_DATA: EnemyDefinition = preload("res://data/enemies/scarab.tres")
 var room: Room
 var definition: BossDefinition
-var boss: WarlordBoss
+var boss: Enemy
 var started: bool = false
 var finished: bool = false
 var summons: Array[Enemy] = []
@@ -31,13 +30,15 @@ func safe_point(preferred: Vector2, radius: float, reserved: Array[Vector2], dis
 
 func start() -> void:
 	if started: return
+	assert(definition != null and definition.boss_scene != null, "Boss requires a configured scene")
 	started = true
-	boss = BOSS.instantiate() as WarlordBoss
+	boss = definition.boss_scene.instantiate() as Enemy
+	assert(boss != null, "Boss scene root must implement Enemy")
 	boss.position = safe_point(Room.ROOM_RECT.get_center(), 34, [], 120)
 	assert(boss.position.is_finite(), "Boss requires a safe point")
 	boss.configure_spawn(room.combat_target, room.projectiles, definition, room.difficulty)
 	boss.killed.connect(_on_defeated)
-	boss.summon_requested.connect(_summon)
+	if boss.has_signal("summon_requested"): boss.connect("summon_requested", _summon)
 	add_child(boss)
 	remaining_changed.emit(targets().size())
 

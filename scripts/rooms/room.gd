@@ -7,8 +7,10 @@ signal traversal_requested(side: Door.Direction)
 signal state_changed(status: RoomState.Status)
 signal enemy_count_changed(count: int)
 signal cleared
-signal boss_started(boss: WarlordBoss)
+signal boss_started(boss: Enemy)
 signal floor_exit_requested
+signal run_complete_requested
+signal boss_defeated
 
 const DOOR_SCENE: PackedScene = preload("res://scenes/rooms/door.tscn")
 const ROOM_RECT := Rect2(64, 144, 1152, 448)
@@ -24,6 +26,7 @@ var combat_target: Player
 var difficulty: EncounterDifficulty = EncounterDifficulty.from_depth(0)
 var boss_definition: BossDefinition
 var boss_encounter: BossEncounter
+var final_floor: bool = false
 var doors: Dictionary[int, Door] = {}
 var _connected_sides: Array[int] = []
 var _wall_rects: Array[Rect2] = []
@@ -54,13 +57,13 @@ func enter() -> void:
 	_set_doors_open(false)
 	if room_state.status == RoomState.Status.CLEARED:
 		_set_doors_open(true)
-		if room_type == RoomDefinition.Type.BOSS and boss_definition != null: _create_floor_exit()
+		if room_type == RoomDefinition.Type.BOSS and boss_definition != null: _create_boss_exit()
 		return
 	if room_type not in [RoomDefinition.Type.COMBAT, RoomDefinition.Type.START, RoomDefinition.Type.BOSS, RoomDefinition.Type.ANTIQUE]:
 		push_error("This room type has no entry policy yet")
 		return
 	room_state.activate()
-	# START/ANTIQUE只复用布局；第二层BOSS暂无正式Definition，才使用普通占位敌人。
+	# START/ANTIQUE只复用布局；正式BOSS由数据场景装配，测试夹具可不注入Definition。
 	if room_type in [RoomDefinition.Type.START, RoomDefinition.Type.ANTIQUE]:
 		_on_all_defeated()
 		return
@@ -98,11 +101,21 @@ func stop_combat() -> void:
 
 
 func _boss_defeated() -> void:
+	boss_defeated.emit()
 	_on_all_defeated()
-	_create_floor_exit()
+	_create_boss_exit()
 
 
-func _create_floor_exit() -> void:
+func _create_boss_exit() -> void:
+	if final_floor:
+		if has_node("RunExit"): return
+		var run_exit := RunExit.new()
+		run_exit.name = "RunExit"
+		run_exit.player = combat_target
+		run_exit.position = RelicPedestal.safe_position(self)
+		run_exit.run_complete_requested.connect(func() -> void: run_complete_requested.emit())
+		add_child(run_exit)
+		return
 	if has_node("FloorExit"): return
 	var exit := FloorExit.new()
 	exit.name = "FloorExit"

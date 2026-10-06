@@ -4,11 +4,11 @@
 
 ## 当前状态
 
-当前 **Phase 6 晋北大帅尸与两层推进**（开发分支，未合并main）。默认 Seed 为 `192034`，每图 8～12 个房间，独立 RNG 可重现正交树状布局。START 固定在 (0,0)，Boss 是距离至少 5 的最远叶子，ANTIQUE 距离至少 2。
+当前 **Phase 6.5 镇墓兽与两层Demo结局**（开发分支，未合并main）。默认 Seed 为 `192034`，每图 8～12 个房间，独立 RNG 可重现正交树状布局。START 固定在 (0,0)，Boss 是距离至少 5 的最远叶子，ANTIQUE 距离至少 2。
 
 随机节点决定位置/连接/类型，五份原有普通房配置作为共享模板池。玩家、战斗、门和房间生命周期继续复用：首次进入锁门，击杀后开门，过门保留生命，重访已清场房不刷怪。
 
-START 为安全出生房，忽略模板刷怪并立即清场开门；第一层BOSS为晋北大帅尸，胜利后E深入第二层；第二层BOSS仍普通敌人占位，无第三层。ANTIQUE自动清场，古董经济尚未实现。已实现尸蟞追击咬击、盗墓枪手保持距离与射击。战斗房入房有 0.35 秒观察期，敌人暂停行动；橙色表示攻击前摇，红色菱形是敌方弹丸。修订版人工手感复验仍待反馈。
+START 为安全出生房，忽略模板刷怪并立即清场开门；第一层BOSS为晋北大帅尸，胜利后E深入第二层；第二层BOSS为镇墓兽，胜利后E返回地面显示通关结算，无第三层。ANTIQUE自动清场，古董经济尚未实现。已实现尸蟞追击咬击、盗墓枪手保持距离与射击。战斗房入房有 0.35 秒观察期，敌人暂停行动；橙色表示攻击前摇，红色菱形是敌方弹丸。第一层Boss已获用户人工验收；第二层Boss与结算手感待本阶段试玩。
 
 ## 开发环境与运行
 
@@ -79,7 +79,7 @@ godot --path . --script res://tests/phase_4_smoke.gd -- --capture
 ```
 
 完整结果、人工反馈与限制见 docs/PHASE_4_VERIFICATION.md。未实现完整寻路、正式美术、音效或 Boss；工程遗物只用于开发回归；正式池为 Phase 5B 的八件遗物。
-START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场景、不修改共享 spawns；START 不调用 EnemySpawner，因此不应用观察期。COMBAT 的 180px 入口间距、0.35 秒观察期和攻击前摇保持；第一层BOSS为正式晋北大帅尸，第二层BOSS仍普通敌人占位，ANTIQUE自动清场。
+START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场景、不修改共享 spawns；START 不调用 EnemySpawner，因此不应用观察期。COMBAT 的 180px 入口间距、0.35 秒观察期和攻击前摇保持；第一层BOSS为正式晋北大帅尸，第二层BOSS为镇墓兽，ANTIQUE自动清场。
 
 ## Phase 5A 开发测试
 
@@ -98,7 +98,7 @@ godot --path . --script res://tests/phase_5a_smoke.gd -- --capture
 godot --path . -- --seed=1
 ```
 
-数据在 data/relics/，效果实现分别位于 scripts/relics/effects/。配置引用独立 effect_script，不添加核心脚本 ID 分支。新增参数或运行对象时继续维护 copy/卸载生命周期。Phase5A/5B已合并main；当前工作为Phase6，仍不自动合并main。
+数据在 data/relics/，效果实现分别位于 scripts/relics/effects/。配置引用独立 effect_script，不添加核心脚本 ID 分支。新增参数或运行对象时继续维护 copy/卸载生命周期。Phase5A/5B已合并main；当前工作为Phase6.5，仍不自动合并main。
 ## Phase 5B 正式奖励与 Build
 
 首次清场第2、4、7个普通COMBAT房生成一件底座奖励。START、ANTIQUE、BOSS占位不计数，重访不重复。靠近底座64px内按E拾取，名称/简短说明就地显示；离房未拾取则丢失，不在重访补发。
@@ -124,7 +124,7 @@ godot --path . --script res://tests/phase_5b_smoke.gd -- --capture
 godot --path . -- --seed=192034
 ```
 
-Seed192034正常测试在第2/4/7次清房获得墨斗/五帝钱/黑火药，再继续战斗。详细测试、文件清单和人工验收状态见docs/PHASE_5B_VERIFICATION.md。以上为Phase5B历史验收；当前分支codex/phase-6-boss-floor-transition，完成后停止。
+Seed192034正常测试在第2/4/7次清房获得墨斗/五帝钱/黑火药，再继续战斗。详细测试、文件清单和人工验收状态见docs/PHASE_5B_VERIFICATION.md。以上为Phase5B历史验收；当前分支codex/phase-6-5-tomb-beast-finale，完成后停止。
 ## Phase 5B 平衡修订（2026-10-06）
 
 正式奖励改为第2/4/7个首次COMBAT清场，其他房型/重访/重复通知规则不变。短局只有5～6个COMBAT时只发2件，不动态补发；无放回序列及R同Seed复现不变。
@@ -147,7 +147,7 @@ HP倍率仍1.00/1.15/1.30；伤害倍率改1.00/1.15/1.35。三Tier实际咬击1
 
 第一层BOSS忽略普通模板刷怪，出现晋北大帅尸（基础650HP，Tier3实际845HP）。冲锋前红色方向线0.65s，然后650px/s直冲0.45s；撞墙停止、方向不追踪、一次伤害。震荡前橙色圆环0.8s，180px内结算一次。首次半血召唤3只尸蟞，Boss死亡清理余下召唤物、开门并产生墓道。
 
-靠近墓道64px内按E进入第二层，当前HP和遗物ID保留；效果重新安装，铜镜/铲计数、纸鸢充能、燃烧及武器冷却重置。奖励2/4/7为整局累计，不按层重发，不会有第四件。第二层深度加3，第一普通房至少Tier2；第二层BOSS为普通敌人占位，无第三层。
+靠近墓道64px内按E进入第二层，当前HP和遗物ID保留；效果重新安装，铜镜/铲计数、纸鸢充能、燃烧及武器冷却重置。奖励2/4/7为整局累计，不按层重发，不会有第四件。第二层深度加3，第一普通房至少Tier2；第二层BOSS为镇墓兽，胜利后E通关，无第三层。
 
 HUD显示墓层、当前层Seed、有效深度与Tier。R在第二层也重开整个Run：同run_seed第一层、80HP、空Build、零奖励进度；N开始新Run。第二层Seed为`(run_seed XOR (2*104729)) + attempt*7919`，attempt从0开始，最多16次选与第一层空间签名不同的结果。参数、引擎、生成版本变化会影响复现。
 
@@ -157,4 +157,23 @@ godot --path . --script res://tests/phase_6_smoke.gd -- --capture
 godot --path . -- --seed=192034
 ```
 
-详细实际结果和人工验收状态见`docs/PHASE_6_VERIFICATION.md`。此阶段未实现古董、撤离、第二正式Boss、第三层或存档。
+详细实际结果和人工验收状态见`docs/PHASE_6_VERIFICATION.md`。Phase6历史范围不含第二Boss；当前Phase6.5已补第二Boss与通关，仍无古董、撤离经济、第三层或存档。
+
+## Phase 6.5：镇墓兽与两层Demo通关
+
+第一层晋北大帅尸保持原数值/技能与已验收手感。第二层现在只有镇墓兽，不刷模板普通敌人：800基础HP、Tier3实际1040HP、速度80；固定扑击→石吼→地刺。
+
+- 扑击开始记录位置，0.7s落点预警，0.35s扑向旧位置；90px落地一次27伤害（Tier3），障碍限制移动且不隔墙伤人。
+- 石吼0.75s前摇锁向，5弹±30/15/0°，速度320、寿命3s、Tier3弹伤18.9，不追踪。
+- 地刺固定交替Pattern，3个警告点，0.75s后55px内一次24.3伤害，0.25s后消失；Boss地刺施法状态0.8s。
+- 首次半血狂暴：7弹±36/24/12/0°、5地刺、决策1→0.8s，所有前摇不缩短，不召怪。
+
+第二层胜利后出现“墓穴深处已肃清 / [E] 返回地面”。64px内E显示通关结算：Run Seed、清理2层、剩余HP、当前遗物名字、COMBAT清理数、Boss击败2。通关后停止移动/攻击/过门；R同Run Seed重开第一层、N新局，均80HP空Build零奖励/击杀。没有第三层、古董经济、永久结算或存档；“返回地面”本阶段只通向开发结算界面。
+
+```powershell
+godot --headless --fixed-fps 60 --path . --script res://tests/phase_6_5_smoke.gd
+godot --path . --script res://tests/phase_6_5_smoke.gd -- --capture
+godot --path . -- --seed=192034
+```
+
+新增代码、真实流程、测试与人工状态见docs/PHASE_6_5_VERIFICATION.md。第一层与第二层Seed、跨层Build、2/4/7整局奖励规则保持。

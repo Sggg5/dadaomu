@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="BossDefinition" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="BossDefinition" load_steps=3 format=3]
 [ext_resource type="Script" path="res://scripts/bosses/boss_definition.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/warlord_boss.tscn" id="2"]
 [resource]
 script = ExtResource("1")
+boss_scene = ExtResource("2")
 id = &"jinbei_warlord_corpse"
 display_name = "晋北大帅尸"
 max_hp = 650.0

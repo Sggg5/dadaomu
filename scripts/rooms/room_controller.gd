@@ -7,6 +7,8 @@ signal room_changed(room_id: StringName)
 signal restart_requested
 signal room_cleared(context: RoomClearContext)
 signal floor_exit_requested
+signal run_complete_requested
+signal boss_defeated
 
 const ROOM_SCENE: PackedScene = preload("res://scenes/rooms/room.tscn")
 const PROJECTILE_SCENE: PackedScene = preload("res://scenes/player/projectile.tscn")
@@ -15,6 +17,8 @@ var rewards: RelicRewardService
 var floor_number: int = 1
 var floor_offset: int = 0
 var boss_definition: BossDefinition
+var final_floor: bool = false
+var run_finished: bool = false
 
 @onready var player: Player = $Player
 @onready var hud: RoomTestHUD = $HUD
@@ -60,7 +64,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func apply_test_damage() -> void:
-	if not transitioning:
+	if not transitioning and not run_finished:
 		player.take_damage(25.0)
 
 
@@ -81,6 +85,7 @@ func _quit() -> void:
 
 
 func request_traversal(side: int) -> bool:
+	if run_finished: return false
 	if transitioning or _restarting or player.health.is_dead or current_room == null:
 		return false
 	if current_room.room_state.status != RoomState.Status.CLEARED:
@@ -109,6 +114,9 @@ func _switch_room(target_id: StringName, entry_side: int) -> void:
 	for side in node.neighbors:
 		sides.append(side)
 	current_room.boss_definition = boss_definition
+	current_room.final_floor = final_floor
+	current_room.boss_defeated.connect(func() -> void: boss_defeated.emit())
+	current_room.run_complete_requested.connect(func() -> void: run_complete_requested.emit())
 	current_room.configure(node.definition, states[target_id], sides, node.room_type, player, EncounterDifficulty.from_depth(node.distance_from_start + floor_offset))
 	hud.hide_boss()
 	current_room.boss_started.connect(hud.show_boss)
@@ -130,6 +138,7 @@ func _switch_room(target_id: StringName, entry_side: int) -> void:
 
 
 func _spawn_projectile(request: AttackRequest) -> void:
+	if run_finished: return
 	if transitioning or player.health.is_dead or _restarting:
 		return
 	var projectile := PROJECTILE_SCENE.instantiate() as Projectile

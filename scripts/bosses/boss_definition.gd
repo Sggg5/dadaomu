@@ -1,5 +1,6 @@
 class_name BossDefinition
 extends EnemyDefinition
+@export var boss_scene: PackedScene
 @export var intro_duration: float = 1.0
 @export var charge_damage: float = 18.0
 @export var charge_speed: float = 650.0
