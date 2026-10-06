@@ -52,16 +52,17 @@ func _tick_ai(delta: float) -> void:
 		State.CHARGE:
 			velocity = charge_direction * boss_data.charge_speed
 			var collision := move_and_collide(velocity * delta)
-			if not _charge_hit and global_position.distance_to(target.global_position) <= 50.0:
-				_charge_hit = true
-				target.take_damage(scaled_damage(boss_data.charge_damage))
+			# 先结算实际碰撞；撞障碍时不得再走距离命中分支。
 			if collision:
 				if collision.get_collider() == target and not _charge_hit:
 					_charge_hit = true
 					target.take_damage(scaled_damage(boss_data.charge_damage))
 				_recover()
-			elif _timer <= 0.0:
-				_recover()
+			else:
+				if not _charge_hit and global_position.distance_to(target.global_position) <= 50.0 and has_line_to_target():
+					_charge_hit = true
+					target.take_damage(scaled_damage(boss_data.charge_damage))
+				if _timer <= 0.0: _recover()
 		State.SHOCKWAVE_WINDUP:
 			velocity = Vector2.ZERO
 			if _timer <= 0.0:

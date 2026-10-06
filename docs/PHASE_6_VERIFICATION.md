@@ -89,7 +89,7 @@ godot --path . --script res://tests/phase_6_smoke.gd -- --capture
 | Phase4 | 105检查，0失败，退出0 |
 | Phase5A | 61检查，0失败，退出0 |
 | Phase5B | 236检查，0失败，退出0；三组遗物协同通过 |
-| Phase6无窗口 | 154检查，0失败，退出0（最终固定60fps步进） |
+| Phase6无窗口 | 163检查，0失败，退出0（边界修订后，固定60fps步进） |
 | Phase6实际图形 | 153检查，0失败，退出0 |
 
 Phase6 Boss专项覆盖用户条目1～28：最深叶、忽略spawns、单Boss/数据/实例HP、锁门/INTRO、冲锋前摇/锁向/一次伤害/横移/撞墙、震荡前摇/范围内外一次结算、半血3尸蟞/一次/安全位置/同Tier、死亡一次/清召唤物/清场开门/HUD隐藏、单出口与E一次。额外覆盖ACTIVE重复enter不重复Boss、已清Boss重访恢复出口。
@@ -115,3 +115,30 @@ Seed192034：从安全START，以活跃AI、真实Weapon/Projectile逐个清六�
 已打开可玩游戏Seed192034，并请求不使用F2试玩冲锋/震荡、半血压力、战斗时长、出口与跨层。当前人工反馈待完成；自动图形流程通过不等于主观验收通过。Boss正常玩家20～40秒、半血压力及第二层危险感仍需人工确认。
 
 已知限制：几何占位与无正式音效；简单切向绕障而非完整寻路；程序驾驶完美射击约15秒；第二层无正式Boss/第三层/结束结算；古董/撤离/经济/存档均未实现。跨层主动重置临时效果计数和充能；奖励离房未领仍丢失，不补发。后续阶段须另获授权，本任务完成后停止。
+
+## Phase 6 边界修订：冲锋遮挡与玩家死亡HUD
+
+基准提交为6583f996a4fb434e76216bb955e9d4ca1c0c09bc，仍在codex/phase-6-boss-floor-transition。本次仅修改warlord_boss.gd、room_controller.gd、phase_6_boss_checks.gd与本报告。
+
+CHARGE先处理move_and_collide结果：碰撞Player才结算一次伤害；碰撞墙/障碍立即RECOVERY，不进入proximity分支。无碰撞时保留50px近距一次命中，并使用现有has_line_to_target确认没有World遮挡，避免尚未接触薄墙时也隔墙伤人。方向锁定、0.65s前摇、650速度、0.45s持续及全部伤害/HP参数不变。
+
+新增Boss→薄障碍→Player夹具：World障碍1×96px，中心(600,544)；Boss由(550,544)向右冲锋，Player在(617,544)。Boss停止后双方仍在障碍两侧且中心距<50px，断言RECOVERY、Player HP80不变、_charge_hit未标记。薄障碍专门满足“隔着障碍但中心距仍小于旧阈值”的边界，不改变正式模板。原真实冲锋一次伤害、横移躲避、撞墙停止仍保留；另验证直接碰撞Player提前停止，以及仅夹具排除玩家物理碰撞时，无遮挡近距仍只伤一次。
+
+RoomController._on_player_died新增hud.hide_boss()，并继续执行原停止战斗/清理底座/show_death逻辑。新Run进入活Boss房，死亡前HUD可见；真实Health死亡信号后同步断言Boss血条已隐藏、Death标签正常、Boss AI停止。普通房死亡由Phase1～5B原回归继续覆盖。
+
+先只加入回归夹具、运行旧代码：160检查中恰好2项失败（隔墙伤害、死亡血条），证明测试确实复现问题。应用修复、补全直接碰撞/无碰撞分支覆盖后完整重跑：
+
+| 套件 | 检查 / 失败 / 退出码 |
+| --- | --- |
+| Phase1 | 27 / 0 / 0 |
+| Phase2 | 204 / 0 / 0 |
+| Phase3 | 94 / 0 / 0 |
+| Phase4 | 105 / 0 / 0 |
+| Phase5A | 61 / 0 / 0 |
+| Phase5B | 236 / 0 / 0 |
+| Phase6 | 163 / 0 / 0 |
+| 导入解析、启动 | 均退出0，无Godot错误 |
+
+复现命令为`godot --headless --fixed-fps 60 --path . --script res://tests/phase_<阶段>_smoke.gd`，阶段依次1、2、3、4、5a、5b、6；导入用`--headless --path . --editor --quit`，启动用`--headless --path . --quit-after 10`。本机完整Godot路径见上文。新日志为忽略的logs/phase_6_boundary_<阶段>.log、phase_6_boundary_import.log、phase_6_boundary_startup.log；旧代码复现失败保存在phase_6_boundary_before.log。
+
+163项包含原完整真实Weapon/Projectile击杀Boss→E进入第二层→继续COMBAT流程。本次未重跑图形截图，图形153项为前次阶段验收记录；主观人工试玩状态仍未确认。未修改第二层、遗物、RewardService、Floor Seed、玩家资源或Boss数据/技能时序；不合并main，完成push后停止。

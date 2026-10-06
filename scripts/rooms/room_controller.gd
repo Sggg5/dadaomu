@@ -147,6 +147,7 @@ func _refresh_hud() -> void:
 func _on_player_died() -> void:
 	player.set_controls_enabled(false)
 	current_room.stop_combat()
+	hud.hide_boss()
 	var pedestal := current_room.get_node_or_null("RelicPedestal")
 	if pedestal != null:
 		pedestal.queue_free()

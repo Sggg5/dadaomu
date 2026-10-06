@@ -56,6 +56,21 @@ func run() -> void:
 	player.invulnerability_remaining = 0
 	await test.frames(30)
 	test.check(is_equal_approx(player.health.current_hp,55.7), "One Tier3 charge deals 24.3 exactly once")
+	test.check(boss.position.x < 460 and boss.state == WarlordBoss.State.RECOVERY, "Direct Player collision deals charge damage and stops movement")
+	player.health.restore(80)
+	player.invulnerability_remaining = 0
+	boss.position = Vector2(410,544)
+	boss.state = WarlordBoss.State.CHARGE
+	boss.charge_direction = Vector2.RIGHT
+	boss._charge_hit = false
+	boss._timer = data.charge_duration
+	# 仅测试夹具排除玩家物理碰撞，单独验证无碰撞的近距分支仍有效且只伤一次。
+	boss.add_collision_exception_with(player)
+	await test.frames(6)
+	test.check(boss.state == WarlordBoss.State.CHARGE and boss._charge_hit and is_equal_approx(player.health.current_hp,55.7), "Unobstructed proximity hits once without a physical collision")
+	await test.frames(24)
+	test.check(is_equal_approx(player.health.current_hp,55.7), "Unobstructed proximity never repeats damage in the same charge")
+	boss.remove_collision_exception_with(player)
 	player.health.restore(80)
 	player.invulnerability_remaining = 0
 	player.position = Vector2(900,450)
@@ -65,6 +80,31 @@ func run() -> void:
 	boss._timer = .45
 	await test.frames(6)
 	test.check(boss.state == WarlordBoss.State.RECOVERY and boss.position.x < 1200, "Wall collision terminates charge early")
+	# 薄障碍使双方身体不重叠，但停止后的中心距仍<50，复现旧距离分支隔墙命中。
+	var barrier := StaticBody2D.new()
+	barrier.collision_layer = 1
+	barrier.collision_mask = 0
+	barrier.position = Vector2(600,544)
+	var barrier_shape := CollisionShape2D.new()
+	var rectangle := RectangleShape2D.new()
+	rectangle.size = Vector2(1,96)
+	barrier_shape.shape = rectangle
+	barrier.add_child(barrier_shape)
+	room.add_child(barrier)
+	await test.frames(1)
+	boss.position = Vector2(550,544)
+	player.position = Vector2(617,544)
+	boss.state = WarlordBoss.State.CHARGE
+	boss.charge_direction = Vector2.RIGHT
+	boss._charge_hit = false
+	boss._timer = data.charge_duration
+	await test.frames(4)
+	test.check(boss.position.x < 599.5 and player.position.x > 600.5 and boss.position.distance_to(player.position) < 50, "Barrier separates Boss/Player inside old proximity threshold")
+	test.check(boss.state == WarlordBoss.State.RECOVERY, "Charge hitting intervening obstacle immediately enters RECOVERY")
+	test.check(player.health.current_hp == 80 and not boss._charge_hit, "Obstacle collision never deals proximity damage through wall")
+	barrier.queue_free()
+	player.health.restore(80)
+	await test.frames(1)
 	boss.position = Vector2(640,368)
 	player.position = Vector2(920,368)
 	boss.state = WarlordBoss.State.SHOCKWAVE_WINDUP
@@ -102,4 +142,13 @@ func run() -> void:
 	world._switch_room(world.layout.boss_id,-1)
 	await test.frames(2)
 	test.check(world.current_room.boss_encounter == null and world.current_room.has_node("FloorExit") and world.current_room.room_state.status == RoomState.Status.CLEARED, "Revisit defeated Boss keeps exit without respawning Boss")
+	# 新Run进入仍活着的Boss房，再真实触发玩家死亡；同步断言HUD立即隐藏。
+	await test.reset()
+	world = test.session.world
+	world._switch_room(world.layout.boss_id,-1)
+	boss = world.current_room.boss_encounter.boss
+	test.check(world.hud.boss_display.visible, "Living Boss HUD visible before Player death")
+	world.player.health.take_damage(world.player.health.max_hp)
+	test.check(not world.hud.boss_display.visible, "Player death immediately hides Boss HUD")
+	test.check(world.hud.get_node("Root/Death").visible and world.hud.get_node("Root/Death").text.contains("你已倒下") and not boss.ai_enabled, "Boss-room death still shows Death UI and stops combat")
 	completed = true
