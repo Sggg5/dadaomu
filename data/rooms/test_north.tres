@@ -1,7 +1,41 @@
-[gd_resource type="Resource" script_class="RoomDefinition" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="RoomDefinition" load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/rooms/room_definition.gd" id="1"]
-[ext_resource type="PackedScene" path="res://scenes/enemies/dummy.tscn" id="2"]
+[ext_resource type="Script" path="res://scripts/rooms/enemy_spawn_definition.gd" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/scarab_enemy.tscn" id="3"]
+[ext_resource type="Resource" path="res://data/enemies/scarab.tres" id="4"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/bandit_shooter.tscn" id="5"]
+[ext_resource type="Resource" path="res://data/enemies/bandit_shooter.tres" id="6"]
+
+[sub_resource type="Resource" id="Spawn_0"]
+script = ExtResource("2")
+enemy_scene = ExtResource("3")
+enemy_definition = ExtResource("4")
+position = Vector2(440, 240)
+
+[sub_resource type="Resource" id="Spawn_1"]
+script = ExtResource("2")
+enemy_scene = ExtResource("3")
+enemy_definition = ExtResource("4")
+position = Vector2(840, 240)
+
+[sub_resource type="Resource" id="Spawn_2"]
+script = ExtResource("2")
+enemy_scene = ExtResource("3")
+enemy_definition = ExtResource("4")
+position = Vector2(440, 496)
+
+[sub_resource type="Resource" id="Spawn_3"]
+script = ExtResource("2")
+enemy_scene = ExtResource("3")
+enemy_definition = ExtResource("4")
+position = Vector2(840, 496)
+
+[sub_resource type="Resource" id="Spawn_4"]
+script = ExtResource("2")
+enemy_scene = ExtResource("3")
+enemy_definition = ExtResource("4")
+position = Vector2(950, 368)
 
 [resource]
 script = ExtResource("1")
@@ -9,6 +43,5 @@ room_id = &"north"
 title = "石柱厅"
 map_position = Vector2i(0, -1)
 floor_color = Color(0.157, 0.169, 0.196, 1)
-enemy_scene = ExtResource("2")
-enemy_positions = PackedVector2Array(440, 240, 840, 240, 440, 496, 840, 496)
 obstacles = Array[Rect2]([Rect2(320, 240, 64, 64), Rect2(896, 240, 64, 64), Rect2(320, 432, 64, 64), Rect2(896, 432, 64, 64)])
+spawns = Array[Resource]([SubResource("Spawn_0"), SubResource("Spawn_1"), SubResource("Spawn_2"), SubResource("Spawn_3"), SubResource("Spawn_4")])

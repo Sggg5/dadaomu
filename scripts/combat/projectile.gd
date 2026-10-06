@@ -28,9 +28,13 @@ func _physics_process(delta: float) -> void:
 		consumed = true
 		var target := collision.get_collider()
 		# 受击对象提供 take_damage(float)；墙没有该接口，仍会消耗弹丸。
-		if is_instance_valid(target) and target.has_method("take_damage"):
-			target.call("take_damage", damage)
+		_apply_hit(target)
 		queue_free()
+
+
+func _apply_hit(target: Object) -> void:
+	if is_instance_valid(target) and target.has_method("take_damage"):
+		target.call("take_damage", damage)
 
 
 func _consume() -> void:

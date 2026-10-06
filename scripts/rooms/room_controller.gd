@@ -94,7 +94,7 @@ func _switch_room(target_id: StringName, entry_side: int) -> void:
 	var node := layout.rooms[target_id]
 	for side in node.neighbors:
 		sides.append(side)
-	current_room.configure(node.definition, states[target_id], sides, node.room_type)
+	current_room.configure(node.definition, states[target_id], sides, node.room_type, player)
 	current_room.traversal_requested.connect(request_traversal)
 	current_room.state_changed.connect(func(_status: RoomState.Status) -> void: _refresh_hud())
 	current_room.enemy_count_changed.connect(func(_count: int) -> void: _refresh_hud())
@@ -123,5 +123,5 @@ func _refresh_hud() -> void:
 
 func _on_player_died() -> void:
 	player.set_controls_enabled(false)
-	current_room.discard_projectiles()
+	current_room.stop_combat()
 	hud.show_death()

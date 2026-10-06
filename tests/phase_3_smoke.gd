@@ -104,8 +104,11 @@ func _clear_with_projectiles() -> void:
 	var room := world.current_room
 	_check(room.room_state.status == RoomState.Status.ACTIVE, "Entered room is ACTIVE")
 	_check(not world.request_traversal(room.doors.keys()[0]), "Combat prevents early traversal")
+	# Phase 3 隔离房间生命周期，不对新增 AI 作手感断言；活跃 AI 由 Phase 4 覆盖。
+	room.enemy_spawner.stop_all()
 	for enemy in room.enemy_spawner.get_children():
-		for shot in range(3):
+		var health := enemy.get_node("Health") as Health
+		for shot in range(int(ceil(health.current_hp / world.player.stats.attack_damage))):
 			_check(world.player.weapon.try_attack(enemy.global_position - Vector2(0, 48), Vector2.DOWN, world.player.stats), "Player weapon issues real projectile")
 			await _frames(14)
 	await _frames(2)

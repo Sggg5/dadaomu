@@ -20,7 +20,7 @@ offset_left = 64.0
 offset_top = 20.0
 theme_override_colors/font_color = Color(0.86, 0.72, 0.43, 1)
 theme_override_font_sizes/font_size = 26
-text = "大盗墓时代 · Phase 3 随机地宫"
+text = "大盗墓时代 · Phase 4 敌人战斗"
 mouse_filter = 2
 
 [node name="HP" type="Label" parent="Root"]
@@ -57,7 +57,7 @@ script = ExtResource("2")
 [node name="Instructions" type="Label" parent="Root"]
 offset_left = 64.0
 offset_top = 634.0
-text = "WASD 移动 · 鼠标瞄准 · 按住左键射击\n击杀全部敌人后开门 · F1 测试受伤"
+text = "WASD 移动 · 鼠标瞄准 · 按住左键射击\n躲开橙色前摇与红色弹丸 · 击杀后开门"
 mouse_filter = 2
 
 [node name="Legend" type="Label" parent="Root"]

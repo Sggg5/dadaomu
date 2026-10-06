@@ -2,7 +2,7 @@
 
 ## 范围与阶段
 
-本项目是 Godot 4.x / GDScript / Windows 的原创 2D 俯视角 Roguelite《大盗墓时代》。阅读 README、PROJECT_PLAN、ARCHITECTURE、GAME_DESIGN 后再修改。用户指令优先；每次只执行明确授权的 Phase。当前授权 Phase 3，完成后必须停止，不自动实施 Phase 4、真正 Boss 或古董内容。
+本项目是 Godot 4.x / GDScript / Windows 的原创 2D 俯视角 Roguelite《大盗墓时代》。阅读 README、PROJECT_PLAN、ARCHITECTURE、GAME_DESIGN 后再修改。用户指令优先；每次只执行明确授权的 Phase。当前授权 Phase 4，完成后必须停止，不自动实施 Phase 5、真正 Boss 或古董内容。
 
 每阶段保持可运行入口，结束前检查导入解析、启动和阶段相关行为。报告修改文件、架构变化、验证命令与真实结果、已知限制及下一阶段范围。未执行的检查必须明确标注，不能把规划写成已实现。
 
@@ -55,3 +55,13 @@ godot --headless --path . --script res://tests/phase_3_smoke.gd
 - R 保留当前 Seed；N 用独立 Seed 来源获得新布局。生成版本、配置、模板池和引擎版本影响复现结果。
 - START/BOSS 为普通战斗占位，ANTIQUE 自动清场。古董内容属于 Phase 6，Boss 战斗属于 Phase 7。
 - Phase 2 固定图仅保留在 tests/fixtures；改旧测试时保留原始行为断言，不通过删除断言掩盖回归。
+
+## Phase 4 敌人约定
+
+- 当前分支 codex/phase-4-enemies；用户已授权验证后提交，未授权推送或合并 main。
+- EnemyDefinition / RangedEnemyDefinition 只读；Enemy 持有实例 HP、冷却和观察期。Player 与弹丸容器通过 Spawner 显式注入。
+- RoomDefinition.spawns 是唯一生成入口，EnemySpawnDefinition 指定场景、数据和位置。Dummy 只保留给旧回归夹具。
+- 敌人弹丸仅检测 World / Player；不伤友军，不追踪移动目标，房间卸载或玩家死亡必须清理。
+- 入房默认 1 秒观察期，暂缓 AI 移动和攻击；模板生成点距四入口至少 180 像素。不得跳过攻击前摇补偿难度。
+- 必跑 Phase 1～4 smoke，保留旧功能断言。人工试玩与程序驱动图形验证分开报告。
+- Phase 5 准备仅文档规划，不提前实现遗物、Boss、古董、黑市或存档。
