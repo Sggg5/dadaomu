@@ -219,7 +219,7 @@ func _run() -> void:
 	_key(KEY_R)
 	await _frames(5)
 	_check(not is_instance_valid(old_world) and session.seed_value == original_seed and session.world.layout.signature() == signature, "R reproduces same full layout and releases old controller")
-	_check(session.world.player.health.current_hp == 100.0 and _count_players(root) == 1, "R restores HP and keeps only one Player")
+	_check(session.world.player.health.current_hp == 80.0 and _count_players(root) == 1, "R restores HP and keeps only one Player")
 	var states_reset: bool = true
 	for room_id in session.world.states:
 		states_reset = states_reset and session.world.states[room_id].status == (RoomState.Status.CLEARED if room_id == &"START" else RoomState.Status.UNVISITED)
@@ -228,7 +228,7 @@ func _run() -> void:
 	_key(KEY_N)
 	await _frames(5)
 	_check(session.seed_value != original_seed and session.world.layout.spatial_signature() != topology, "N selects a new Seed and different topology")
-	_check(not is_instance_valid(old_world) and _count_players(root) == 1 and session.world.player.health.current_hp == 100.0, "New Seed rebuilds without stale Player")
+	_check(not is_instance_valid(old_world) and _count_players(root) == 1 and session.world.player.health.current_hp == 80.0, "New Seed rebuilds without stale Player")
 	_check(not LAYOUT_CHECKS.inspect(session.world.layout, CONFIG).values().has(false), "New Seed restart still satisfies every layout constraint")
 	var new_signature := session.world.layout.signature()
 	_key(KEY_R)

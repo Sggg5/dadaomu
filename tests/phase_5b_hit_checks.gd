@@ -158,7 +158,7 @@ func run() -> void:
 	hostile.track_player(world.player)
 	var before: int = hits[0]
 	await test.frames(30)
-	test.check(world.player.health.current_hp == 88.0 and not is_instance_valid(hostile) and hits[0] == before, "EnemyProjectile ignores all formal attack modifiers and hit effects")
+	test.check(world.player.health.current_hp == 68.0 and not is_instance_valid(hostile) and hits[0] == before, "EnemyProjectile ignores all formal attack modifiers and hit effects")
 	inventory.clear()
 	test.check(runtime.projectile_hit.get_connections().size() == 1 and runtime.player_damaged.get_connections().is_empty(), "Unloading all formal effects leaves no ghost hit or damage connections")
 	inventory.add(definition(&"corpse_oil_lamp"))

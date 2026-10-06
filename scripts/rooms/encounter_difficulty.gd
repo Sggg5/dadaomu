@@ -13,9 +13,9 @@ static func from_depth(value: int) -> EncounterDifficulty:
 	if value >= 5:
 		result.tier = 3
 		result.hp_multiplier = 1.30
-		result.damage_multiplier = 1.20
+		result.damage_multiplier = 1.35
 	elif value >= 3:
 		result.tier = 2
 		result.hp_multiplier = 1.15
-		result.damage_multiplier = 1.10
+		result.damage_multiplier = 1.15
 	return result

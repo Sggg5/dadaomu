@@ -40,7 +40,7 @@ func run() -> void:
 	runtime.player_damaged.connect(func(_amount: float) -> void: damaged[0] += 1)
 	runtime.room_cleared.connect(func(_context: RoomClearContext) -> void: cleared[0] += 1)
 	player.health.take_damage(25.0)
-	test.check(damaged[0] == 1 and player.health.current_hp == 75.0, "Nonlethal player damage reaches local Hook exactly once")
+	test.check(damaged[0] == 1 and player.health.current_hp == 55.0, "Nonlethal player damage reaches local Hook exactly once")
 	var start_side: int = world.layout.rooms[world.current_id].neighbors.keys()[0]
 	await test.walk(start_side)
 	var room := world.current_room
@@ -57,7 +57,7 @@ func run() -> void:
 	if is_instance_valid(first) and not first.health.is_dead:
 		player.weapon.try_attack(player.position, Vector2.UP, player.stats)
 		await test.frames(14)
-	test.check((not is_instance_valid(first) or first.health.is_dead) and killed[0] == 1 and player.health.current_hp == 80.0, "Real combined bullets kill scarab and heal five HP once")
+	test.check((not is_instance_valid(first) or first.health.is_dead) and killed[0] == 1 and player.health.current_hp == 60.0, "Real combined bullets kill scarab and heal five HP once")
 	var heal_effect := inventory.get_effect(HEAL.id)
 	room.enemy_spawner._on_enemy_died(first_id)
 	test.check(heal_effect.get("triggers") == 1 and killed[0] == 1, "Repeated death callback cannot repeat killed Hook or heal")

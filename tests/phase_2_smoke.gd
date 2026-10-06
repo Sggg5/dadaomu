@@ -158,7 +158,7 @@ func _run() -> void:
 	_check(world.current_room.doors[Door.Direction.NORTH].trigger.get_overlapping_bodies().has(world.player), "Player can already overlap sensor while door is locked")
 	world.apply_test_damage()
 	await _frames(2)
-	_check(world.player.health.current_hp == 75.0, "Test damage before room crossing")
+	_check(world.player.health.current_hp == 55.0, "Test damage before room crossing")
 	await _clear_current_room()
 	_check(world.current_id == &"center", "Door opening alone does not teleport player standing nearby")
 	await _walk_through(Door.Direction.NORTH, &"north", true)
@@ -207,7 +207,7 @@ func _run() -> void:
 	world.hud.restart_requested.emit()
 	await _frames(5)
 	world = current_scene as RoomController
-	_check(not is_instance_valid(previous_world) and world.player.health.current_hp == 100.0, "Restart releases map and restores HP")
+	_check(not is_instance_valid(previous_world) and world.player.health.current_hp == 80.0, "Restart releases map and restores HP")
 	for room_id in world.states:
 		var expected: RoomState.Status = RoomState.Status.ACTIVE if room_id == &"center" else RoomState.Status.UNVISITED
 		_check(world.states[room_id].status == expected, "%s resets state on restart" % room_id)

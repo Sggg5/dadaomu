@@ -45,7 +45,7 @@ func _run() -> void:
 		DirAccess.make_dir_recursive_absolute("res://logs")
 		root.get_texture().get_image().save_png("res://logs/phase_1_initial.png")
 	var player := arena.player
-	_check(player.health.current_hp == 100.0 and arena.remaining_targets == 3, "Initial HP and three targets")
+	_check(player.health.current_hp == 80.0 and arena.remaining_targets == 3, "Initial HP and three targets")
 	_check(InputMap.action_get_events("test_damage")[0].physical_keycode == KEY_F1, "F1 binding")
 
 	Input.action_press("move_right")
@@ -117,7 +117,7 @@ func _run() -> void:
 	key.pressed = true
 	root.push_input(key)
 	await _frames(2)
-	_check(player.health.current_hp == 75.0, "F1 dispatch applies configured test damage")
+	_check(player.health.current_hp == 55.0, "F1 dispatch applies configured test damage")
 	_check(not player.take_damage(25.0), "Hurt invulnerability rejects repeated immediate damage")
 	for hit in range(3):
 		await _frames(25)
@@ -143,7 +143,7 @@ func _run() -> void:
 		var previous := arena
 		arena = current_scene as CombatTest
 		_check(not is_instance_valid(previous), "Restart releases old scene %d" % iteration)
-		_check(arena.player.health.current_hp == 100.0 and arena.remaining_targets == 3
+		_check(arena.player.health.current_hp == 80.0 and arena.remaining_targets == 3
 			and arena.projectiles.get_child_count() == 0 and arena.player.weapon.cooldown_remaining == 0.0,
 			"Restart resets health, targets, projectiles and cooldown %d" % iteration)
 
@@ -178,7 +178,7 @@ func _run() -> void:
 		click.pressed = false
 		Input.parse_input_event(click)
 		await _frames(3)
-		_check(arena.player.health.current_hp == 75.0 and arena.projectiles.get_child_count() == 0,
+		_check(arena.player.health.current_hp == 55.0 and arena.projectiles.get_child_count() == 0,
 			"Clicking test damage UI applies damage without firing")
 
 	var restart_key := InputEventKey.new()
@@ -186,7 +186,7 @@ func _run() -> void:
 	restart_key.pressed = true
 	root.push_input(restart_key)
 	await _frames(5)
-	_check(current_scene != arena and (current_scene as CombatTest).player.health.current_hp == 100.0,
+	_check(current_scene != arena and (current_scene as CombatTest).player.health.current_hp == 80.0,
 		"R input restarts scene")
 
 	print("[Phase 1] %d checks, %d failures" % [checks, failures])

@@ -51,13 +51,26 @@ func fight() -> void:
 		for attempt in range(32):
 			if not is_instance_valid(enemy) or enemy.health.is_dead or world.player.health.is_dead:
 				break
-			for direction in [Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT]:
-				var origin: Vector2 = enemy.global_position + direction * 100.0
+			# 测试驾驶主动选更安全的射击点，不靠加血/停AI通过更高致死性。
+			var safest := world.player.position
+			var best_score: float = -INF
+			for direction in [Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector2(1,1).normalized(), Vector2(-1,1).normalized(), Vector2(1,-1).normalized(), Vector2(-1,-1).normalized()]:
+				var origin: Vector2 = enemy.global_position + direction * 180.0
 				var ray := PhysicsRayQueryParameters2D.create(enemy.global_position, origin, 5, [enemy.get_rid()])
 				if Room.ROOM_RECT.grow(-20).has_point(origin) and enemy.get_world_2d().direct_space_state.intersect_ray(ray).is_empty():
-					world.player.position = origin
-					world.player.velocity = Vector2.ZERO
-					break
+					var score: float = 500.0
+					for other in CombatGeometry.targets(world.current_room):
+						if other != enemy:
+							score = minf(score, origin.distance_to(other.global_position))
+					for projectile in world.current_room.projectiles.get_children():
+						if projectile is EnemyProjectile:
+							var closest := Geometry2D.get_closest_point_to_segment(origin, projectile.global_position, projectile.global_position + projectile.velocity * 0.3)
+							score = minf(score, origin.distance_to(closest) * 2.0)
+					if score > best_score:
+						best_score = score
+						safest = origin
+			world.player.position = safest
+			world.player.velocity = Vector2.ZERO
 			world.player.weapon.try_attack(world.player.position, (enemy.global_position - world.player.position).normalized(), world.player.stats)
 			await test.frames(14)
 	await test.frames(14)

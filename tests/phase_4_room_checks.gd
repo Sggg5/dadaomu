@@ -144,7 +144,7 @@ func run() -> void:
 	# 从实际剩余时间和物理频率推导等待帧数，不假设观察期为一秒。
 	var remaining: float = original_enemies[0].activation_remaining
 	await frames(maxi(1, floori(remaining * Engine.physics_ticks_per_second * 0.5)))
-	var dormant: bool = world.player.health.current_hp == 100.0
+	var dormant: bool = world.player.health.current_hp == 80.0
 	for index in range(original_enemies.size()):
 		var enemy: Enemy = original_enemies[index]
 		dormant = dormant and enemy.activation_remaining > 0.0 and enemy.velocity.is_zero_approx() and enemy.position == spawn_positions[index]
@@ -155,7 +155,7 @@ func run() -> void:
 	check.call(original_enemies.all(func(enemy: Enemy) -> bool: return enemy.activation_remaining <= 0.0 and enemy.can_act()) and scarabs[0].position != spawn_positions[0], "AI resumes movement after configured grace expires")
 	scarabs[0].position = world.player.position + Vector2(34, 0)
 	await frames(18)
-	check.call(world.player.health.current_hp < 100.0 and world.player.health.current_hp > 0.0, "Live random-room scarab attacks Player")
+	check.call(world.player.health.current_hp < 80.0 and world.player.health.current_hp > 0.0, "Live random-room scarab attacks Player")
 	await shoot_enemy(scarabs[0])
 	check.call(room.enemy_spawner.get_remaining() == 4 and room.room_state.status == RoomState.Status.ACTIVE, "Enemy death updates remaining without early clear")
 	gunner.position = world.player.position + Vector2(240, 0)
@@ -199,7 +199,7 @@ func run() -> void:
 	key(KEY_R)
 	await frames(5)
 	world = session.world
-	check.call(world.layout.signature() == signature and world.player.health.current_hp == 100.0 and world.current_room.room_state.status == RoomState.Status.CLEARED and world.current_room.enemy_spawner.get_remaining() == 0 and not world.current_room.enemy_spawner.started, "R preserves Seed and restores safe START and HP")
+	check.call(world.layout.signature() == signature and world.player.health.current_hp == 80.0 and world.current_room.room_state.status == RoomState.Status.CLEARED and world.current_room.enemy_spawner.get_remaining() == 0 and not world.current_room.enemy_spawner.started, "R preserves Seed and restores safe START and HP")
 	await walk(start_side, true)
 	check.call(world.current_room.enemy_spawner.get_remaining() > 0, "R restart still generates combat enemies after leaving START")
 	var deaths := [0]
@@ -216,6 +216,6 @@ func run() -> void:
 	key(KEY_N)
 	await frames(5)
 	world = session.world
-	check.call(session.seed_value != previous_seed and world.player.health.current_hp == 100.0 and world.current_room.room_state.status == RoomState.Status.CLEARED and world.current_room.enemy_spawner.get_remaining() == 0 and not world.current_room.enemy_spawner.started and world.current_room.doors.values().all(func(door: Door) -> bool: return door.is_open) and count_players(tree.root) == 1, "N creates a different dungeon with safe open START")
+	check.call(session.seed_value != previous_seed and world.player.health.current_hp == 80.0 and world.current_room.room_state.status == RoomState.Status.CLEARED and world.current_room.enemy_spawner.get_remaining() == 0 and not world.current_room.enemy_spawner.started and world.current_room.doors.values().all(func(door: Door) -> bool: return door.is_open) and count_players(tree.root) == 1, "N creates a different dungeon with safe open START")
 	await walk(world.layout.rooms[world.current_id].neighbors.keys()[0], true)
 	check.call(world.current_room.room_type == RoomDefinition.Type.COMBAT and world.current_room.enemy_spawner.get_remaining() > 0, "New Seed still generates combat enemies beyond safe START")
