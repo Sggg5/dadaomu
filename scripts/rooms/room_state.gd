@@ -7,7 +7,22 @@ signal changed(status: Status)
 enum Status { UNVISITED, ACTIVE, CLEARED }
 
 var status: Status = Status.UNVISITED
-var antique_claimed: bool = false
+var claimed_loot_sources: Dictionary[StringName,bool] = {}
+# 旧回归夹具兼容入口；真实领取逻辑只操作统一source，不维护第二份bool。
+var antique_claimed: bool:
+	get: return is_loot_claimed(&"antique_room")
+	set(value):
+		if value: claim_loot(&"antique_room")
+		else: claimed_loot_sources.erase(&"antique_room")
+
+
+func is_loot_claimed(source_id: StringName) -> bool: return claimed_loot_sources.has(source_id)
+
+
+func claim_loot(source_id: StringName) -> bool:
+	if source_id == &"" or is_loot_claimed(source_id): return false
+	claimed_loot_sources[source_id] = true
+	return true
 
 
 func activate() -> bool:

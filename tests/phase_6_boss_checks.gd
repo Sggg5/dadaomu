@@ -136,12 +136,12 @@ func run() -> void:
 	test.check(summons.all(func(actor) -> bool: return not is_instance_valid(actor)), "Boss victory removes still-living summons")
 	test.check(room.room_state.status == RoomState.Status.CLEARED and room.doors.values().all(func(door: Door) -> bool: return door.is_open), "Boss victory clears Room and reopens all Doors")
 	test.check(not world.hud.boss_display.visible, "Boss victory hides HUD")
-	test.check(room.get_node_or_null("FloorExit") is FloorExit, "Victory creates one floor exit")
+	test.check(room.get_node_or_null("ExpeditionExit") is ExpeditionExit, "Victory creates one floor exit")
 	# 已清Boss房重访必须仍有出口，不得再次生成Boss。
 	world._switch_room(world.layout.start_id,-1)
 	world._switch_room(world.layout.boss_id,-1)
 	await test.frames(2)
-	test.check(world.current_room.boss_encounter == null and world.current_room.has_node("FloorExit") and world.current_room.room_state.status == RoomState.Status.CLEARED, "Revisit defeated Boss keeps exit without respawning Boss")
+	test.check(world.current_room.boss_encounter == null and world.current_room.has_node("ExpeditionExit") and world.current_room.room_state.status == RoomState.Status.CLEARED, "Revisit defeated Boss keeps exit without respawning Boss")
 	# 新Run进入仍活着的Boss房，再真实触发玩家死亡；同步断言HUD立即隐藏。
 	await test.reset()
 	world = test.session.world

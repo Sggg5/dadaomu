@@ -11,6 +11,7 @@ signal boss_started(boss: Enemy)
 signal floor_exit_requested
 signal run_complete_requested
 signal boss_defeated
+signal extraction_requested
 
 const DOOR_SCENE: PackedScene = preload("res://scenes/rooms/door.tscn")
 const ROOM_RECT := Rect2(64, 144, 1152, 448)
@@ -28,6 +29,8 @@ var boss_definition: BossDefinition
 var boss_encounter: BossEncounter
 var final_floor: bool = false
 var antique_definition: AntiqueDefinition
+var cache_definition: AntiqueDefinition
+var can_exit: Callable
 var doors: Dictionary[int, Door] = {}
 var _connected_sides: Array[int] = []
 var _wall_rects: Array[Rect2] = []
@@ -59,6 +62,7 @@ func enter() -> void:
 	if room_state.status == RoomState.Status.CLEARED:
 		_set_doors_open(true)
 		_create_antique()
+		_create_cache()
 		if room_type == RoomDefinition.Type.BOSS and boss_definition != null: _create_boss_exit()
 		return
 	if room_type not in [RoomDefinition.Type.COMBAT, RoomDefinition.Type.START, RoomDefinition.Type.BOSS, RoomDefinition.Type.ANTIQUE]:
@@ -92,7 +96,7 @@ func get_entry_position(side: int = -1) -> Vector2:
 
 
 func _create_antique() -> void:
-	if room_type != RoomDefinition.Type.ANTIQUE or antique_definition == null or room_state.antique_claimed or has_node("AntiquePedestal"): return
+	if room_type != RoomDefinition.Type.ANTIQUE or antique_definition == null or room_state.is_loot_claimed(&"antique_room") or has_node("AntiquePedestal"): return
 	var pedestal := AntiquePedestal.new()
 	pedestal.name = "AntiquePedestal"
 	pedestal.definition = antique_definition
@@ -100,6 +104,17 @@ func _create_antique() -> void:
 	pedestal.room_state = room_state
 	pedestal.position = RelicPedestal.safe_position(self)
 	add_child(pedestal)
+
+
+func _create_cache() -> void:
+	if room_type != RoomDefinition.Type.COMBAT or cache_definition == null or room_state.status != RoomState.Status.CLEARED or room_state.is_loot_claimed(&"combat_cache") or has_node("AntiqueCache"): return
+	var cache := AntiqueCache.new()
+	cache.name = "AntiqueCache"
+	cache.definition = cache_definition
+	cache.player = combat_target
+	cache.room_state = room_state
+	cache.position = AntiqueCache.safe_position(self)
+	add_child(cache)
 
 
 func discard_projectiles() -> void:
@@ -130,12 +145,14 @@ func _create_boss_exit() -> void:
 		run_exit.run_complete_requested.connect(func() -> void: run_complete_requested.emit())
 		add_child(run_exit)
 		return
-	if has_node("FloorExit"): return
-	var exit := FloorExit.new()
-	exit.name = "FloorExit"
+	if has_node("ExpeditionExit"): return
+	var exit := ExpeditionExit.new()
+	exit.name = "ExpeditionExit"
+	exit.can_choose = can_exit
 	exit.player = combat_target
 	exit.position = RelicPedestal.safe_position(self)
-	exit.floor_exit_requested.connect(func() -> void: floor_exit_requested.emit())
+	exit.descend_requested.connect(func() -> void: floor_exit_requested.emit())
+	exit.extract_requested.connect(func() -> void: extraction_requested.emit())
 	add_child(exit)
 
 
@@ -153,6 +170,7 @@ func remaining_count() -> int:
 func _on_all_defeated() -> void:
 	if room_state.clear():
 		cleared.emit()
+		_create_cache()
 
 
 func _on_state_changed(value: RoomState.Status) -> void:

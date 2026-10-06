@@ -54,7 +54,7 @@ func verify_result(result: RunResult) -> void:
 	for item in collected:
 		expected += item.base_value
 		test.check(result.antique_names.has(item.display_name) and test.session.complete_screen.label.text.contains(item.display_name), "Complete screen displays carried antique " + item.display_name)
-	test.check(result.antique_names.size() == 2 and result.antique_value == expected and test.session.complete_screen.label.text.contains("古董总估值："+AntiqueDefinition.money(expected)), "Complete snapshots/display exactly two carried antiques and total value")
+	test.check(result.antique_names.size() == 2 and result.antique_value == expected and test.session.complete_screen.label.text.contains("安全带回总估值："+AntiqueDefinition.money(expected)), "Complete snapshots/display exactly two carried antiques and total value")
 
 
 func run() -> void:

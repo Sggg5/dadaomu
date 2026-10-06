@@ -6,12 +6,14 @@ var player: Player
 var room_state: RoomState
 var label: Label
 var failure_remaining: float = 0
+var source_id: StringName = &"antique_room"
+var caption: String = ""
 
 
 func _ready() -> void:
 	label = Label.new()
 	label.position = Vector2(-200,26)
-	label.size = Vector2(400,110)
+	label.size = Vector2(400,150)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	label.add_theme_font_size_override("font_size",17)
@@ -20,7 +22,7 @@ func _ready() -> void:
 
 
 func in_range() -> bool:
-	return not room_state.antique_claimed and is_instance_valid(player) and not player.health.is_dead and player.controls_enabled and player.global_position.distance_to(global_position) <= 64
+	return not room_state.is_loot_claimed(source_id) and is_instance_valid(player) and not player.health.is_dead and player.controls_enabled and player.global_position.distance_to(global_position) <= 64
 
 
 func try_pickup() -> bool:
@@ -29,7 +31,7 @@ func try_pickup() -> bool:
 		failure_remaining = 2
 		_refresh()
 		return false
-	room_state.antique_claimed = true
+	room_state.claim_loot(source_id)
 	queue_free()
 	return true
 
@@ -40,7 +42,7 @@ func _process(delta: float) -> void:
 
 
 func _refresh() -> void:
-	label.text = "%s\n估值：%s\n占用：%d格\n%s" % [definition.display_name,AntiqueDefinition.money(definition.base_value),definition.slots,"背包空间不足" if failure_remaining > 0 else ("[E] 带走" if in_range() else "靠近后按 E 带走")]
+	label.text = (caption+"\n" if not caption.is_empty() else "")+"%s\n估值：%s\n占用：%d格\n%s" % [definition.display_name,AntiqueDefinition.money(definition.base_value),definition.slots,"背包空间不足" if failure_remaining > 0 else ("[E] 带走" if in_range() else "靠近后按 E 带走")]
 
 
 func _unhandled_input(event: InputEvent) -> void:

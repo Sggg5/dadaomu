@@ -9,11 +9,13 @@ signal room_cleared(context: RoomClearContext)
 signal floor_exit_requested
 signal run_complete_requested
 signal boss_defeated
+signal extraction_requested
 
 const ROOM_SCENE: PackedScene = preload("res://scenes/rooms/room.tscn")
 const PROJECTILE_SCENE: PackedScene = preload("res://scenes/player/projectile.tscn")
 const ANTIQUE_POOL: AntiquePool = preload("res://data/antiques/formal_pool.tres")
 var run_seed: int
+var antique_loot: AntiqueLootService = AntiqueLootService.new()
 var layout: DungeonLayout
 var rewards: RelicRewardService
 var floor_number: int = 1
@@ -35,6 +37,7 @@ var _restarting: bool = false
 
 func _ready() -> void:
 	assert(layout != null and layout.rooms.has(layout.start_id), "Inject a DungeonLayout before adding RoomController")
+	antique_loot.configure(run_seed,floor_number,layout)
 	for room_id in layout.rooms:
 		assert(layout.rooms[room_id].definition != null)
 		states[room_id] = RoomState.new()
@@ -123,10 +126,13 @@ func _switch_room(target_id: StringName, entry_side: int) -> void:
 	for side in node.neighbors:
 		sides.append(side)
 	current_room.boss_definition = boss_definition
+	current_room.can_exit = func() -> bool: return not run_finished and not transitioning and not _restarting
 	if node.room_type == RoomDefinition.Type.ANTIQUE: current_room.antique_definition = ANTIQUE_POOL.pick(run_seed,floor_number,target_id)
+	if antique_loot.has_cache(target_id): current_room.cache_definition = ANTIQUE_POOL.pick(run_seed,floor_number,target_id,&"combat_cache")
 	current_room.final_floor = final_floor
 	current_room.boss_defeated.connect(func() -> void: boss_defeated.emit())
 	current_room.run_complete_requested.connect(func() -> void: run_complete_requested.emit())
+	current_room.extraction_requested.connect(func() -> void: extraction_requested.emit())
 	current_room.configure(node.definition, states[target_id], sides, node.room_type, player, EncounterDifficulty.from_depth(node.distance_from_start + floor_offset))
 	hud.hide_boss()
 	current_room.boss_started.connect(hud.show_boss)

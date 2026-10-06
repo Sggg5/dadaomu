@@ -1,5 +1,7 @@
 class_name RunResult
 extends RefCounted
+enum Outcome { EXTRACTED, COMPLETED, DEAD }
+var outcome: Outcome = Outcome.COMPLETED
 ## 结算只读数值/名称快照，不持Session、节点或RelicEffect。
 var run_seed: int
 var floors_cleared: int
@@ -10,3 +12,5 @@ var combat_clears: int
 var bosses_defeated: int
 var antique_names: Array[String] = []
 var antique_value: int
+var antique_values: Array[int] = []
+var floor_reached: int = 1

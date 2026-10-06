@@ -23,7 +23,7 @@ func run() -> void:
 	test.check(session.bosses_defeated == 1 and not session.run_completed, "Real warlord victory counts one, does not finish Run")
 	var hp := session.world.player.health.current_hp
 	var ids := session.world.player.relics.inventory.ids()
-	var floor_exit := session.world.current_room.get_node("FloorExit") as FloorExit
+	var floor_exit := session.world.current_room.get_node("ExpeditionExit") as ExpeditionExit
 	session.world.player.position = floor_exit.position+Vector2(20,0)
 	test.key(KEY_E)
 	await test.frames(5)

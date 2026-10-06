@@ -20,6 +20,9 @@ func _ready() -> void:
 	header = Label.new()
 	header.add_theme_font_size_override("font_size",23)
 	box.add_child(header)
+	var columns := Label.new()
+	columns.text = "名称 · 占格 · 估值 · 价值/格"
+	box.add_child(columns)
 	list = ItemList.new()
 	list.custom_minimum_size = Vector2(600,280)
 	list.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -39,7 +42,7 @@ func _ready() -> void:
 func refresh() -> void:
 	var selected := list.get_selected_items()
 	list.clear()
-	for item in inventory.items(): list.add_item("%s    %d格    %s" % [item.display_name,item.slots,AntiqueDefinition.money(item.base_value)])
+	for item in inventory.items(): list.add_item("%s    %d格    %s    %s/格" % [item.display_name,item.slots,AntiqueDefinition.money(item.base_value),AntiqueDefinition.money(floori(float(item.base_value)/item.slots))])
 	if not selected.is_empty() and selected[0] < list.item_count: list.select(selected[0])
 	header.text = "随身背包 %d / %d · Tab关闭" % [inventory.used_slots(),inventory.capacity]
 	footer.text = "总估值：%s · 背包打开时战斗继续" % AntiqueDefinition.money(inventory.total_value())

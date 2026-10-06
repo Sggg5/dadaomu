@@ -12,7 +12,11 @@ var floor_number: int = 1
 var current_floor_seed: int
 var world: RoomController
 var rewards: RelicRewardService
-var run_completed: bool = false
+var run_ended: bool = false
+# 旧回归入口兼容；新的结束逻辑一律使用run_ended与明确Outcome。
+var run_completed: bool:
+	get: return run_ended
+	set(value): run_ended = value
 var bosses_defeated: int = 0
 var complete_screen: RunCompleteScreen
 var _defeated_floors: Dictionary[int, bool] = {}
@@ -67,7 +71,7 @@ func _drop_world() -> void:
 func _start_new_run(layout: DungeonLayout) -> void:
 	assert(layout != null)
 	if is_instance_valid(complete_screen): complete_screen.queue_free()
-	run_completed = false
+	run_ended = false
 	bosses_defeated = 0
 	_defeated_floors.clear()
 	_drop_world()
@@ -96,9 +100,11 @@ func _assemble_world(layout: DungeonLayout) -> void:
 	world.final_floor = floor_number == 2
 	world.boss_defeated.connect(_on_boss_defeated)
 	world.run_complete_requested.connect(request_run_complete)
+	world.extraction_requested.connect(request_extraction)
 	world.restart_requested.connect(_restart_current)
 	world.floor_exit_requested.connect(request_next_floor)
 	add_child(world)
+	world.player.died.connect(_on_player_died)
 	world.hud.new_seed_requested.connect(regenerate)
 
 
@@ -112,7 +118,7 @@ func next_floor_layout() -> DungeonLayout:
 
 
 func request_next_floor() -> bool:
-	if run_completed: return false
+	if run_ended: return false
 	if _changing or floor_number != 1 or world.player.health.is_dead or world.current_room.room_type != RoomDefinition.Type.BOSS or world.current_room.room_state.status != RoomState.Status.CLEARED:
 		return false
 	var layout := next_floor_layout()
@@ -125,6 +131,10 @@ func request_next_floor() -> bool:
 
 
 func _enter_next_floor(layout: DungeonLayout, carry: RunCarryState) -> void:
+	# E已排队但本帧死亡时，不允许旧carry把已结束Run带进下一层。
+	if run_ended or world.player.health.is_dead:
+		_changing = false
+		return
 	_drop_world()
 	floor_number = 2
 	current_floor_seed = layout.seed_value
@@ -147,24 +157,45 @@ func _on_boss_defeated() -> void:
 
 
 func request_run_complete() -> bool:
-	if run_completed or _changing or floor_number != 2 or world.player.health.is_dead or world.current_room.room_type != RoomDefinition.Type.BOSS or world.current_room.room_state.status != RoomState.Status.CLEARED or bosses_defeated != 2: return false
-	run_completed = true
+	if run_ended or _changing or floor_number != 2 or world.player.health.is_dead or world.current_room.room_type != RoomDefinition.Type.BOSS or world.current_room.room_state.status != RoomState.Status.CLEARED or bosses_defeated != 2: return false
+	return _finish_run(RunResult.Outcome.COMPLETED)
+
+
+func request_extraction() -> bool:
+	if run_ended or _changing or floor_number != 1 or world.player.health.is_dead or world.current_room.room_type != RoomDefinition.Type.BOSS or world.current_room.room_state.status != RoomState.Status.CLEARED or bosses_defeated != 1: return false
+	return _finish_run(RunResult.Outcome.EXTRACTED)
+
+
+func _on_player_died() -> void: _finish_run(RunResult.Outcome.DEAD)
+
+
+func _finish_run(outcome: RunResult.Outcome) -> bool:
+	if run_ended: return false
+	run_ended = true
+	_changing = false
+	# 在库存清空前、Health死亡的遗物卸载回调继续前取纯数值/名称快照。
+	var result := RunResult.new()
+	result.outcome = outcome
+	result.run_seed = run_seed
+	result.floors_cleared = _defeated_floors.size()
+	result.floor_reached = floor_number
+	result.current_hp = world.player.health.current_hp
+	result.max_hp = world.player.health.max_hp
+	result.combat_clears = rewards.combat_clears
+	result.bosses_defeated = bosses_defeated
+	result.antique_value = world.player.antiques.total_value()
+	for item in world.player.antiques.items():
+		result.antique_names.append(item.display_name)
+		result.antique_values.append(item.base_value)
+	for id in world.player.relics.inventory.ids(): result.relic_names.append(world.player.relics.inventory.get_effect(id).definition.display_name)
 	world.run_finished = true
 	world.player.set_controls_enabled(false)
 	world.current_room.stop_combat()
 	rewards.stop()
 	world.hud.hide_boss()
 	world.antique_panel.panel.hide()
-	var result := RunResult.new()
-	result.run_seed = run_seed
-	result.floors_cleared = 2
-	result.current_hp = world.player.health.current_hp
-	result.max_hp = world.player.health.max_hp
-	result.combat_clears = rewards.combat_clears
-	result.bosses_defeated = bosses_defeated
-	result.antique_value = world.player.antiques.total_value()
-	for item in world.player.antiques.items(): result.antique_names.append(item.display_name)
-	for id in world.player.relics.inventory.ids(): result.relic_names.append(world.player.relics.inventory.get_effect(id).definition.display_name)
+	world.get_node("RelicDebugPanel").process_mode = Node.PROCESS_MODE_DISABLED
+	if outcome == RunResult.Outcome.DEAD: world.player.antiques.clear()
 	complete_screen = RunCompleteScreen.new()
 	complete_screen.result = result
 	add_child(complete_screen)

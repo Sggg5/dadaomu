@@ -93,7 +93,7 @@ func run() -> void:
 	await driver.visit(world.layout.boss_id)
 	test.check(world.current_room.room_type == RoomDefinition.Type.BOSS and world.current_room.enemy_spawner.get_child_count() == 0, "Actual Door reaches formal Boss without template enemies")
 	await boss_fight()
-	var exit := world.current_room.get_node("FloorExit") as FloorExit
+	var exit := world.current_room.get_node("ExpeditionExit") as ExpeditionExit
 	world.player.position = Vector2(96,560)
 	test.check(not exit.request() and not exit.used, "FloorExit rejects interaction outside64px")
 	# 单项Runtime边界夹具：完整Boss击杀已结束；不使用F2，不影响战斗通关。
