@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AntiqueDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/antiques/antique_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"tang_sancai_horse"
+display_name = "唐三彩马"
+description = "三色釉彩交错，马首昂起。"
+base_value = 1600
+slots = 3
+rarity = 2

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AntiqueDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/antiques/antique_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"blue_white_jar"
+display_name = "青花小罐"
+description = "绘着卷草纹的小罐，釉色尚存。"
+base_value = 350
+slots = 2
+rarity = 0

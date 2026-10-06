@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AntiquePool" load_steps=11 format=3]
+[ext_resource type="Script" path="res://scripts/antiques/antique_pool.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/antiques/antique_definition.gd" id="type"]
+[ext_resource type="Resource" path="res://data/antiques/republic_silver_coin.tres" id="2"]
+[ext_resource type="Resource" path="res://data/antiques/blue_white_jar.tres" id="3"]
+[ext_resource type="Resource" path="res://data/antiques/gilt_buddha.tres" id="4"]
+[ext_resource type="Resource" path="res://data/antiques/han_jade_disc.tres" id="5"]
+[ext_resource type="Resource" path="res://data/antiques/inlaid_bronze_mirror.tres" id="6"]
+[ext_resource type="Resource" path="res://data/antiques/tang_sancai_horse.tres" id="7"]
+[ext_resource type="Resource" path="res://data/antiques/gold_thread_jade.tres" id="8"]
+[ext_resource type="Resource" path="res://data/antiques/guardian_fragment.tres" id="9"]
+[resource]
+script = ExtResource("1")
+antiques = Array[ExtResource("type")]([ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5"), ExtResource("6"), ExtResource("7"), ExtResource("8"), ExtResource("9")])

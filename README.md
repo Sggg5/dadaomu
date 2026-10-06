@@ -4,11 +4,11 @@
 
 ## 当前状态
 
-当前 **Phase 6.5 镇墓兽与两层Demo结局**（开发分支，未合并main）。默认 Seed 为 `192034`，每图 8～12 个房间，独立 RNG 可重现正交树状布局。START 固定在 (0,0)，Boss 是距离至少 5 的最远叶子，ANTIQUE 距离至少 2。
+当前 **Phase 7A 古董拾取与有限背包**（开发分支，未合并main）。默认 Seed 为 `192034`，每图 8～12 个房间，独立 RNG 可重现正交树状布局。START 固定在 (0,0)，Boss 是距离至少 5 的最远叶子，ANTIQUE 距离至少 2。
 
 随机节点决定位置/连接/类型，五份原有普通房配置作为共享模板池。玩家、战斗、门和房间生命周期继续复用：首次进入锁门，击杀后开门，过门保留生命，重访已清场房不刷怪。
 
-START 为安全出生房，忽略模板刷怪并立即清场开门；第一层BOSS为晋北大帅尸，胜利后E深入第二层；第二层BOSS为镇墓兽，胜利后E返回地面显示通关结算，无第三层。ANTIQUE自动清场，古董经济尚未实现。已实现尸蟞追击咬击、盗墓枪手保持距离与射击。战斗房入房有 0.35 秒观察期，敌人暂停行动；橙色表示攻击前摇，红色菱形是敌方弹丸。第一层Boss已获用户人工验收；第二层Boss与结算手感待本阶段试玩。
+START 为安全出生房，忽略模板刷怪并立即清场开门；第一层BOSS为晋北大帅尸，胜利后E深入第二层；第二层BOSS为镇墓兽，胜利后E返回地面显示通关结算，无第三层。ANTIQUE安全清场并提供古董底座，古董经济尚未实现。已实现尸蟞追击咬击、盗墓枪手保持距离与射击。战斗房入房有 0.35 秒观察期，敌人暂停行动；橙色表示攻击前摇，红色菱形是敌方弹丸。第一层Boss已获用户人工验收；第二层Boss与结算手感待本阶段试玩。
 
 ## 开发环境与运行
 
@@ -79,7 +79,7 @@ godot --path . --script res://tests/phase_4_smoke.gd -- --capture
 ```
 
 完整结果、人工反馈与限制见 docs/PHASE_4_VERIFICATION.md。未实现完整寻路、正式美术、音效或 Boss；工程遗物只用于开发回归；正式池为 Phase 5B 的八件遗物。
-START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场景、不修改共享 spawns；START 不调用 EnemySpawner，因此不应用观察期。COMBAT 的 180px 入口间距、0.35 秒观察期和攻击前摇保持；第一层BOSS为正式晋北大帅尸，第二层BOSS为镇墓兽，ANTIQUE自动清场。
+START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场景、不修改共享 spawns；START 不调用 EnemySpawner，因此不应用观察期。COMBAT 的 180px 入口间距、0.35 秒观察期和攻击前摇保持；第一层BOSS为正式晋北大帅尸，第二层BOSS为镇墓兽，ANTIQUE安全清场并提供古董底座。
 
 ## Phase 5A 开发测试
 
@@ -98,7 +98,7 @@ godot --path . --script res://tests/phase_5a_smoke.gd -- --capture
 godot --path . -- --seed=1
 ```
 
-数据在 data/relics/，效果实现分别位于 scripts/relics/effects/。配置引用独立 effect_script，不添加核心脚本 ID 分支。新增参数或运行对象时继续维护 copy/卸载生命周期。Phase5A/5B已合并main；当前工作为Phase6.5，仍不自动合并main。
+数据在 data/relics/，效果实现分别位于 scripts/relics/effects/。配置引用独立 effect_script，不添加核心脚本 ID 分支。新增参数或运行对象时继续维护 copy/卸载生命周期。Phase5A/5B已合并main；当前工作为Phase7A，仍不自动合并main。
 ## Phase 5B 正式奖励与 Build
 
 首次清场第2、4、7个普通COMBAT房生成一件底座奖励。START、ANTIQUE、BOSS占位不计数，重访不重复。靠近底座64px内按E拾取，名称/简短说明就地显示；离房未拾取则丢失，不在重访补发。
@@ -177,3 +177,18 @@ godot --path . -- --seed=192034
 ```
 
 新增代码、真实流程、测试与人工状态见docs/PHASE_6_5_VERIFICATION.md。第一层与第二层Seed、跨层Build、2/4/7整局奖励规则保持。
+
+## Phase 7A：古董房与随身背包
+
+小地图A房现在安全开门并有一件古董：靠近64px按E带走，显示名称、估值和占格。背包默认8格，满包提示“背包空间不足”；Tab打开列表、选择一件后Delete或按钮丢弃（本Run永久删除，不在地上重生成）。背包打开时战斗继续；未领取的古董可离房后回来领取，领取或丢弃后不会补发。
+
+古董与遗物完全分离，古董不改变HP、攻击或移动。正式8件资源位于data/antiques，初始价值/槽位按用户指定；两层同池均匀选择。版本1+Run Seed+楼层+房间ID确定选择，独立RNG不影响地图或遗物。重复古董可带多件，按各自槽位/价值累加。
+
+古董随HP/遗物跨层保留，新层重建库存与UI；R/N清空。通关仅展示带回名称和总估值，没有黑市、钱包、出售、鉴定、真假或存档。结算内容可滚动，R/N提示固定在底部。
+
+```powershell
+godot --headless --fixed-fps 60 --path . --script res://tests/phase_7a_smoke.gd
+godot --path . --script res://tests/phase_7a_smoke.gd -- --capture
+```
+
+详细资源表、实际拾取与回归结果见docs/PHASE_7A_VERIFICATION.md。当前分支codex/phase-7a-antique-inventory，提交push后停止，不合并main。

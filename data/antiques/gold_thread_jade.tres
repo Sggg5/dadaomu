@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AntiqueDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/antiques/antique_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"gold_thread_jade"
+display_name = "金丝玉佩"
+description = "细金丝包缠玉饰边缘。"
+base_value = 2200
+slots = 1
+rarity = 3

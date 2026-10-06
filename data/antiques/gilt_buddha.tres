@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AntiqueDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/antiques/antique_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"gilt_buddha"
+display_name = "铜鎏金佛像"
+description = "鎏金斑驳，底座保留着铸造痕迹。"
+base_value = 600
+slots = 2
+rarity = 1

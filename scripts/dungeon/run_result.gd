@@ -8,3 +8,5 @@ var max_hp: float
 var relic_names: Array[String] = []
 var combat_clears: int
 var bosses_defeated: int
+var antique_names: Array[String] = []
+var antique_value: int

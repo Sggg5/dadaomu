@@ -2,7 +2,7 @@
 
 ## 范围与阶段
 
-本项目是 Godot 4.x / GDScript / Windows 的原创 2D 俯视角 Roguelite《大盗墓时代》。阅读 README、PROJECT_PLAN、ARCHITECTURE、GAME_DESIGN 后再修改。用户指令优先；每次只执行明确授权的 Phase。当前授权Phase6.5：镇墓兽与两层Demo结局。分支codex/phase-6-5-tomb-beast-finale，从main d833efe创建，验证后提交并push，禁止合并main；不开发第三层、第三Boss或古董。旧阶段条款仅为历史，当前以Phase6.5为准。
+本项目是 Godot 4.x / GDScript / Windows 的原创 2D 俯视角 Roguelite《大盗墓时代》。阅读 README、PROJECT_PLAN、ARCHITECTURE、GAME_DESIGN 后再修改。用户指令优先；每次只执行明确授权的 Phase。当前授权Phase7A：古董Definition、安全房拾取、有限背包与HUD。分支codex/phase-7a-antique-inventory，从main 8b19dfb创建，验证后提交并push，禁止合并main；不开发撤离/死亡掉落/经济/鉴定/存档/第三层。旧阶段条款仅为历史，当前以Phase7A为准。
 
 每阶段保持可运行入口，结束前检查导入解析、启动和阶段相关行为。报告修改文件、架构变化、验证命令与真实结果、已知限制及下一阶段范围。未执行的检查必须明确标注，不能把规划写成已实现。
 
@@ -126,3 +126,15 @@ Session.boss_for_floor映射1大帅尸/2镇墓兽，其他null；Room.final_floo
 RunExit与FloorExit职责区分：第二层只有RunExit，64px内E一次才run_completed；Boss死亡只清房与计数，不立即通关。显式boss_defeated信号按层去重，不能用房数猜。结算RunResult只持数值与名称，不保存Effect或节点；完成冻结输入/Room traversal/弹丸生成，R/N重置结果界面、Build/HP/进度/击杀。
 
 必跑Phase1～6.5。改Phase6第二层占位断言时保留真实第二层清场与无第三层覆盖，新增正式Boss真实战斗；至少一次正常拾取遗物、真实Door/E、真实两Boss武器击杀到结算。人工试玩单独记录，不把程序驾驶时间当人工25～45秒验收。禁止第三层、第三Boss、古董经济、背包、黑市、存档或新普通敌人。
+
+## Phase 7A 当前规则
+
+AntiqueDefinition/Inventory/Pool与RelicDefinition/Inventory/Runtime彻底分离。Player拥有独立8格AntiqueInventory，仅持只读定义数组、允许重复件；不保存Pickup/Effect/UI，不修改任何战斗属性。remove(id)删首个同ID项，remove_at(index)支持重复件准确丢弃；items返回数组副本。
+
+AntiquePool以版本/run_seed/floor/raw room_id稳定文本混合后建立独立RNG，按ID排序均匀选择；不得消耗地图/遗物全局随机状态。当前两层同池同概率，不做权重框架。ANTIQUE安全CLEARED/开门且忽略spawns，64px内E领取；满包提示，不自动丢物，不要求领取才能离开。
+
+RoomState.antique_claimed跟随本层状态，未领可重访恢复同件，已领/已丢弃不重新生成。Tab背包不暂停战斗，Delete/按钮按索引永久删除当前Run物品，无落地重生成。死亡/通关/过门冻结期间禁止管理；未加死亡掉落系统。
+
+RunCarryState仅增加古董定义数组，新层加入新的Inventory、新UI；HP/Relic原规则不变。RunResult保存名称与总估值，只当前Run展示，绝不钱包/出售/保存。R/N新Run背包空。
+
+必跑Phase1～6.5及Phase7A；真实主流程使用Door/E两层领取、真实武器击败两Boss后结算，不用inventory.add替代正常获取。单位边界可直接调用Inventory。只实现本阶段，禁止撤离、黑市、鉴定、真伪、永久货币、战斗古董、保险箱、尸体回收、存档、第三层或新Boss。

@@ -88,6 +88,7 @@ func _start_new_run(layout: DungeonLayout) -> void:
 func _assemble_world(layout: DungeonLayout) -> void:
 	world = WORLD_SCENE.instantiate() as RoomController
 	world.layout = layout
+	world.run_seed = run_seed
 	world.rewards = rewards
 	world.floor_number = floor_number
 	world.floor_offset = (floor_number - 1) * 3
@@ -153,6 +154,7 @@ func request_run_complete() -> bool:
 	world.current_room.stop_combat()
 	rewards.stop()
 	world.hud.hide_boss()
+	world.antique_panel.panel.hide()
 	var result := RunResult.new()
 	result.run_seed = run_seed
 	result.floors_cleared = 2
@@ -160,6 +162,8 @@ func request_run_complete() -> bool:
 	result.max_hp = world.player.health.max_hp
 	result.combat_clears = rewards.combat_clears
 	result.bosses_defeated = bosses_defeated
+	result.antique_value = world.player.antiques.total_value()
+	for item in world.player.antiques.items(): result.antique_names.append(item.display_name)
 	for id in world.player.relics.inventory.ids(): result.relic_names.append(world.player.relics.inventory.get_effect(id).definition.display_name)
 	complete_screen = RunCompleteScreen.new()
 	complete_screen.result = result

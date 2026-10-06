@@ -27,6 +27,7 @@ var difficulty: EncounterDifficulty = EncounterDifficulty.from_depth(0)
 var boss_definition: BossDefinition
 var boss_encounter: BossEncounter
 var final_floor: bool = false
+var antique_definition: AntiqueDefinition
 var doors: Dictionary[int, Door] = {}
 var _connected_sides: Array[int] = []
 var _wall_rects: Array[Rect2] = []
@@ -57,15 +58,17 @@ func enter() -> void:
 	_set_doors_open(false)
 	if room_state.status == RoomState.Status.CLEARED:
 		_set_doors_open(true)
+		_create_antique()
 		if room_type == RoomDefinition.Type.BOSS and boss_definition != null: _create_boss_exit()
 		return
 	if room_type not in [RoomDefinition.Type.COMBAT, RoomDefinition.Type.START, RoomDefinition.Type.BOSS, RoomDefinition.Type.ANTIQUE]:
 		push_error("This room type has no entry policy yet")
 		return
 	room_state.activate()
-	# START/ANTIQUE只复用布局；正式BOSS由数据场景装配，测试夹具可不注入Definition。
+	# START安全清场；ANTIQUE安全开门并放古董；正式BOSS由数据场景装配。
 	if room_type in [RoomDefinition.Type.START, RoomDefinition.Type.ANTIQUE]:
 		_on_all_defeated()
+		_create_antique()
 		return
 	if room_type == RoomDefinition.Type.BOSS and boss_definition != null:
 		if is_instance_valid(boss_encounter): return
@@ -86,6 +89,17 @@ func get_entry_position(side: int = -1) -> Vector2:
 	if side < 0:
 		return ROOM_RECT.get_center()
 	return _door_position(side) - Vector2.UP.rotated(side * PI * 0.5) * 64.0
+
+
+func _create_antique() -> void:
+	if room_type != RoomDefinition.Type.ANTIQUE or antique_definition == null or room_state.antique_claimed or has_node("AntiquePedestal"): return
+	var pedestal := AntiquePedestal.new()
+	pedestal.name = "AntiquePedestal"
+	pedestal.definition = antique_definition
+	pedestal.player = combat_target
+	pedestal.room_state = room_state
+	pedestal.position = RelicPedestal.safe_position(self)
+	add_child(pedestal)
 
 
 func discard_projectiles() -> void:

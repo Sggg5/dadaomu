@@ -14,6 +14,7 @@ var aim_direction: Vector2 = Vector2.RIGHT
 var invulnerability_remaining: float = 0.0
 var mouse_viewport_position: Vector2 = Vector2.ZERO
 var controls_enabled: bool = true
+var antiques: AntiqueInventory = AntiqueInventory.new()
 
 
 func _ready() -> void:

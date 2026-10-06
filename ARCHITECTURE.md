@@ -2,7 +2,7 @@
 
 ## 当前实现
 
-Godot 4.6.2 / GDScript / 2D / Compatibility。`project.godot` 启动 `scenes/main/dungeon_test.tscn`。DungeonSession 调用纯数据生成器，向 RoomController 注入 DungeonLayout，再复用现有玩家、战斗、Door、Room 和 RoomState。无Autoload或第三方插件；Phase6.5已增加两只正式Boss与通关结算，古董未实现。下文保留旧阶段架构记录，当前生命周期以Phase6.5章节为准。
+Godot 4.6.2 / GDScript / 2D / Compatibility。`project.godot` 启动 `scenes/main/dungeon_test.tscn`。DungeonSession 调用纯数据生成器，向 RoomController 注入 DungeonLayout，再复用现有玩家、战斗、Door、Room 和 RoomState。无Autoload或第三方插件；Phase6.5已增加两只正式Boss与通关结算，Phase7A已增加独立古董背包与安全房拾取，经济未实现。旧阶段记录保留，当前古董规则以Phase7A章节为准。
 
 ### Phase 3 数据与职责
 
@@ -246,3 +246,13 @@ TombGuardianBeast独立状态机，复用Enemy，不复制大帅尸AI。TombSpik
 Session.boss_for_floor(1/2)解析Boss，注入Controller；Controller再注入Room。Room.final_floor区分FloorExit与RunExit，首次Boss死亡明确boss_defeated信号→Controller→Session按floor去重计数；重访已清Boss只恢复对应出口，不重复计数。
 
 RunExit 64px内E→run_complete_requested→Session.request_run_complete验证第二层CLEARED且两Boss已击败。置run_completed/world.run_finished，停止Player/战斗/奖励，再构建RunResult只读快照，RunCompleteScreen只展示快照。Controller同时阻断过门与_spawn_projectile，防手动发射请求绕过Player控制冻结。R/N沿既有新Run路径释放旧界面、重置完成标记/HP/Build/Service/Boss计数。未加计时器、Campaign、存档或经济。
+
+## Phase 7A：古董与单Run背包
+
+AntiqueDefinition只读id/name/description/base_value/slots/rarity；AntiqueInventory是Player独立RefCounted，8格、定义数组、changed局部信号，完全不接RelicRuntime或Health/Weapon。Pool从(version,run_seed,floor_number,room_id)文本以乘131模2147483647稳定混合，独立RNG对稳定ID排序的池均匀选择。两层暂同概率，无额外权重或经济系统。
+
+Controller接收Session.run_seed，调用Pool选择并注入Room.antique_definition；Room的安全ANTIQUE进入/重访只装配AntiquePedestal，不生成敌人，不改变邻接或地图RNG。Pickup64px内E→Player.antiques.add成功→RoomState.antique_claimed=true→释放节点。满包不消耗底座；已领标记随Controller本层状态存活，不写Resource。未领重访重建相同底座，已丢弃不回补。
+
+Controller创建AntiqueInventoryPanel，注入Inventory与can_manage回调；Panel只是Tab/选择/Delete UI，不查Session，不暂停战斗。HUD底部局部订阅changed更新槽位/估值；死亡和完成隐藏Panel。库存只持定义，无Pickup/UI引用。
+
+RunCarryState增加antique_definitions，旧World/Panel释放、新Player加入新库存并更新新HUD；不搬节点。Session通关构建RunResult.antique_names/antique_value数值快照，结算独立ScrollContainer与固定R/N提示，不持Inventory或Resource。R/N仍整Run重建，HP/遗物与奖励规则不改。没有死亡掉落、钱包、永久货币或磁盘写入。

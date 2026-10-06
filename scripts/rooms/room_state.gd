@@ -7,6 +7,7 @@ signal changed(status: Status)
 enum Status { UNVISITED, ACTIVE, CLEARED }
 
 var status: Status = Status.UNVISITED
+var antique_claimed: bool = false
 
 
 func activate() -> bool:

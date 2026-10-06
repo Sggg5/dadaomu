@@ -7,6 +7,7 @@ signal restart_requested
 signal quit_requested
 signal new_seed_requested
 var boss_display: BossHealthDisplay
+var antique_label: Label
 
 @onready var damage_button: Button = $Root/DamageButton
 @onready var minimap: RoomMinimap = $Root/Minimap
@@ -15,6 +16,11 @@ var boss_display: BossHealthDisplay
 func _ready() -> void:
 	boss_display = BossHealthDisplay.new()
 	$Root.add_child(boss_display)
+	antique_label = Label.new()
+	antique_label.position = Vector2(580,690)
+	antique_label.add_theme_font_size_override("font_size",14)
+	antique_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	$Root.add_child(antique_label)
 	var depth_label := Label.new()
 	depth_label.name = "EncounterDepth"
 	depth_label.position = Vector2(660, 108)
@@ -32,9 +38,13 @@ func show_hp(current_hp: float, max_hp: float) -> void:
 	$Root/HP.modulate = Color("ff8277") if current_hp <= max_hp * 0.25 else Color.WHITE
 
 
+func show_antiques(inventory: AntiqueInventory) -> void:
+	antique_label.text = "古董：%d / %d格  估值：%s  [Tab]背包" % [inventory.used_slots(),inventory.capacity,AntiqueDefinition.money(inventory.total_value())]
+
+
 func show_room(room: DungeonRoom, state: RoomState, remaining: int) -> void:
 	$Root/EncounterDepth.text = "深度：%d · 威胁：Tier %d" % [room.distance_from_start, EncounterDifficulty.from_depth(room.distance_from_start).tier]
-	var type_label: String = ["战斗", "古董占位", "商人", "机关", "秘密", "Boss房", "出生房"][room.room_type]
+	var type_label: String = ["战斗", "古董房", "商人", "机关", "秘密", "Boss房", "出生房"][room.room_type]
 	$Root/RoomInfo.text = "%s · %s  |  %s" % [room.definition.title, type_label, state.get_label()]
 	$Root/RoomInfo.tooltip_text = str(room.room_id)
 	$Root/Enemies.text = "存活敌人 %d" % remaining

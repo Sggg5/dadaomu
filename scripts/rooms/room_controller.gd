@@ -12,6 +12,8 @@ signal boss_defeated
 
 const ROOM_SCENE: PackedScene = preload("res://scenes/rooms/room.tscn")
 const PROJECTILE_SCENE: PackedScene = preload("res://scenes/player/projectile.tscn")
+const ANTIQUE_POOL: AntiquePool = preload("res://data/antiques/formal_pool.tres")
+var run_seed: int
 var layout: DungeonLayout
 var rewards: RelicRewardService
 var floor_number: int = 1
@@ -19,6 +21,7 @@ var floor_offset: int = 0
 var boss_definition: BossDefinition
 var final_floor: bool = false
 var run_finished: bool = false
+var antique_panel: AntiqueInventoryPanel
 
 @onready var player: Player = $Player
 @onready var hud: RoomTestHUD = $HUD
@@ -37,6 +40,12 @@ func _ready() -> void:
 		states[room_id] = RoomState.new()
 	player.weapon.attack_requested.connect(_spawn_projectile)
 	player.health.changed.connect(hud.show_hp)
+	player.antiques.changed.connect(func() -> void: hud.show_antiques(player.antiques))
+	hud.show_antiques(player.antiques)
+	antique_panel = AntiqueInventoryPanel.new()
+	antique_panel.inventory = player.antiques
+	antique_panel.can_manage = func() -> bool: return not run_finished and player.controls_enabled and not player.health.is_dead
+	add_child(antique_panel)
 	player.died.connect(_on_player_died)
 	if rewards != null:
 		room_cleared.connect(rewards.on_room_cleared)
@@ -114,6 +123,7 @@ func _switch_room(target_id: StringName, entry_side: int) -> void:
 	for side in node.neighbors:
 		sides.append(side)
 	current_room.boss_definition = boss_definition
+	if node.room_type == RoomDefinition.Type.ANTIQUE: current_room.antique_definition = ANTIQUE_POOL.pick(run_seed,floor_number,target_id)
 	current_room.final_floor = final_floor
 	current_room.boss_defeated.connect(func() -> void: boss_defeated.emit())
 	current_room.run_complete_requested.connect(func() -> void: run_complete_requested.emit())
@@ -154,6 +164,7 @@ func _refresh_hud() -> void:
 
 
 func _on_player_died() -> void:
+	antique_panel.panel.hide()
 	player.set_controls_enabled(false)
 	current_room.stop_combat()
 	hud.hide_boss()

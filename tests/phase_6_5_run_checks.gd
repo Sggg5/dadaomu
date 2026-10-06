@@ -11,6 +11,7 @@ func run() -> void:
 	var driver = preload("res://tests/phase_5b_run_checks.gd").new(test)
 	var original := session.world.layout.signature()
 	var run_seed := session.run_seed
+	await prepare_first_floor(driver)
 	for id in session.world.layout.rooms:
 		if session.world.layout.rooms[id].room_type == RoomDefinition.Type.COMBAT:
 			await driver.visit(id)
@@ -30,6 +31,7 @@ func run() -> void:
 	await test.walk(session.world.layout.rooms[session.world.current_id].neighbors.keys()[0])
 	await driver.fight()
 	test.check(session.rewards.combat_clears == 7 and driver.picked.size() == 3, "Normal floor2 seventh clear/E grants third formal relic")
+	await prepare_second_floor(driver)
 	await driver.visit(session.world.layout.boss_id)
 	var beast_driver = preload("res://tests/beast_fight_driver.gd").new(test)
 	await beast_driver.run()
@@ -53,6 +55,7 @@ func run() -> void:
 	test.check(result.relic_names.size() == ids.size() and result.relic_names.size() == 3 and result.bosses_defeated == 2 and result.combat_clears == session.rewards.combat_clears, "RunResult snapshots three earned relic names/combat/Boss statistics")
 	test.check(screen.label.text.contains(str(run_seed)) and screen.label.text.contains("清理墓层：2") and screen.label.text.contains("剩余生命：%.1f / 80" % hp) and screen.label.text.contains("Boss击败：2") and screen.label.text.contains("普通战斗房清理：%d" % result.combat_clears), "Complete screen shows correct Seed/floors/HP/Bosses/combat counts")
 	for name in result.relic_names: test.check(screen.label.text.contains(name), "Complete screen shows earned relic " + name)
+	verify_result(result)
 	test.capture("run_complete")
 	Input.action_press("attack")
 	await test.frames(6)
@@ -75,3 +78,12 @@ func run() -> void:
 	await test.reset(KEY_N)
 	test.check(not is_instance_valid(fixture_screen) and not session.run_completed and session.floor_number == 1 and session.run_seed != run_seed and session.world.player.health.current_hp == 80 and session.world.player.relics.inventory.ids().is_empty() and session.bosses_defeated == 0, "N from complete starts fresh Seed/floor1/empty Build and frees screen")
 	completed = true
+
+
+func prepare_first_floor(_driver: RefCounted) -> void: pass
+
+
+func prepare_second_floor(_driver: RefCounted) -> void: pass
+
+
+func verify_result(_result: RunResult) -> void: pass
