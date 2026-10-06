@@ -1,21 +1,14 @@
 class_name RoomController
 extends Node2D
-## 固定地图装配与切换。持有唯一玩家、五个状态及当前房间，不负责局部清场判定。
+## 消费注入的 DungeonLayout，持有唯一玩家和各房状态，不负责生成算法。
 ## 门请求后立即冻结输入，再延迟卸载房间，避免在物理查询中删除碰撞体。
 
 signal room_changed(room_id: StringName)
+signal restart_requested
 
 const ROOM_SCENE: PackedScene = preload("res://scenes/rooms/room.tscn")
 const PROJECTILE_SCENE: PackedScene = preload("res://scenes/player/projectile.tscn")
-const CONNECTIONS: Dictionary = {
-	&"center": {Door.Direction.NORTH: &"north", Door.Direction.EAST: &"east", Door.Direction.SOUTH: &"south", Door.Direction.WEST: &"west"},
-	&"north": {Door.Direction.SOUTH: &"center"},
-	&"east": {Door.Direction.WEST: &"center"},
-	&"south": {Door.Direction.NORTH: &"center"},
-	&"west": {Door.Direction.EAST: &"center"},
-}
-
-@export var definitions: Array[RoomDefinition] = []
+var layout: DungeonLayout
 
 @onready var player: Player = $Player
 @onready var hud: RoomTestHUD = $HUD
@@ -24,18 +17,14 @@ var states: Dictionary[StringName, RoomState] = {}
 var current_room: Room
 var current_id: StringName
 var transitioning: bool = false
-var _definitions_by_id: Dictionary[StringName, RoomDefinition] = {}
 var _restarting: bool = false
 
 
 func _ready() -> void:
-	for definition in definitions:
-		assert(definition != null and definition.room_type == RoomDefinition.Type.COMBAT, "Only combat room definitions are supported")
-		assert(CONNECTIONS.has(definition.room_id) and not _definitions_by_id.has(definition.room_id), "Room IDs must match fixed map and be unique")
-		assert(definition.enemy_scene != null, "Room requires enemy scene")
-		_definitions_by_id[definition.room_id] = definition
-		states[definition.room_id] = RoomState.new()
-	assert(states.size() == CONNECTIONS.size(), "Fixed map requires five room definitions")
+	assert(layout != null and layout.rooms.has(layout.start_id), "Inject a DungeonLayout before adding RoomController")
+	for room_id in layout.rooms:
+		assert(layout.rooms[room_id].definition != null)
+		states[room_id] = RoomState.new()
 	player.weapon.attack_requested.connect(_spawn_projectile)
 	player.health.changed.connect(hud.show_hp)
 	player.died.connect(_on_player_died)
@@ -43,8 +32,8 @@ func _ready() -> void:
 	hud.restart_requested.connect(restart)
 	hud.quit_requested.connect(_quit)
 	hud.show_hp(player.health.current_hp, player.health.max_hp)
-	_switch_room(&"center", -1)
-	print("[大盗墓时代] Phase 2 fixed five-room test ready")
+	_switch_room(layout.start_id, -1)
+	print("[大盗墓时代] Dungeon ready: Seed %d, %d rooms" % [layout.seed_value, layout.rooms.size()])
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -66,7 +55,11 @@ func restart() -> void:
 		return
 	_restarting = true
 	player.set_controls_enabled(false)
-	get_tree().call_deferred("reload_current_scene")
+	if restart_requested.has_connections():
+		restart_requested.emit()
+	else:
+		# 独立回归夹具重新注入固定图，生产入口由 Session 接管。
+		get_tree().call_deferred("reload_current_scene")
 
 
 func _quit() -> void:
@@ -78,7 +71,7 @@ func request_traversal(side: int) -> bool:
 		return false
 	if current_room.room_state.status != RoomState.Status.CLEARED:
 		return false
-	var neighbors: Dictionary = CONNECTIONS[current_id]
+	var neighbors: Dictionary[int, StringName] = layout.rooms[current_id].neighbors
 	if not neighbors.has(side) or not current_room.doors[side].is_open:
 		return false
 	transitioning = true
@@ -98,9 +91,10 @@ func _switch_room(target_id: StringName, entry_side: int) -> void:
 	current_id = target_id
 	current_room = ROOM_SCENE.instantiate() as Room
 	var sides: Array[int] = []
-	for side in CONNECTIONS[target_id]:
+	var node := layout.rooms[target_id]
+	for side in node.neighbors:
 		sides.append(side)
-	current_room.configure(_definitions_by_id[target_id], states[target_id], sides)
+	current_room.configure(node.definition, states[target_id], sides, node.room_type)
 	current_room.traversal_requested.connect(request_traversal)
 	current_room.state_changed.connect(func(_status: RoomState.Status) -> void: _refresh_hud())
 	current_room.enemy_count_changed.connect(func(_count: int) -> void: _refresh_hud())
@@ -123,8 +117,8 @@ func _spawn_projectile(request: AttackRequest) -> void:
 
 
 func _refresh_hud() -> void:
-	hud.show_room(current_room.definition, current_room.room_state, current_room.enemy_spawner.get_remaining())
-	hud.show_map(definitions, states, current_id)
+	hud.show_room(layout.rooms[current_id], current_room.room_state, current_room.enemy_spawner.get_remaining())
+	hud.show_map(layout, states, current_id)
 
 
 func _on_player_died() -> void:

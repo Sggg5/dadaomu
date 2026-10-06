@@ -3,9 +3,9 @@ config_version=5
 
 [application]
 config/name="大盗墓时代"
-run/main_scene="res://scenes/main/room_test.tscn"
+run/main_scene="res://scenes/main/dungeon_test.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/description="原创盗墓主题 2D 房间式 Roguelite — Phase 2 固定五房测试"
+config/description="原创盗墓主题 2D 房间式 Roguelite — Phase 3 Seed 随机地宫"
 
 [display]
 window/size/viewport_width=1280
@@ -46,6 +46,10 @@ restart={
 quit={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"physical_keycode":4194305)]
+}
+new_dungeon={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"physical_keycode":78)]
 }
 
 [layer_names]

@@ -1,9 +1,10 @@
 class_name RoomDefinition
 extends Resource
 ## 房间只读内容。五个测试资源复用同一场景和行为，只改变布局与生成数据。
-## 非战斗类型仅预留标识；相应内容与规则未在 Phase 2 实现。
+## room_id 是历史命名的模板 ID；map_position 仅用于旧测试夹具。
+## 随机图的位置、身份与类型属于 DungeonRoom，不从这些模板元数据读取。
 
-enum Type { COMBAT, ANTIQUE, MERCHANT, TRAP, SECRET, BOSS }
+enum Type { COMBAT, ANTIQUE, MERCHANT, TRAP, SECRET, BOSS, START }
 
 @export var room_id: StringName
 @export var title: String

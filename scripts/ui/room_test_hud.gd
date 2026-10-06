@@ -5,6 +5,7 @@ extends CanvasLayer
 signal damage_requested
 signal restart_requested
 signal quit_requested
+signal new_seed_requested
 
 @onready var damage_button: Button = $Root/DamageButton
 @onready var minimap: RoomMinimap = $Root/Minimap
@@ -14,6 +15,7 @@ func _ready() -> void:
 	damage_button.pressed.connect(func() -> void: damage_requested.emit())
 	$Root/RestartButton.pressed.connect(func() -> void: restart_requested.emit())
 	$Root/QuitButton.pressed.connect(func() -> void: quit_requested.emit())
+	$Root/NewSeedButton.pressed.connect(func() -> void: new_seed_requested.emit())
 
 
 func show_hp(current_hp: float, max_hp: float) -> void:
@@ -21,22 +23,26 @@ func show_hp(current_hp: float, max_hp: float) -> void:
 	$Root/HP.modulate = Color("ff8277") if current_hp <= max_hp * 0.25 else Color.WHITE
 
 
-func show_room(definition: RoomDefinition, state: RoomState, remaining: int) -> void:
-	$Root/RoomInfo.text = "%s  |  %s" % [definition.title, state.get_label()]
+func show_room(room: DungeonRoom, state: RoomState, remaining: int) -> void:
+	var type_label: String = ["战斗", "古董占位", "商人", "机关", "秘密", "Boss占位", "出生房"][room.room_type]
+	$Root/RoomInfo.text = "%s · %s  |  %s" % [room.definition.title, type_label, state.get_label()]
+	$Root/RoomInfo.tooltip_text = str(room.room_id)
 	$Root/Enemies.text = "存活敌人 %d" % remaining
 
 
-func show_map(definitions: Array[RoomDefinition], states: Dictionary[StringName, RoomState], current_id: StringName) -> void:
-	minimap.update_map(definitions, states, current_id)
+func show_map(layout: DungeonLayout, states: Dictionary[StringName, RoomState], current_id: StringName) -> void:
+	minimap.update_map(layout, states, current_id)
+	$Root/Seed.text = "Seed: %d" % layout.seed_value
 	var cleared_count: int = 0
 	for state in states.values():
 		if state.status == RoomState.Status.CLEARED:
 			cleared_count += 1
 	$Root/Progress.text = "已清场 %d / %d  ·  走入绿色门切换房间" % [cleared_count, states.size()]
 	if cleared_count == states.size():
-		$Root/Progress.text = "五间房已全部清场  ·  可自由重访，按 R 重新测试"
+		$Root/Progress.text = "全图已清场  ·  可自由重访，R 同图重开 / N 新地宫"
 
 
 func show_death() -> void:
-	$Root/Death.text = "你已倒下\n按 R 重新开始五房测试"
+	$Root/Death.text = "你已倒下\nR 同 Seed 重开 / N 新地宫"
+	$Root/Progress.text = "本次测试结束 · 重开会重置所有房间状态"
 	damage_button.disabled = true

@@ -17,14 +17,16 @@ const WALL_THICKNESS: float = 16.0
 @onready var projectiles: Node2D = $Projectiles
 
 var room_state: RoomState
+var room_type: RoomDefinition.Type = RoomDefinition.Type.COMBAT
 var doors: Dictionary[int, Door] = {}
 var _connected_sides: Array[int] = []
 var _wall_rects: Array[Rect2] = []
 
 
-func configure(data: RoomDefinition, state: RoomState, connected_sides: Array[int]) -> void:
+func configure(data: RoomDefinition, state: RoomState, connected_sides: Array[int], type: RoomDefinition.Type = RoomDefinition.Type.COMBAT) -> void:
 	definition = data
 	room_state = state
+	room_type = type
 	_connected_sides = connected_sides.duplicate()
 
 
@@ -41,10 +43,14 @@ func enter() -> void:
 	if room_state.status == RoomState.Status.CLEARED:
 		_set_doors_open(true)
 		return
-	if definition.room_type != RoomDefinition.Type.COMBAT:
-		push_error("Phase 2 only implements ordinary combat rooms")
+	if room_type not in [RoomDefinition.Type.COMBAT, RoomDefinition.Type.START, RoomDefinition.Type.BOSS, RoomDefinition.Type.ANTIQUE]:
+		push_error("This room type has no entry policy yet")
 		return
 	room_state.activate()
+	# Phase 3 占位：古董内容留给 Phase 6；Boss 使用普通 Dummy 留给 Phase 7。
+	if room_type == RoomDefinition.Type.ANTIQUE:
+		_on_all_defeated()
+		return
 	enemy_spawner.spawn(definition)
 
 

@@ -20,7 +20,7 @@ offset_left = 64.0
 offset_top = 20.0
 theme_override_colors/font_color = Color(0.86, 0.72, 0.43, 1)
 theme_override_font_sizes/font_size = 26
-text = "大盗墓时代 · Phase 2 房间测试"
+text = "大盗墓时代 · Phase 3 随机地宫"
 mouse_filter = 2
 
 [node name="HP" type="Label" parent="Root"]
@@ -32,25 +32,25 @@ mouse_filter = 2
 [node name="RoomInfo" type="Label" parent="Root"]
 offset_left = 285.0
 offset_top = 64.0
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 18
 mouse_filter = 2
 
 [node name="Enemies" type="Label" parent="Root"]
-offset_left = 800.0
+offset_left = 835.0
 offset_top = 64.0
 theme_override_font_sizes/font_size = 20
 mouse_filter = 2
 
 [node name="Progress" type="Label" parent="Root"]
-offset_left = 64.0
+offset_left = 340.0
 offset_top = 106.0
 mouse_filter = 2
 
 [node name="Minimap" type="Control" parent="Root"]
-offset_left = 1070.0
+offset_left = 988.0
 offset_top = 8.0
 offset_right = 1216.0
-offset_bottom = 124.0
+offset_bottom = 132.0
 mouse_filter = 2
 script = ExtResource("2")
 
@@ -64,7 +64,7 @@ mouse_filter = 2
 offset_left = 64.0
 offset_top = 688.0
 theme_override_font_sizes/font_size = 12
-text = "小地图：灰色未探索 / 橙色战斗中 / 绿色已清场 / 金框当前位置"
+text = "地图：暗色未访 / 绿色已访 / 金框当前 · S 出生 / B Boss占位 / A 古董占位"
 mouse_filter = 2
 
 [node name="Death" type="Label" parent="Root"]
@@ -81,23 +81,36 @@ mouse_filter = 2
 [node name="DamageButton" type="Button" parent="Root"]
 offset_left = 600.0
 offset_top = 635.0
-offset_right = 840.0
+offset_right = 810.0
 offset_bottom = 683.0
 text = "测试伤害 -25 HP [F1]"
 focus_mode = 0
 
 [node name="RestartButton" type="Button" parent="Root"]
-offset_left = 856.0
+offset_left = 826.0
 offset_top = 635.0
-offset_right = 1056.0
+offset_right = 990.0
 offset_bottom = 683.0
-text = "重新开始 [R]"
+text = "同图重开 [R]"
 focus_mode = 0
 
 [node name="QuitButton" type="Button" parent="Root"]
-offset_left = 1072.0
+offset_left = 1126.0
 offset_top = 635.0
 offset_right = 1216.0
 offset_bottom = 683.0
-text = "退出 [Esc]"
+text = "退出"
+focus_mode = 0
+
+[node name="Seed" type="Label" parent="Root"]
+offset_left = 64.0
+offset_top = 106.0
+mouse_filter = 2
+
+[node name="NewSeedButton" type="Button" parent="Root"]
+offset_left = 1006.0
+offset_top = 635.0
+offset_right = 1110.0
+offset_bottom = 683.0
+text = "新图 [N]"
 focus_mode = 0

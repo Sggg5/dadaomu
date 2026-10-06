@@ -2,16 +2,57 @@
 
 ## 当前实现
 
-Godot 4.6.2 / GDScript / 2D / Compatibility。`project.godot` 启动 `scenes/main/room_test.tscn`，由 RoomController 装配固定十字形地图与唯一玩家。没有 Autoload、第三方插件、随机地图或敌人 AI。Phase 0/1 的独立入口保留供历史与回归检查。
+Godot 4.6.2 / GDScript / 2D / Compatibility。`project.godot` 启动 `scenes/main/dungeon_test.tscn`。DungeonSession 调用纯数据生成器，向 RoomController 注入 DungeonLayout，再复用现有玩家、战斗、Door、Room 和 RoomState。没有 Autoload、第三方插件、真实敌人 AI、古董或 Boss 内容。
+
+### Phase 3 数据与职责
+
+| 模块 | 持有内容 | 职责 |
+| --- | --- | --- |
+| DungeonConfig / Resource | 8～12 房数范围、深度阈值、五份模板池 | 只读参数与有限约束校验 |
+| DungeonGenerator / RefCounted | 每次调用的独立 RNG | 根据 Seed 和配置构造拓扑、类型、距离与模板引用；不创建节点 |
+| DungeonLayout / RefCounted | Seed、节点字典、坐标索引、特殊房 ID、生成版本 | 一次纯结果；稳定完整签名与按坐标的空间签名 |
+| DungeonRoom / RefCounted | 稳定 ID、Vector2i 坐标、类型、邻接、距离、模板引用 | 地图身份，和视觉模板、运行状态分离 |
+| DungeonSession / Node2D | 当前 Seed、生成配置、独立新 Seed RNG、当前控制器 | 开发期启动、R/N 和场景装配，不是 Phase 8 单局 Run 系统 |
+| RoomController | 注入布局、RoomState、唯一 Player、当前 Room | 只读拓扑，调度已有房间生命周期；没有生成算法或固定连接表 |
+
+调用方向：Session → Generator.generate(seed, config) → Layout → Controller → Room / Door / EnemySpawner。HUD 读取 Layout 和 RoomState，不决定拓扑。
+
+### 生成规则与终止
+
+START ID 为 `START`，坐标 (0,0)，其余 ID 为按创建序号分配的 `ROOM_001` 等。先用局部 RNG 选择 8～12 的目标数量，再选择两个正交方向，构造至少 5 步的随机单调主路径；单调性保证不会自撞或形成环。
+
+剩余节点从稳定顺序的合法边候选中随机选取。新格必须为空，且恰好邻接一个已有格；连接只在 NORTH/EAST/SOUTH/WEST 中建立，立即写入双向邻接。有限目标计数控制所有扩展，没有无限重试。有限坐标集的边界始终存在可扩展候选，异常仍返回明确失败。
+
+树的父子距离就是最短路径距离；最远叶子标记 BOSS（至少 5 步，一扇门），排除 START/BOSS 后从至少 2 步的节点选择一个 ANTIQUE。其余为 COMBAT。节点全部共用原有五份模板池，不为每个地图节点创建 `.tres`。
+
+### Seed 与复现
+
+生成器不读取时钟/场景树/全局 RNG，仅使用本次 `RandomNumberGenerator.seed`。遍历候选和分配模板时显式按字符串 ID 排序；不能以 StringName 的默认比较顺序作为跨进程契约。完整签名包含 ID、坐标、类型、距离、连接、模板 ID/路径，空间签名忽略创建顺序和模板，仅比较位置/类型/连边。
+
+同 Seed + 同配置 + 同模板顺序 + 同生成版本 + 同引擎版本重现完整结果。当前生成版本 1，验证引擎 4.6.2；没有承诺跨 Godot RNG 版本或算法升级后仍保持旧图。
+
+Session 的 R 用当前 Seed 重新生成并替换控制器；N 使用独立随机来源最多选 16 个不同 Seed，比较空间签名找实际不同地图，失败保留原图并警告。新 Seed 不写存档。命令行 `-- --seed=192034` 可复现，HUD 始终显示实际 Seed。
+
+### 模板与占位类型
+
+RoomDefinition 的历史 `room_id` 是模板标识；`map_position` 只在 Phase 2 旧回归夹具读取，随机系统不读它。DungeonRoom 的类型、坐标和 ID 才是地图语义。Type 枚举在末尾增加 START，保留已有类型序号。
+
+Controller 将模板、运行状态、已连接方向和实际节点类型注入 Room.configure。Room 原有普通战斗生命周期不重写；仅增加占位进入规则：START/BOSS 使用普通敌人，ANTIQUE 经 ACTIVE → CLEARED 自动开门。没有古董奖励/背包（Phase 6），没有 Boss 战斗（Phase 7）；MERCHANT/TRAP/SECRET 尚无规则。
+
+### 小地图与回归夹具
+
+RoomMinimap 从 Layout 坐标包围盒计算缩放/居中，只绘制实际邻接边。未访问暗色、已访问绿色、当前房金框；S/B/A 标记特殊房。没有固定十字或五房数量假设。
+
+Phase 2 十字图只在 `tests/fixtures/fixed_room_test.gd/.tscn` 内生成并注入同一个 Controller；原 204 个断言保留，仅替换夹具/数据读取入口。生产 Controller 中不保留固定图兼容分支。
 
 ### Phase 2 组件与状态
 
-- `RoomDefinition` Resource：稳定 ID、房间名称、类型、地图坐标、地面颜色、敌人场景、生成点与障碍矩形。五份 `.tres` 共用 `room.tscn`，不复制房间逻辑。
+- `RoomDefinition` Resource：模板 ID、房间名称、地面颜色、敌人场景、生成点与障碍矩形。五份 `.tres` 共用 `room.tscn`，不复制房间逻辑；拓扑坐标和实际类型在 Phase 3 移到 DungeonRoom。
 - `RoomState` RefCounted：每局每房间独立的 UNVISITED → ACTIVE → CLEARED 状态，重复激活/清场无效；已清场状态不可倒退。
 - `Room`：按定义创建墙、障碍和已连接方向的 Door；首次进入先锁门再生成；接收 all_defeated 后清场并开门。清场重访只重建布局与打开门。
 - `EnemySpawner`：生成一次，按 Health.died 和实例 ID 管理存活集合；只把死亡作为击杀，卸载节点不算清场。使用已有 Dummy 作为测试敌人，没有 AI。
 - `Door`：World 层阻挡与只检测玩家的 Area2D；持续观察区域，玩家跨过门槛才发出方向请求。即使清场时已经站在门边，继续移动也能过门；单纯开门不会自动传送。
-- `RoomController`：持有固定邻接表、五个状态、唯一玩家及当前 Room；验证清场/相邻/死亡/切换条件，冻结输入后延迟替换房间。
+- `RoomController`：持有布局、各房状态、唯一玩家及当前 Room；验证清场/相邻/死亡/切换条件，冻结输入后延迟替换房间。固定拓扑在 Phase 3 已移出生产代码。
 - `RoomTestHUD` / `RoomMinimap`：只展示房间、存活数、清场进度与状态，不改战斗状态；按钮发出操作请求。
 
 门的方向为 Door.Direction.NORTH/EAST/SOUTH/WEST，回房入口取相反方向。没有相邻房间的一侧是整面墙。门的形状禁用采用 set_deferred，避免在物理查询/死亡回调中修改形状。
@@ -25,11 +66,11 @@ RoomController
 
 玩家始终挂在 RoomController 下，不随 Room 卸载，也不在切换时重新实例化。生命、初始属性、无敌期和武器冷却保留；位置更新到目标房间入口内侧 64 像素，速度归零，防止立刻触发回门。`Player.set_controls_enabled()` 用于短暂冻结及死亡停用。
 
-切换前原 Room 停止处理并离开场景树，再 queue_free；敌人与弹丸一起释放。当前场景树只保留一个 Room。RoomState 由控制器保留，所以重访 CLEARED 不重新生成敌人。死亡阻止过门和射击并回收当前弹丸；R 重载整张地图，全部运行状态重建。
+切换前原 Room 停止处理并离开场景树，再 queue_free；敌人与弹丸一起释放。当前场景树只保留一个 Room。RoomState 由控制器保留，所以重访 CLEARED 不重新生成敌人。死亡阻止过门和射击并回收当前弹丸；R/N 由 Session 重建控制器、玩家与运行状态。独立 Phase 2 夹具的 R 仍通过重载自身场景注入固定图。
 
 ### 房间类型扩展（规划）
 
-RoomDefinition.Type 预留 COMBAT、ANTIQUE、MERCHANT、TRAP、SECRET、BOSS；只有 COMBAT 有实现。其他类型需要对应进入/完成策略和内容，不能仅改枚举就使用。局部生命周期位于 Room，地图相邻关系位于 RoomController，后续可分别扩展而无需在每个房间复制脚本。
+真正内容仅有 COMBAT 原型；Phase 3 START/BOSS/ANTIQUE 的占位策略如上。其他类型仍需对应内容和规则。局部生命周期位于 Room，邻接数据位于 Layout，切换位于 Controller，可分别扩展而无需每房复制脚本。
 
 ### Phase 1 组件
 
@@ -64,8 +105,8 @@ RoomDefinition.Type 预留 COMBAT、ANTIQUE、MERCHANT、TRAP、SECRET、BOSS；
 | --- | --- | --- |
 | Main / 场景路由 | 当前地面或单局场景 | 创建、销毁场景，不处理攻击或背包细节 |
 | RunController | 本局种子、层数、状态、临时收益 | 调度地宫，发出结算事件 |
-| DungeonGenerator | 房间图与模板选择 | 输入种子和配置，输出纯拓扑数据，不创建玩家 |
-| RoomController | 地图连接、房间状态、当前 Room、唯一玩家 | 调度房间切换；Phase 2 已有固定地图实现 |
+| DungeonGenerator / Layout | 房间图与模板选择 | Phase 3 已实现纯结果，不创建玩家 |
+| RoomController | 注入布局、房间状态、当前 Room、唯一玩家 | 调度房间切换，Phase 3 已消除固定拓扑依赖 |
 | Room / EnemySpawner | 门、布局、本房间敌人与弹丸、存活数 | 局部生成与清场，发出过门请求；Phase 2 已实现 |
 | Player / Enemy | 移动、攻击控制 | 组合 Health、攻击器等小组件 |
 | Combat 组件 | 伤害包、生命、命中与弹丸 | 显式伤害接口和局部信号，不依赖 UI 或经济 |
@@ -85,7 +126,7 @@ RoomDefinition.Type 预留 COMBAT、ANTIQUE、MERCHANT、TRAP、SECRET、BOSS；
 
 ## 生命周期与确定性
 
-Phase 2 的所有权已在上文落实。后续 Run 拥有本局高层状态，RoomController 管理地图局部切换；禁止把玩家同时交给 Room 与 Run 重复创建。结算通过显式状态转换防止重复发放收益。Phase 3 才引入独立 RandomNumberGenerator；地图和战斗随机源分离，方便复现问题。
+房间所有权已在上文落实；后续 Run 才拥有结算等高层状态，不能把玩家交给 Room 重复创建。Phase 3 地图 RNG 与选择新 Seed 的 RNG 均独立；将来战斗随机源也必须独立，不能因射击/掉落改变同 Seed 地图。
 
 ## 工程约定
 

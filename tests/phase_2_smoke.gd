@@ -3,7 +3,8 @@ extends SceneTree
 ## godot --headless --path . --script res://tests/phase_2_smoke.gd
 ## 图形模式加 -- --capture 会保存各房间与清场/死亡截图。
 
-const MAP_SCENE: PackedScene = preload("res://scenes/main/room_test.tscn")
+const MAP_SCENE: PackedScene = preload("res://tests/fixtures/fixed_room_test.tscn")
+const FIXTURE = preload("res://tests/fixtures/fixed_room_test.gd")
 const MOVE_ACTIONS: Array[StringName] = [&"move_up", &"move_right", &"move_down", &"move_left"]
 
 var world: RoomController
@@ -110,14 +111,14 @@ func _walk_through(side: int, target_id: StringName, use_existing_position: bool
 
 
 func _validate_content() -> void:
-	for definition in world.definitions:
+	for definition in FIXTURE.TEMPLATES:
 		var valid: bool = true
 		for position in definition.enemy_positions:
 			var bounds := Rect2(position - Vector2(20, 20), Vector2(40, 40))
 			valid = valid and Room.ROOM_RECT.encloses(bounds)
 			for obstacle in definition.obstacles:
 				valid = valid and not obstacle.intersects(bounds)
-		for side in RoomController.CONNECTIONS[definition.room_id]:
+		for side in world.layout.rooms[definition.room_id].neighbors:
 			var entry := world.current_room.get_entry_position(side)
 			var bounds := Rect2(entry - Vector2(16, 16), Vector2(32, 32))
 			for obstacle in definition.obstacles:
@@ -165,7 +166,7 @@ func _run() -> void:
 	_check(world.current_room.room_state.status == RoomState.Status.CLEARED and not world.current_room.enemy_spawner.started and _all_doors_open(true), "Revisited center stays cleared without spawning")
 
 	for side in [Door.Direction.WEST, Door.Direction.EAST, Door.Direction.SOUTH]:
-		var destination: StringName = RoomController.CONNECTIONS[&"center"][side]
+		var destination: StringName = world.layout.rooms[&"center"].neighbors[side]
 		await _walk_through(side, destination)
 		_check(world.current_room.doors.size() == 1, "%s only has its connected return door" % destination)
 		await _clear_current_room()
@@ -182,7 +183,7 @@ func _run() -> void:
 	_check(world.current_id == &"north" and world.current_room.enemy_spawner.get_child_count() == 0, "Cleared leaf revisit does not respawn")
 	await _walk_through(Door.Direction.SOUTH, &"center")
 
-	var empty_data := world.definitions[0].duplicate() as RoomDefinition
+	var empty_data := FIXTURE.TEMPLATES[0].duplicate() as RoomDefinition
 	empty_data.enemy_positions = PackedVector2Array()
 	var empty := RoomController.ROOM_SCENE.instantiate() as Room
 	var empty_state := RoomState.new()
@@ -192,7 +193,7 @@ func _run() -> void:
 	empty.enter()
 	await _frames(2)
 	_check(empty_state.status == RoomState.Status.CLEARED, "Zero-enemy combat room clears without deadlock")
-	_check(world.definitions[0].enemy_positions.size() == 3, "Runtime changes do not mutate shared definition")
+	_check(FIXTURE.TEMPLATES[0].enemy_positions.size() == 3, "Runtime changes do not mutate shared definition")
 	empty.queue_free()
 	await _frames(2)
 

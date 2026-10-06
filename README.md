@@ -4,17 +4,11 @@
 
 ## 当前状态
 
-已完成 **Phase 2 房间系统**。默认启动固定十字形五房地图：首次进入锁门并生成敌人，击杀全部敌人后开门，走入门口切换相邻房间；已清场房间重访不刷怪。玩家生命跨房间保留，R 重开整张测试地图。Phase 3 尚未开始。
+已完成 **Phase 3 随机地宫系统**。默认 Seed 为 `192034`，每图 8～12 个房间，独立 RNG 可重现正交树状布局。START 固定在 (0,0)，Boss 是距离至少 5 的最远叶子，ANTIQUE 距离至少 2。
 
-```text
-          石柱厅
-             |
-横廊 —— 前室 —— 侧殿
-             |
-          沉沙室
-```
+随机节点决定位置/连接/类型，五份原有普通房配置作为共享模板池。玩家、战斗、门和房间生命周期继续复用：首次进入锁门，击杀后开门，过门保留生命，重访已清场房不刷怪。
 
-五房分别配置不同敌人生成点、数量（3/4/2/4/5）、石柱/障碍布局与地面颜色，均复用同一 Room 场景和控制逻辑。敌人仍为 Phase 1 的无攻击 Dummy，真正敌人 AI 留在 Phase 4。
+START 和 BOSS 使用普通 Dummy 战斗占位；ANTIQUE 自动清场，没有古董内容（Phase 6）或 Boss 战斗（Phase 7）。敌人 AI 属于 Phase 4，尚未开始。
 
 ## 开发环境与运行
 
@@ -24,7 +18,8 @@
 - WASD 移动，鼠标瞄准，按住鼠标左键连续射击。
 - F1 或“测试伤害”按钮造成 25 点伤害；受伤后有 0.35 秒无敌期。默认 100 HP，间隔受伤四次死亡。
 - 清场后走入绿色门过房；橙色门锁定。小地图显示未探索、战斗中、已清场和当前位置。
-- R 或“重新开始”按钮重置玩家、所有房间状态、敌人和弹丸；Esc 或“退出”按钮关闭窗口。
+- R 或“同图重开”使用当前 Seed 重建完整地图、恢复 HP 并重置状态。N 或“新图”选择新 Seed，生成不同拓扑。
+- HUD 显示当前 Seed；动态小地图以 S/B/A 标记出生/Boss/古董占位房。Esc 或“退出”关闭窗口。
 - 命令行：`godot --path . --editor`；Godot 不在 PATH 时使用安装位置的完整路径。
 - 导入/解析检查：`godot --headless --path . --editor --quit`。
 - 启动冒烟检查：`godot --headless --path . --quit-after 10`。
@@ -32,10 +27,22 @@
 - 图形/鼠标检查：`godot --path . --script res://tests/phase_1_smoke.gd -- --capture`，截图保存在忽略的 `logs/`。
 - Phase 2 五房完整检查：`godot --headless --path . --script res://tests/phase_2_smoke.gd`。
 - Phase 2 图形检查：`godot --path . --script res://tests/phase_2_smoke.gd -- --capture`，保存各房间、清场和死亡截图。
+- Phase 3 完整检查：`godot --headless --path . --script res://tests/phase_3_smoke.gd`。
+- Phase 3 图形检查：`godot --path . --script res://tests/phase_3_smoke.gd -- --capture`。
+
+复现指定 Seed：
+
+```powershell
+godot --path . -- --seed=192034
+```
+
+也可修改 `dungeon_test.tscn` 根节点 Inspector 的 `seed_value`。不传参数时从默认 Seed 开始；选到新 Seed 后 R 重复该 Seed。关闭程序不会保存所选 Seed，请记录 HUD 值或用命令行再次指定。
+
+相同引擎（当前验证为 Godot 4.6.2）、生成版本、配置与模板池顺序下，相同 Seed 重现完整拓扑与模板选择。不同 Seed 不保证每次都得到不同图，所以 N 最多尝试 16 个候选，失败保留当前图并提示警告。无窗口与图形测试还会在 `logs/phase_3_digest_*.txt` 保存 100 Seed 的结果摘要供跨进程比较。
 
 调参：编辑 `data/definitions/default_player_stats.tres`，修改 MaxHP、MoveSpeed、AttackDamage、AttackSpeed（每秒次数）、ProjectileSpeed、加减速、弹丸寿命和无敌期。CurrentHP 属于每个玩家的 Health 实例，不能写回共享初始资源。Dummy 的初始 HP 可在 `dummy.tscn` Inspector 调整，测试伤害可在测试场景 Inspector 调整。
 
-房间内容：编辑 `data/rooms/test_*.tres` 的敌人场景、生成点、障碍矩形、名称和颜色；固定地图邻接表位于 `scripts/rooms/room_controller.gd`，本阶段没有随机生成。房间状态属于本次测试，不能写回配置资源。非战斗房类型仅预留标识，尚不可使用。
+房间内容：编辑 `data/rooms/test_*.tres` 的敌人场景、生成点、障碍、名称和颜色。生成配置位于 `data/tombs/default_dungeon_config.tres`，可调整房数、最低深度和模板池。地图状态属于运行实例，不能写回模板；模板的历史 `room_id` 是模板 ID，`map_position` 仅供 Phase 2 旧夹具使用，随机节点不读取该坐标。
 
 尚未配置发行导出预设；需要发布时再安装对应版本导出模板。不同 Godot 4.x 版本升级前应重新执行导入和启动检查。
 
@@ -50,7 +57,7 @@
 | tests/ | 后续核心行为验证场景与脚本 |
 | docs/ | 后续设计记录和验证报告 |
 
-尚未实现的目录由 `.gitkeep` 保留。Phase 0 占位主场景保留在 `scenes/main/main.tscn`，Phase 1 独立测试场景保留在 `scenes/main/combat_test.tscn`；当前入口为 `scenes/main/room_test.tscn`。复用的 `scenes/rooms/room.tscn` 需由控制器注入配置，不作为独立入口运行。
+尚未实现的目录由 `.gitkeep` 保留。当前运行入口为 `scenes/main/dungeon_test.tscn`；`room_test.tscn` 是需注入布局的控制器装配场景，不直接 F6 运行。Phase 0/1 独立入口保留；Phase 2 原始十字图位于 `tests/fixtures/fixed_room_test.tscn`，原来的 204 个断言全部保留。
 
 ## 文档与 Git
 
@@ -58,5 +65,6 @@
 - `ARCHITECTURE.md`：系统边界、数据与依赖约定。
 - `GAME_DESIGN.md`：核心玩法与首个 Demo 范围。
 - `AGENTS.md`：所有后续开发任务必须遵守的项目规则。
+- `docs/PHASE_3_VERIFICATION.md`：实际验收、命令、逐项结果及限制。
 - 跟踪源码、场景、Resource、源资产和 Godot `.uid`；不提交 `.godot/`、构建输出和本地日志。
 - 开始任务前检查 `git status`；功能分支默认使用 `codex/` 前缀。提交需有明确阶段与范围，不自动推送。
