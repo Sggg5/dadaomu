@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RelicDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/relics/relic_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/relics/effects/black_powder_effect.gd" id="2"]
+[resource]
+script = ExtResource("1")
+id = &"black_powder"
+display_name = "黑火药"
+description = "命中时爆炸：半径72，伤害为本枚弹丸的50%。"
+rarity = 1
+effect_script = ExtResource("2")
+parameters = {"radius": 72.0, "damage_multiplier": 0.5}

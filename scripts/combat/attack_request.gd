@@ -8,6 +8,9 @@ var direction: Vector2
 var damage: float
 var speed: float
 var lifetime: float
+var pierce_count: int = 0
+var projectile_scale: float = 1.0
+var tags: Array[StringName] = []
 
 
 func copy() -> AttackRequest:
@@ -17,4 +20,7 @@ func copy() -> AttackRequest:
 	result.damage = damage
 	result.speed = speed
 	result.lifetime = lifetime
+	result.pierce_count = pierce_count
+	result.projectile_scale = projectile_scale
+	result.tags = tags.duplicate()
 	return result

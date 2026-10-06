@@ -54,7 +54,20 @@ func clear() -> void:
 
 
 func modify_attack(context: AttackContext) -> void:
-	for id in ids():
+	for id in attack_order():
 		var effect := get_effect(id)
 		if effect != null and effect.installed:
 			effect.modify_attack(context)
+
+
+func attack_order() -> Array[StringName]:
+	var result := ids()
+	result.sort_custom(func(a: StringName, b: StringName) -> bool:
+		var left := get_effect(a)
+		var right := get_effect(b)
+		if left.get_attack_stage() != right.get_attack_stage():
+			return left.get_attack_stage() < right.get_attack_stage()
+		if left.get_attack_priority() != right.get_attack_priority():
+			return left.get_attack_priority() < right.get_attack_priority()
+		return str(a) < str(b))
+	return result

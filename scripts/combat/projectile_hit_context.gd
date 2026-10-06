@@ -4,3 +4,4 @@ extends RefCounted
 var target: Object
 var position: Vector2
 var damage: float
+var origin: Vector2

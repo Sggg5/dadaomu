@@ -5,10 +5,12 @@ extends Node2D
 
 signal room_changed(room_id: StringName)
 signal restart_requested
+signal room_cleared(context: RoomClearContext)
 
 const ROOM_SCENE: PackedScene = preload("res://scenes/rooms/room.tscn")
 const PROJECTILE_SCENE: PackedScene = preload("res://scenes/player/projectile.tscn")
 var layout: DungeonLayout
+var rewards: RelicRewardService
 
 @onready var player: Player = $Player
 @onready var hud: RoomTestHUD = $HUD
@@ -28,6 +30,10 @@ func _ready() -> void:
 	player.weapon.attack_requested.connect(_spawn_projectile)
 	player.health.changed.connect(hud.show_hp)
 	player.died.connect(_on_player_died)
+	if rewards != null:
+		room_cleared.connect(rewards.on_room_cleared)
+		rewards.reward_available.connect(_create_pedestal)
+		player.died.connect(rewards.stop)
 	hud.damage_requested.connect(apply_test_damage)
 	hud.restart_requested.connect(restart)
 	hud.quit_requested.connect(_quit)
@@ -104,7 +110,8 @@ func _switch_room(target_id: StringName, entry_side: int) -> void:
 	current_room.enemy_count_changed.connect(func(_count: int) -> void: _refresh_hud())
 	$RoomHost.add_child(current_room)
 	current_room.enemy_spawner.enemy_killed.connect(player.relics.notify_enemy_killed)
-	current_room.cleared.connect(player.relics.notify_room_cleared.bind(target_id))
+	player.relics.room = current_room
+	current_room.cleared.connect(_on_room_cleared)
 	player.global_position = current_room.to_global(current_room.get_entry_position(entry_side))
 	player.velocity = Vector2.ZERO
 	current_room.enter()
@@ -131,4 +138,28 @@ func _refresh_hud() -> void:
 func _on_player_died() -> void:
 	player.set_controls_enabled(false)
 	current_room.stop_combat()
+	var pedestal := current_room.get_node_or_null("RelicPedestal")
+	if pedestal != null:
+		pedestal.queue_free()
 	hud.show_death()
+
+
+func _on_room_cleared() -> void:
+	var context := RoomClearContext.new()
+	context.room_id = current_id
+	context.room_type = current_room.room_type
+	context.was_combat = context.room_type == RoomDefinition.Type.COMBAT
+	context.enemy_count = current_room.definition.spawns.size() if context.room_type in [RoomDefinition.Type.COMBAT, RoomDefinition.Type.BOSS] else 0
+	player.relics.notify_room_cleared(context)
+	room_cleared.emit(context)
+
+
+func _create_pedestal(definition: RelicDefinition, room_id: StringName) -> void:
+	if player.health.is_dead or room_id != current_id:
+		return
+	var pedestal := RelicPedestal.new()
+	pedestal.name = "RelicPedestal"
+	pedestal.definition = definition
+	pedestal.player = player
+	pedestal.position = RelicPedestal.safe_position(current_room)
+	current_room.add_child(pedestal)

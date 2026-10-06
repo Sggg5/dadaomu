@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RelicDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/relics/relic_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/relics/effects/ink_line_effect.gd" id="2"]
+[resource]
+script = ExtResource("1")
+id = &"ink_line"
+display_name = "墨斗"
+description = "命中回扫起点到命中点的墨线，宽24，其他敌人受6伤害。"
+rarity = 1
+effect_script = ExtResource("2")
+parameters = {"width": 24.0, "damage": 6.0, "duration": 0.3}

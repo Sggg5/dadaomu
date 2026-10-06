@@ -38,7 +38,7 @@ func run() -> void:
 	var cleared := [0]
 	runtime.enemy_killed.connect(func(_enemy: Node2D) -> void: killed[0] += 1)
 	runtime.player_damaged.connect(func(_amount: float) -> void: damaged[0] += 1)
-	runtime.room_cleared.connect(func(_id: StringName) -> void: cleared[0] += 1)
+	runtime.room_cleared.connect(func(_context: RoomClearContext) -> void: cleared[0] += 1)
 	player.health.take_damage(25.0)
 	test.check(damaged[0] == 1 and player.health.current_hp == 75.0, "Nonlethal player damage reaches local Hook exactly once")
 	var start_side: int = world.layout.rooms[world.current_id].neighbors.keys()[0]

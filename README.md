@@ -4,7 +4,7 @@
 
 ## 当前状态
 
-当前 **Phase 5A 遗物框架与工程测试效果**。默认 Seed 为 `192034`，每图 8～12 个房间，独立 RNG 可重现正交树状布局。START 固定在 (0,0)，Boss 是距离至少 5 的最远叶子，ANTIQUE 距离至少 2。
+当前 **Phase 5B 正式遗物奖励与 Build 协同**。默认 Seed 为 `192034`，每图 8～12 个房间，独立 RNG 可重现正交树状布局。START 固定在 (0,0)，Boss 是距离至少 5 的最远叶子，ANTIQUE 距离至少 2。
 
 随机节点决定位置/连接/类型，五份原有普通房配置作为共享模板池。玩家、战斗、门和房间生命周期继续复用：首次进入锁门，击杀后开门，过门保留生命，重访已清场房不刷怪。
 
@@ -78,7 +78,7 @@ godot --headless --path . --script res://tests/phase_4_smoke.gd
 godot --path . --script res://tests/phase_4_smoke.gd -- --capture
 ```
 
-完整结果、人工反馈与限制见 docs/PHASE_4_VERIFICATION.md。未实现完整寻路、正式美术、音效或 Boss；遗物仅 Phase 5A 的三个工程测试效果，未进入 Phase 5B。
+完整结果、人工反馈与限制见 docs/PHASE_4_VERIFICATION.md。未实现完整寻路、正式美术、音效或 Boss；工程遗物只用于开发回归；正式池为 Phase 5B 的八件遗物。
 START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场景、不修改共享 spawns；START 不调用 EnemySpawner，因此不应用观察期。COMBAT 的 180px 入口间距、0.35 秒观察期和攻击前摇保持；BOSS 仍普通敌人占位，ANTIQUE 仍自动清场。
 
 ## Phase 5A 开发测试
@@ -90,7 +90,7 @@ START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场�
 - 3：血契，每个敌人首次死亡恢复 5 HP，上限 MaxHP。
 - Backspace：卸载全部工程遗物，后续攻击恢复原值。已经发射的弹丸保留发射时快照。
 
-底部显示工程遗物列表。没有随机掉落、正式奖励/选择界面、永久存档或正式遗物美术。人工反馈确认“双弹清晰，跨房保留”；其余主观效果验收未确认，详情见 docs/PHASE_5A_VERIFICATION.md。
+底部显示当前遗物列表。本节工程遗物不进入正式池；正式获得见下文。仍无永久存档或正式遗物美术。人工反馈确认“双弹清晰，跨房保留”；其余主观效果验收未确认，详情见 docs/PHASE_5A_VERIFICATION.md。
 
 ```powershell
 godot --headless --path . --script res://tests/phase_5a_smoke.gd
@@ -98,4 +98,30 @@ godot --path . --script res://tests/phase_5a_smoke.gd -- --capture
 godot --path . -- --seed=1
 ```
 
-数据在 data/relics/，效果实现分别位于 scripts/relics/effects/。配置引用独立 effect_script，不添加核心脚本 ID 分支。新增参数或运行对象时继续维护 copy/卸载生命周期。当前分支 codex/phase-5a-relic-framework，验证后提交并推送，不合并 main，不进入 Phase 5B。
+数据在 data/relics/，效果实现分别位于 scripts/relics/effects/。配置引用独立 effect_script，不添加核心脚本 ID 分支。新增参数或运行对象时继续维护 copy/卸载生命周期。Phase 5A 已合并 main；当前工作为 Phase 5B，仍不自动合并 main。
+## Phase 5B 正式奖励与 Build
+
+首次清场第1、3、5个普通COMBAT房生成一件底座奖励。START、ANTIQUE、BOSS占位不计数，重访不重复。靠近底座64px内按E拾取，名称/简短说明就地显示；离房未拾取则丢失，不在重访补发。
+
+正式池只有五帝钱、黑火药、尸油灯、镇尸钉、铜镜、墨斗、洛阳铲、引魂纸鸢8件，不包含工程test_*。奖励按Seed和版本独立无放回抽取；R复现地图和奖励序列并清空Build；N重建新图/奖励进度。相同引擎/池/版本下可复现，尚无存档。
+
+| 遗物 | 实际规则 |
+| --- | --- |
+| 五帝钱 | 双弹±5°，每发80%伤害，一次冷却 |
+| 黑火药 | 每个成功命中产生半径72px、50%弹丸伤害爆炸；可伤原目标，不递归 |
+| 尸油灯 | 3次3HP DOT，间隔0.35秒；同敌人刷新不叠层 |
+| 镇尸钉 | 穿透1个敌人；撞墙消失，同一弹不重复命中同敌人 |
+| 铜镜 | 每3次攻击在最终批次两侧±20°各复制一组；单弹变3，五帝钱双弹变6 |
+| 墨斗 | 起点到命中点24px宽墨线，对其他敌人一次6伤害，视觉0.3秒 |
+| 洛阳铲 | 每5次追加铲风：2.2倍伤害、1.3倍速度、寿命0.22秒、体积1.8倍 |
+| 引魂纸鸢 | 有效非致命受伤充能；下次攻击加±15°两侧弹并消耗，未用充能跨房保留 |
+
+E是正常获得方式。F2打开/关闭正式遗物开发添加按钮；1/2/3工程键和Backspace全移除仍保留，仅用于开发，不影响正式池。
+
+```powershell
+godot --headless --path . --script res://tests/phase_5b_smoke.gd
+godot --path . --script res://tests/phase_5b_smoke.gd -- --capture
+godot --path . -- --seed=192034
+```
+
+Seed192034正常测试在第1/3/5次清房获得墨斗/五帝钱/黑火药，再继续战斗。详细测试、文件清单和人工验收状态见docs/PHASE_5B_VERIFICATION.md。当前分支codex/phase-5b-relic-builds，提交并push后停止，不进入Phase6。

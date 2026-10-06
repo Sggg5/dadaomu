@@ -1,5 +1,6 @@
 class_name RelicEffect
 extends RefCounted
+enum AttackStage { DAMAGE, COUNT, DIRECTION, PROJECTILE_PROPERTY, FINAL }
 ## 幂等生命周期；具体效果拥有自己的连接并在 _on_uninstall 中断开。
 var definition: RelicDefinition
 var runtime: RelicRuntime
@@ -32,6 +33,14 @@ func uninstall() -> bool:
 
 func modify_attack(_context: AttackContext) -> void:
 	pass
+
+
+func get_attack_stage() -> AttackStage:
+	return AttackStage.DAMAGE
+
+
+func get_attack_priority() -> int:
+	return 0
 
 
 func _on_install() -> void:

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RelicDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/relics/relic_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/relics/effects/copper_mirror_effect.gd" id="2"]
+[resource]
+script = ExtResource("1")
+id = &"copper_mirror"
+display_name = "铜镜"
+description = "每第3次攻击在最终批次两侧各复制一组镜像弹。"
+rarity = 1
+effect_script = ExtResource("2")
+parameters = {"period": 3, "angle_degrees": 20.0}

@@ -164,7 +164,7 @@ START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场�
 | ProjectileHitContext / RefCounted | 成功伤害后的 target、位置、快照伤害，限同步使用 |
 | RelicDebugPanel / CanvasLayer | 展示 Inventory，1/2/3 与 Backspace 操作适配，不包含效果逻辑 |
 
-管线：Player → RangedWeapon（一次冷却）→ 基础 AttackRequest → Runtime.prepare_attack → AttackContext 复制 → Inventory 按 ID 字符串排序应用独立效果 → attack_prepared → 0..N attack_requested → Controller/CombatTest 在局部容器生成 Projectile → projectile_spawned。无遗物仍一个请求，数值/速度/方向/冷却与 Phase 4 一致。
+管线：Player → RangedWeapon（一次冷却）→ 基础 AttackRequest → Runtime.prepare_attack → AttackContext 复制 → Inventory 按阶段/优先级/稳定 ID 排序应用独立效果 → attack_prepared → 0..N attack_requested → Controller/CombatTest 在局部容器生成 Projectile → projectile_spawned。无遗物仍一个请求，数值/速度/方向/冷却与 Phase 4 一致。
 
 | Hook | 来源与边界 |
 | --- | --- |
@@ -173,10 +173,27 @@ START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场�
 | projectile_hit(context) | 玩家弹丸成功 take_damage 后通知；碰墙/失败伤害不算命中；不连接敌方弹丸 |
 | enemy_killed(enemy) | 唯一 Spawner 首次从存活集合删除后通知，重复回调或卸载不通知 |
 | player_damaged(amount) | 已接受的非致命 Health.damaged；死亡标记后不通知效果 |
-| room_cleared(room_id) | Room 首次 CLEARED，重访不重复；安全 START 首次自动清场也属于此事件 |
+| room_cleared(context) | Controller 创建 RoomClearContext，首次 CLEARED 通知，重访不重复；type/was_combat 明确区分自动清场 |
 
 三个工程效果分别实现 damage ×1.5、每条请求展开 ±6° 双弹、kill Hook heal 5。无 ID 分支、无全局 EventBus。Health.heal 拒绝死亡/非法量并限制最大生命。定义与 PlayerStats 均不修改，卸载只移除实例/断开连接；旧弹丸的发射快照不追溯修改。
 
 跨房：Runtime/Inventory 是 Player 所有，Room 卸载只删除该房敌人与弹丸，Build 保留，下一房重新接通局部来源。死亡：is_active 立即由 Health.is_dead 拒绝晚到事件，shutdown 清空库存；R/N 与整场景卸载调用 _exit_tree/shutdown，断开 Health 和效果连接及回指。新局创建新 Player/Runtime/Inventory，效果计数不共享。
 
-顺序规则为稳定 ID 排序，解决本阶段两个修改器获得顺序差异；不承诺未来任意效果都可交换。新增请求字段须更新 AttackRequest.copy。爆炸/穿透/反弹等后续采用独立弹丸策略或命中订阅，不在 Projectile 中加入遗物 ID 分支；本阶段未实现这些玩法。enemy_killed 是本房首次死亡事件，尚无击杀归因/伤害来源系统。
+Phase 5A 原先仅稳定 ID 排序；当前规则为 stage/priority/ID 排序，解决本阶段两个修改器获得顺序差异；不承诺未来任意效果都可交换。新增请求字段须更新 AttackRequest.copy。爆炸/穿透/反弹等后续采用独立弹丸策略或命中订阅，不在 Projectile 中加入遗物 ID 分支；Phase 5B 已实现本阶段所需爆炸/燃烧/一次穿透，尚无反弹。enemy_killed 是本房首次死亡事件，尚无击杀归因/伤害来源系统。
+## Phase 5B：上下文、阶段、奖励与局部攻击
+
+RoomController是RoomClearContext唯一装配入口：room_id、实际DungeonRoom.room_type、was_combat、原始生成enemy_count。START/ANTIQUE自动清场的enemy_count=0/was_combat=false；普通COMBAT=true；BOSS占位虽有敌人，本阶段was_combat=false，不计普通奖励。Context先转发Runtime局部Hook再通知RewardService，重访不会重复clear。
+
+效果排序为AttackStage DAMAGE → COUNT → DIRECTION → PROJECTILE_PROPERTY → FINAL；每阶段按priority升序，同值按stable ID。五帝钱COUNT产生两条±5°请求；纸鸢DIRECTION追加充能侧弹；镇尸钉PROJECTILE_PROPERTY统一加穿透；铜镜FINAL priority0复制最终批次；洛阳铲FINAL priority10在镜像之后追加一枚短距重弹。运行次数不写回Definition。
+
+AttackRequest新增pierce_count=0/projectile_scale=1/tags=[]，copy复制全部字段且tags独立。Projectile只读取通用参数：碰撞后已命中ID集合防重伤，穿透剩余>0时递减并对目标增加碰撞例外，墙立即消费；默认0仍首次碰撞消费。heavy是通用呈现标签而非遗物ID。EnemyProjectile的请求不经过玩家Runtime，仍默认普通红弹。
+
+ProjectileHitContext新增origin。HitRelicEffect管理命中连接与弱引用局部对象；具体黑火药/墨斗调用CombatGeometry瞬时范围/线段伤害，再生成CombatPulse几何反馈；非Projectile伤害不发projectile_hit，所以无递归。范围/线段只扫描本房存活敌人，当前不额外遮挡检测。
+
+Burn仅一个轻量Node2D，每目标/效果一实例；重复命中刷新3次计数及0.35秒间隔。不建立StatusEffect注册框架。组件随敌人/Room释放；效果remove/shutdown取消已拥有的Burn和反馈对象。Runtime.is_active与Health死亡门控阻止晚到DOT、充能或击杀反应。
+
+DungeonSession拥有当前局RelicRewardService，创建World前注入Controller；R/N先卸载旧World/Service，再创建独立新实例。Service只处理COMBAT首次ID与第1/3/5进度；版本1，独立RNG seed XOR (version*7919)。正式池先按ID稳定排序、Fisher-Yates洗牌，序列无放回；不会读取全局RNG或改变DungeonGenerator。
+
+Service发reward_available(definition, room_id)，Controller只在当前活房生成RelicPedestal。底座使用Room视觉之外的轻量Node2D，安全位置避开障碍；64px内E调用Inventory.add成功后标记claimed并释放。离房未领即销毁并丢失，不回补；死亡销毁未领取底座并stop Service。固定Phase2回归夹具不注入奖励服务，生产入口始终由Session注入。
+
+三组协同没有专用combo脚本：数量批次自然进入FINAL镜像；穿透逐目标发独立hit，爆炸逐hit响应；双弹逐目标附加独立Burn。没有第三敌人、正式Boss、经济/古董/存档或复杂状态系统。

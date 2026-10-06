@@ -6,11 +6,12 @@ signal projectile_spawned(projectile: Projectile)
 signal projectile_hit(context: ProjectileHitContext)
 signal enemy_killed(enemy: Node2D)
 signal player_damaged(amount: float)
-signal room_cleared(room_id: StringName)
+signal room_cleared(context: RoomClearContext)
 
 var inventory: RelicInventory
 var health: Health
 var weapon: RangedWeapon
+var room: Room
 var _active: bool = false
 
 
@@ -48,9 +49,9 @@ func notify_enemy_killed(enemy: Node2D) -> void:
 		enemy_killed.emit(enemy)
 
 
-func notify_room_cleared(room_id: StringName) -> void:
+func notify_room_cleared(context: RoomClearContext) -> void:
 	if is_active():
-		room_cleared.emit(room_id)
+		room_cleared.emit(context)
 
 
 func _on_projectile_hit(context: ProjectileHitContext) -> void:

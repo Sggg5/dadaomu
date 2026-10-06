@@ -10,6 +10,7 @@ const DEFAULT_CONFIG: DungeonConfig = preload("res://data/tombs/default_dungeon_
 @export var seed_value: int = 192034
 
 var world: RoomController
+var rewards: RelicRewardService
 var _changing: bool = false
 var _seed_rng := RandomNumberGenerator.new()
 
@@ -66,8 +67,15 @@ func _replace_world(next: DungeonLayout) -> void:
 		remove_child(world)
 		world.queue_free()
 	seed_value = next.seed_value
+	if is_instance_valid(rewards):
+		remove_child(rewards)
+		rewards.queue_free()
+	rewards = RelicRewardService.new()
+	rewards.configure(seed_value)
+	add_child(rewards)
 	world = WORLD_SCENE.instantiate() as RoomController
 	world.layout = next
+	world.rewards = rewards
 	world.restart_requested.connect(_restart_current)
 	add_child(world)
 	world.hud.new_seed_requested.connect(regenerate)

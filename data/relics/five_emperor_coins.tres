@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RelicDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/relics/relic_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/relics/effects/five_emperor_coins_effect.gd" id="2"]
+[resource]
+script = ExtResource("1")
+id = &"five_emperor_coins"
+display_name = "五帝钱"
+description = "每次攻击发射±5°双弹，每发伤害为80%。"
+rarity = 0
+effect_script = ExtResource("2")
+parameters = {"angle_degrees": 5.0, "damage_multiplier": 0.8}

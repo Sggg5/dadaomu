@@ -2,7 +2,7 @@
 
 ## 范围与阶段
 
-本项目是 Godot 4.x / GDScript / Windows 的原创 2D 俯视角 Roguelite《大盗墓时代》。阅读 README、PROJECT_PLAN、ARCHITECTURE、GAME_DESIGN 后再修改。用户指令优先；每次只执行明确授权的 Phase。当前授权 Phase 5A，完成后必须停止，不自动实施 Phase 5B、真正 Boss 或古董内容。
+本项目是 Godot 4.x / GDScript / Windows 的原创 2D 俯视角 Roguelite《大盗墓时代》。阅读 README、PROJECT_PLAN、ARCHITECTURE、GAME_DESIGN 后再修改。用户指令优先；每次只执行明确授权的 Phase。当前授权 Phase 5B，完成后必须停止，不自动实施 Phase 6、真正 Boss 或古董内容。
 
 每阶段保持可运行入口，结束前检查导入解析、启动和阶段相关行为。报告修改文件、架构变化、验证命令与真实结果、已知限制及下一阶段范围。未执行的检查必须明确标注，不能把规划写成已实现。
 
@@ -72,9 +72,20 @@ START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场�
 - 遗物仅单局临时 Build；普通遗物按稳定 ID 唯一，重复获得返回 false，不安装第二实例。
 - RelicDefinition 与 PlayerStats 只读；RelicEffect 是每次安装的新实例，运行计数/连接不得写回 Resource。
 - Runtime 挂在唯一 Player 下；Inventory 只管理持有、安装和卸载。具体效果是独立脚本，不在 Player/Projectile/Controller 写遗物 ID 分支，不使用全局 EventBus。
-- 武器单次输入消耗一次冷却，AttackContext 存 0..N 请求快照，按 ID 字符串稳定排序应用效果；copy 必须保留请求的全部数值。
+- 武器单次输入消耗一次冷却，AttackContext 存 0..N 请求快照，按 AttackStage、priority、稳定 ID 排序应用效果；copy 必须保留请求的全部数值。
 - Hook 仅 attack_prepared、projectile_spawned、projectile_hit、enemy_killed、player_damaged、room_cleared。节点上下文仅同步使用，不长期保留死亡敌人。
 - 新遗物必须实现幂等 install/uninstall，卸载断开自己建立的连接。玩家死亡/离树清空 Inventory；R/N 重建空 Build，跨房不得卸载 Player 的效果。
 - 开发期 1/2/3 添加三个测试遗物，Backspace 全卸载；不是正式拾取界面或正式内容量。
 - 必跑 Godot 导入和 Phase 1～5A smoke。旧 Phase 1～4 断言不删；人工验收单独记录。
-- 不实现 Phase 5B 正式遗物/随机掉落/选择/复杂协同，亦不提前做爆炸、燃烧、穿透、反弹、古董、Boss、商店或存档。
+- Phase 5A 当时仅工程效果；Phase 5B 的授权范围见下文，仍不提前做古董、Boss、商店或存档。
+## Phase 5B 正式遗物与奖励
+
+- 分支 codex/phase-5b-relic-builds，从指定 main d7660a1 开始；本任务授权提交并push，不合并main，结束后停止，不开发Phase6。
+- RoomController 创建 RoomClearContext（ID/type/was_combat/enemy_count）。was_combat 仅普通COMBAT为true；START/ANTIQUE/BOSS占位均不计普通清房奖励，重访不重复通知。
+- RelicRewardService 由 DungeonSession 持有，独立RNG：seed XOR (reward_version*7919)，稳定ID排序后Fisher-Yates无放回；不能改变地图RNG或把奖励逻辑塞入Runtime。
+- 第1/3/5个首次COMBAT清场产生底座；E靠近拾取一次。离房未领取奖励丢失且不补发；工程test_*不得入正式RelicPool。
+- AttackStage为DAMAGE/COUNT/DIRECTION/PROJECTILE_PROPERTY/FINAL，先stage再priority再ID。AttackRequest新增pierce_count/projectile_scale/tags，copy须完整且tags独立。
+- 正式效果各自独立，核心Player/Projectile/Controller/Spawner/Runtime禁止正式遗物ID特判或组合专用脚本。
+- 爆炸/墨线是瞬时非Projectile伤害，不递归命中；Burn仅轻量3tick可刷新组件，不扩展万能状态框架。
+- 卸载/死亡取消效果拥有的Burn/反馈，跨房释放旧房对象并保留库存/充能；R/N清空全部运行状态和奖励进度。
+- 必跑Phase1～5B；Phase5A仅调整typed清房Hook测试，保留断言。至少一次真实Weapon/Door/E流程获得3件奖励，并单独记录人工手感。
