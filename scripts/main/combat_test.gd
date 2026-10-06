@@ -72,6 +72,7 @@ func _spawn_projectile(request: AttackRequest) -> void:
 	var projectile := PROJECTILE_SCENE.instantiate() as Projectile
 	projectiles.add_child(projectile)
 	projectile.setup(request)
+	player.relics.bind_projectile(projectile)
 
 
 func _on_player_died() -> void:

@@ -4,7 +4,7 @@
 
 ## 当前状态
 
-当前 **Phase 4 敌人战斗原型**。默认 Seed 为 `192034`，每图 8～12 个房间，独立 RNG 可重现正交树状布局。START 固定在 (0,0)，Boss 是距离至少 5 的最远叶子，ANTIQUE 距离至少 2。
+当前 **Phase 5A 遗物框架与工程测试效果**。默认 Seed 为 `192034`，每图 8～12 个房间，独立 RNG 可重现正交树状布局。START 固定在 (0,0)，Boss 是距离至少 5 的最远叶子，ANTIQUE 距离至少 2。
 
 随机节点决定位置/连接/类型，五份原有普通房配置作为共享模板池。玩家、战斗、门和房间生命周期继续复用：首次进入锁门，击杀后开门，过门保留生命，重访已清场房不刷怪。
 
@@ -78,5 +78,24 @@ godot --headless --path . --script res://tests/phase_4_smoke.gd
 godot --path . --script res://tests/phase_4_smoke.gd -- --capture
 ```
 
-完整结果、人工反馈与限制见 docs/PHASE_4_VERIFICATION.md。未实现完整寻路、正式美术、音效、遗物或 Boss；不进入 Phase 5。
+完整结果、人工反馈与限制见 docs/PHASE_4_VERIFICATION.md。未实现完整寻路、正式美术、音效或 Boss；遗物仅 Phase 5A 的三个工程测试效果，未进入 Phase 5B。
 START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场景、不修改共享 spawns；START 不调用 EnemySpawner，因此不应用观察期。COMBAT 的 180px 入口间距、0.35 秒观察期和攻击前摇保持；BOSS 仍普通敌人占位，ANTIQUE 仍自动清场。
+
+## Phase 5A 开发测试
+
+当前新增 RelicDefinition / RelicInventory / RelicEffect / RelicRuntime 与局部战斗 Hook。遗物随唯一 Player 跨房保留，R/N 或死亡清空；定义只读，效果实例每次安装独立；同一 ID 不重复获得。
+
+- 1：强力火药，攻击请求伤害 ×1.5（默认 20 →30，50HP 尸蟞由 3 发变 2 发）。
+- 2：双生铜钱，一次输入发射两枚方向 ±6° 的弹丸，只计一次冷却。
+- 3：血契，每个敌人首次死亡恢复 5 HP，上限 MaxHP。
+- Backspace：卸载全部工程遗物，后续攻击恢复原值。已经发射的弹丸保留发射时快照。
+
+底部显示工程遗物列表。没有随机掉落、正式奖励/选择界面、永久存档或正式遗物美术。人工反馈确认“双弹清晰，跨房保留”；其余主观效果验收未确认，详情见 docs/PHASE_5A_VERIFICATION.md。
+
+```powershell
+godot --headless --path . --script res://tests/phase_5a_smoke.gd
+godot --path . --script res://tests/phase_5a_smoke.gd -- --capture
+godot --path . -- --seed=1
+```
+
+数据在 data/relics/，效果实现分别位于 scripts/relics/effects/。配置引用独立 effect_script，不添加核心脚本 ID 分支。新增参数或运行对象时继续维护 copy/卸载生命周期。当前分支 codex/phase-5a-relic-framework，验证后提交并推送，不合并 main，不进入 Phase 5B。

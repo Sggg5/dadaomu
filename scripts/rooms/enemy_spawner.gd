@@ -5,6 +5,7 @@ extends Node2D
 
 signal remaining_changed(count: int)
 signal all_defeated
+signal enemy_killed(enemy: Node2D)
 
 var started: bool = false
 var target: Player
@@ -59,7 +60,9 @@ func stop_all() -> void:
 func _on_enemy_died(enemy_id: int) -> void:
 	if not _living.has(enemy_id):
 		return
+	var enemy := _living[enemy_id]
 	_living.erase(enemy_id)
+	enemy_killed.emit(enemy)
 	remaining_changed.emit(get_remaining())
 	_check_finished()
 

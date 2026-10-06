@@ -8,3 +8,13 @@ var direction: Vector2
 var damage: float
 var speed: float
 var lifetime: float
+
+
+func copy() -> AttackRequest:
+	var result := AttackRequest.new()
+	result.origin = origin
+	result.direction = direction
+	result.damage = damage
+	result.speed = speed
+	result.lifetime = lifetime
+	return result

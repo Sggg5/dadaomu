@@ -29,3 +29,11 @@ func take_damage(amount: float) -> bool:
 	if is_dead:
 		died.emit()
 	return true
+
+
+func heal(amount: float) -> bool:
+	if is_dead or amount <= 0.0 or not is_finite(amount) or current_hp >= max_hp:
+		return false
+	current_hp = minf(max_hp, current_hp + amount)
+	changed.emit(current_hp, max_hp)
+	return true

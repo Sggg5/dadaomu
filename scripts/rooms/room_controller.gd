@@ -32,6 +32,10 @@ func _ready() -> void:
 	hud.restart_requested.connect(restart)
 	hud.quit_requested.connect(_quit)
 	hud.show_hp(player.health.current_hp, player.health.max_hp)
+	var relic_panel := RelicDebugPanel.new()
+	relic_panel.name = "RelicDebugPanel"
+	relic_panel.runtime = player.relics
+	add_child(relic_panel)
 	_switch_room(layout.start_id, -1)
 	print("[大盗墓时代] Dungeon ready: Seed %d, %d rooms" % [layout.seed_value, layout.rooms.size()])
 
@@ -99,6 +103,8 @@ func _switch_room(target_id: StringName, entry_side: int) -> void:
 	current_room.state_changed.connect(func(_status: RoomState.Status) -> void: _refresh_hud())
 	current_room.enemy_count_changed.connect(func(_count: int) -> void: _refresh_hud())
 	$RoomHost.add_child(current_room)
+	current_room.enemy_spawner.enemy_killed.connect(player.relics.notify_enemy_killed)
+	current_room.cleared.connect(player.relics.notify_room_cleared.bind(target_id))
 	player.global_position = current_room.to_global(current_room.get_entry_position(entry_side))
 	player.velocity = Vector2.ZERO
 	current_room.enter()
@@ -114,6 +120,7 @@ func _spawn_projectile(request: AttackRequest) -> void:
 	var projectile := PROJECTILE_SCENE.instantiate() as Projectile
 	current_room.projectiles.add_child(projectile)
 	projectile.setup(request)
+	player.relics.bind_projectile(projectile)
 
 
 func _refresh_hud() -> void:

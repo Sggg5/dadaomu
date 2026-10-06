@@ -8,6 +8,7 @@ signal died
 
 @onready var health: Health = $Health
 @onready var weapon: RangedWeapon = $Weapon
+@onready var relics: RelicRuntime = $Relics
 
 var aim_direction: Vector2 = Vector2.RIGHT
 var invulnerability_remaining: float = 0.0
@@ -19,6 +20,7 @@ func _ready() -> void:
 	assert(stats != null, "Player requires PlayerStats")
 	health.died.connect(_on_died)
 	health.initialize(stats.max_hp)
+	relics.configure(health, weapon)
 	mouse_viewport_position = get_viewport().get_mouse_position()
 
 

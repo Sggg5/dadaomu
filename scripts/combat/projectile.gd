@@ -1,5 +1,6 @@
 class_name Projectile
 extends CharacterBody2D
+signal hit(context: ProjectileHitContext)
 ## 使用运动扫掠检测，避免高速弹丸只靠重叠检测穿过薄墙。
 ## 基础弹丸第一次碰撞即消耗；命中与表现分开，未来扩展在弹丸/武器策略中实现。
 
@@ -34,7 +35,12 @@ func _physics_process(delta: float) -> void:
 
 func _apply_hit(target: Object) -> void:
 	if is_instance_valid(target) and target.has_method("take_damage"):
-		target.call("take_damage", damage)
+		if target.call("take_damage", damage):
+			var context := ProjectileHitContext.new()
+			context.target = target
+			context.position = global_position
+			context.damage = damage
+			hit.emit(context)
 
 
 func _consume() -> void:

@@ -120,7 +120,7 @@ RoomController
 
 ## 数据驱动
 
-已使用自定义 Resource 和 `.tres` 存储玩家属性及房间定义；敌人数据已实现，后续用于遗物、古董和墓穴。每项内容具有稳定字符串 ID，展示名称独立于 ID。定义资源视为只读，运行时生命/冷却/房间状态/叠层/鉴定状态保存在实例或运行状态对象中。策略行为通过小脚本或枚举选择；不建立庞大条件分支。
+已使用自定义 Resource 和 `.tres` 存储玩家属性及房间定义；敌人数据已实现，遗物框架数据已在 Phase 5A 实现，后续用于古董和墓穴。每项内容具有稳定字符串 ID，展示名称独立于 ID。定义资源视为只读，运行时生命/冷却/房间状态/叠层/鉴定状态保存在实例或运行状态对象中。策略行为通过小脚本或枚举选择；不建立庞大条件分支。
 
 资源之间可使用类型化 Resource 引用；存档仅保存稳定 ID 和可序列化值，不保存节点或 Resource 实例。建立内容校验时检查重复 ID、缺失引用和非法参数。
 
@@ -149,5 +149,34 @@ EnemyProjectile 继承 Projectile 的扫掠、寿命与消费流程，仅覆盖�
 
 入口公平性：真正生成敌人的战斗房默认 0.35 秒观察期内不推进 AI 状态机、不移动、不攻击；外观暂时变浅。每模板出生点距四入口至少 180 像素。观察期结束后攻击仍必须完整前摇；这不是玩家无敌或完整难度平衡系统。
 
-墙体绕行仅短射线检测后沿法线切向移动，并短暂保持方向避免抖动；没有导航网格，复杂凹形障碍可能卡住。Phase 5 仅准备在既有攻击请求/受击接口周围设计可卸载的遗物效果，当前未添加效果管理器。
+墙体绕行仅短射线检测后沿法线切向移动，并短暂保持方向避免抖动；没有导航网格，复杂凹形障碍可能卡住。Phase 5 仅准备在既有攻击请求/受击接口周围设计可卸载的遗物效果，Phase 5A 已增加玩家局部 Runtime，见下文。
 START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场景、不修改共享 spawns；START 不调用 EnemySpawner，因此不应用观察期。COMBAT 的 180px 入口间距、0.35 秒观察期和攻击前摇保持；BOSS 仍普通敌人占位，ANTIQUE 仍自动清场。
+
+## Phase 5A：单局遗物与战斗 Hook
+
+| 模块 | 所有权与职责 |
+| --- | --- |
+| RelicDefinition / Resource | ID、中文名、描述、rarity、effect_script、只读 parameters |
+| RelicEffect / RefCounted | 本次安装实例、幂等 install/uninstall、具体效果连接/计数和 modify_attack |
+| RelicInventory / RefCounted | Runtime 拥有；唯一 ID、查询/添加/移除/clear；不处理地图、绘制或存档 |
+| RelicRuntime / Node | Player 子节点；持有 Inventory，装配武器与 Health，并暴露局部 Hook |
+| AttackContext / RefCounted | 一次攻击批次，持有请求副本，可展开成 0..N；不持有共享 PlayerStats |
+| ProjectileHitContext / RefCounted | 成功伤害后的 target、位置、快照伤害，限同步使用 |
+| RelicDebugPanel / CanvasLayer | 展示 Inventory，1/2/3 与 Backspace 操作适配，不包含效果逻辑 |
+
+管线：Player → RangedWeapon（一次冷却）→ 基础 AttackRequest → Runtime.prepare_attack → AttackContext 复制 → Inventory 按 ID 字符串排序应用独立效果 → attack_prepared → 0..N attack_requested → Controller/CombatTest 在局部容器生成 Projectile → projectile_spawned。无遗物仍一个请求，数值/速度/方向/冷却与 Phase 4 一致。
+
+| Hook | 来源与边界 |
+| --- | --- |
+| attack_prepared(context) | 效果处理后、生成前，可访问本次批次；不是共享属性 |
+| projectile_spawned(projectile) | 玩家弹丸 setup 后由装配入口 bind_projectile 通知 |
+| projectile_hit(context) | 玩家弹丸成功 take_damage 后通知；碰墙/失败伤害不算命中；不连接敌方弹丸 |
+| enemy_killed(enemy) | 唯一 Spawner 首次从存活集合删除后通知，重复回调或卸载不通知 |
+| player_damaged(amount) | 已接受的非致命 Health.damaged；死亡标记后不通知效果 |
+| room_cleared(room_id) | Room 首次 CLEARED，重访不重复；安全 START 首次自动清场也属于此事件 |
+
+三个工程效果分别实现 damage ×1.5、每条请求展开 ±6° 双弹、kill Hook heal 5。无 ID 分支、无全局 EventBus。Health.heal 拒绝死亡/非法量并限制最大生命。定义与 PlayerStats 均不修改，卸载只移除实例/断开连接；旧弹丸的发射快照不追溯修改。
+
+跨房：Runtime/Inventory 是 Player 所有，Room 卸载只删除该房敌人与弹丸，Build 保留，下一房重新接通局部来源。死亡：is_active 立即由 Health.is_dead 拒绝晚到事件，shutdown 清空库存；R/N 与整场景卸载调用 _exit_tree/shutdown，断开 Health 和效果连接及回指。新局创建新 Player/Runtime/Inventory，效果计数不共享。
+
+顺序规则为稳定 ID 排序，解决本阶段两个修改器获得顺序差异；不承诺未来任意效果都可交换。新增请求字段须更新 AttackRequest.copy。爆炸/穿透/反弹等后续采用独立弹丸策略或命中订阅，不在 Projectile 中加入遗物 ID 分支；本阶段未实现这些玩法。enemy_killed 是本房首次死亡事件，尚无击杀归因/伤害来源系统。
