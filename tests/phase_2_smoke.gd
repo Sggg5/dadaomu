@@ -10,6 +10,7 @@ const MOVE_ACTIONS: Array[StringName] = [&"move_up", &"move_right", &"move_down"
 var world: RoomController
 var checks: int = 0
 var failures: int = 0
+var _templates: Array[RoomDefinition] = FIXTURE.make_templates()
 var _state_changes: Dictionary[StringName, Array] = {}
 var _clear_counts: Dictionary[StringName, int] = {}
 
@@ -62,7 +63,7 @@ func _clear_current_room() -> void:
 	_clear_counts[room_id] = 0
 	room.cleared.connect(_record_clear.bind(room_id))
 	_check(room.room_state.status == RoomState.Status.ACTIVE and _all_doors_open(false), "%s enters ACTIVE with all doors blocked" % room_id)
-	_check(room.enemy_spawner.get_remaining() == room.definition.enemy_positions.size(), "%s spawns configured enemy count" % room_id)
+	_check(room.enemy_spawner.get_remaining() == room.definition.spawns.size(), "%s spawns configured enemy count" % room_id)
 	_capture(str(room_id) + "_active")
 	var enemies := room.enemy_spawner.get_children()
 	for index in range(enemies.size()):
@@ -111,9 +112,10 @@ func _walk_through(side: int, target_id: StringName, use_existing_position: bool
 
 
 func _validate_content() -> void:
-	for definition in FIXTURE.TEMPLATES:
+	for definition in _templates:
 		var valid: bool = true
-		for position in definition.enemy_positions:
+		for entry in definition.spawns:
+			var position := entry.position
 			var bounds := Rect2(position - Vector2(20, 20), Vector2(40, 40))
 			valid = valid and Room.ROOM_RECT.encloses(bounds)
 			for obstacle in definition.obstacles:
@@ -183,8 +185,8 @@ func _run() -> void:
 	_check(world.current_id == &"north" and world.current_room.enemy_spawner.get_child_count() == 0, "Cleared leaf revisit does not respawn")
 	await _walk_through(Door.Direction.SOUTH, &"center")
 
-	var empty_data := FIXTURE.TEMPLATES[0].duplicate() as RoomDefinition
-	empty_data.enemy_positions = PackedVector2Array()
+	var empty_data := _templates[0].duplicate() as RoomDefinition
+	empty_data.spawns = []
 	var empty := RoomController.ROOM_SCENE.instantiate() as Room
 	var empty_state := RoomState.new()
 	empty.configure(empty_data, empty_state, [])
@@ -193,7 +195,7 @@ func _run() -> void:
 	empty.enter()
 	await _frames(2)
 	_check(empty_state.status == RoomState.Status.CLEARED, "Zero-enemy combat room clears without deadlock")
-	_check(FIXTURE.TEMPLATES[0].enemy_positions.size() == 3, "Runtime changes do not mutate shared definition")
+	_check(_templates[0].spawns.size() == 3, "Runtime changes do not mutate shared definition")
 	empty.queue_free()
 	await _frames(2)
 

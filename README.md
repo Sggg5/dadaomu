@@ -4,11 +4,11 @@
 
 ## 当前状态
 
-已完成 **Phase 3 随机地宫系统**。默认 Seed 为 `192034`，每图 8～12 个房间，独立 RNG 可重现正交树状布局。START 固定在 (0,0)，Boss 是距离至少 5 的最远叶子，ANTIQUE 距离至少 2。
+当前 **Phase 4 敌人战斗原型**。默认 Seed 为 `192034`，每图 8～12 个房间，独立 RNG 可重现正交树状布局。START 固定在 (0,0)，Boss 是距离至少 5 的最远叶子，ANTIQUE 距离至少 2。
 
 随机节点决定位置/连接/类型，五份原有普通房配置作为共享模板池。玩家、战斗、门和房间生命周期继续复用：首次进入锁门，击杀后开门，过门保留生命，重访已清场房不刷怪。
 
-START 和 BOSS 使用普通 Dummy 战斗占位；ANTIQUE 自动清场，没有古董内容（Phase 6）或 Boss 战斗（Phase 7）。敌人 AI 属于 Phase 4，尚未开始。
+START 为安全出生房，忽略模板刷怪并立即清场开门；BOSS 使用普通敌人战斗占位；ANTIQUE 自动清场，没有古董内容（Phase 6）或 Boss 战斗（Phase 7）。已实现尸蟞追击咬击、盗墓枪手保持距离与射击。战斗房入房有 0.35 秒观察期，敌人暂停行动；橙色表示攻击前摇，红色菱形是敌方弹丸。修订版人工手感复验仍待反馈。
 
 ## 开发环境与运行
 
@@ -68,3 +68,15 @@ godot --path . -- --seed=192034
 - `docs/PHASE_3_VERIFICATION.md`：实际验收、命令、逐项结果及限制。
 - 跟踪源码、场景、Resource、源资产和 Godot `.uid`；不提交 `.godot/`、构建输出和本地日志。
 - 开始任务前检查 `git status`；功能分支默认使用 `codex/` 前缀。提交需有明确阶段与范围，不自动推送。
+
+## Phase 4 敌人与验证
+
+五模板组合为 3 尸蟞、5 尸蟞、2 枪手、3 尸蟞 + 1 枪手、2 尸蟞 + 2 枪手。编辑 data/enemies/*.tres 调整生命、速度、伤害、冷却和前摇；编辑 RoomDefinition.spawns 的每项场景/数据/位置，entry_grace_time 调整入房观察期。每个生成点与四入口至少相距 180 像素。
+
+```powershell
+godot --headless --path . --script res://tests/phase_4_smoke.gd
+godot --path . --script res://tests/phase_4_smoke.gd -- --capture
+```
+
+完整结果、人工反馈与限制见 docs/PHASE_4_VERIFICATION.md。未实现完整寻路、正式美术、音效、遗物或 Boss；不进入 Phase 5。
+START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场景、不修改共享 spawns；START 不调用 EnemySpawner，因此不应用观察期。COMBAT 的 180px 入口间距、0.35 秒观察期和攻击前摇保持；BOSS 仍普通敌人占位，ANTIQUE 仍自动清场。

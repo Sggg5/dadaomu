@@ -1,14 +1,42 @@
-[gd_resource type="Resource" script_class="RoomDefinition" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="RoomDefinition" load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/rooms/room_definition.gd" id="1"]
-[ext_resource type="PackedScene" path="res://scenes/enemies/dummy.tscn" id="2"]
+[ext_resource type="Script" path="res://scripts/rooms/enemy_spawn_definition.gd" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/scarab_enemy.tscn" id="3"]
+[ext_resource type="Resource" path="res://data/enemies/scarab.tres" id="4"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/bandit_shooter.tscn" id="5"]
+[ext_resource type="Resource" path="res://data/enemies/bandit_shooter.tres" id="6"]
+
+[sub_resource type="Resource" id="Spawn_0"]
+script = ExtResource("2")
+enemy_scene = ExtResource("3")
+enemy_definition = ExtResource("4")
+position = Vector2(440, 240)
+
+[sub_resource type="Resource" id="Spawn_1"]
+script = ExtResource("2")
+enemy_scene = ExtResource("3")
+enemy_definition = ExtResource("4")
+position = Vector2(840, 240)
+
+[sub_resource type="Resource" id="Spawn_2"]
+script = ExtResource("2")
+enemy_scene = ExtResource("5")
+enemy_definition = ExtResource("6")
+position = Vector2(430, 496)
+
+[sub_resource type="Resource" id="Spawn_3"]
+script = ExtResource("2")
+enemy_scene = ExtResource("5")
+enemy_definition = ExtResource("6")
+position = Vector2(860, 496)
 
 [resource]
+entry_grace_time = 0.35
 script = ExtResource("1")
 room_id = &"south"
 title = "沉沙室"
 map_position = Vector2i(0, 1)
 floor_color = Color(0.153, 0.176, 0.137, 1)
-enemy_scene = ExtResource("2")
-enemy_positions = PackedVector2Array(440, 240, 840, 240, 480, 496, 780, 496, 1000, 368)
 obstacles = Array[Rect2]([Rect2(260, 240, 96, 96), Rect2(924, 400, 96, 96)])
+spawns = Array[Resource]([SubResource("Spawn_0"), SubResource("Spawn_1"), SubResource("Spawn_2"), SubResource("Spawn_3")])

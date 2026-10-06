@@ -2,7 +2,7 @@
 
 ## 当前实现
 
-Godot 4.6.2 / GDScript / 2D / Compatibility。`project.godot` 启动 `scenes/main/dungeon_test.tscn`。DungeonSession 调用纯数据生成器，向 RoomController 注入 DungeonLayout，再复用现有玩家、战斗、Door、Room 和 RoomState。没有 Autoload、第三方插件、真实敌人 AI、古董或 Boss 内容。
+Godot 4.6.2 / GDScript / 2D / Compatibility。`project.godot` 启动 `scenes/main/dungeon_test.tscn`。DungeonSession 调用纯数据生成器，向 RoomController 注入 DungeonLayout，再复用现有玩家、战斗、Door、Room 和 RoomState。没有 Autoload、第三方插件、古董或 Boss 内容。
 
 ### Phase 3 数据与职责
 
@@ -37,7 +37,7 @@ Session 的 R 用当前 Seed 重新生成并替换控制器；N 使用独立随�
 
 RoomDefinition 的历史 `room_id` 是模板标识；`map_position` 只在 Phase 2 旧回归夹具读取，随机系统不读它。DungeonRoom 的类型、坐标和 ID 才是地图语义。Type 枚举在末尾增加 START，保留已有类型序号。
 
-Controller 将模板、运行状态、已连接方向和实际节点类型注入 Room.configure。Room 原有普通战斗生命周期不重写；仅增加占位进入规则：START/BOSS 使用普通敌人，ANTIQUE 经 ACTIVE → CLEARED 自动开门。没有古董奖励/背包（Phase 6），没有 Boss 战斗（Phase 7）；MERCHANT/TRAP/SECRET 尚无规则。
+Controller 将模板、运行状态、已连接方向和实际节点类型注入 Room.configure。Room 原有普通战斗生命周期不重写；仅增加占位进入规则：START 忽略模板 spawns，经 ACTIVE → CLEARED 同次进入即开门；BOSS 使用普通敌人，ANTIQUE 仍自动清场开门。没有古董奖励/背包（Phase 6），没有 Boss 战斗（Phase 7）；MERCHANT/TRAP/SECRET 尚无规则。
 
 ### 小地图与回归夹具
 
@@ -50,7 +50,7 @@ Phase 2 十字图只在 `tests/fixtures/fixed_room_test.gd/.tscn` 内生成并�
 - `RoomDefinition` Resource：模板 ID、房间名称、地面颜色、敌人场景、生成点与障碍矩形。五份 `.tres` 共用 `room.tscn`，不复制房间逻辑；拓扑坐标和实际类型在 Phase 3 移到 DungeonRoom。
 - `RoomState` RefCounted：每局每房间独立的 UNVISITED → ACTIVE → CLEARED 状态，重复激活/清场无效；已清场状态不可倒退。
 - `Room`：按定义创建墙、障碍和已连接方向的 Door；首次进入先锁门再生成；接收 all_defeated 后清场并开门。清场重访只重建布局与打开门。
-- `EnemySpawner`：生成一次，按 Health.died 和实例 ID 管理存活集合；只把死亡作为击杀，卸载节点不算清场。使用已有 Dummy 作为测试敌人，没有 AI。
+- `EnemySpawner`：生成一次，按 Health.died 和实例 ID 管理存活集合；只把死亡作为击杀，卸载节点不算清场。Phase 4 按统一生成项创建 Enemy；旧测试夹具仍使用 Dummy。
 - `Door`：World 层阻挡与只检测玩家的 Area2D；持续观察区域，玩家跨过门槛才发出方向请求。即使清场时已经站在门边，继续移动也能过门；单纯开门不会自动传送。
 - `RoomController`：持有布局、各房状态、唯一玩家及当前 Room；验证清场/相邻/死亡/切换条件，冻结输入后延迟替换房间。固定拓扑在 Phase 3 已移出生产代码。
 - `RoomTestHUD` / `RoomMinimap`：只展示房间、存活数、清场进度与状态，不改战斗状态；按钮发出操作请求。
@@ -120,7 +120,7 @@ RoomController
 
 ## 数据驱动
 
-已使用自定义 Resource 和 `.tres` 存储玩家属性及房间定义；后续用于敌人、遗物、古董和墓穴。每项内容具有稳定字符串 ID，展示名称独立于 ID。定义资源视为只读，运行时生命/冷却/房间状态/叠层/鉴定状态保存在实例或运行状态对象中。策略行为通过小脚本或枚举选择；不建立庞大条件分支。
+已使用自定义 Resource 和 `.tres` 存储玩家属性及房间定义；敌人数据已实现，后续用于遗物、古董和墓穴。每项内容具有稳定字符串 ID，展示名称独立于 ID。定义资源视为只读，运行时生命/冷却/房间状态/叠层/鉴定状态保存在实例或运行状态对象中。策略行为通过小脚本或枚举选择；不建立庞大条件分支。
 
 资源之间可使用类型化 Resource 引用；存档仅保存稳定 ID 和可序列化值，不保存节点或 Resource 实例。建立内容校验时检查重复 ID、缺失引用和非法参数。
 
@@ -136,3 +136,18 @@ RoomController
 - 注释解释责任、生命周期、约束和原因，避免逐行翻译代码。
 - 存档规划使用 `user://`、版本号、临时文件及备份，错误回退在 Phase 10 实现。
 - 不提前建立对象池、ECS、网络同步或通用插件框架；出现实测瓶颈后再选择局部优化。
+
+## Phase 4 敌人架构
+
+EnemyDefinition 存通用参数，RangedEnemyDefinition 增加射程带和弹丸参数。Enemy 共享 Health、目标注入、受伤闪白、死亡缩小与轻量墙体切向绕行。ScarabEnemy 的 CHASE / WINDUP / RECOVERY 与 BanditShooter 的 MOVE / AIM / RECOVERY 分别负责攻击，不依赖 RoomState 或地图。
+
+RoomDefinition.spawns 保存 EnemySpawnDefinition 数组，每项指定场景、数据与坐标。唯一 EnemySpawner 注入 Player 与本房 Projectiles，在加入场景树前设置 entry_grace_time；只订阅 Health.died 维护存活实例集合。生成完成及最后死亡都有一次性清场保护。旧 Dummy 通过同一入口运行，没有另建生成系统。
+
+EnemyProjectile 继承 Projectile 的扫掠、寿命与消费流程，仅覆盖伤害对象和几何外观。枪手开火时快照方向；玩家死亡取消追踪弹丸并停用 AI。Room.stop_combat 停止生成器内 AI、释放局部弹丸；地图切换仍由原 Controller 卸载整个 Room。玩家唯一、HP 跨房保留、Seed 算法不变。
+
+碰撞：World=1，Player=2，Targets/Enemies=4，PlayerProjectiles=8，EnemyProjectiles=16。新 Enemy mask=7，玩家弹丸 mask=5，敌人弹丸 mask=3；敌人弹丸不会与友军或玩家弹丸碰撞。Dummy 夹具 mask=2 保留。
+
+入口公平性：真正生成敌人的战斗房默认 0.35 秒观察期内不推进 AI 状态机、不移动、不攻击；外观暂时变浅。每模板出生点距四入口至少 180 像素。观察期结束后攻击仍必须完整前摇；这不是玩家无敌或完整难度平衡系统。
+
+墙体绕行仅短射线检测后沿法线切向移动，并短暂保持方向避免抖动；没有导航网格，复杂凹形障碍可能卡住。Phase 5 仅准备在既有攻击请求/受击接口周围设计可卸载的遗物效果，当前未添加效果管理器。
+START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场景、不修改共享 spawns；START 不调用 EnemySpawner，因此不应用观察期。COMBAT 的 180px 入口间距、0.35 秒观察期和攻击前摇保持；BOSS 仍普通敌人占位，ANTIQUE 仍自动清场。

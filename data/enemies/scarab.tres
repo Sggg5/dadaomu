@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"scarab"
+display_name = "尸蟞"
+max_hp = 50.0
+move_speed = 150.0
+contact_damage = 10.0
+attack_cooldown = 1.0
+windup_time = 0.22
+recovery_time = 0.28
+attack_range = 42.0
+body_color = Color(0.596, 0.71, 0.408, 1)

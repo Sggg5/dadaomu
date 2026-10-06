@@ -18,21 +18,25 @@ const WALL_THICKNESS: float = 16.0
 
 var room_state: RoomState
 var room_type: RoomDefinition.Type = RoomDefinition.Type.COMBAT
+var combat_target: Player
 var doors: Dictionary[int, Door] = {}
 var _connected_sides: Array[int] = []
 var _wall_rects: Array[Rect2] = []
 
 
-func configure(data: RoomDefinition, state: RoomState, connected_sides: Array[int], type: RoomDefinition.Type = RoomDefinition.Type.COMBAT) -> void:
+func configure(data: RoomDefinition, state: RoomState, connected_sides: Array[int], type: RoomDefinition.Type = RoomDefinition.Type.COMBAT, player: Player = null) -> void:
 	definition = data
 	room_state = state
 	room_type = type
+	combat_target = player
 	_connected_sides = connected_sides.duplicate()
 
 
 func _ready() -> void:
 	assert(definition != null and room_state != null, "Room must be configured before entering tree")
 	_build_geometry()
+	enemy_spawner.target = combat_target
+	enemy_spawner.projectile_parent = projectiles
 	room_state.changed.connect(_on_state_changed)
 	enemy_spawner.remaining_changed.connect(func(count: int) -> void: enemy_count_changed.emit(count))
 	enemy_spawner.all_defeated.connect(_on_all_defeated)
@@ -47,8 +51,9 @@ func enter() -> void:
 		push_error("This room type has no entry policy yet")
 		return
 	room_state.activate()
-	# Phase 3 占位：古董内容留给 Phase 6；Boss 使用普通 Dummy 留给 Phase 7。
-	if room_type == RoomDefinition.Type.ANTIQUE:
+	# START 仅复用视觉/障碍，忽略模板刷怪；古董内容留给 Phase 6。
+	# Boss 仍使用普通敌人组合，真正 Boss 留给 Phase 7。
+	if room_type in [RoomDefinition.Type.START, RoomDefinition.Type.ANTIQUE]:
 		_on_all_defeated()
 		return
 	enemy_spawner.spawn(definition)
@@ -64,6 +69,11 @@ func discard_projectiles() -> void:
 	for child in projectiles.get_children():
 		child.set_physics_process(false)
 		child.queue_free()
+
+
+func stop_combat() -> void:
+	enemy_spawner.stop_all()
+	discard_projectiles()
 
 
 func _on_all_defeated() -> void:

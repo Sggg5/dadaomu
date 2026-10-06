@@ -5,7 +5,7 @@ config_version=5
 config/name="大盗墓时代"
 run/main_scene="res://scenes/main/dungeon_test.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/description="原创盗墓主题 2D 房间式 Roguelite — Phase 3 Seed 随机地宫"
+config/description="原创盗墓主题 2D 房间式 Roguelite — Phase 4 尸蟞与盗墓枪手"
 
 [display]
 window/size/viewport_width=1280
@@ -57,6 +57,7 @@ new_dungeon={
 2d_physics/layer_2="Player"
 2d_physics/layer_3="Targets"
 2d_physics/layer_4="PlayerProjectiles"
+2d_physics/layer_5="EnemyProjectiles"
 
 [rendering]
 renderer/rendering_method="gl_compatibility"

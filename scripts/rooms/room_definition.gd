@@ -11,6 +11,7 @@ enum Type { COMBAT, ANTIQUE, MERCHANT, TRAP, SECRET, BOSS, START }
 @export var room_type: Type = Type.COMBAT
 @export var map_position: Vector2i
 @export var floor_color: Color = Color("20292c")
-@export var enemy_scene: PackedScene
-@export var enemy_positions: PackedVector2Array
+@export var spawns: Array[EnemySpawnDefinition] = []
+## 入房观察期仍立即生成敌人，但暂缓移动和攻击，避免持键过门遭先手。
+@export_range(0.0, 3.0) var entry_grace_time: float = 0.35
 @export var obstacles: Array[Rect2] = []

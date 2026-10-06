@@ -1,0 +1,149 @@
+# Phase 4 验证报告
+
+日期：2026-10-06。基准：94f0bb890e5d321de230066f80d61c93b1408dd2。
+分支：codex/phase-4-enemies。Godot 4.6.2 标准版，Windows，Compatibility。
+
+## 实际实现与边界
+
+原创占位尸蟞和盗墓枪手，共享生命/目标/反馈、各自小型状态机；混合敌人统一生成，真实伤害、前摇、死亡缩小、敌方弹丸及清房接通随机地图。玩家、地图生成算法和门系统复用。ANTIQUE 自动清场；START 现为安全出生房，忽略模板 spawns 并直接清场开门；BOSS 是普通敌人组合占位。未实现遗物、背包、经济、Boss、复杂导航、击退或正式资产。
+
+EnemyDefinition / RangedEnemyDefinition 为只读 Resource；Enemy 组合已有 Health，Spawner 显式注入唯一 Player 与本房弹丸容器。Enemy 不操作门、RoomState 或 DungeonLayout。RoomDefinition 从单场景 + 多坐标迁移为 Array[EnemySpawnDefinition]，每项有场景、定义、位置；没有双轨生成器。存活集合通过 Health.died 一次性通知，卸载不算死亡。
+
+敌方弹丸继承既有 Projectile 运动/扫掠/消费流程，只覆盖受击对象与图形。开火快照方向、不会追踪，命中或墙体/到期销毁，玩家死亡和房间切换清理。
+
+## 实际参数
+
+| 参数 | 尸蟞 scarab | 盗墓枪手 bandit_shooter |
+| --- | --- | --- |
+| HP | 50 | 70 |
+| 移速 | 150 | 95 |
+| 近战伤害 | 10 | 0 |
+| 冷却 | 1 秒 | 1.5 秒 |
+| 前摇 | 0.22 秒 | 0.4 秒 |
+| 恢复 | 0.28 秒 | 0.15 秒 |
+| 攻击距离 | 42 | 上限 500 |
+| 实际枪手射击距离带 | — | 200～280，目标 240 ±40 |
+| 弹丸 | — | 速度 280，伤害 12，寿命 3 秒 |
+
+冷却在攻击提交时启动，实际连续攻击间隔还包含下一次前摇；尸蟞约不低于 1.22 秒，枪手约不低于 1.9 秒。尸蟞前摇后重新判定距离/视线，可躲开；枪手过近撤退、过远靠近，在距离带与视线条件下瞄准。
+
+命中闪白 0.12 秒，死亡白色缩小 0.16 秒后释放；前摇橙色和圆环，枪手还有方向线。敌方弹丸红色菱形、浅色描边。玩家原有 0.35 秒无敌期不变。
+
+## 碰撞和所有权
+
+World 层 1 / 位值 1；Player 层 2 / 2；Targets/Enemies 层 3 / 4；PlayerProjectiles 层 4 / 8；新增 EnemyProjectiles 层 5 / 16。Enemy mask=7；玩家弹丸 mask=5；敌方弹丸 mask=3。敌方弹丸不伤友军。Room 拥有敌人与弹丸；Controller 持有唯一 Player。死亡停止 AI，过房卸载旧 Room。
+
+## 入口公平性修订
+
+用户人工反馈：“有开门杀的嫌疑”。初版据此加入可配置 entry_grace_time=1.0 秒（本次调整为 0.35 秒）；生成后 AI 暂停移动/攻击，颜色变浅；之后仍完整执行前摇。五模板每个敌人距四个入口至少 180 像素，避免持键过门直接贴脸。不额外改变玩家无敌期。
+
+组合：center=3 尸蟞，north=5 尸蟞，west=2 枪手，east=3 尸蟞+1 枪手，south=2 尸蟞+2 枪手。
+
+## 自动验证
+
+以下命令中的 godot 使用本机完整路径：
+C:/Users/atian/Downloads/Godot_v4.6.2-stable_win64.exe/Godot_v4.6.2-stable_win64_console.exe
+
+```powershell
+godot --headless --path . --editor --quit
+godot --headless --path . --script res://tests/phase_1_smoke.gd
+godot --headless --path . --script res://tests/phase_2_smoke.gd
+godot --headless --path . --script res://tests/phase_3_smoke.gd
+godot --headless --path . --script res://tests/phase_4_smoke.gd
+godot --path . --script res://tests/phase_4_smoke.gd -- --capture
+```
+
+最终完整运行结果：导入退出 0，无解析错误；Phase 1：27 checks / 0 failures；Phase 2：204 / 0；Phase 3：103 / 0；Phase 4 无窗口及图形各 80 / 0。所有完整测试退出码 0。日志在忽略的 logs/phase_4_final_0～4.log；无窗口 Phase 4 在 logs/phase_4_smoke.log。
+
+Phase 2 保留原 204 项验收语义，通过固定夹具克隆模板视觉并注入旧 Dummy 数量/位置；仍使用生产 Controller/Spawner。Phase 3 清房测试冻结新 AI、按 HP 计算真实弹丸数量，保留地图、状态、过门和生命周期断言；活跃 AI 完整链由 Phase 4 覆盖。
+
+Phase 4 覆盖请求的 26 项：两敌人生成/读取定义、追击与近战距离、咬击冷却/无敌、瞄准快照/不追踪、子弹一次伤害/撞墙/友军安全、两类被玩家子弹击伤、死亡一次、计数/清房一次、混合房、重访、旧敌人/弹丸释放、唯一玩家、玩家死亡幂等、R/N恢复。额外检查距离行为、前摇/闪白/死亡反馈、弹丸寿命、五模板组合和入口安全。
+
+实际场景执行：Seed 192034 → 首个 COMBAT 混合房 → 尸蟞真实伤害 → Player 武器击杀 → 活跃枪手射击 → 玩家弹丸击杀 → 清房开门 → WASD + Door 物理过门 → 重访 → R/N。AI 没有在这条主链中冻结；部分单体位置用于固定测试条件，并不等同于人工自由游玩。
+
+新增入口验证：五模板距所有入口 >=180；初版检查初次入房半秒内敌人位置不变/速度为零/HP不变；本次按配置推导观察期内检查时间；持键穿门后目标房仍有观察期。图形模式截图已查看，玩家可见、前摇橙色圆环可见；截图是程序驱动场景证据。
+
+开发中出现的早期资源替换解析错误已修复，最终运行无该错误。早期带 quit-after 的 Phase 2 运行提前中止，不计为通过；以上结果均等待完整测试摘要。
+
+## 人工试玩状态
+
+启动实际图形窗口并通过原生窗口输入 R 重开。窗口捕获先 FrameArrived 超时，恢复后再次 capture 超时，因此不能声称完成代理人工战斗试玩。
+
+用户给出入口先手风险反馈，已完成上述修订并自动验证。用户明确要求“先交付，人工复验待完成”。修订版人工复验待完成；尸蟞前摇主观清晰度、枪手距离手感、红弹辨识和混合房可躲避性不能以自动断言代替验收。
+
+## 已知限制与下一阶段
+
+轻量墙体切向绕行不等于路径规划，复杂凹形障碍可能卡住；尚无击退、音效或难度曲线。观察期与入口间距是当前公平性保护，长时间试玩和不同入口仍需人工评估。相同 Seed 复现地图拓扑，实时战斗不承诺确定性回放。Phase 5 待单独授权后规划遗物数据、获得与可卸载效果；本任务不进入。
+
+## 文件清单
+-  M AGENTS.md
+-  M ARCHITECTURE.md
+-  M PROJECT_PLAN.md
+-  M README.md
+-  M data/rooms/test_center.tres
+-  M data/rooms/test_east.tres
+-  M data/rooms/test_north.tres
+-  M data/rooms/test_south.tres
+-  M data/rooms/test_west.tres
+-  M project.godot
+-  M scenes/ui/room_test_hud.tscn
+-  M scripts/combat/projectile.gd
+-  M scripts/dungeon/dungeon_config.gd
+-  M scripts/rooms/enemy_spawner.gd
+-  M scripts/rooms/room.gd
+-  M scripts/rooms/room_controller.gd
+-  M scripts/rooms/room_definition.gd
+-  M tests/fixtures/fixed_room_test.gd
+-  M tests/phase_2_smoke.gd
+-  M tests/phase_3_smoke.gd
+- ?? data/enemies/bandit_shooter.tres
+- ?? data/enemies/scarab.tres
+- ?? scenes/enemies/bandit_shooter.tscn
+- ?? scenes/enemies/enemy_projectile.tscn
+- ?? scenes/enemies/scarab_enemy.tscn
+- ?? scripts/combat/enemy_projectile.gd
+- ?? scripts/combat/enemy_projectile.gd.uid
+- ?? scripts/enemies/bandit_shooter.gd
+- ?? scripts/enemies/bandit_shooter.gd.uid
+- ?? scripts/enemies/enemy.gd
+- ?? scripts/enemies/enemy.gd.uid
+- ?? scripts/enemies/enemy_definition.gd
+- ?? scripts/enemies/enemy_definition.gd.uid
+- ?? scripts/enemies/ranged_enemy_definition.gd
+- ?? scripts/enemies/ranged_enemy_definition.gd.uid
+- ?? scripts/enemies/scarab_enemy.gd
+- ?? scripts/enemies/scarab_enemy.gd.uid
+- ?? scripts/rooms/enemy_spawn_definition.gd
+- ?? scripts/rooms/enemy_spawn_definition.gd.uid
+- ?? tests/phase_4_enemy_checks.gd
+- ?? tests/phase_4_enemy_checks.gd.uid
+- ?? tests/phase_4_projectile_checks.gd
+- ?? tests/phase_4_projectile_checks.gd.uid
+- ?? tests/phase_4_room_checks.gd
+- ?? tests/phase_4_room_checks.gd.uid
+- ?? tests/phase_4_smoke.gd
+- ?? tests/phase_4_smoke.gd.uid
+- 新增本报告 docs/PHASE_4_VERIFICATION.md。Godot 生成的源码 .uid 一并跟踪；logs/ 不提交。
+
+新增测试源码 UID：tests/phase_4_enemy_checks.gd.uid、phase_4_projectile_checks.gd.uid、phase_4_room_checks.gd.uid、phase_4_smoke.gd.uid。
+
+## 2026-10-06 小范围手感调整
+
+用户反馈 1 秒静止过长，影响战斗节奏。本次仅将 RoomDefinition.entry_grace_time 默认值改为 0.35 秒，并在五个 test_*.tres 中显式设置 0.35。未改变出生点、180px 入口限制、尸蟞 0.22 秒 / 枪手 0.4 秒前摇或 AI 逻辑。
+
+Phase 4 测试从实际 activation_remaining 和 Engine.physics_ticks_per_second 计算观察期内/结束后的等待时间；验证位置与 HP 不变、无发射/前摇、期满 can_act 恢复且尸蟞重新移动。过门保护改为目标房进入时检查，避免错误要求 0.35 秒结束后仍静止。五模板运行资源值逐项检查，入口间距断言保留。
+
+完整执行上文导入命令及 Phase 1～4 无窗口 smoke：导入退出 0；Phase 1 为 27 / 0，Phase 2 为 204 / 0，Phase 3 为 103 / 0，Phase 4 为 87 / 0，均完整运行至结果摘要并退出 0；日志 logs/grace_import.log 与 logs/grace_phase_1～4.log 无 ERROR / FAIL / WARNING。git diff --check 通过。
+
+本次未追加人工手感验收，仍需用户试玩确认 0.35 秒节奏。修改 RoomDefinition、五模板、phase_4_room_checks 与 AGENTS / README / ARCHITECTURE / PROJECT_PLAN / 本报告；不进入 Phase 5，不合并 main。
+## 2026-10-06 最后修正：安全 START
+
+基准 ce2c31d。Room.enter 对实际 room_type START 与 ANTIQUE 同样在 activate 后立即 clear，不调用 EnemySpawner.spawn。复用原 room.tscn；随机选取 RoomDefinition 仍提供地面和障碍，不修改或复制共享刷怪数据。START 的实际连接门立即打开，首次/重访/R/N 均零敌人。entry_grace_time 只在真正生成敌人的房间赋给 Enemy；COMBAT 的 0.35 秒、入口 >=180px、尸蟞 0.22 秒/枪手 0.4 秒前摇未改。BOSS 仍普通敌人组合占位，ANTIQUE 自动清场。
+
+测试调整：Phase 3 START 不再执行战斗清场帮助函数，ACTIVE、禁止提前过门、真实弹丸击杀和开门断言仍在实际 COMBAT 执行；R 预期 START=CLEARED、其他=UNVISITED。检查数由 103 降为 86 是移除出生房不再存在的重复敌人射击/战斗断言，核心战斗覆盖保留。Phase 2 固定夹具中心仍为 COMBAT，全部 204 项原断言保留。
+
+Phase 4 有限搜索 0～99 Seed，选到 Seed 1 的首个相邻混合 COMBAT（不改生产生成器或模板池）。实际执行安全 START → WASD + Door → 混合 COMBAT → 观察期前后 → 活跃敌人攻击/击杀 → 开门 → 过门 → 重访 COMBAT → 回 START → R 安全出生 → 再过门生成敌人 → 玩家死亡停止 AI → N 安全出生 → 再过门生成敌人。模板 spawns 非空但 START 的 Spawner.started=false，证明没有应用随机刷怪配置；初始/重访/R/N 均检查安全状态。
+
+执行命令与本机 Godot 路径沿用上文。最终完整结果：导入解析退出 0；Phase 1 27 / 0，Phase 2 204 / 0，Phase 3 86 / 0，Phase 4 95 / 0；均退出 0，最终日志 logs/safe_start_import.log、safe_start_phase_1～4.log 无 ERROR/FAIL/WARNING。git diff --check 通过。首轮 Phase 3 因旧测试仍将 START 当 ACTIVE 房而失败，已将战斗断言移到 COMBAT 并完整复跑通过。
+
+修改：scripts/rooms/room.gd、tests/phase_3_smoke.gd、tests/phase_4_room_checks.gd、README.md、ARCHITECTURE.md、PROJECT_PLAN.md、AGENTS.md、本报告。未新增场景、资源或敌人机制。本次未进行新的人工手感验收；上一项人工复验仍待完成。用户授权提交并推送 codex/phase-4-enemies，禁止合并 main，不进入 Phase 5。

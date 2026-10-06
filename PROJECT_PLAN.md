@@ -38,12 +38,20 @@
 - Phase 1：最小玩家战斗原型已完成；生命、测试伤害、死亡/重开已接入。验证结果见 `docs/PHASE_1_VERIFICATION.md`。
 - Phase 2：基础房间战斗循环、五房固定地图及重访/切换完成；结果见 `docs/PHASE_2_VERIFICATION.md`。
 - Phase 3：随机树状地宫和 Room 系统已接通，Seed 重现、动态小地图、R/N 与回归通过，见 `docs/PHASE_3_VERIFICATION.md`。
-- Phase 4～12：未开始，等待单独授权。
+- Phase 4：两类真实敌人、混合生成、敌方弹丸与入口保护已实现；自动回归通过，修订版人工手感复验待反馈。见 docs/PHASE_4_VERIFICATION.md。
+- Phase 5～12：未开始，等待单独授权。
 
 ## Phase 3 边界与下一阶段
 
 通过随机单调主路径保证最低 Boss 深度，再随机扩展分支；每次扩展只邻接一个已有节点，保持树状。Boss 选最远叶子，古董房从距离至少 2 的剩余节点选择。没有无限重试或复杂迷宫算法。
 
-START/BOSS 仅普通战斗占位，ANTIQUE 自动清场。未做 AI、遗物、背包、Boss 战斗、黑市、存档、正式美术或剧情。本阶段提交到指定开发分支，不自行合并 main。
+Phase 3 当时 START/BOSS 为普通战斗占位；Phase 4 已将 START 改为安全出生房，BOSS 仍普通战斗占位，ANTIQUE 自动清场。未做 AI、遗物、背包、Boss 战斗、黑市、存档、正式美术或剧情。本阶段提交到指定开发分支，不自行合并 main。
 
 Phase 4 准备：用独立敌人场景替换部分 Dummy，先实现追击与远程敌人；复用 Health、EnemySpawner 和房间清场信号，加入攻击预警、玩家受伤及敌人死亡验证。不修改 Seed 生成算法，也不顺带实现 Boss 或遗物。
+
+## Phase 4 边界与 Phase 5 准备
+
+仅两种敌人及混合房战斗。共享 Health、数据配置、攻击前摇、受伤/死亡反馈、死亡停 AI、房间清理；0.35 秒入房观察期与安全生成点降低入口先手风险。无正式素材、复杂导航、Boss、遗物、古董、商店、存档。
+
+Phase 5 待单独授权后设计遗物定义、获取与可卸载效果生命周期，优先少量改变射击玩法的组合；不能因本阶段预留接口而宣称已实现 Build。
+START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场景、不修改共享 spawns；START 不调用 EnemySpawner，因此不应用观察期。COMBAT 的 180px 入口间距、0.35 秒观察期和攻击前摇保持；BOSS 仍普通敌人占位，ANTIQUE 仍自动清场。
