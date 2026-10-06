@@ -1,0 +1,12 @@
+# Godot generated editor/import cache (source .uid files should be tracked).
+.godot/
+*.tmp
+*.bak
+# Local builds and test logs.
+builds/
+logs/
+# Machine-specific editor files.
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

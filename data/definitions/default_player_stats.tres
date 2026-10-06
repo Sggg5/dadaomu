@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PlayerStats" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/player/player_stats.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+max_hp = 100.0
+move_speed = 280.0
+acceleration = 1800.0
+deceleration = 2200.0
+attack_damage = 20.0
+attack_speed = 5.0
+projectile_speed = 750.0
+projectile_lifetime = 2.0
+hurt_invulnerability = 0.35

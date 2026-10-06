@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="RoomDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/rooms/room_definition.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/dummy.tscn" id="2"]
+
+[resource]
+script = ExtResource("1")
+room_id = &"south"
+title = "沉沙室"
+map_position = Vector2i(0, 1)
+floor_color = Color(0.153, 0.176, 0.137, 1)
+enemy_scene = ExtResource("2")
+enemy_positions = PackedVector2Array(440, 240, 840, 240, 480, 496, 780, 496, 1000, 368)
+obstacles = Array[Rect2]([Rect2(260, 240, 96, 96), Rect2(924, 400, 96, 96)])

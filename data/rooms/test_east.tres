@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="RoomDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/rooms/room_definition.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/dummy.tscn" id="2"]
+
+[resource]
+script = ExtResource("1")
+room_id = &"east"
+title = "侧殿"
+map_position = Vector2i(1, 0)
+floor_color = Color(0.165, 0.129, 0.153, 1)
+enemy_scene = ExtResource("2")
+enemy_positions = PackedVector2Array(300, 240, 950, 230, 360, 500, 1040, 500)
+obstacles = Array[Rect2]([Rect2(464, 208, 96, 56), Rect2(720, 472, 96, 56)])

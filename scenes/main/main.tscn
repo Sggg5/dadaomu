@@ -1,0 +1,50 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/main/main.gd" id="1_main"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_main")
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Content" type="VBoxContainer" parent="Center"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Title" type="Label" parent="Center/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.86, 0.72, 0.43, 1)
+theme_override_font_sizes/font_size = 48
+text = "大盗墓时代"
+horizontal_alignment = 1
+
+[node name="Status" type="Label" parent="Center/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Phase 0 · 项目骨架已就绪"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="Center/Content"]
+layout_mode = 2
+text = "架空中国 · 随机古墓 · 遗物组合 · 贪心与撤离\n当前为启动验证场景，尚未实现游戏玩法。"
+horizontal_alignment = 1
+
+[node name="QuitButton" type="Button" parent="Center/Content"]
+custom_minimum_size = Vector2(240, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "退出"
+
+[connection signal="pressed" from="Center/Content/QuitButton" to="." method="_on_quit_pressed"]
