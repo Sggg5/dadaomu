@@ -5,7 +5,7 @@ static func targets(room: Room) -> Array[Node2D]:
 	var result: Array[Node2D] = []
 	if not is_instance_valid(room):
 		return result
-	for actor in room.enemy_spawner.get_children():
+	for actor in room.damage_targets():
 		var health := actor.get_node_or_null("Health") as Health
 		if actor is Node2D and health != null and not health.is_dead:
 			result.append(actor)

@@ -6,11 +6,15 @@ extends Node2D
 signal room_changed(room_id: StringName)
 signal restart_requested
 signal room_cleared(context: RoomClearContext)
+signal floor_exit_requested
 
 const ROOM_SCENE: PackedScene = preload("res://scenes/rooms/room.tscn")
 const PROJECTILE_SCENE: PackedScene = preload("res://scenes/player/projectile.tscn")
 var layout: DungeonLayout
 var rewards: RelicRewardService
+var floor_number: int = 1
+var floor_offset: int = 0
+var boss_definition: BossDefinition
 
 @onready var player: Player = $Player
 @onready var hud: RoomTestHUD = $HUD
@@ -104,7 +108,11 @@ func _switch_room(target_id: StringName, entry_side: int) -> void:
 	var node := layout.rooms[target_id]
 	for side in node.neighbors:
 		sides.append(side)
-	current_room.configure(node.definition, states[target_id], sides, node.room_type, player, EncounterDifficulty.from_depth(node.distance_from_start))
+	current_room.boss_definition = boss_definition
+	current_room.configure(node.definition, states[target_id], sides, node.room_type, player, EncounterDifficulty.from_depth(node.distance_from_start + floor_offset))
+	hud.hide_boss()
+	current_room.boss_started.connect(hud.show_boss)
+	current_room.floor_exit_requested.connect(func() -> void: floor_exit_requested.emit())
 	current_room.traversal_requested.connect(request_traversal)
 	current_room.state_changed.connect(func(_status: RoomState.Status) -> void: _refresh_hud())
 	current_room.enemy_count_changed.connect(func(_count: int) -> void: _refresh_hud())
@@ -131,8 +139,9 @@ func _spawn_projectile(request: AttackRequest) -> void:
 
 
 func _refresh_hud() -> void:
-	hud.show_room(layout.rooms[current_id], current_room.room_state, current_room.enemy_spawner.get_remaining())
+	hud.show_room(layout.rooms[current_id], current_room.room_state, current_room.remaining_count())
 	hud.show_map(layout, states, current_id)
+	hud.show_floor(floor_number, current_room.difficulty.depth, current_room.difficulty.tier)
 
 
 func _on_player_died() -> void:
@@ -146,16 +155,16 @@ func _on_player_died() -> void:
 
 func _on_room_cleared() -> void:
 	var context := RoomClearContext.new()
-	context.room_id = current_id
+	context.room_id = scoped_room_id(current_id)
 	context.room_type = current_room.room_type
 	context.was_combat = context.room_type == RoomDefinition.Type.COMBAT
-	context.enemy_count = current_room.definition.spawns.size() if context.room_type in [RoomDefinition.Type.COMBAT, RoomDefinition.Type.BOSS] else 0
+	context.enemy_count = 1 if current_room.boss_definition != null and context.room_type == RoomDefinition.Type.BOSS else (current_room.definition.spawns.size() if context.room_type in [RoomDefinition.Type.COMBAT, RoomDefinition.Type.BOSS] else 0)
 	player.relics.notify_room_cleared(context)
 	room_cleared.emit(context)
 
 
 func _create_pedestal(definition: RelicDefinition, room_id: StringName) -> void:
-	if player.health.is_dead or room_id != current_id:
+	if player.health.is_dead or room_id != scoped_room_id(current_id):
 		return
 	var pedestal := RelicPedestal.new()
 	pedestal.name = "RelicPedestal"
@@ -163,3 +172,7 @@ func _create_pedestal(definition: RelicDefinition, room_id: StringName) -> void:
 	pedestal.player = player
 	pedestal.position = RelicPedestal.safe_position(current_room)
 	current_room.add_child(pedestal)
+
+
+func scoped_room_id(id: StringName) -> StringName:
+	return id if floor_number == 1 else StringName("F%d:%s" % [floor_number, id])

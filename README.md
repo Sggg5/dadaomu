@@ -4,11 +4,11 @@
 
 ## 当前状态
 
-当前 **Phase 5B 正式遗物奖励与 Build 协同**。默认 Seed 为 `192034`，每图 8～12 个房间，独立 RNG 可重现正交树状布局。START 固定在 (0,0)，Boss 是距离至少 5 的最远叶子，ANTIQUE 距离至少 2。
+当前 **Phase 6 晋北大帅尸与两层推进**（开发分支，未合并main）。默认 Seed 为 `192034`，每图 8～12 个房间，独立 RNG 可重现正交树状布局。START 固定在 (0,0)，Boss 是距离至少 5 的最远叶子，ANTIQUE 距离至少 2。
 
 随机节点决定位置/连接/类型，五份原有普通房配置作为共享模板池。玩家、战斗、门和房间生命周期继续复用：首次进入锁门，击杀后开门，过门保留生命，重访已清场房不刷怪。
 
-START 为安全出生房，忽略模板刷怪并立即清场开门；BOSS 使用普通敌人战斗占位；ANTIQUE 自动清场，没有古董内容（Phase 6）或 Boss 战斗（Phase 7）。已实现尸蟞追击咬击、盗墓枪手保持距离与射击。战斗房入房有 0.35 秒观察期，敌人暂停行动；橙色表示攻击前摇，红色菱形是敌方弹丸。修订版人工手感复验仍待反馈。
+START 为安全出生房，忽略模板刷怪并立即清场开门；第一层BOSS为晋北大帅尸，胜利后E深入第二层；第二层BOSS仍普通敌人占位，无第三层。ANTIQUE自动清场，古董经济尚未实现。已实现尸蟞追击咬击、盗墓枪手保持距离与射击。战斗房入房有 0.35 秒观察期，敌人暂停行动；橙色表示攻击前摇，红色菱形是敌方弹丸。修订版人工手感复验仍待反馈。
 
 ## 开发环境与运行
 
@@ -18,7 +18,7 @@ START 为安全出生房，忽略模板刷怪并立即清场开门；BOSS 使用
 - WASD 移动，鼠标瞄准，按住鼠标左键连续射击。
 - F1 或“测试伤害”按钮造成 25 点伤害；受伤后有 0.25 秒无敌期。默认 80 HP，间隔受伤四次死亡。
 - 清场后走入绿色门过房；橙色门锁定。小地图显示未探索、战斗中、已清场和当前位置。
-- R 或“同图重开”使用当前 Seed 重建完整地图、恢复 HP 并重置状态。N 或“新图”选择新 Seed，生成不同拓扑。
+- R 或“同图重开”回到相同run_seed第一层、80HP、空Build、零奖励进度。N 或“新图”选择新 Seed，生成不同拓扑。
 - HUD 显示当前 Seed；动态小地图以 S/B/A 标记出生/Boss/古董占位房。Esc 或“退出”关闭窗口。
 - 命令行：`godot --path . --editor`；Godot 不在 PATH 时使用安装位置的完整路径。
 - 导入/解析检查：`godot --headless --path . --editor --quit`。
@@ -79,7 +79,7 @@ godot --path . --script res://tests/phase_4_smoke.gd -- --capture
 ```
 
 完整结果、人工反馈与限制见 docs/PHASE_4_VERIFICATION.md。未实现完整寻路、正式美术、音效或 Boss；工程遗物只用于开发回归；正式池为 Phase 5B 的八件遗物。
-START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场景、不修改共享 spawns；START 不调用 EnemySpawner，因此不应用观察期。COMBAT 的 180px 入口间距、0.35 秒观察期和攻击前摇保持；BOSS 仍普通敌人占位，ANTIQUE 仍自动清场。
+START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场景、不修改共享 spawns；START 不调用 EnemySpawner，因此不应用观察期。COMBAT 的 180px 入口间距、0.35 秒观察期和攻击前摇保持；第一层BOSS为正式晋北大帅尸，第二层BOSS仍普通敌人占位，ANTIQUE自动清场。
 
 ## Phase 5A 开发测试
 
@@ -98,7 +98,7 @@ godot --path . --script res://tests/phase_5a_smoke.gd -- --capture
 godot --path . -- --seed=1
 ```
 
-数据在 data/relics/，效果实现分别位于 scripts/relics/effects/。配置引用独立 effect_script，不添加核心脚本 ID 分支。新增参数或运行对象时继续维护 copy/卸载生命周期。Phase 5A 已合并 main；当前工作为 Phase 5B，仍不自动合并 main。
+数据在 data/relics/，效果实现分别位于 scripts/relics/effects/。配置引用独立 effect_script，不添加核心脚本 ID 分支。新增参数或运行对象时继续维护 copy/卸载生命周期。Phase5A/5B已合并main；当前工作为Phase6，仍不自动合并main。
 ## Phase 5B 正式奖励与 Build
 
 首次清场第2、4、7个普通COMBAT房生成一件底座奖励。START、ANTIQUE、BOSS占位不计数，重访不重复。靠近底座64px内按E拾取，名称/简短说明就地显示；离房未拾取则丢失，不在重访补发。
@@ -124,7 +124,7 @@ godot --path . --script res://tests/phase_5b_smoke.gd -- --capture
 godot --path . -- --seed=192034
 ```
 
-Seed192034正常测试在第2/4/7次清房获得墨斗/五帝钱/黑火药，再继续战斗。详细测试、文件清单和人工验收状态见docs/PHASE_5B_VERIFICATION.md。当前分支codex/phase-5b-relic-builds，提交并push后停止，不进入Phase6。
+Seed192034正常测试在第2/4/7次清房获得墨斗/五帝钱/黑火药，再继续战斗。详细测试、文件清单和人工验收状态见docs/PHASE_5B_VERIFICATION.md。以上为Phase5B历史验收；当前分支codex/phase-6-boss-floor-transition，完成后停止。
 ## Phase 5B 平衡修订（2026-10-06）
 
 正式奖励改为第2/4/7个首次COMBAT清场，其他房型/重访/重复通知规则不变。短局只有5～6个COMBAT时只发2件，不动态补发；无放回序列及R同Seed复现不变。
@@ -143,3 +143,18 @@ EncounterDifficulty由Controller读取DungeonRoom.distance_from_start解析，�
 HP倍率仍1.00/1.15/1.30；伤害倍率改1.00/1.15/1.35。三Tier实际咬击14/16.1/18.9，弹伤16/18.4/21.6。80HP分别约6/5/5次咬击或5/5/4次枪弹死亡；均非一两下秒杀。倍率仍仅作用实例HP和伤害，不额外缩放时序/速度。
 
 怪物数量、正式遗物、奖励2/4/7均不改。本次只提高失误代价，不以堆HP或数量延长战斗；若主观风险仍不足，后续应评估攻击模式而非继续堆HP。人工复验状态见验证报告，不进入Phase6。
+## Phase 6：Boss与第二层
+
+第一层BOSS忽略普通模板刷怪，出现晋北大帅尸（基础650HP，Tier3实际845HP）。冲锋前红色方向线0.65s，然后650px/s直冲0.45s；撞墙停止、方向不追踪、一次伤害。震荡前橙色圆环0.8s，180px内结算一次。首次半血召唤3只尸蟞，Boss死亡清理余下召唤物、开门并产生墓道。
+
+靠近墓道64px内按E进入第二层，当前HP和遗物ID保留；效果重新安装，铜镜/铲计数、纸鸢充能、燃烧及武器冷却重置。奖励2/4/7为整局累计，不按层重发，不会有第四件。第二层深度加3，第一普通房至少Tier2；第二层BOSS为普通敌人占位，无第三层。
+
+HUD显示墓层、当前层Seed、有效深度与Tier。R在第二层也重开整个Run：同run_seed第一层、80HP、空Build、零奖励进度；N开始新Run。第二层Seed为`(run_seed XOR (2*104729)) + attempt*7919`，attempt从0开始，最多16次选与第一层空间签名不同的结果。参数、引擎、生成版本变化会影响复现。
+
+```powershell
+godot --headless --path . --script res://tests/phase_6_smoke.gd
+godot --path . --script res://tests/phase_6_smoke.gd -- --capture
+godot --path . -- --seed=192034
+```
+
+详细实际结果和人工验收状态见`docs/PHASE_6_VERIFICATION.md`。此阶段未实现古董、撤离、第二正式Boss、第三层或存档。

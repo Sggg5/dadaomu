@@ -37,3 +37,10 @@ func heal(amount: float) -> bool:
 	current_hp = minf(max_hp, current_hp + amount)
 	changed.emit(current_hp, max_hp)
 	return true
+
+
+func restore(value: float) -> void:
+	if not is_finite(value): return
+	current_hp = clampf(value, 0.0, max_hp)
+	is_dead = current_hp <= 0.0
+	changed.emit(current_hp, max_hp)

@@ -46,7 +46,7 @@ func fight() -> void:
 	if world.current_room.room_state.status != RoomState.Status.ACTIVE:
 		return
 	var original := world.current_room.enemy_spawner.get_children()
-	test.check(original.all(func(enemy: Enemy) -> bool: return is_equal_approx(enemy.health.max_hp, enemy.definition.max_hp * world.current_room.difficulty.hp_multiplier)) and world.current_room.difficulty.depth == world.layout.rooms[world.current_id].distance_from_start, "Controller injects actual layout depth into live enemy HP")
+	test.check(original.all(func(enemy: Enemy) -> bool: return is_equal_approx(enemy.health.max_hp, enemy.definition.max_hp * world.current_room.difficulty.hp_multiplier)) and world.current_room.difficulty.depth == world.layout.rooms[world.current_id].distance_from_start + world.floor_offset, "Controller injects actual layout depth into live enemy HP")
 	for enemy in original:
 		for attempt in range(32):
 			if not is_instance_valid(enemy) or enemy.health.is_dead or world.player.health.is_dead:

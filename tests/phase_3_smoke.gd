@@ -209,7 +209,7 @@ func _run() -> void:
 	_check(session.world.current_room.room_type == RoomDefinition.Type.ANTIQUE and session.world.current_room.room_state.status == RoomState.Status.CLEARED and session.world.current_room.enemy_spawner.get_remaining() == 0, "ANTIQUE placeholder auto clears without implementing inventory")
 	_capture("antique")
 	await _visit(session.world.layout.boss_id)
-	_check(session.world.current_room.room_type == RoomDefinition.Type.BOSS and session.world.current_room.enemy_spawner.get_remaining() > 0, "BOSS uses ordinary combat placeholder, no Boss AI")
+	_check(session.world.current_room.room_type == RoomDefinition.Type.BOSS and not session.world.current_room.enemy_spawner.started and is_instance_valid(session.world.current_room.boss_encounter.boss), "First-floor BOSS replaces ordinary spawns with one formal encounter")
 	_capture("boss")
 	session.world.player.health.take_damage(1000.0)
 	await _frames(2)

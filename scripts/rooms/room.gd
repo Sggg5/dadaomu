@@ -7,6 +7,8 @@ signal traversal_requested(side: Door.Direction)
 signal state_changed(status: RoomState.Status)
 signal enemy_count_changed(count: int)
 signal cleared
+signal boss_started(boss: WarlordBoss)
+signal floor_exit_requested
 
 const DOOR_SCENE: PackedScene = preload("res://scenes/rooms/door.tscn")
 const ROOM_RECT := Rect2(64, 144, 1152, 448)
@@ -20,6 +22,8 @@ var room_state: RoomState
 var room_type: RoomDefinition.Type = RoomDefinition.Type.COMBAT
 var combat_target: Player
 var difficulty: EncounterDifficulty = EncounterDifficulty.from_depth(0)
+var boss_definition: BossDefinition
+var boss_encounter: BossEncounter
 var doors: Dictionary[int, Door] = {}
 var _connected_sides: Array[int] = []
 var _wall_rects: Array[Rect2] = []
@@ -50,15 +54,27 @@ func enter() -> void:
 	_set_doors_open(false)
 	if room_state.status == RoomState.Status.CLEARED:
 		_set_doors_open(true)
+		if room_type == RoomDefinition.Type.BOSS and boss_definition != null: _create_floor_exit()
 		return
 	if room_type not in [RoomDefinition.Type.COMBAT, RoomDefinition.Type.START, RoomDefinition.Type.BOSS, RoomDefinition.Type.ANTIQUE]:
 		push_error("This room type has no entry policy yet")
 		return
 	room_state.activate()
-	# START 仅复用视觉/障碍，忽略模板刷怪；古董内容留给 Phase 6。
-	# Boss 仍使用普通敌人组合，真正 Boss 留给 Phase 7。
+	# START/ANTIQUE只复用布局；第二层BOSS暂无正式Definition，才使用普通占位敌人。
 	if room_type in [RoomDefinition.Type.START, RoomDefinition.Type.ANTIQUE]:
 		_on_all_defeated()
+		return
+	if room_type == RoomDefinition.Type.BOSS and boss_definition != null:
+		if is_instance_valid(boss_encounter): return
+		boss_encounter = BossEncounter.new()
+		boss_encounter.room = self
+		boss_encounter.definition = boss_definition
+		boss_encounter.defeated.connect(_boss_defeated)
+		boss_encounter.enemy_killed.connect(combat_target.relics.notify_enemy_killed)
+		boss_encounter.remaining_changed.connect(func(count: int) -> void: enemy_count_changed.emit(count))
+		add_child(boss_encounter)
+		boss_encounter.start()
+		boss_started.emit(boss_encounter.boss)
 		return
 	enemy_spawner.spawn(definition)
 
@@ -76,8 +92,35 @@ func discard_projectiles() -> void:
 
 
 func stop_combat() -> void:
+	if is_instance_valid(boss_encounter): boss_encounter.stop()
 	enemy_spawner.stop_all()
 	discard_projectiles()
+
+
+func _boss_defeated() -> void:
+	_on_all_defeated()
+	_create_floor_exit()
+
+
+func _create_floor_exit() -> void:
+	if has_node("FloorExit"): return
+	var exit := FloorExit.new()
+	exit.name = "FloorExit"
+	exit.player = combat_target
+	exit.position = RelicPedestal.safe_position(self)
+	exit.floor_exit_requested.connect(func() -> void: floor_exit_requested.emit())
+	add_child(exit)
+
+
+func damage_targets() -> Array[Node2D]:
+	var result: Array[Node2D] = []
+	result.assign(enemy_spawner.get_children())
+	if is_instance_valid(boss_encounter): result.append_array(boss_encounter.targets())
+	return result
+
+
+func remaining_count() -> int:
+	return boss_encounter.targets().size() if is_instance_valid(boss_encounter) else enemy_spawner.get_remaining()
 
 
 func _on_all_defeated() -> void:
