@@ -5,7 +5,7 @@
 
 ## 实际实现与边界
 
-原创占位尸蟞和盗墓枪手，共享生命/目标/反馈、各自小型状态机；混合敌人统一生成，真实伤害、前摇、死亡缩小、敌方弹丸及清房接通随机地图。玩家、地图生成算法和门系统复用。ANTIQUE 自动清场；BOSS 是普通敌人组合占位。未实现遗物、背包、经济、Boss、复杂导航、击退或正式资产。
+原创占位尸蟞和盗墓枪手，共享生命/目标/反馈、各自小型状态机；混合敌人统一生成，真实伤害、前摇、死亡缩小、敌方弹丸及清房接通随机地图。玩家、地图生成算法和门系统复用。ANTIQUE 自动清场；START 现为安全出生房，忽略模板 spawns 并直接清场开门；BOSS 是普通敌人组合占位。未实现遗物、背包、经济、Boss、复杂导航、击退或正式资产。
 
 EnemyDefinition / RangedEnemyDefinition 为只读 Resource；Enemy 组合已有 Health，Spawner 显式注入唯一 Player 与本房弹丸容器。Enemy 不操作门、RoomState 或 DungeonLayout。RoomDefinition 从单场景 + 多坐标迁移为 Array[EnemySpawnDefinition]，每项有场景、定义、位置；没有双轨生成器。存活集合通过 Health.died 一次性通知，卸载不算死亡。
 
@@ -59,7 +59,7 @@ Phase 2 保留原 204 项验收语义，通过固定夹具克隆模板视觉并�
 
 Phase 4 覆盖请求的 26 项：两敌人生成/读取定义、追击与近战距离、咬击冷却/无敌、瞄准快照/不追踪、子弹一次伤害/撞墙/友军安全、两类被玩家子弹击伤、死亡一次、计数/清房一次、混合房、重访、旧敌人/弹丸释放、唯一玩家、玩家死亡幂等、R/N恢复。额外检查距离行为、前摇/闪白/死亡反馈、弹丸寿命、五模板组合和入口安全。
 
-实际场景执行：Seed 192034 → START 混合房 → 尸蟞真实伤害 → Player 武器击杀 → 活跃枪手射击 → 玩家弹丸击杀 → 清房开门 → WASD + Door 物理过门 → 重访 → R/N。AI 没有在这条主链中冻结；部分单体位置用于固定测试条件，并不等同于人工自由游玩。
+实际场景执行：Seed 192034 → 首个 COMBAT 混合房 → 尸蟞真实伤害 → Player 武器击杀 → 活跃枪手射击 → 玩家弹丸击杀 → 清房开门 → WASD + Door 物理过门 → 重访 → R/N。AI 没有在这条主链中冻结；部分单体位置用于固定测试条件，并不等同于人工自由游玩。
 
 新增入口验证：五模板距所有入口 >=180；初版检查初次入房半秒内敌人位置不变/速度为零/HP不变；本次按配置推导观察期内检查时间；持键穿门后目标房仍有观察期。图形模式截图已查看，玩家可见、前摇橙色圆环可见；截图是程序驱动场景证据。
 
@@ -136,3 +136,14 @@ Phase 4 测试从实际 activation_remaining 和 Engine.physics_ticks_per_second
 完整执行上文导入命令及 Phase 1～4 无窗口 smoke：导入退出 0；Phase 1 为 27 / 0，Phase 2 为 204 / 0，Phase 3 为 103 / 0，Phase 4 为 87 / 0，均完整运行至结果摘要并退出 0；日志 logs/grace_import.log 与 logs/grace_phase_1～4.log 无 ERROR / FAIL / WARNING。git diff --check 通过。
 
 本次未追加人工手感验收，仍需用户试玩确认 0.35 秒节奏。修改 RoomDefinition、五模板、phase_4_room_checks 与 AGENTS / README / ARCHITECTURE / PROJECT_PLAN / 本报告；不进入 Phase 5，不合并 main。
+## 2026-10-06 最后修正：安全 START
+
+基准 ce2c31d。Room.enter 对实际 room_type START 与 ANTIQUE 同样在 activate 后立即 clear，不调用 EnemySpawner.spawn。复用原 room.tscn；随机选取 RoomDefinition 仍提供地面和障碍，不修改或复制共享刷怪数据。START 的实际连接门立即打开，首次/重访/R/N 均零敌人。entry_grace_time 只在真正生成敌人的房间赋给 Enemy；COMBAT 的 0.35 秒、入口 >=180px、尸蟞 0.22 秒/枪手 0.4 秒前摇未改。BOSS 仍普通敌人组合占位，ANTIQUE 自动清场。
+
+测试调整：Phase 3 START 不再执行战斗清场帮助函数，ACTIVE、禁止提前过门、真实弹丸击杀和开门断言仍在实际 COMBAT 执行；R 预期 START=CLEARED、其他=UNVISITED。检查数由 103 降为 86 是移除出生房不再存在的重复敌人射击/战斗断言，核心战斗覆盖保留。Phase 2 固定夹具中心仍为 COMBAT，全部 204 项原断言保留。
+
+Phase 4 有限搜索 0～99 Seed，选到 Seed 1 的首个相邻混合 COMBAT（不改生产生成器或模板池）。实际执行安全 START → WASD + Door → 混合 COMBAT → 观察期前后 → 活跃敌人攻击/击杀 → 开门 → 过门 → 重访 COMBAT → 回 START → R 安全出生 → 再过门生成敌人 → 玩家死亡停止 AI → N 安全出生 → 再过门生成敌人。模板 spawns 非空但 START 的 Spawner.started=false，证明没有应用随机刷怪配置；初始/重访/R/N 均检查安全状态。
+
+执行命令与本机 Godot 路径沿用上文。最终完整结果：导入解析退出 0；Phase 1 27 / 0，Phase 2 204 / 0，Phase 3 86 / 0，Phase 4 95 / 0；均退出 0，最终日志 logs/safe_start_import.log、safe_start_phase_1～4.log 无 ERROR/FAIL/WARNING。git diff --check 通过。首轮 Phase 3 因旧测试仍将 START 当 ACTIVE 房而失败，已将战斗断言移到 COMBAT 并完整复跑通过。
+
+修改：scripts/rooms/room.gd、tests/phase_3_smoke.gd、tests/phase_4_room_checks.gd、README.md、ARCHITECTURE.md、PROJECT_PLAN.md、AGENTS.md、本报告。未新增场景、资源或敌人机制。本次未进行新的人工手感验收；上一项人工复验仍待完成。用户授权提交并推送 codex/phase-4-enemies，禁止合并 main，不进入 Phase 5。

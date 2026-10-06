@@ -53,15 +53,16 @@ godot --headless --path . --script res://tests/phase_3_smoke.gd
 - 图为 8～12 房的正交树；START 在 (0,0)，Boss 为最深叶子且距离至少 5，ANTIQUE 距离至少 2。
 - 候选遍历与签名必须显式稳定排序，StringName 应转字符串后排序；检查跨进程复现，不能只验证同进程重复调用。
 - R 保留当前 Seed；N 用独立 Seed 来源获得新布局。生成版本、配置、模板池和引擎版本影响复现结果。
-- START/BOSS 为普通战斗占位，ANTIQUE 自动清场。古董内容属于 Phase 6，Boss 战斗属于 Phase 7。
+- START 为安全出生房，忽略模板 spawns 并立即清场开门；BOSS 为普通战斗占位，ANTIQUE 自动清场。古董内容属于 Phase 6，Boss 战斗属于 Phase 7。
 - Phase 2 固定图仅保留在 tests/fixtures；改旧测试时保留原始行为断言，不通过删除断言掩盖回归。
 
 ## Phase 4 敌人约定
 
-- 当前分支 codex/phase-4-enemies；用户已授权验证后提交，未授权推送或合并 main。
+- 当前分支 codex/phase-4-enemies；用户已授权验证后提交并推送当前分支，禁止合并 main。
 - EnemyDefinition / RangedEnemyDefinition 只读；Enemy 持有实例 HP、冷却和观察期。Player 与弹丸容器通过 Spawner 显式注入。
 - RoomDefinition.spawns 是唯一生成入口，EnemySpawnDefinition 指定场景、数据和位置。Dummy 只保留给旧回归夹具。
 - 敌人弹丸仅检测 World / Player；不伤友军，不追踪移动目标，房间卸载或玩家死亡必须清理。
-- 入房默认 0.35 秒观察期，暂缓 AI 移动和攻击；模板生成点距四入口至少 180 像素。不得跳过攻击前摇补偿难度。
+- 真正生成敌人的战斗房入房默认 0.35 秒观察期，暂缓 AI 移动和攻击；模板生成点距四入口至少 180 像素。不得跳过攻击前摇补偿难度。
 - 必跑 Phase 1～4 smoke，保留旧功能断言。人工试玩与程序驱动图形验证分开报告。
 - Phase 5 准备仅文档规划，不提前实现遗物、Boss、古董、黑市或存档。
+START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场景、不修改共享 spawns；START 不调用 EnemySpawner，因此不应用观察期。COMBAT 的 180px 入口间距、0.35 秒观察期和攻击前摇保持；BOSS 仍普通敌人占位，ANTIQUE 仍自动清场。

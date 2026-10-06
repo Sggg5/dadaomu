@@ -51,8 +51,9 @@ func enter() -> void:
 		push_error("This room type has no entry policy yet")
 		return
 	room_state.activate()
-	# 古董内容留给 Phase 6；Boss 使用普通敌人组合，真正 Boss 留给 Phase 7。
-	if room_type == RoomDefinition.Type.ANTIQUE:
+	# START 仅复用视觉/障碍，忽略模板刷怪；古董内容留给 Phase 6。
+	# Boss 仍使用普通敌人组合，真正 Boss 留给 Phase 7。
+	if room_type in [RoomDefinition.Type.START, RoomDefinition.Type.ANTIQUE]:
 		_on_all_defeated()
 		return
 	enemy_spawner.spawn(definition)

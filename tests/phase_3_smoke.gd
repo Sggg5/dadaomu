@@ -194,9 +194,10 @@ func _run() -> void:
 	var original_seed := session.seed_value
 	_capture("start")
 	_check(session.world.current_id == &"START" and _count_players(root) == 1, "Session starts at START with one Player")
+	_check(session.world.current_room.room_state.status == RoomState.Status.CLEARED and session.world.current_room.enemy_spawner.get_remaining() == 0 and not session.world.current_room.enemy_spawner.started and session.world.current_room.doors.values().all(func(door: Door) -> bool: return door.is_open), "START is safe and opens all actual connections immediately")
 	_check(session.world.hud.get_node("Root/Seed").text.contains(str(original_seed)), "HUD shows actual Seed")
 	session.world.apply_test_damage()
-	await _clear_with_projectiles()
+	# START 已自动清场；原有 ACTIVE/锁门/真实弹丸清场断言在下一 COMBAT 执行。
 	var side: int = session.world.layout.rooms[&"START"].neighbors.keys()[0]
 	await _walk(side)
 	_check(session.world.layout.rooms[session.world.current_id].room_type == RoomDefinition.Type.COMBAT, "START leads to generated COMBAT room")
@@ -221,7 +222,7 @@ func _run() -> void:
 	_check(session.world.player.health.current_hp == 100.0 and _count_players(root) == 1, "R restores HP and keeps only one Player")
 	var states_reset: bool = true
 	for room_id in session.world.states:
-		states_reset = states_reset and session.world.states[room_id].status == (RoomState.Status.ACTIVE if room_id == &"START" else RoomState.Status.UNVISITED)
+		states_reset = states_reset and session.world.states[room_id].status == (RoomState.Status.CLEARED if room_id == &"START" else RoomState.Status.UNVISITED)
 	_check(states_reset, "R resets every room state")
 	old_world = session.world
 	_key(KEY_N)

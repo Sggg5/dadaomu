@@ -37,7 +37,7 @@ Session 的 R 用当前 Seed 重新生成并替换控制器；N 使用独立随�
 
 RoomDefinition 的历史 `room_id` 是模板标识；`map_position` 只在 Phase 2 旧回归夹具读取，随机系统不读它。DungeonRoom 的类型、坐标和 ID 才是地图语义。Type 枚举在末尾增加 START，保留已有类型序号。
 
-Controller 将模板、运行状态、已连接方向和实际节点类型注入 Room.configure。Room 原有普通战斗生命周期不重写；仅增加占位进入规则：START/BOSS 使用普通敌人，ANTIQUE 经 ACTIVE → CLEARED 自动开门。没有古董奖励/背包（Phase 6），没有 Boss 战斗（Phase 7）；MERCHANT/TRAP/SECRET 尚无规则。
+Controller 将模板、运行状态、已连接方向和实际节点类型注入 Room.configure。Room 原有普通战斗生命周期不重写；仅增加占位进入规则：START 忽略模板 spawns，经 ACTIVE → CLEARED 同次进入即开门；BOSS 使用普通敌人，ANTIQUE 仍自动清场开门。没有古董奖励/背包（Phase 6），没有 Boss 战斗（Phase 7）；MERCHANT/TRAP/SECRET 尚无规则。
 
 ### 小地图与回归夹具
 
@@ -147,6 +147,7 @@ EnemyProjectile 继承 Projectile 的扫掠、寿命与消费流程，仅覆盖�
 
 碰撞：World=1，Player=2，Targets/Enemies=4，PlayerProjectiles=8，EnemyProjectiles=16。新 Enemy mask=7，玩家弹丸 mask=5，敌人弹丸 mask=3；敌人弹丸不会与友军或玩家弹丸碰撞。Dummy 夹具 mask=2 保留。
 
-入口公平性：默认 0.35 秒观察期内不推进 AI 状态机、不移动、不攻击；外观暂时变浅。每模板出生点距四入口至少 180 像素。观察期结束后攻击仍必须完整前摇；这不是玩家无敌或完整难度平衡系统。
+入口公平性：真正生成敌人的战斗房默认 0.35 秒观察期内不推进 AI 状态机、不移动、不攻击；外观暂时变浅。每模板出生点距四入口至少 180 像素。观察期结束后攻击仍必须完整前摇；这不是玩家无敌或完整难度平衡系统。
 
 墙体绕行仅短射线检测后沿法线切向移动，并短暂保持方向避免抖动；没有导航网格，复杂凹形障碍可能卡住。Phase 5 仅准备在既有攻击请求/受击接口周围设计可卸载的遗物效果，当前未添加效果管理器。
+START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场景、不修改共享 spawns；START 不调用 EnemySpawner，因此不应用观察期。COMBAT 的 180px 入口间距、0.35 秒观察期和攻击前摇保持；BOSS 仍普通敌人占位，ANTIQUE 仍自动清场。

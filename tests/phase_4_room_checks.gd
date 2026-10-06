@@ -61,7 +61,7 @@ func enemy_bullet(room: Room, player: Player) -> EnemyProjectile:
 	return bullet
 
 
-func walk(side: int) -> void:
+func walk(side: int, stop_on_entry: bool = false) -> void:
 	var world := session.world
 	world.player.position = world.current_room.get_entry_position(side)
 	world.player.velocity = Vector2.ZERO
@@ -76,8 +76,11 @@ func walk(side: int) -> void:
 			var enemies := world.current_room.enemy_spawner.get_children()
 			if not enemies.is_empty():
 				check.call(enemies.all(func(enemy: Enemy) -> bool: return enemy.activation_remaining > 0.0 and enemy.velocity.is_zero_approx()), "Holding movement through a door retains destination entry protection")
+			if stop_on_entry:
+				break
 	Input.action_release(MOVES[side])
-	await frames(12)
+	if not stop_on_entry:
+		await frames(12)
 
 
 func key(code: Key) -> void:
@@ -89,6 +92,16 @@ func key(code: Key) -> void:
 
 func run() -> void:
 	session = SESSION.instantiate() as DungeonSession
+	# 有限选择首个相邻房为混合 COMBAT 的 Seed，保持真实生成和过门链。
+	var found: bool = false
+	for candidate in range(100):
+		var layout := DungeonGenerator.generate(candidate, session.config)
+		var neighbor: DungeonRoom = layout.rooms[layout.rooms[layout.start_id].neighbors.values()[0]]
+		if neighbor.room_type == RoomDefinition.Type.COMBAT and neighbor.definition.room_id == &"east":
+			session.seed_value = candidate
+			found = true
+			break
+	check.call(found, "Bounded Seed search finds adjacent mixed COMBAT")
 	tree.root.add_child(session)
 	tree.current_scene = session
 	await frames(3)
@@ -105,6 +118,12 @@ func run() -> void:
 		check.call(is_equal_approx(template.entry_grace_time, 0.35), "Template uses 0.35 second grace: " + str(template.room_id))
 		check.call(safe, "Every spawn stays 180 pixels away from all entrances: " + str(template.room_id))
 	var world := session.world
+	check.call(world.current_id == &"START" and world.current_room.room_state.status == RoomState.Status.CLEARED and world.current_room.enemy_spawner.get_remaining() == 0 and world.current_room.enemy_spawner.get_child_count() == 0, "Initial START is CLEARED with zero enemies")
+	check.call(not world.current_room.definition.spawns.is_empty() and not world.current_room.enemy_spawner.started and world.current_room.doors.values().all(func(door: Door) -> bool: return door.is_open), "START ignores populated template spawns and opens actual doors")
+	var start_side: int = world.layout.rooms[world.current_id].neighbors.keys()[0]
+	await walk(start_side, true)
+	check.call(world.current_room.room_type == RoomDefinition.Type.COMBAT and world.current_room.enemy_spawner.get_remaining() > 0 and is_equal_approx(world.current_room.definition.entry_grace_time, 0.35), "Real Door leads from safe START into COMBAT with 0.35 second grace")
+	var mixed_id := world.current_id
 	var room := world.current_room
 	var scarabs: Array[ScarabEnemy] = []
 	var gunner: BanditShooter
@@ -173,12 +192,16 @@ func run() -> void:
 		enemy.take_damage(1000.0)
 	await frames(14)
 	await walk(Door.opposite(side))
-	check.call(world.current_id == &"START" and world.current_room.room_state.status == RoomState.Status.CLEARED and world.current_room.enemy_spawner.get_child_count() == 0, "Revisit CLEARED never respawns enemies")
+	check.call(world.current_id == mixed_id and world.current_room.room_state.status == RoomState.Status.CLEARED and world.current_room.enemy_spawner.get_child_count() == 0, "Revisit CLEARED never respawns enemies")
+	await walk(Door.opposite(start_side))
+	check.call(world.current_id == &"START" and world.current_room.room_state.status == RoomState.Status.CLEARED and not world.current_room.enemy_spawner.started and world.current_room.enemy_spawner.get_child_count() == 0, "Revisit START stays safe without spawning")
 	var signature := world.layout.signature()
 	key(KEY_R)
 	await frames(5)
 	world = session.world
-	check.call(world.layout.signature() == signature and world.player.health.current_hp == 100.0 and world.current_room.enemy_spawner.get_remaining() > 0, "R preserves Seed and restores enemies and HP")
+	check.call(world.layout.signature() == signature and world.player.health.current_hp == 100.0 and world.current_room.room_state.status == RoomState.Status.CLEARED and world.current_room.enemy_spawner.get_remaining() == 0 and not world.current_room.enemy_spawner.started, "R preserves Seed and restores safe START and HP")
+	await walk(start_side, true)
+	check.call(world.current_room.enemy_spawner.get_remaining() > 0, "R restart still generates combat enemies after leaving START")
 	var deaths := [0]
 	world.player.died.connect(func() -> void: deaths[0] += 1)
 	old_bullet = enemy_bullet(world.current_room, world.player)
@@ -193,4 +216,6 @@ func run() -> void:
 	key(KEY_N)
 	await frames(5)
 	world = session.world
-	check.call(session.seed_value != previous_seed and world.player.health.current_hp == 100.0 and world.current_room.enemy_spawner.get_remaining() > 0 and count_players(tree.root) == 1, "N creates a different live enemy dungeon safely")
+	check.call(session.seed_value != previous_seed and world.player.health.current_hp == 100.0 and world.current_room.room_state.status == RoomState.Status.CLEARED and world.current_room.enemy_spawner.get_remaining() == 0 and not world.current_room.enemy_spawner.started and world.current_room.doors.values().all(func(door: Door) -> bool: return door.is_open) and count_players(tree.root) == 1, "N creates a different dungeon with safe open START")
+	await walk(world.layout.rooms[world.current_id].neighbors.keys()[0], true)
+	check.call(world.current_room.room_type == RoomDefinition.Type.COMBAT and world.current_room.enemy_spawner.get_remaining() > 0, "New Seed still generates combat enemies beyond safe START")
