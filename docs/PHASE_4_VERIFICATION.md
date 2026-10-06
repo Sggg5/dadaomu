@@ -35,7 +35,7 @@ World 层 1 / 位值 1；Player 层 2 / 2；Targets/Enemies 层 3 / 4；PlayerPr
 
 ## 入口公平性修订
 
-用户人工反馈：“有开门杀的嫌疑”。据此加入可配置 entry_grace_time=1.0 秒；生成后 AI 暂停移动/攻击，颜色变浅；之后仍完整执行前摇。五模板每个敌人距四个入口至少 180 像素，避免持键过门直接贴脸。不额外改变玩家无敌期。
+用户人工反馈：“有开门杀的嫌疑”。初版据此加入可配置 entry_grace_time=1.0 秒（本次调整为 0.35 秒）；生成后 AI 暂停移动/攻击，颜色变浅；之后仍完整执行前摇。五模板每个敌人距四个入口至少 180 像素，避免持键过门直接贴脸。不额外改变玩家无敌期。
 
 组合：center=3 尸蟞，north=5 尸蟞，west=2 枪手，east=3 尸蟞+1 枪手，south=2 尸蟞+2 枪手。
 
@@ -61,7 +61,7 @@ Phase 4 覆盖请求的 26 项：两敌人生成/读取定义、追击与近战�
 
 实际场景执行：Seed 192034 → START 混合房 → 尸蟞真实伤害 → Player 武器击杀 → 活跃枪手射击 → 玩家弹丸击杀 → 清房开门 → WASD + Door 物理过门 → 重访 → R/N。AI 没有在这条主链中冻结；部分单体位置用于固定测试条件，并不等同于人工自由游玩。
 
-新增入口验证：五模板距所有入口 >=180；初次入房半秒内敌人位置不变/速度为零/HP不变；持键穿门后目标房仍有观察期。图形模式截图已查看，玩家可见、前摇橙色圆环可见；截图是程序驱动场景证据。
+新增入口验证：五模板距所有入口 >=180；初版检查初次入房半秒内敌人位置不变/速度为零/HP不变；本次按配置推导观察期内检查时间；持键穿门后目标房仍有观察期。图形模式截图已查看，玩家可见、前摇橙色圆环可见；截图是程序驱动场景证据。
 
 开发中出现的早期资源替换解析错误已修复，最终运行无该错误。早期带 quit-after 的 Phase 2 运行提前中止，不计为通过；以上结果均等待完整测试摘要。
 
@@ -126,3 +126,13 @@ Phase 4 覆盖请求的 26 项：两敌人生成/读取定义、追击与近战�
 - 新增本报告 docs/PHASE_4_VERIFICATION.md。Godot 生成的源码 .uid 一并跟踪；logs/ 不提交。
 
 新增测试源码 UID：tests/phase_4_enemy_checks.gd.uid、phase_4_projectile_checks.gd.uid、phase_4_room_checks.gd.uid、phase_4_smoke.gd.uid。
+
+## 2026-10-06 小范围手感调整
+
+用户反馈 1 秒静止过长，影响战斗节奏。本次仅将 RoomDefinition.entry_grace_time 默认值改为 0.35 秒，并在五个 test_*.tres 中显式设置 0.35。未改变出生点、180px 入口限制、尸蟞 0.22 秒 / 枪手 0.4 秒前摇或 AI 逻辑。
+
+Phase 4 测试从实际 activation_remaining 和 Engine.physics_ticks_per_second 计算观察期内/结束后的等待时间；验证位置与 HP 不变、无发射/前摇、期满 can_act 恢复且尸蟞重新移动。过门保护改为目标房进入时检查，避免错误要求 0.35 秒结束后仍静止。五模板运行资源值逐项检查，入口间距断言保留。
+
+完整执行上文导入命令及 Phase 1～4 无窗口 smoke：导入退出 0；Phase 1 为 27 / 0，Phase 2 为 204 / 0，Phase 3 为 103 / 0，Phase 4 为 87 / 0，均完整运行至结果摘要并退出 0；日志 logs/grace_import.log 与 logs/grace_phase_1～4.log 无 ERROR / FAIL / WARNING。git diff --check 通过。
+
+本次未追加人工手感验收，仍需用户试玩确认 0.35 秒节奏。修改 RoomDefinition、五模板、phase_4_room_checks 与 AGENTS / README / ARCHITECTURE / PROJECT_PLAN / 本报告；不进入 Phase 5，不合并 main。

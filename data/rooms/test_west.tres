@@ -20,6 +20,7 @@ enemy_definition = ExtResource("6")
 position = Vector2(870, 490)
 
 [resource]
+entry_grace_time = 0.35
 script = ExtResource("1")
 room_id = &"west"
 title = "横廊"

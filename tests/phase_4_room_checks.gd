@@ -67,7 +67,15 @@ func walk(side: int) -> void:
 	world.player.velocity = Vector2.ZERO
 	await frames(2)
 	Input.action_press(MOVES[side])
-	await frames(28)
+	var source_id := world.current_id
+	var checked_entry: bool = false
+	for frame in range(28):
+		await frames(1)
+		if world.current_id != source_id and not checked_entry:
+			checked_entry = true
+			var enemies := world.current_room.enemy_spawner.get_children()
+			if not enemies.is_empty():
+				check.call(enemies.all(func(enemy: Enemy) -> bool: return enemy.activation_remaining > 0.0 and enemy.velocity.is_zero_approx()), "Holding movement through a door retains destination entry protection")
 	Input.action_release(MOVES[side])
 	await frames(12)
 
@@ -94,6 +102,7 @@ func run() -> void:
 			for side in range(4):
 				safe = safe and entry.position.distance_to(session.world.current_room.get_entry_position(side)) >= 180.0
 		check.call(composition == expected[template.room_id], "Unified composition for " + str(template.room_id))
+		check.call(is_equal_approx(template.entry_grace_time, 0.35), "Template uses 0.35 second grace: " + str(template.room_id))
 		check.call(safe, "Every spawn stays 180 pixels away from all entrances: " + str(template.room_id))
 	var world := session.world
 	var room := world.current_room
@@ -113,13 +122,18 @@ func run() -> void:
 	var spawn_positions: Array[Vector2] = []
 	for enemy in original_enemies:
 		spawn_positions.append(enemy.position)
-	await frames(30)
+	# 从实际剩余时间和物理频率推导等待帧数，不假设观察期为一秒。
+	var remaining: float = original_enemies[0].activation_remaining
+	await frames(maxi(1, floori(remaining * Engine.physics_ticks_per_second * 0.5)))
 	var dormant: bool = world.player.health.current_hp == 100.0
 	for index in range(original_enemies.size()):
 		var enemy: Enemy = original_enemies[index]
 		dormant = dormant and enemy.activation_remaining > 0.0 and enemy.velocity.is_zero_approx() and enemy.position == spawn_positions[index]
 	check.call(dormant, "Entry observation period prevents movement and damage")
-	await frames(32)
+	check.call(gunner.shots_fired == 0 and room.projectiles.get_child_count() == 0 and original_enemies.all(func(enemy: Enemy) -> bool: return not enemy.telegraphing), "Observation period blocks attacks and windups")
+	remaining = original_enemies[0].activation_remaining
+	await frames(ceili(remaining * Engine.physics_ticks_per_second) + 4)
+	check.call(original_enemies.all(func(enemy: Enemy) -> bool: return enemy.activation_remaining <= 0.0 and enemy.can_act()) and scarabs[0].position != spawn_positions[0], "AI resumes movement after configured grace expires")
 	scarabs[0].position = world.player.position + Vector2(34, 0)
 	await frames(18)
 	check.call(world.player.health.current_hp < 100.0 and world.player.health.current_hp > 0.0, "Live random-room scarab attacks Player")
@@ -154,7 +168,6 @@ func run() -> void:
 	check.call(world.current_id == destination and not is_instance_valid(room) and not is_instance_valid(old_bullet), "Physical door removes old Room and enemy projectile")
 	check.call(original_enemies.all(func(enemy) -> bool: return not is_instance_valid(enemy)), "Old enemies cannot follow across rooms")
 	check.call(world.player.get_instance_id() == player_id and count_players(tree.root) == 1, "Player instance remains unique across traversal")
-	check.call(world.current_room.enemy_spawner.get_children().all(func(enemy: Enemy) -> bool: return enemy.activation_remaining > 0.0 and enemy.velocity.is_zero_approx()), "Holding movement through a door retains destination entry protection")
 	# 回房覆盖用 Health 加速邻居清场；此前混合房已通过活跃 AI 和真实弹丸。
 	for enemy in world.current_room.enemy_spawner.get_children():
 		enemy.take_damage(1000.0)
