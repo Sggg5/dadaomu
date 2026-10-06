@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="RoomDefinition" load_steps=12 format=3]
+[gd_resource type="Resource" script_class="RoomDefinition" load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://scripts/rooms/room_definition.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/rooms/enemy_spawn_definition.gd" id="2"]
@@ -37,6 +37,12 @@ enemy_scene = ExtResource("3")
 enemy_definition = ExtResource("4")
 position = Vector2(950, 368)
 
+[sub_resource type="Resource" id="Spawn_5"]
+script = ExtResource("2")
+enemy_scene = ExtResource("3")
+enemy_definition = ExtResource("4")
+position = Vector2(360, 368)
+
 [resource]
 entry_grace_time = 0.35
 script = ExtResource("1")
@@ -45,4 +51,4 @@ title = "石柱厅"
 map_position = Vector2i(0, -1)
 floor_color = Color(0.157, 0.169, 0.196, 1)
 obstacles = Array[Rect2]([Rect2(320, 240, 64, 64), Rect2(896, 240, 64, 64), Rect2(320, 432, 64, 64), Rect2(896, 432, 64, 64)])
-spawns = Array[Resource]([SubResource("Spawn_0"), SubResource("Spawn_1"), SubResource("Spawn_2"), SubResource("Spawn_3"), SubResource("Spawn_4")])
+spawns = Array[Resource]([SubResource("Spawn_0"), SubResource("Spawn_1"), SubResource("Spawn_2"), SubResource("Spawn_3"), SubResource("Spawn_4"), SubResource("Spawn_5")])

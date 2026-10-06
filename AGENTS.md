@@ -83,9 +83,20 @@ START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场�
 - 分支 codex/phase-5b-relic-builds，从指定 main d7660a1 开始；本任务授权提交并push，不合并main，结束后停止，不开发Phase6。
 - RoomController 创建 RoomClearContext（ID/type/was_combat/enemy_count）。was_combat 仅普通COMBAT为true；START/ANTIQUE/BOSS占位均不计普通清房奖励，重访不重复通知。
 - RelicRewardService 由 DungeonSession 持有，独立RNG：seed XOR (reward_version*7919)，稳定ID排序后Fisher-Yates无放回；不能改变地图RNG或把奖励逻辑塞入Runtime。
-- 第1/3/5个首次COMBAT清场产生底座；E靠近拾取一次。离房未领取奖励丢失且不补发；工程test_*不得入正式RelicPool。
+- 第2/4/7个首次COMBAT清场产生底座；E靠近拾取一次。离房未领取奖励丢失且不补发；工程test_*不得入正式RelicPool。
 - AttackStage为DAMAGE/COUNT/DIRECTION/PROJECTILE_PROPERTY/FINAL，先stage再priority再ID。AttackRequest新增pierce_count/projectile_scale/tags，copy须完整且tags独立。
 - 正式效果各自独立，核心Player/Projectile/Controller/Spawner/Runtime禁止正式遗物ID特判或组合专用脚本。
 - 爆炸/墨线是瞬时非Projectile伤害，不递归命中；Burn仅轻量3tick可刷新组件，不扩展万能状态框架。
 - 卸载/死亡取消效果拥有的Burn/反馈，跨房释放旧房对象并保留库存/充能；R/N清空全部运行状态和奖励进度。
 - 必跑Phase1～5B；Phase5A仅调整typed清房Hook测试，保留断言。至少一次真实Weapon/Door/E流程获得3件奖励，并单独记录人工手感。
+## Phase 5B 平衡修订（2026-10-06）
+
+正式奖励改为第2/4/7个首次COMBAT清场，其他房型/重访/重复通知规则不变。短局只有5～6个COMBAT时只发2件，不动态补发；无放回序列及R同Seed复现不变。
+
+尸蟞：HP65、速度165、伤害12、冷却0.9、前摇0.25。枪手：HP90、速度105、弹伤14、弹速340、冷却1.35、前摇0.4，距离逻辑与非追踪弹保持。
+
+模板center/north/west/east/south分别为4尸蟞、6尸蟞、3枪手、4尸蟞+1枪手、3尸蟞+2枪手。新增点与其他点均验证四入口距离≥180、障碍边界安全及敌人间距≥40；观察期0.35秒保持。
+
+EncounterDifficulty由Controller读取DungeonRoom.distance_from_start解析，再经Room/Spawner注入Enemy.configure_spawn。深度1～2：HP/伤害1.00；3～4：HP1.15/伤害1.10；≥5：HP1.30/伤害1.20。只缩放实例Health上限、咬击/枪弹伤害；不修改共享Definition，不缩放移速/弹速/前摇/冷却，不做BFS或完整难度系统。HUD显示深度和Tier。R重建新上下文，倍率不累计；CLEARED重访不刷强化敌人。
+
+本次仅成长节奏与战斗压力修订；不增加敌人、Boss、词缀、遗物、经济或Phase6内容。实际试玩对底座+E体验已确认无问题，新平衡主观复验另见验证报告。

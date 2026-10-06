@@ -53,7 +53,7 @@ func _fire() -> void:
 	var request := AttackRequest.new()
 	request.origin = global_position
 	request.direction = (target.global_position - global_position).normalized()
-	request.damage = ranged.projectile_damage
+	request.damage = scaled_damage(ranged.projectile_damage)
 	request.speed = ranged.projectile_speed
 	request.lifetime = ranged.projectile_lifetime
 	var bullet := BULLET_SCENE.instantiate() as EnemyProjectile

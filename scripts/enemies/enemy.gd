@@ -14,6 +14,7 @@ var telegraphing: bool = false
 var aim_direction: Vector2 = Vector2.RIGHT
 var ai_enabled: bool = true
 var dying: bool = false
+var difficulty: EncounterDifficulty = EncounterDifficulty.from_depth(0)
 var activation_remaining: float = 0.0
 var _death_remaining: float = 0.0
 var _flash_remaining: float = 0.0
@@ -21,9 +22,11 @@ var _avoid_remaining: float = 0.0
 var _avoid_direction: Vector2
 
 
-func configure_spawn(player: Player, bullets: Node2D, data: EnemyDefinition = null) -> void:
+func configure_spawn(player: Player, bullets: Node2D, data: EnemyDefinition = null, encounter: EncounterDifficulty = null) -> void:
 	target = player
 	projectile_parent = bullets
+	if encounter != null:
+		difficulty = encounter
 	if data != null:
 		definition = data
 	if is_instance_valid(target):
@@ -33,7 +36,11 @@ func configure_spawn(player: Player, bullets: Node2D, data: EnemyDefinition = nu
 func _ready() -> void:
 	assert(definition != null, "Enemy requires definition")
 	health.died.connect(_on_died)
-	health.initialize(definition.max_hp)
+	health.initialize(definition.max_hp * difficulty.hp_multiplier)
+
+
+func scaled_damage(base_damage: float) -> float:
+	return base_damage * difficulty.damage_multiplier
 
 
 func _physics_process(delta: float) -> void:

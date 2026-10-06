@@ -67,7 +67,7 @@ func run() -> void:
 	var normal_shots := await shots_to_kill(player, world, "baseline_single")
 	inventory.add(DAMAGE)
 	var boosted_shots := await shots_to_kill(player, world, "damage_only")
-	test.check(normal_shots == 3 and boosted_shots == 2, "Damage relic reduces real scarab kill from three shots to two")
+	test.check(normal_shots == 4 and boosted_shots == 3, "Damage relic reduces real scarab kill from four shots to three")
 	inventory.clear()
 	test.check(inventory.add(DOUBLE), "Double shot installs")
 	output = runtime.prepare_attack(request)
@@ -108,7 +108,7 @@ func run() -> void:
 	player.weapon.cooldown_remaining = 0.0
 	player.weapon.try_attack(request.origin, request.direction, player.stats)
 	await test.frames(24)
-	test.check(hits.size() == 2 and enemies.all(func(enemy: Enemy) -> bool: return enemy.health.current_hp == 50.0 - original_damage * 1.5), "Both combined projectiles collide and each issue one hit context")
+	test.check(hits.size() == 2 and enemies.all(func(enemy: Enemy) -> bool: return enemy.health.current_hp == enemy.definition.max_hp - original_damage * 1.5), "Both combined projectiles collide and each issue one hit context")
 	test.check(hits.all(func(context: ProjectileHitContext) -> bool: return context.target is Enemy and context.damage == original_damage * 1.5), "Hit context carries actual target and snapshot damage")
 	test.check(world.current_room.projectiles.get_child_count() == 0, "Consumed dual bullets leave no projectile residue")
 	test.capture("combined_hit")

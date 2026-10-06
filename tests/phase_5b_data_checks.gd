@@ -61,7 +61,8 @@ func run() -> void:
 	boss.room_type = RoomDefinition.Type.BOSS
 	a.on_room_cleared(boss)
 	test.check(a.combat_clears == 0, "START ANTIQUE and Boss placeholder never count rewards")
-	for index in range(1, 6):
+	test.check(RelicRewardService.THRESHOLDS == [2, 4, 7], "Formal rewards use thresholds 2/4/7")
+	for index in range(1, 8):
 		var clear := RoomClearContext.new()
 		clear.room_id = StringName("COMBAT_%d" % index)
 		clear.room_type = RoomDefinition.Type.COMBAT
@@ -69,7 +70,9 @@ func run() -> void:
 		clear.enemy_count = 3
 		a.on_room_cleared(clear)
 		a.on_room_cleared(clear)
-		test.check(a.combat_clears == index and rewards.size() == (1 if index < 3 else (2 if index < 5 else 3)), "Reward cadence and duplicate clear guard at COMBAT %d" % index)
+		test.check(a.combat_clears == index and rewards.size() == (0 if index < 2 else (1 if index < 4 else (2 if index < 7 else 3))), "Reward cadence and duplicate clear guard at COMBAT %d" % index)
+		if index in [5, 6]:
+			test.check(rewards.size() == 2, "Short run ending at %d COMBAT gets only two rewards" % index)
 	a.stop()
 	a.on_room_cleared(antique)
 	test.check(a.rewards_given == 3 and not a.active, "Stopped reward service cannot issue more rewards")

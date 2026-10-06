@@ -46,6 +46,7 @@ func fight() -> void:
 	if world.current_room.room_state.status != RoomState.Status.ACTIVE:
 		return
 	var original := world.current_room.enemy_spawner.get_children()
+	test.check(original.all(func(enemy: Enemy) -> bool: return is_equal_approx(enemy.health.max_hp, enemy.definition.max_hp * world.current_room.difficulty.hp_multiplier)) and world.current_room.difficulty.depth == world.layout.rooms[world.current_id].distance_from_start, "Controller injects actual layout depth into live enemy HP")
 	for enemy in original:
 		for attempt in range(32):
 			if not is_instance_valid(enemy) or enemy.health.is_dead or world.player.health.is_dead:
@@ -83,6 +84,8 @@ func visit(target: StringName) -> void:
 		await fight()
 		var side: int = world.layout.rooms[world.current_id].neighbors.find_key(next_id)
 		await test.walk(side)
+		if world.current_room.room_state.status == RoomState.Status.CLEARED:
+			test.check(world.current_room.enemy_spawner.get_child_count() == 0, "Revisit CLEARED never spawns strengthened enemies")
 		test.check(player_count(test.root) == 1 and world.player.relics.inventory.ids().size() == picked.size(), "Formal Build and unique Player survive traversal")
 		if world.current_room.room_type == RoomDefinition.Type.COMBAT:
 			await fight()
@@ -99,16 +102,16 @@ func run() -> void:
 	combat_ids.sort_custom(func(a: StringName, b: StringName) -> bool: return str(a) < str(b))
 	for id in combat_ids:
 		await visit(id)
-		if test.session.rewards.combat_clears >= 5:
+		if test.session.rewards.combat_clears >= 7:
 			break
-	test.check(picked.size() == 3 and world.player.relics.inventory.ids().size() == 3 and picked[0] == test.session.rewards.sequence[0].id and picked[2] == test.session.rewards.sequence[2].id, "Normal Seed run obtains three formal relics through clear 1/3/5 pedestals")
+	test.check(picked.size() == 3 and world.player.relics.inventory.ids().size() == 3 and picked[0] == test.session.rewards.sequence[0].id and picked[2] == test.session.rewards.sequence[2].id, "Normal Seed run obtains three formal relics through clear 2/4/7 pedestals")
 	test.check(world.player.get_instance_id() == player_id and world.player.health.current_hp > 0.0, "Full reward flow preserves the same living Player")
 	test.capture("three_relic_build")
 	for id in combat_ids:
 		if world.states[id].status == RoomState.Status.UNVISITED:
 			await visit(id)
 			break
-	test.check(test.session.rewards.combat_clears >= 6 and picked.size() == 3 and world.player.relics.inventory.ids().size() == 3, "Normal three-relic Build continues fighting beyond fifth clear")
+	test.check(test.session.rewards.combat_clears >= 8 and picked.size() == 3 and world.player.relics.inventory.ids().size() == 3, "Normal three-relic Build continues fighting beyond seventh clear")
 	var progress: int = test.session.rewards.combat_clears
 	var clear_count: int = test.contexts.size()
 	world.current_room.enter()
@@ -117,7 +120,7 @@ func run() -> void:
 	var antiques: Array = test.contexts.filter(func(context: RoomClearContext) -> bool: return context.room_type == RoomDefinition.Type.ANTIQUE)
 	test.check(not antiques.is_empty() and not antiques[0].was_combat and antiques[0].enemy_count == 0, "Real ANTIQUE emits non-combat RoomClearContext")
 	var combats: Array = test.contexts.filter(func(context: RoomClearContext) -> bool: return context.room_type == RoomDefinition.Type.COMBAT)
-	test.check(combats.size() >= 5 and combats.all(func(context: RoomClearContext) -> bool: return context.was_combat and context.enemy_count > 0), "Real COMBAT contexts carry original enemy counts")
+	test.check(combats.size() >= 7 and combats.all(func(context: RoomClearContext) -> bool: return context.was_combat and context.enemy_count > 0), "Real COMBAT contexts carry original enemy counts")
 	# 正式完整流程已验证；以下单独验证充能跨房与新局生命周期。
 	await fight()
 	world.player.relics.inventory.clear()
@@ -134,6 +137,8 @@ func run() -> void:
 	await test.reset(KEY_R)
 	world = test.session.world
 	test.check(world.player.relics.inventory.ids().is_empty() and reward_signature(test.session.rewards) == signature and not is_instance_valid(old_world) and not is_instance_valid(old_service) and kite.uninstall_count == 1, "R empties formal Build and repeats reward sequence without ghost world/service")
+	await test.walk(world.layout.rooms[world.current_id].neighbors.keys()[0])
+	test.check(world.current_room.enemy_spawner.get_children().all(func(enemy: Enemy) -> bool: return is_equal_approx(enemy.health.max_hp, enemy.definition.max_hp * world.current_room.difficulty.hp_multiplier)), "R rebuilds fresh multipliers without accumulating previous tier")
 	var before_seed: int = test.session.seed_value
 	old_world = world
 	test.session._seed_rng.seed = 20261006

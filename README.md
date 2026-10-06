@@ -71,7 +71,7 @@ godot --path . -- --seed=192034
 
 ## Phase 4 敌人与验证
 
-五模板组合为 3 尸蟞、5 尸蟞、2 枪手、3 尸蟞 + 1 枪手、2 尸蟞 + 2 枪手。编辑 data/enemies/*.tres 调整生命、速度、伤害、冷却和前摇；编辑 RoomDefinition.spawns 的每项场景/数据/位置，entry_grace_time 调整入房观察期。每个生成点与四入口至少相距 180 像素。
+五模板组合为 4 尸蟞、6 尸蟞、3 枪手、4 尸蟞 + 1 枪手、3 尸蟞 + 2 枪手。编辑 data/enemies/*.tres 调整生命、速度、伤害、冷却和前摇；编辑 RoomDefinition.spawns 的每项场景/数据/位置，entry_grace_time 调整入房观察期。每个生成点与四入口至少相距 180 像素。
 
 ```powershell
 godot --headless --path . --script res://tests/phase_4_smoke.gd
@@ -85,7 +85,7 @@ START 与其他房复用 room.tscn 和随机视觉/障碍模板，不复制场�
 
 当前新增 RelicDefinition / RelicInventory / RelicEffect / RelicRuntime 与局部战斗 Hook。遗物随唯一 Player 跨房保留，R/N 或死亡清空；定义只读，效果实例每次安装独立；同一 ID 不重复获得。
 
-- 1：强力火药，攻击请求伤害 ×1.5（默认 20 →30，50HP 尸蟞由 3 发变 2 发）。
+- 1：强力火药，攻击请求伤害 ×1.5（默认 20 →30，Tier1 65HP 尸蟞由 4 发变 3 发）。
 - 2：双生铜钱，一次输入发射两枚方向 ±6° 的弹丸，只计一次冷却。
 - 3：血契，每个敌人首次死亡恢复 5 HP，上限 MaxHP。
 - Backspace：卸载全部工程遗物，后续攻击恢复原值。已经发射的弹丸保留发射时快照。
@@ -101,7 +101,7 @@ godot --path . -- --seed=1
 数据在 data/relics/，效果实现分别位于 scripts/relics/effects/。配置引用独立 effect_script，不添加核心脚本 ID 分支。新增参数或运行对象时继续维护 copy/卸载生命周期。Phase 5A 已合并 main；当前工作为 Phase 5B，仍不自动合并 main。
 ## Phase 5B 正式奖励与 Build
 
-首次清场第1、3、5个普通COMBAT房生成一件底座奖励。START、ANTIQUE、BOSS占位不计数，重访不重复。靠近底座64px内按E拾取，名称/简短说明就地显示；离房未拾取则丢失，不在重访补发。
+首次清场第2、4、7个普通COMBAT房生成一件底座奖励。START、ANTIQUE、BOSS占位不计数，重访不重复。靠近底座64px内按E拾取，名称/简短说明就地显示；离房未拾取则丢失，不在重访补发。
 
 正式池只有五帝钱、黑火药、尸油灯、镇尸钉、铜镜、墨斗、洛阳铲、引魂纸鸢8件，不包含工程test_*。奖励按Seed和版本独立无放回抽取；R复现地图和奖励序列并清空Build；N重建新图/奖励进度。相同引擎/池/版本下可复现，尚无存档。
 
@@ -124,4 +124,15 @@ godot --path . --script res://tests/phase_5b_smoke.gd -- --capture
 godot --path . -- --seed=192034
 ```
 
-Seed192034正常测试在第1/3/5次清房获得墨斗/五帝钱/黑火药，再继续战斗。详细测试、文件清单和人工验收状态见docs/PHASE_5B_VERIFICATION.md。当前分支codex/phase-5b-relic-builds，提交并push后停止，不进入Phase6。
+Seed192034正常测试在第2/4/7次清房获得墨斗/五帝钱/黑火药，再继续战斗。详细测试、文件清单和人工验收状态见docs/PHASE_5B_VERIFICATION.md。当前分支codex/phase-5b-relic-builds，提交并push后停止，不进入Phase6。
+## Phase 5B 平衡修订（2026-10-06）
+
+正式奖励改为第2/4/7个首次COMBAT清场，其他房型/重访/重复通知规则不变。短局只有5～6个COMBAT时只发2件，不动态补发；无放回序列及R同Seed复现不变。
+
+尸蟞：HP65、速度165、伤害12、冷却0.9、前摇0.25。枪手：HP90、速度105、弹伤14、弹速340、冷却1.35、前摇0.4，距离逻辑与非追踪弹保持。
+
+模板center/north/west/east/south分别为4尸蟞、6尸蟞、3枪手、4尸蟞+1枪手、3尸蟞+2枪手。新增点与其他点均验证四入口距离≥180、障碍边界安全及敌人间距≥40；观察期0.35秒保持。
+
+EncounterDifficulty由Controller读取DungeonRoom.distance_from_start解析，再经Room/Spawner注入Enemy.configure_spawn。深度1～2：HP/伤害1.00；3～4：HP1.15/伤害1.10；≥5：HP1.30/伤害1.20。只缩放实例Health上限、咬击/枪弹伤害；不修改共享Definition，不缩放移速/弹速/前摇/冷却，不做BFS或完整难度系统。HUD显示深度和Tier。R重建新上下文，倍率不累计；CLEARED重访不刷强化敌人。
+
+本次仅成长节奏与战斗压力修订；不增加敌人、Boss、词缀、遗物、经济或Phase6内容。实际试玩对底座+E体验已确认无问题，新平衡主观复验另见验证报告。

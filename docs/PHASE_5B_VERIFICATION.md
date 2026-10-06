@@ -1,5 +1,7 @@
 # Phase 5B 验证报告
 
+> 最新平衡修订：奖励2/4/7、两类敌人强化、深度Tier与新模板组成；本文件前半部分保留原版历史，当前结果见末节。
+
 日期：2026-10-06。基准main d7660a1ff198cf1c0a6ce1520db8f315c3766c82。
 工作分支 codex/phase-5b-relic-builds。Godot4.6.2标准版 / Windows / Compatibility。
 
@@ -180,3 +182,61 @@ Phase6只准备独立古董Definition/背包容量/价值/携带生命周期，�
 - ?? tests/phase_5b_smoke.gd
 - ?? tests/phase_5b_smoke.gd.uid
 - 新增本报告 docs/PHASE_5B_VERIFICATION.md；源码.uid一并跟踪。
+
+## 2026-10-06 平衡修订：成长节奏与战斗压力
+
+基准6b286e7ac154d5e60efba0c1b07dd086954d954d，仍在codex/phase-5b-relic-builds。用户反馈原版奖励过快、整体无挑战；底座靠近+E体验没有问题。E/底座规则不改，不增敌人种类/遗物/Boss/词缀/经济/Phase6。
+
+### 当前奖励
+
+THRESHOLDS=[2,4,7]。普通COMBAT首次ID统计不变，START/ANTIQUE/BOSS/重访/重复clear不统计。第1/3/5/6无奖励，第2/4/7各一件。5～6个COMBAT的短局只得2件，不动态补发。独立RNG/版本/池不变，无放回序列不变，R复现序列，N重建。
+
+### 当前敌人和模板
+
+尸蟞基础HP65、move_speed165、contact_damage12、attack_cooldown0.9、windup0.25；恢复0.28、距离42和咬击前距离/LOS重判保持。枪手HP90、move_speed105、projectile_damage14、projectile_speed340、cooldown1.35、windup0.4；原距离带/非追踪保持。
+
+center=4尸蟞；north=6尸蟞；west=3枪手；east=4尸蟞+1枪手；south=3尸蟞+2枪手。各新增坐标：center(360,368)、north(360,368)、west(980,260)、east(900,400)、south(1000,240)。保留0.35s观察期。
+
+所有点（含新增）自动检查：四入口距离≥180px、半径16障碍安全、房间边界内、其他敌人间距≥40px；五模板均通过。
+
+### EncounterDifficulty
+
+Controller从DungeonRoom.distance_from_start解析上下文，经Room/EnemySpawner传给Enemy.configure_spawn。Enemy._ready只初始化本实例Health，scaled_damage只计算本实例伤害；EnemyDefinition及RangedEnemyDefinition资源不变，AI不查询Layout，Spawner不做BFS。
+
+| 深度 | Tier | HP | 伤害 |
+| --- | --- | --- | --- |
+| 1～2 | 1 | ×1.00 | ×1.00 |
+| 3～4 | 2 | ×1.15 | ×1.10 |
+| ≥5 | 3 | ×1.30 | ×1.20 |
+
+尸蟞实例HP65/74.75/84.5，咬击12/13.2/14.4；枪手HP90/103.5/117，弹伤14/15.4/16.8。不缩放前摇/冷却/弹速/移速。BOSS普通组合仍可使用其地图深度，奖励依然不计数。HUD新增深度/Tier开发标签。R重新解析新上下文，重访CLEARED无敌人。
+
+### 完整验证
+
+使用原报告命令并新增encounter_balance_checks帮助模块（由phase_5b_smoke执行）。新版日志为logs/balance_import.log、balance_1～5b.log、balance_graphical.log。最终导入exit0无解析错误；git diff --check通过。
+
+| 测试 | 最终结果 |
+| --- | --- |
+| Phase1 | 27 checks / 0 failures / exit0 |
+| Phase2 | 204 / 0 / exit0 |
+| Phase3 | 94 / 0 / exit0 |
+| Phase4 | 105 / 0 / exit0 |
+| Phase5A | 61 / 0 / exit0 |
+| Phase5B无窗口 | 232 / 0 / exit0 |
+| Phase5B图形 | 232 / 0 / exit0 |
+
+旧测试保留验收语义：Phase4按新伤害/HP/组合调整期望；Phase5A伤害增幅测试由65HP的4发变3发，真实击杀需要补一轮双弹；Phase3按实际HP计算射击数所以断言数增加。没有删除断言让回归通过。早期枪手HP断言替换成88的笔误已改为90并完整复跑。
+
+新增检查覆盖本次30项：奖励阈值与1～7每次发放、短局5/6仅2件、非COMBAT/去重/R规则；官方资源精确参数；五模板组成/新点几何；深度1/2/3/4/5/8映射；真实实例HP、定时咬击、真实枪手弹伤/速度；资源不变；实际Controller深度注入；R无倍率累计；CLEARED重访无强化敌人；三组协同全部保留并通过。
+
+实际无F2正常自动局Seed192034：前两COMBAT用普通武器，第二次ROOM_002领取墨斗，第四次ROOM_005领取五帝钱，第七次ROOM_008领取黑火药，再继续第八个COMBAT。通过真实Weapon/Projectile、Door和E获得奖励，活跃AI没有冻结，也没有修改玩家HP用于这条正式流程。测试为固定射击条件会将玩家调整至无遮挡射击点，不能作为人类操作难度结论。
+
+图形截图第七次领取时玩家24/100HP，HUD深度4/Tier2；深层Tier3行为由实际咬击/枪弹与房间流程断言验证。底座/E原人工反馈已确认无问题。
+
+### 人工复验与限制
+
+已打开新版Seed192034，提出“不用F2打一局”复验，关注前两房压力、中段成长、深层威胁。用户回复“先交付，人工平衡复验待完成”，因此标为待复验；自动流程不等同于挑战性平衡通过。
+
+保留旧版限制：轻量避障可能在复杂障碍卡住；范围/墨线无墙体遮挡；未领取底座离房丢失；未做最终平衡曲线。短局仅2件是本次明确规则。Phase6仍未开始。
+
+修改：两类敌人资源、五模板、Enemy/两AI、Spawner/Room/Controller、HUD、奖励阈值、旧测试期望及Phase5B帮助；新增encounter_difficulty.gd和encounter_balance_checks.gd及UID；同步四份项目文档。本任务提交并push当前分支，不合并main。

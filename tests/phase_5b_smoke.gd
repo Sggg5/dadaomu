@@ -3,6 +3,7 @@ const SESSION: PackedScene = preload("res://scenes/main/dungeon_test.tscn")
 const DATA_CHECKS = preload("res://tests/phase_5b_data_checks.gd")
 const HIT_CHECKS = preload("res://tests/phase_5b_hit_checks.gd")
 const RUN_CHECKS = preload("res://tests/phase_5b_run_checks.gd")
+const BALANCE_CHECKS = preload("res://tests/encounter_balance_checks.gd")
 var session: DungeonSession
 var contexts: Array[RoomClearContext] = []
 var checks: int = 0
@@ -74,6 +75,9 @@ func run() -> void:
 	root.add_child(session)
 	current_scene = session
 	await frames(3)
+	var balance = BALANCE_CHECKS.new(self)
+	await balance.run()
+	check(balance.completed, "Encounter balance suite completes")
 	var data = DATA_CHECKS.new(self)
 	await data.run()
 	check(data.completed, "Data/attack suite completes")

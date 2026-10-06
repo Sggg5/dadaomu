@@ -6,11 +6,11 @@
 script = ExtResource("1")
 id = &"scarab"
 display_name = "尸蟞"
-max_hp = 50.0
-move_speed = 150.0
-contact_damage = 10.0
-attack_cooldown = 1.0
-windup_time = 0.22
+max_hp = 65.0
+move_speed = 165.0
+contact_damage = 12.0
+attack_cooldown = 0.9
+windup_time = 0.25
 recovery_time = 0.28
 attack_range = 42.0
 body_color = Color(0.596, 0.71, 0.408, 1)

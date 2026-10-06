@@ -19,16 +19,19 @@ const WALL_THICKNESS: float = 16.0
 var room_state: RoomState
 var room_type: RoomDefinition.Type = RoomDefinition.Type.COMBAT
 var combat_target: Player
+var difficulty: EncounterDifficulty = EncounterDifficulty.from_depth(0)
 var doors: Dictionary[int, Door] = {}
 var _connected_sides: Array[int] = []
 var _wall_rects: Array[Rect2] = []
 
 
-func configure(data: RoomDefinition, state: RoomState, connected_sides: Array[int], type: RoomDefinition.Type = RoomDefinition.Type.COMBAT, player: Player = null) -> void:
+func configure(data: RoomDefinition, state: RoomState, connected_sides: Array[int], type: RoomDefinition.Type = RoomDefinition.Type.COMBAT, player: Player = null, encounter: EncounterDifficulty = null) -> void:
 	definition = data
 	room_state = state
 	room_type = type
 	combat_target = player
+	if encounter != null:
+		difficulty = encounter
 	_connected_sides = connected_sides.duplicate()
 
 
@@ -36,6 +39,7 @@ func _ready() -> void:
 	assert(definition != null and room_state != null, "Room must be configured before entering tree")
 	_build_geometry()
 	enemy_spawner.target = combat_target
+	enemy_spawner.difficulty = difficulty
 	enemy_spawner.projectile_parent = projectiles
 	room_state.changed.connect(_on_state_changed)
 	enemy_spawner.remaining_changed.connect(func(count: int) -> void: enemy_count_changed.emit(count))

@@ -9,6 +9,7 @@ signal enemy_killed(enemy: Node2D)
 
 var started: bool = false
 var target: Player
+var difficulty: EncounterDifficulty = EncounterDifficulty.from_depth(0)
 var projectile_parent: Node2D
 var _spawning: bool = false
 var _failed: bool = false
@@ -39,7 +40,7 @@ func spawn(definition: RoomDefinition) -> void:
 		health.died.connect(_on_enemy_died.bind(enemy_id), CONNECT_ONE_SHOT)
 		enemy.position = entry.position
 		if enemy is Enemy:
-			enemy.configure_spawn(target, projectile_parent, entry.enemy_definition)
+			enemy.configure_spawn(target, projectile_parent, entry.enemy_definition, difficulty)
 			enemy.activation_remaining = definition.entry_grace_time
 		add_child(enemy)
 	_spawning = false

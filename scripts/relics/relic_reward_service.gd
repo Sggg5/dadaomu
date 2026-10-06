@@ -3,7 +3,7 @@ extends Node
 ## 一局奖励进度和独立 RNG；不执行遗物效果、不持有房间节点。
 signal reward_available(definition: RelicDefinition, room_id: StringName)
 const DEFAULT_POOL: RelicPool = preload("res://data/relics/formal_pool.tres")
-const THRESHOLDS: Array[int] = [1, 3, 5]
+const THRESHOLDS: Array[int] = [2, 4, 7]
 var pool: RelicPool
 var sequence: Array[RelicDefinition] = []
 var combat_clears: int = 0

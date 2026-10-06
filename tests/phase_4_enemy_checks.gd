@@ -64,12 +64,12 @@ func melee() -> void:
 	check.call(scarab.telegraphing and player.health.current_hp == 100.0, "Scarab shows windup before damage")
 	capture.call("scarab_windup")
 	await frames(14)
-	check.call(player.health.current_hp == 90.0, "Scarab bite uses Player.take_damage")
+	check.call(player.health.current_hp == 88.0, "Scarab bite uses Player.take_damage")
 	await frames(12)
-	check.call(player.health.current_hp == 90.0, "Melee cooldown prevents per-frame damage")
-	check.call(not player.take_damage(10.0) and player.health.current_hp == 90.0, "Existing Player invulnerability remains effective")
+	check.call(player.health.current_hp == 88.0, "Melee cooldown prevents per-frame damage")
+	check.call(not player.take_damage(10.0) and player.health.current_hp == 88.0, "Existing Player invulnerability remains effective")
 	await frames(65)
-	check.call(player.health.current_hp == 80.0, "Scarab attacks again after cooldown")
+	check.call(player.health.current_hp == 76.0, "Scarab attacks again after cooldown")
 	for frame in range(100):
 		if scarab.state == ScarabEnemy.State.WINDUP:
 			break
@@ -85,7 +85,7 @@ func melee() -> void:
 	var first := spawn(SCARAB, player.position + Vector2(34, 0))
 	var second := spawn(SCARAB, player.position - Vector2(34, 0))
 	await frames(18)
-	check.call(player.health.current_hp == 90.0, "Simultaneous bites respect invulnerability, not instant burst death")
+	check.call(player.health.current_hp == 88.0, "Simultaneous bites respect invulnerability, not instant burst death")
 	first.queue_free()
 	second.queue_free()
 	await frames(2)
@@ -94,7 +94,7 @@ func melee() -> void:
 
 func ranged() -> BanditShooter:
 	var shooter := spawn(SHOOTER, Vector2(1050, 368)) as BanditShooter
-	check.call(shooter.definition.id == &"bandit_shooter" and shooter.ranged != null and shooter.health.max_hp == 70.0, "Shooter spawns and reads ranged definition")
+	check.call(shooter.definition.id == &"bandit_shooter" and shooter.ranged != null and shooter.health.max_hp == 90.0, "Shooter spawns and reads ranged definition")
 	var original_distance := shooter.position.distance_to(player.position)
 	await frames(20)
 	check.call(shooter.position.distance_to(player.position) < original_distance - 20, "Shooter approaches from far range")

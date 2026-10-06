@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="RoomDefinition" load_steps=9 format=3]
+[gd_resource type="Resource" script_class="RoomDefinition" load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/rooms/room_definition.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/rooms/enemy_spawn_definition.gd" id="2"]
@@ -19,6 +19,12 @@ enemy_scene = ExtResource("5")
 enemy_definition = ExtResource("6")
 position = Vector2(870, 490)
 
+[sub_resource type="Resource" id="Spawn_2"]
+script = ExtResource("2")
+enemy_scene = ExtResource("5")
+enemy_definition = ExtResource("6")
+position = Vector2(980, 260)
+
 [resource]
 entry_grace_time = 0.35
 script = ExtResource("1")
@@ -27,4 +33,4 @@ title = "横廊"
 map_position = Vector2i(-1, 0)
 floor_color = Color(0.173, 0.157, 0.122, 1)
 obstacles = Array[Rect2]([Rect2(440, 208, 48, 104), Rect2(792, 424, 48, 104)])
-spawns = Array[Resource]([SubResource("Spawn_0"), SubResource("Spawn_1")])
+spawns = Array[Resource]([SubResource("Spawn_0"), SubResource("Spawn_1"), SubResource("Spawn_2")])

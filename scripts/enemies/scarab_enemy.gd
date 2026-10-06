@@ -17,7 +17,7 @@ func _tick_ai(delta: float) -> void:
 			if _timer <= 0.0:
 				telegraphing = false
 				if global_position.distance_to(target.global_position) <= definition.attack_range and has_line_to_target():
-					target.take_damage(definition.contact_damage)
+					target.take_damage(scaled_damage(definition.contact_damage))
 				cooldown_remaining = definition.attack_cooldown
 				_timer = definition.recovery_time
 				state = State.RECOVERY

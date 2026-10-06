@@ -106,7 +106,7 @@ func run() -> void:
 	tree.current_scene = session
 	await frames(3)
 	session._seed_rng.seed = 20261006
-	var expected: Dictionary = {&"center": [3, 0], &"north": [5, 0], &"west": [0, 2], &"east": [3, 1], &"south": [2, 2]}
+	var expected: Dictionary = {&"center": [4, 0], &"north": [6, 0], &"west": [0, 3], &"east": [4, 1], &"south": [3, 2]}
 	for template in session.config.templates:
 		var composition: Array[int] = [0, 0]
 		var safe: bool = true
@@ -134,7 +134,7 @@ func run() -> void:
 			scarabs.append(enemy)
 		elif enemy is BanditShooter:
 			gunner = enemy
-	check.call(scarabs.size() == 3 and gunner != null and room.enemy_spawner.get_remaining() == 4, "Random dungeon enters real mixed room")
+	check.call(scarabs.size() == 4 and gunner != null and room.enemy_spawner.get_remaining() == 5, "Random dungeon enters real mixed room")
 	var cleared := [0]
 	room.cleared.connect(func() -> void: cleared[0] += 1)
 	capture.call("mixed_start")
@@ -157,7 +157,7 @@ func run() -> void:
 	await frames(18)
 	check.call(world.player.health.current_hp < 100.0 and world.player.health.current_hp > 0.0, "Live random-room scarab attacks Player")
 	await shoot_enemy(scarabs[0])
-	check.call(room.enemy_spawner.get_remaining() == 3 and room.room_state.status == RoomState.Status.ACTIVE, "Enemy death updates remaining without early clear")
+	check.call(room.enemy_spawner.get_remaining() == 4 and room.room_state.status == RoomState.Status.ACTIVE, "Enemy death updates remaining without early clear")
 	gunner.position = world.player.position + Vector2(240, 0)
 	# 清空余下尸蟞与枪手之间的干扰位置，保持 AI 活跃。
 	scarabs[1].position = Vector2(240, 200)

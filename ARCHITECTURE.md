@@ -192,8 +192,19 @@ ProjectileHitContext新增origin。HitRelicEffect管理命中连接与弱引用�
 
 Burn仅一个轻量Node2D，每目标/效果一实例；重复命中刷新3次计数及0.35秒间隔。不建立StatusEffect注册框架。组件随敌人/Room释放；效果remove/shutdown取消已拥有的Burn和反馈对象。Runtime.is_active与Health死亡门控阻止晚到DOT、充能或击杀反应。
 
-DungeonSession拥有当前局RelicRewardService，创建World前注入Controller；R/N先卸载旧World/Service，再创建独立新实例。Service只处理COMBAT首次ID与第1/3/5进度；版本1，独立RNG seed XOR (version*7919)。正式池先按ID稳定排序、Fisher-Yates洗牌，序列无放回；不会读取全局RNG或改变DungeonGenerator。
+DungeonSession拥有当前局RelicRewardService，创建World前注入Controller；R/N先卸载旧World/Service，再创建独立新实例。Service只处理COMBAT首次ID与第2/4/7进度；版本1，独立RNG seed XOR (version*7919)。正式池先按ID稳定排序、Fisher-Yates洗牌，序列无放回；不会读取全局RNG或改变DungeonGenerator。
 
 Service发reward_available(definition, room_id)，Controller只在当前活房生成RelicPedestal。底座使用Room视觉之外的轻量Node2D，安全位置避开障碍；64px内E调用Inventory.add成功后标记claimed并释放。离房未领即销毁并丢失，不回补；死亡销毁未领取底座并stop Service。固定Phase2回归夹具不注入奖励服务，生产入口始终由Session注入。
 
 三组协同没有专用combo脚本：数量批次自然进入FINAL镜像；穿透逐目标发独立hit，爆炸逐hit响应；双弹逐目标附加独立Burn。没有第三敌人、正式Boss、经济/古董/存档或复杂状态系统。
+## Phase 5B 平衡修订（2026-10-06）
+
+正式奖励改为第2/4/7个首次COMBAT清场，其他房型/重访/重复通知规则不变。短局只有5～6个COMBAT时只发2件，不动态补发；无放回序列及R同Seed复现不变。
+
+尸蟞：HP65、速度165、伤害12、冷却0.9、前摇0.25。枪手：HP90、速度105、弹伤14、弹速340、冷却1.35、前摇0.4，距离逻辑与非追踪弹保持。
+
+模板center/north/west/east/south分别为4尸蟞、6尸蟞、3枪手、4尸蟞+1枪手、3尸蟞+2枪手。新增点与其他点均验证四入口距离≥180、障碍边界安全及敌人间距≥40；观察期0.35秒保持。
+
+EncounterDifficulty由Controller读取DungeonRoom.distance_from_start解析，再经Room/Spawner注入Enemy.configure_spawn。深度1～2：HP/伤害1.00；3～4：HP1.15/伤害1.10；≥5：HP1.30/伤害1.20。只缩放实例Health上限、咬击/枪弹伤害；不修改共享Definition，不缩放移速/弹速/前摇/冷却，不做BFS或完整难度系统。HUD显示深度和Tier。R重建新上下文，倍率不累计；CLEARED重访不刷强化敌人。
+
+本次仅成长节奏与战斗压力修订；不增加敌人、Boss、词缀、遗物、经济或Phase6内容。实际试玩对底座+E体验已确认无问题，新平衡主观复验另见验证报告。

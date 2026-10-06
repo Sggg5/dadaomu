@@ -54,6 +54,9 @@ func run() -> void:
 	player.weapon.cooldown_remaining = 0.0
 	player.weapon.try_attack(player.position, Vector2.UP, player.stats)
 	await test.frames(14)
+	if is_instance_valid(first) and not first.health.is_dead:
+		player.weapon.try_attack(player.position, Vector2.UP, player.stats)
+		await test.frames(14)
 	test.check((not is_instance_valid(first) or first.health.is_dead) and killed[0] == 1 and player.health.current_hp == 80.0, "Real combined bullets kill scarab and heal five HP once")
 	var heal_effect := inventory.get_effect(HEAL.id)
 	room.enemy_spawner._on_enemy_died(first_id)

@@ -12,6 +12,12 @@ signal new_seed_requested
 
 
 func _ready() -> void:
+	var depth_label := Label.new()
+	depth_label.name = "EncounterDepth"
+	depth_label.position = Vector2(800, 108)
+	depth_label.add_theme_font_size_override("font_size", 16)
+	depth_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	$Root.add_child(depth_label)
 	damage_button.pressed.connect(func() -> void: damage_requested.emit())
 	$Root/RestartButton.pressed.connect(func() -> void: restart_requested.emit())
 	$Root/QuitButton.pressed.connect(func() -> void: quit_requested.emit())
@@ -24,6 +30,7 @@ func show_hp(current_hp: float, max_hp: float) -> void:
 
 
 func show_room(room: DungeonRoom, state: RoomState, remaining: int) -> void:
+	$Root/EncounterDepth.text = "深度：%d · 威胁：Tier %d" % [room.distance_from_start, EncounterDifficulty.from_depth(room.distance_from_start).tier]
 	var type_label: String = ["战斗", "古董占位", "商人", "机关", "秘密", "Boss占位", "出生房"][room.room_type]
 	$Root/RoomInfo.text = "%s · %s  |  %s" % [room.definition.title, type_label, state.get_label()]
 	$Root/RoomInfo.tooltip_text = str(room.room_id)
