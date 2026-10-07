@@ -9,8 +9,7 @@ static func generate(run_seed: int, number: int, tomb: TombDefinition) -> Dungeo
 	config.terminal_is_boss = data.terminal_mode == TombFloorDefinition.TerminalMode.BOSS
 	if number == 1: return DungeonGenerator.generate(run_seed, config)
 	if number == 2:
-		var first_config := tomb.floor_at(1).dungeon_config
-		var first := DungeonGenerator.generate(run_seed, first_config)
+		var first := generate(run_seed, 1, tomb)
 		for attempt in range(16):
 			var seed_value := (run_seed ^ (2 * 104729)) + attempt * 7919
 			var result := DungeonGenerator.generate(seed_value, config)

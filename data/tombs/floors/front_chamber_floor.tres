@@ -11,3 +11,4 @@ antique_reward_profile = ExtResource("3")
 rest_amount = 15
 terminal_mode = 1
 boss_definition = ExtResource("4")
+combat_cache_count = 1

@@ -2,6 +2,16 @@
 
 基线：`aaefb2e653cdbfa1dd87deb4e46ba5772fdef72c`。开发分支：`codex/phase-9b-multifloor-endurance`。不合并main、不进入后续阶段。
 
+## 本次审查修正（基于3a18df5）
+
+生产普通古董基础数量固定，不再因深层房间更多而自动增加；深层价值提升来自RewardProfile。
+
+TombFloorDefinition新增combat_cache_count（默认1，合法范围0～3），生产五份FloorDefinition均显式为1。Session→Controller→AntiqueLootService传入明确预算，稳定评分排序后选择min(budget,候选数)，不按floor_number决定数量。每层通常1个Antique Room+1个Combat Cache，风险事件保持额外可选机会。legacy_two_floor_tomb两层显式为3；旧三参数纯服务调用默认3仅兼容历史夹具，生产始终显式注入。
+
+Run33真实五层逐层验证Cache=1；1000 Seed×5层验证每层恰好1个，深层不自动增加。legacy两层实际选3个。奖励权重和1000 Seed品质/价值统计保持原值，未修改风险参数、治疗、80HP、8格、Profile v4和跨日Seed。
+
+Floor2比较对象改为TombFloorGenerator.generate(run_seed,1,tomb)，统一应用FloorDefinition terminal_mode。自定义两层普通终点墓：Floor1原Config terminal_is_boss=true，但FloorDefinition=COMBAT，两层同为固定4房。100 Seed验证真实Floor1是COMBAT、共享原Config不变、Floor2结果与手动用真实Floor1比较的有限搜索一致，并确认至少一个Seed首候选相同而实际触发重试。保持XOR/7919/最多16次搜索策略。
+
 ## 实现与职责
 
 - TombDefinition / TombFloorDefinition：多层数据编排与验证，最后一层由数组位置判断，允许一层/三层/其他层数。
@@ -64,12 +74,12 @@ F2/F4在真实敌人攻击后再治疗，分别有效+15/+20：63.9→78.9、57.
 |完整程序Run离层|HP|背包槽位|携货估值|真实Boss累计|
 |---|---:|---:|---:|---:|
 |1|80|2|240|0|
-|2|78.9|7|2940|1|
-|3|78.9|8|5500|1|
+|2|78.9|6|2040|1|
+|3|78.9|8|4300|1|
 |4|77.3|7|5400|1|
-|5|77.3|7|6800|2|
+|5|77.3|6|5000|2|
 
-F3开始发生真实满包E失败→Tab/Delete→E换货。例如丢弃银元120换玉璧900；深层仍保持8格，不自动替换，不把掉落直接塞包。程序驾驶的选择不一定经济最优。
+F3开始发生真实满包E失败→Tab/Delete→E换货。例如丢弃两枚银元共240换唐三彩马1600；深层仍保持8格，不自动替换，不把掉落直接塞包。程序驾驶的选择不一定经济最优。
 
 另从真实GameFlow分别重跑前缀，在F1/F2/F3/F4真实终点F撤离；结果均EXTRACTED/reached当前层/cleared当前层，Boss计数0/1/1/1，实际E回馆并安全入藏。死亡统计单项独立构造已清层账本：F4尚未清终点死亡=reached4/cleared3/boss1；它属于边界测试，不冒充完整无注入死亡主流程。一层普通终点墓也通过真实战斗和RunExit完成，0Boss；三层数据生成有效且第四层拒绝。
 
@@ -91,7 +101,7 @@ godot --headless --path . --quit-after 10 -- --profile-path=user://tests/phase_9
 # Phase1～9A同参数逐套跑phase_<name>_smoke.gd。
 ```
 
-最终完整回归：Phase1～9B **41,508项、0失败**；其中旧Phase1～9A **15,840项、0失败**，9B headless **25,668项、0失败**。9B graphical **25,668项、0失败**。导入与隔离正式入口启动返回0，错误/失败扫描为空。检查并实际查看了终点、层名/出口提示、Boss预警和背包截图。
+最终完整回归：Phase1～9B **46,593项、0失败**；其中旧Phase1～9A **15,840项、0失败**，9B headless **30,753项、0失败**。9B graphical **30,753项、0失败**。导入与隔离正式入口启动返回0，错误/失败扫描为空。检查并实际查看了终点、层名/出口提示、Boss预警和背包截图。
 
 |套件|断言数|失败|
 |---|---:|---:|
@@ -110,9 +120,9 @@ godot --headless --path . --quit-after 10 -- --profile-path=user://tests/phase_9
 |8C|297|0|
 |8D|2153|0|
 |9A|10510|0|
-|9B|25668|0|
+|9B|30753|0|
 
-日志：logs/phase_9b_regression_*.log、phase_9b_graphical.log、phase_9b_import.log、phase_9b_startup.log，均忽略不提交。错误/失败扫描与实际返回码同时检查。
+日志：logs/phase_9b_review_<phase>.log、phase_9b_review_graphical.log、phase_9b_review_import.log、phase_9b_review_startup.log，均忽略不提交。错误/失败扫描与实际返回码同时检查。
 
 ## 人工试玩
 

@@ -24,6 +24,7 @@ var layout: DungeonLayout
 var rewards: RelicRewardService
 var floor_number: int = 1
 var floor_count: int = 0
+var combat_cache_count: int = 3
 var floor_name: String = ""
 var floor_offset: int = 0
 var boss_definition: BossDefinition
@@ -47,7 +48,7 @@ var _restarting: bool = false
 
 func _ready() -> void:
 	assert(layout != null and layout.rooms.has(layout.start_id), "Inject a DungeonLayout before adding RoomController")
-	antique_loot.configure(run_seed,floor_number,layout)
+	antique_loot.configure(run_seed,floor_number,layout,combat_cache_count)
 	# 普通古董先使用原主图选源；探索层不会改变旧奖励/敌人/地图RNG。
 	if exploration_enabled:
 		exploration = TombExplorationPlan.build(layout, run_seed, floor_number)

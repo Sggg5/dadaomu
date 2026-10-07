@@ -7,6 +7,7 @@ enum TerminalMode { COMBAT, BOSS }
 @export var terminal_mode: TerminalMode = TerminalMode.COMBAT
 @export var boss_definition: BossDefinition
 @export_range(0, 80) var rest_amount: int = 0
+@export_range(0, 3) var combat_cache_count: int = 1
 @export var antique_reward_profile: AntiqueRewardProfile
 
 func validation_error() -> String:
@@ -15,6 +16,7 @@ func validation_error() -> String:
 	if terminal_mode not in [TerminalMode.COMBAT, TerminalMode.BOSS]: return "Invalid terminal mode"
 	if (terminal_mode == TerminalMode.BOSS) != (boss_definition != null): return "Boss mode requires exactly one definition"
 	if boss_definition != null and (boss_definition.id == &"" or boss_definition.boss_scene == null): return "Invalid Boss definition"
+	if combat_cache_count < 0 or combat_cache_count > 3: return "Invalid combat cache budget"
 	if rest_amount < 0 or rest_amount > 80: return "Invalid rest amount"
 	if antique_reward_profile != null and not antique_reward_profile.validation_error().is_empty(): return "Invalid antique profile"
 	return ""

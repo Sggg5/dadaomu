@@ -1,11 +1,11 @@
 class_name AntiqueLootService
 extends RefCounted
-## 本层纯配置：按稳定评分选前三COMBAT；不监听战斗、进入顺序或奖励服务。
+## 本层纯配置：按稳定评分与注入预算选择COMBAT；不监听战斗、进入顺序或奖励服务。
 const VERSION: int = 1
 var selected_rooms: Array[StringName] = []
 
 
-func configure(run_seed: int, floor_number: int, layout: DungeonLayout) -> void:
+func configure(run_seed: int, floor_number: int, layout: DungeonLayout, cache_count: int = 3) -> void:
 	selected_rooms.clear()
 	var candidates: Array[StringName] = []
 	for id in layout.rooms:
@@ -14,7 +14,7 @@ func configure(run_seed: int, floor_number: int, layout: DungeonLayout) -> void:
 		var first := AntiquePool.stable_score(run_seed,floor_number,a,&"cache_room",VERSION)
 		var second := AntiquePool.stable_score(run_seed,floor_number,b,&"cache_room",VERSION)
 		return str(a) < str(b) if first == second else first < second)
-	for index in range(mini(3,candidates.size())): selected_rooms.append(candidates[index])
+	for index in range(mini(clampi(cache_count,0,3),candidates.size())): selected_rooms.append(candidates[index])
 
 
 func has_cache(room_id: StringName) -> bool: return room_id in selected_rooms

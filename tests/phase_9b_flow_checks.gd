@@ -33,6 +33,7 @@ func play(exit_floor: int) -> void:
 		if number in [2, 4]: await one_real_hit()
 		await collect()
 		var world := session.world
+		test.check(world.combat_cache_count == 1 and world.antique_loot.selected_rooms.size() == 1, "Live Run33 uses one cache on every floor")
 		await driver.visit(world.layout.terminal_id)
 		if world.boss_definition is BossDefinition:
 			if number == 2: await preload("res://tests/phase_6_floor_checks.gd").new(test).boss_fight()

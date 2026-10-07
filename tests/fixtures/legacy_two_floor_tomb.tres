@@ -9,12 +9,14 @@ script = ExtResource("2")
 display_name = "旧第一层"
 dungeon_config = ExtResource("3")
 terminal_mode = 1
+combat_cache_count = 3
 boss_definition = ExtResource("4")
 [sub_resource type="Resource" id="F2"]
 script = ExtResource("2")
 display_name = "旧第二层"
 dungeon_config = ExtResource("3")
 terminal_mode = 1
+combat_cache_count = 3
 boss_definition = ExtResource("5")
 [resource]
 script = ExtResource("1")

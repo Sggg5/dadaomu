@@ -18,6 +18,9 @@ func run() -> void:
 			var cfg := data.dungeon_config
 			test.check(layout != null and layout.rooms.size() >= cfg.min_rooms and layout.rooms.size() <= cfg.max_rooms, "Floor%d room range seed%d" % [number, seed_value])
 			sums[number-1] += layout.rooms.size()
+			var loot := AntiqueLootService.new()
+			loot.configure(seed_value,number,layout,data.combat_cache_count)
+			test.check(data.combat_cache_count == 1 and loot.selected_rooms.size() == 1, "Each production floor has exactly one cache across 1000 Seeds")
 			var distances := {layout.start_id: 0}
 			var queue: Array[StringName] = [layout.start_id]
 			while not queue.is_empty():
@@ -44,6 +47,12 @@ func run() -> void:
 	test.check(sums[4] < sums[3] and common5 > 0 and treasure5 > 0, "F5 contraction with both COMMON and TREASURE")
 	var legacy: TombDefinition = preload("res://tests/fixtures/legacy_two_floor_tomb.tres")
 	test.check(legacy.floors.size() == 2 and legacy.validation_error().is_empty(), "Explicit legacy valid two-floor fixture")
+	for number in range(1, 3):
+		var loot := AntiqueLootService.new()
+		var layout := TombFloorGenerator.generate(33,number,legacy)
+		loot.configure(33,number,layout,legacy.floor_at(number).combat_cache_count)
+		test.check(legacy.floor_at(number).combat_cache_count == 3 and loot.selected_rooms.size() == 3, "Legacy three-cache semantics preserved")
+	await custom_terminal_comparison()
 	var empty := TombDefinition.new()
 	test.check(not empty.validation_error().is_empty(), "Reject missing tomb ID and floors")
 	var invalid := AntiqueRewardProfile.new()
@@ -57,3 +66,32 @@ func run() -> void:
 		var layout := TombFloorGenerator.generate(33, number, TOMB)
 		print("[9B sample] Run33 floor%d seed=%d rooms=%d terminal=%s" % [number, layout.seed_value, layout.rooms.size(), layout.terminal_id])
 	test.check(MuseumProfileStore.VERSION == 4, "No Profile v5 or mid-run save")
+
+
+func custom_terminal_comparison() -> void:
+	var tomb := TombDefinition.new()
+	tomb.id = &"OVERRIDE_TERMINAL_TEST"
+	var first := TOMB.floor_at(1).duplicate() as TombFloorDefinition
+	first.dungeon_config = first.dungeon_config.duplicate() as DungeonConfig
+	first.dungeon_config.terminal_is_boss = true
+	first.terminal_mode = TombFloorDefinition.TerminalMode.COMBAT
+	first.dungeon_config.min_rooms = 4
+	first.dungeon_config.max_rooms = 4
+	var second := first.duplicate() as TombFloorDefinition
+	var saw_retry := false
+	tomb.floors.assign([first,second])
+	for seed_value in range(100):
+		var actual_first := TombFloorGenerator.generate(seed_value,1,tomb)
+		test.check(actual_first.boss_id == &"" and actual_first.rooms[actual_first.terminal_id].room_type == RoomDefinition.Type.COMBAT and first.dungeon_config.terminal_is_boss, "Floor mode overrides raw config without mutating Resource")
+		var expected: DungeonLayout
+		var config := second.dungeon_config.duplicate() as DungeonConfig
+		config.terminal_is_boss = false
+		for attempt in range(16):
+			var candidate := DungeonGenerator.generate((seed_value ^ (2*104729))+attempt*7919,config)
+			if candidate.spatial_signature() != actual_first.spatial_signature():
+				expected = candidate
+				saw_retry = saw_retry or attempt > 0
+				break
+		test.check(TombFloorGenerator.generate(seed_value,2,tomb).signature() == expected.signature(), "Floor2 compares against actual assembled Floor1 with finite legacy Seed algorithm")
+
+	test.check(saw_retry, "Custom same-size combat floors exercise an actual rejected identical first candidate")

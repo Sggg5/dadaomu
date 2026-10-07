@@ -115,6 +115,7 @@ func _assemble_world(layout: DungeonLayout) -> void:
 	var floor_data := tomb.floor_at(floor_number)
 	world.floor_count = tomb.floors.size()
 	world.floor_name = floor_data.display_name
+	world.combat_cache_count = floor_data.combat_cache_count
 	world.rest_amount = floor_data.rest_amount
 	world.antique_reward_profile = floor_data.antique_reward_profile
 	world.next_floor_number = floor_number + 1

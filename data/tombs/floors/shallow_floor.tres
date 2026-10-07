@@ -9,3 +9,4 @@ dungeon_config = ExtResource("2")
 antique_reward_profile = ExtResource("3")
 rest_amount = 0
 terminal_mode = 0
+combat_cache_count = 1
