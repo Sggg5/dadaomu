@@ -33,7 +33,7 @@ func run() -> void:
 		test.check(counts == expected[template.room_id] and is_equal_approx(template.entry_grace_time, 0.35), "Updated composition and grace: " + str(template.room_id))
 		test.check(safe, "All spawns include new point: entry180/obstacle16/actor40 safety " + str(template.room_id))
 	var player := world.player
-	test.check(player.stats.max_hp == 80.0 and player.stats.hurt_invulnerability == 0.25 and player.stats.move_speed == 280.0 and player.stats.attack_damage == 20.0, "Player survival changes to 80 HP / 0.25s without altering movement or attack")
+	test.check(player.stats.max_hp == 80.0 and player.stats.hurt_invulnerability == 0.25 and player.stats.move_speed == 240.0 and player.stats.attack_damage == 20.0, "Player survival changes to 80 HP / 0.25s without altering movement or attack")
 	player.invulnerability_remaining = 0.0
 	test.check(player.take_damage(1.0) and player.invulnerability_remaining > 0.0 and not player.take_damage(1.0), "Effective injury starts readable red flash and rejects immediate repeats")
 	await test.frames(4)

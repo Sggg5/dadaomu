@@ -153,7 +153,7 @@ func run()->void:
 	pounce.pending=[pounce.action(&"POUNCE",0.8,18,{"speed":550,"duration":0.5})]
 	pounce._next_action()
 	var landing:=pounce.endpoint
-	test.check(landing==Vector2(900,368) and world.current_room.get_children().any(func(node:Node)->bool:return node is BossTelegraph and node.shape==BossTelegraph.Shape.CIRCLE and is_equal_approx(node.radius,70)),"Pounce shows locked 70px landing circle")
+	test.check(landing==Vector2(900,368) and world.current_room.get_children().any(func(node:Node)->bool:return node is BossTelegraph and node.shape==BossTelegraph.Shape.CIRCLE and is_equal_approx(node.radius,pounce.body_radius()*1.9)),"Pounce shows locked body-scaled landing circle")
 	await test.frames(45)
 	test.check(pounce.state==&"WINDUP" and world.player.health.current_hp==80,"Pounce remains harmless throughout its warning")
 	world.player.global_position=Vector2(700,496)

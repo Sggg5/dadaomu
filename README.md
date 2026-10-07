@@ -381,4 +381,6 @@ godot --path . --disable-vsync --fixed-fps 60 --script tests/phase_8a_smoke.gd -
 ```
 
 Phase1～8A最终回归2811项/0失败；8A专项与图形均718项/0失败。用户提出“不必一直等着”，已改为可跳过营业或提前闭馆出发；完整人工手感复验待完成。命令、文件列表和限制见 docs/PHASE_8A_VERIFICATION.md。
-`9B.3.2a-c` 顺序补齐中：潜地2.4秒硬生命周期已验证；Geometry v2提供13普通布局/6Boss Arena，BOSS不继承普通障碍。最新阶段数据以对应验收文档为准。
+`9B.3.2a-c` 顺序补齐已完成：潜地2.4秒硬生命周期已验证；Geometry v2提供13普通布局/6Boss Arena，BOSS不继承普通障碍。最新阶段数据以对应验收文档为准。
+
+9B.3.2a-c完成开发待人工验收：基础240移速/3.5攻速/750弹速×1秒寿命，80HP不改；正式池41件，新增机括簧/飞虎靴/雁翎/缩地尺/定风珠。Boss身体半径32～52，原HP/伤害保持。详见docs/PHASE_9B_3_2C_VERIFICATION.md。

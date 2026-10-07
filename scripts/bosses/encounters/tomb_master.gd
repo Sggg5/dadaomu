@@ -18,5 +18,7 @@ func choose_actions(_distance:float)->Array:
 		3:return [action(&"FAN",0.7,14,{"count":5})]
 	return [action(&"CHARGE",0.7,18)]
 func _draw_body(color:Color)->void:
+	draw_set_transform(Vector2.ZERO,0,Vector2.ONE*body_radius()/43.0)
 	draw_colored_polygon(PackedVector2Array([Vector2(0,-42),Vector2(30,30),Vector2(-30,30)]),color)
 	draw_line(Vector2(-26,-30),Vector2(26,-30),Color("e0b554"),8)
+	draw_set_transform(Vector2.ZERO)

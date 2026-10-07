@@ -1,5 +1,7 @@
 # Phase 9B.3.2b — Room Geometry Variety & Boss Arena Separation
 
+以下主体记录298bf6a首次空间拆分；文末“2026-10-08顺序复验B补齐”是当前Geometry v2/13种布局/8.4436%结果，旧v1统计仅保留历史对照。
+
 ## 基线与边界
 
 基线 `5435e96872f2ff8a2b76d24cfb438406df9df39d`，当前分支codex/phase-9b-multifloor-endurance。9B.3.3此前已提交；本次按最新HEAD和“不要改Boss HP/伤害/Build”保留其数值，只做空间拆分与合法性。没有继续Boss Pressure，没有新Boss/怪/遗物/经济或存档版本，不合并main。

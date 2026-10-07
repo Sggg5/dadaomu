@@ -21,7 +21,7 @@ func _ready()->void:
 		data.max_hp=definition.max_hp*0.5
 		data.display_name="阴尸" if i==1 else "阳尸"
 		child.ranged=i==1
-		var point:=encounter_room.boss_encounter.safe_point(position+Vector2(-100 if i==0 else 100,0),28,reserved,80)
+		var point:=encounter_room.boss_encounter.safe_point(position+Vector2(-100 if i==0 else 100,0),child.body_radius(),reserved,80)
 		assert(point.is_finite(),"Twin bodies need legal distinct positions")
 		reserved.append(point)
 		child.position=to_local(encounter_room.to_global(point))

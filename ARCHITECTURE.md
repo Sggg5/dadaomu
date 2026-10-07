@@ -448,3 +448,5 @@ Controller创建AntiqueInventoryPanel，注入Inventory与can_manage回调；Pan
 
 RunCarryState增加antique_definitions，旧World/Panel释放、新Player加入新库存并更新新HUD；不搬节点。Session通关构建RunResult.antique_names/antique_value数值快照，结算独立ScrollContainer与固定R/N提示，不持Inventory或Resource。R/N仍整Run重建，HP/遗物与奖励规则不改。没有死亡掉落、钱包、永久货币或磁盘写入。
 `RoomGeometryPlan.GEOMETRY_VERSION=2`，中央有限配额ceil(COMBAT/10)，邻接去重；普通池13种。Boss四角Arena保持四入口及中心开放；风险事件独立流有专项比较。
+
+C：growth_properties_effect读取只读Definition参数，修改AttackRequest冷却/弹速/寿命及Runtime移动倍率，不写PlayerStats。Enemy.body_radius读取实例CircleShape；Boss出生/双生/召唤/卵的空间查询与视觉共享实际身体尺寸。

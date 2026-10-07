@@ -15,7 +15,8 @@ func setup()->DungeonSession:
 func check_actors(room:Room)->void:
 	for actor in CombatGeometry.targets(room):
 		var point:=room.to_local(actor.global_position)
-		test.check(room.obstacles().all(func(rect:Rect2)->bool:return not rect.grow(18).has_point(point)),"Actual instantiated actor cannot spawn inside padded wall")
+		var radius:float=actor.body_radius() if actor is Enemy else 18
+		test.check(room.obstacles().all(func(rect:Rect2)->bool:return not rect.grow(radius).has_point(point)),"Actual instantiated actor body cannot spawn inside padded wall")
 func boss_arena(definition:BossDefinition,geometry:RoomGeometryDefinition)->void:
 	var session:=await setup()
 	var world:=session.world
@@ -107,6 +108,10 @@ func run()->void:
 	await boss_arena(TOMB.floor_at(4).boss_pool.bosses[0],preload("res://data/geometries/arenas/boss_side_walls.tres"))
 	await boss_arena(TOMB.floor_at(5).boss_pool.bosses[0],preload("res://data/geometries/arenas/boss_open.tres"))
 	await boss_arena(TOMB.floor_at(5).boss_pool.bosses[1],preload("res://data/geometries/arenas/boss_edge_cover.tres"))
+	# New body sizes: instantiate every compatible pair, not only one representative per Arena.
+	for number in range(1,6):
+		for definition:Variant in TOMB.floor_at(number).boss_pool.bosses:
+			for arena in ARENAS.compatible(definition):await boss_arena(definition,arena)
 	var session:=await setup()
 	var plan:=session.world.geometry_plan.signature()
 	var boss:=BossArenaPlan.pick(session.run_seed,1,session.world.layout.boss_id,ARENAS,session.boss_for_floor(1)).id

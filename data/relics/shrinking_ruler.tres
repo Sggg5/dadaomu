@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RelicDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/relics/relic_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/relics/effects/growth_properties_effect.gd" id="2"]
+[resource]
+script = ExtResource("1")
+id = &"shrinking_ruler"
+display_name = "缩地尺"
+description = "移动速度提高20%，弹丸寿命缩短15%。"
+effect_script = ExtResource("2")
+parameters = {"movement":1.2,"lifetime":0.85}
+design_role = 3
+power_band = 1
+archetype_tags = Array[StringName]([&"PROJECTILE"])

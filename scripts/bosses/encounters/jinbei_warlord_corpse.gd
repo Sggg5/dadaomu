@@ -17,5 +17,7 @@ func choose_actions(distance:float)->Array:
 		&"SUMMON":return [action(&"SUMMON",0.8,0,{"count":2,"gap":0.05}),action(&"BURST",0.45,12,{"count":1})]
 	return [action(&"BURST",0.7,12,{"count":1}),action(&"BURST",0.25,12,{"count":1}),action(&"BURST",0.25,12,{"count":1})]
 func _draw_body(color:Color)->void:
+	draw_set_transform(Vector2.ZERO,0,Vector2.ONE*body_radius()/47.0)
 	draw_colored_polygon(PackedVector2Array([Vector2(-28,-24),Vector2(28,-24),Vector2(36,30),Vector2(-36,30)]),color)
 	draw_rect(Rect2(-30,-36,60,14),Color("302d42"))
+	draw_set_transform(Vector2.ZERO)

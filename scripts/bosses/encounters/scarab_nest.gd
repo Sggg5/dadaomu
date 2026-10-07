@@ -9,5 +9,7 @@ func choose_actions(_distance:float)->Array:
 		1:return [action(&"FAN",0.7,7,{"count":5,"speed":240})]
 	return [action(&"SUMMON",0.7,0,{"count":2})]
 func _draw_body(color:Color)->void:
+	draw_set_transform(Vector2.ZERO,0,Vector2.ONE*body_radius()/34.0)
 	draw_circle(Vector2.ZERO,30,color)
 	for i in range(8):draw_circle(Vector2.RIGHT.rotated(i*TAU/8)*26,8,Color("77884a"))
+	draw_set_transform(Vector2.ZERO)

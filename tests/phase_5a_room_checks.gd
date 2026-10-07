@@ -53,10 +53,10 @@ func run() -> void:
 	player.position = first.position + Vector2(0, 64)
 	player.weapon.cooldown_remaining = 0.0
 	player.weapon.try_attack(player.position, Vector2.UP, player.stats)
-	await test.frames(14)
+	await test.frames(int(ceil(player.weapon.cooldown_remaining*60))+2)
 	if is_instance_valid(first) and not first.health.is_dead:
 		player.weapon.try_attack(player.position, Vector2.UP, player.stats)
-		await test.frames(14)
+		await test.frames(int(ceil(player.weapon.cooldown_remaining*60))+2)
 	test.check((not is_instance_valid(first) or first.health.is_dead) and killed[0] == 1 and player.health.current_hp == 60.0, "Real combined bullets kill scarab and heal five HP once")
 	var heal_effect := inventory.get_effect(HEAL.id)
 	room.enemy_spawner._on_enemy_died(first_id)
@@ -68,7 +68,7 @@ func run() -> void:
 	for enemy in room.enemy_spawner.get_children():
 		if not enemy.health.is_dead:
 			enemy.take_damage(1000.0)
-	await test.frames(14)
+	await test.frames(int(ceil(player.weapon.cooldown_remaining*60))+2)
 	test.check(room.room_state.status == RoomState.Status.CLEARED and cleared[0] == 1 and inventory.ids().size() == 3, "Room clears once and Build remains installed")
 	room.enter()
 	test.check(cleared[0] == 1, "Repeated enter never repeats room-cleared Hook")
@@ -125,7 +125,7 @@ func run() -> void:
 	player.health.take_damage(1000.0)
 	var triggers_before: int = old_effect.get("triggers")
 	enemy.take_damage(1000.0)
-	await test.frames(14)
+	await test.frames(int(ceil(player.weapon.cooldown_remaining*60))+2)
 	test.check(inventory.ids().is_empty() and old_effect.uninstall_count == 1 and not runtime.is_active() and player.health.current_hp == 0.0 and not player.health.heal(5.0), "Death clears all relics and cannot revive dead Player")
 	test.check(old_effect.get("triggers") == triggers_before and runtime.enemy_killed.get_connections().is_empty() and hit_count[0] == 0, "Post-death kills cannot trigger stale heal connections or hits")
 	test.check(not inventory.add(DAMAGE) and world.current_room.projectiles.get_child_count() == 0 and world.current_room.enemy_spawner.get_children().all(func(actor: Enemy) -> bool: return not actor.ai_enabled), "Dead runtime rejects new installs and keeps Phase 4 death cleanup")

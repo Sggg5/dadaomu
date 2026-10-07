@@ -44,7 +44,7 @@ func run()->void:
 					elites+=int(entry.enemy_definition.elite)
 		stats.append({"floor":number,"combat_rooms":combat_total,"threat_counts":threats,"enemy_families":families.keys(),"mean_initial_enemies":float(count_total)/combat_total,"elite_instances":elites,"environment_rooms":environments})
 	var pool:=RelicRewardService.PRODUCTION_POOL
-	test.check(pool.relics.size()==36,"Thirty-six independent relic definitions")
+	test.check(pool.relics.size()==41,"Forty-one independent relic definitions")
 	var ids:Dictionary={}
 	var roles:Array[int]=[0,0,0,0]
 	for item in pool.relics:
@@ -76,7 +76,7 @@ func run()->void:
 		core_hist[cores]=core_hist.get(cores,0)+1
 		powers.append(power)
 	powers.sort()
-	test.check(signatures.size()>950 and frequencies.size()==36 and powers[-1]>powers[0],"Broad plan variation and complete pool coverage")
+	test.check(signatures.size()>950 and frequencies.size()==41 and powers[-1]>powers[0],"Broad plan variation and complete pool coverage")
 	var report:={"encounters_1000_seeds":stats,"relic_roles":roles,"unique_plans":signatures.size(),"core_histogram":core_hist,"source_role_counts":source_roles,"relic_frequency":frequencies,"power_proxy_min":powers[0],"power_proxy_p10":powers[100],"power_proxy_median":powers[500],"power_proxy_p90":powers[900],"power_proxy_max":powers[-1]}
 	var file:=FileAccess.open("res://logs/phase_9b3_statistics.json",FileAccess.WRITE)
 	file.store_string(JSON.stringify(report,"  "))

@@ -20,5 +20,7 @@ func choose_actions(distance:float)->Array:
 		&"ROAR":return [action(&"FAN",0.7,12,{"count":7}),action(&"POUNCE",0.8,18,{"speed":550,"duration":0.5})] if phase_index>=2 else [action(&"FAN",0.7,12,{"count":5})]
 	return [action(&"SPIKES",0.9,14)]
 func _draw_body(color:Color)->void:
+	draw_set_transform(Vector2.ZERO,0,Vector2.ONE*body_radius()/47.0)
 	draw_colored_polygon(PackedVector2Array([Vector2(-40,-18),Vector2(-24,-40),Vector2(24,-40),Vector2(40,-18),Vector2(32,30),Vector2(-32,30)]),color)
 	for sign_value in [-1,1]:draw_line(Vector2(sign_value*20,-28),Vector2(sign_value*38,-55),Color("c5bd92"),9)
+	draw_set_transform(Vector2.ZERO)

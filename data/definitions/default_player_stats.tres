@@ -5,11 +5,11 @@
 [resource]
 script = ExtResource("1")
 max_hp = 80.0
-move_speed = 280.0
+move_speed = 240.0
 acceleration = 1800.0
 deceleration = 2200.0
 attack_damage = 20.0
-attack_speed = 5.0
+attack_speed = 3.5
 projectile_speed = 750.0
-projectile_lifetime = 2.0
+projectile_lifetime = 1.0
 hurt_invulnerability = 0.25

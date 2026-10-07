@@ -125,11 +125,11 @@ func _next_action()->void:
 		var node:=zone(BossTelegraph.Shape.PATH,global_position,0,timer,0)
 		var extent:float=current.get("extent",float(current.get("speed",650))*float(current.get("duration",0.45)))
 		if kind==&"POUNCE":
-			var point:=EncounterGeometry.safe_point(encounter_room,encounter_room.to_local(endpoint),70)
+			var point:=EncounterGeometry.safe_point(encounter_room,encounter_room.to_local(endpoint),maxf(70,body_radius()+12))
 			endpoint=encounter_room.to_global(point) if point.is_finite() else global_position
 			extent=global_position.distance_to(endpoint)
 			locked=(endpoint-global_position).normalized()
-			zone(BossTelegraph.Shape.CIRCLE,endpoint,70,timer,0,float(current.get("duration",0.5))+0.1)
+			zone(BossTelegraph.Shape.CIRCLE,endpoint,maxf(70,body_radius()*1.9),timer,0,float(current.get("duration",0.5))+0.1)
 		path_points=[]
 		for i in range(25):
 			var t:=i/24.0
@@ -137,7 +137,7 @@ func _next_action()->void:
 			if kind==&"CURVE":point+=locked.orthogonal()*sin(t*TAU)*60
 			path_points.append(point)
 		node.path=path_points
-		node.width=50
+		node.width=maxf(50,body_radius()*2)
 	else:
 		var node:=zone(BossTelegraph.Shape.SECTOR,global_position,180,timer,0)
 		node.direction=locked
@@ -213,12 +213,12 @@ func _dash(delta:float)->void:
 		if collider==target and not dash_hit:target.take_damage(scaled_damage(current.damage));dash_hit=true
 		_finish_dash()
 	elif current.kind==&"POUNCE" and global_position.distance_to(endpoint)<2:_finish_dash()
-	elif not dash_hit and global_position.distance_to(target.global_position)<44 and has_line_to_target():
+	elif not dash_hit and global_position.distance_to(target.global_position)<body_radius()+16 and has_line_to_target():
 		target.take_damage(scaled_damage(current.damage))
 		dash_hit=true
 	elif timer<=0:_finish_dash()
 func _finish_dash()->void:
-	if current.kind==&"POUNCE" and not dash_hit and global_position.distance_to(target.global_position)<70 and has_line_to_target():
+	if current.kind==&"POUNCE" and not dash_hit and global_position.distance_to(target.global_position)<maxf(70,body_radius()*1.9) and has_line_to_target():
 		target.take_damage(scaled_damage(current.damage))
 		dash_hit=true
 	_on_skill_finished(current.kind)
@@ -236,5 +236,5 @@ func _draw()->void:
 	super._draw()
 	if state==&"TRANSITION":draw_arc(Vector2.ZERO,48+sin(timer*24)*5,0,TAU,48,Color("ffb749"),5)
 func _draw_body(color:Color)->void:
-	draw_circle(Vector2.ZERO,28,color)
-	draw_arc(Vector2.ZERO,34,-PI/2,-PI/2+TAU*(health.current_hp/health.max_hp),32,Color("cfa471"),3)
+	draw_circle(Vector2.ZERO,body_radius(),color)
+	draw_arc(Vector2.ZERO,body_radius()+6,-PI/2,-PI/2+TAU*(health.current_hp/health.max_hp),32,Color("cfa471"),3)

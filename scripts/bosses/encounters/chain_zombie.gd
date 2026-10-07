@@ -17,5 +17,7 @@ func choose_actions(_distance:float)->Array:
 		1:return [action(&"SWEEP",0.8,14)]
 	return [action(&"HOOK",0.9,10,{"width":40,"gap":0.0}),action(&"SWEEP",0.55,14)]
 func _draw_body(color:Color)->void:
+	draw_set_transform(Vector2.ZERO,0,Vector2.ONE*body_radius()/25.0)
 	draw_circle(Vector2.ZERO,25,color)
 	for i in range(5):draw_arc(Vector2(-36+i*18,0),8,0,TAU,12,Color("b8bec2"),3)
+	draw_set_transform(Vector2.ZERO)

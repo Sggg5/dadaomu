@@ -87,3 +87,8 @@ func _tick_ai(delta:float)->void:
 func _draw()->void:
 	super._draw()
 	if transition_pause>0:draw_arc(Vector2.ZERO,46+sin(transition_pause*24)*4,0,TAU,48,Color("ffb749"),5)
+
+func _draw_body(color:Color)->void:
+	draw_set_transform(Vector2.ZERO,0,Vector2.ONE*body_radius()/32.0)
+	super._draw_body(color)
+	draw_set_transform(Vector2.ZERO)

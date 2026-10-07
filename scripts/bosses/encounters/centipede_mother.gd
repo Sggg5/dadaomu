@@ -31,5 +31,7 @@ func _on_skill_finished(kind:StringName)->void:
 			var point:=global_position-locked*float(i*60)
 			zone(BossTelegraph.Shape.CIRCLE,point,42,0.6,4,2)
 func _draw_body(color:Color)->void:
+	draw_set_transform(Vector2.ZERO,0,Vector2.ONE*body_radius()/23.0)
 	draw_circle(Vector2.ZERO,23,color)
 	draw_circle(Vector2(0,-6),5,Color("ffc06b"))
+	draw_set_transform(Vector2.ZERO)

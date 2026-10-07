@@ -71,7 +71,7 @@ func _clear_current_room() -> void:
 		for shot in range(3):
 			var fired := world.player.weapon.try_attack(enemy.global_position - Vector2(0, 48), Vector2.DOWN, world.player.stats)
 			_check(fired, "%s weapon fires at target %d shot %d" % [room_id, index, shot])
-			await _frames(14)
+			await _frames(int(ceil(world.player.weapon.cooldown_remaining*60))+2)
 		_check(not is_instance_valid(enemy), "%s target %d dies from actual projectile hits" % [room_id, index])
 		if index < enemies.size() - 1:
 			_check(room.room_state.status == RoomState.Status.ACTIVE and _all_doors_open(false), "%s doors stay locked before last death" % room_id)

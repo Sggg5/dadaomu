@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RelicDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/relics/relic_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/relics/effects/growth_properties_effect.gd" id="2"]
+[resource]
+script = ExtResource("1")
+id = &"mechanism_spring"
+display_name = "机括簧"
+description = "攻击间隔缩短16%。"
+effect_script = ExtResource("2")
+parameters = {"cooldown":0.84}
+design_role = 1
+power_band = 1
+archetype_tags = Array[StringName]([&"PROJECTILE"])

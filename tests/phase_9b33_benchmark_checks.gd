@@ -41,6 +41,7 @@ func run()->void:
 				var build_ids:=world.player.relics.inventory.ids()
 				var driver=preload("res://tests/threat_fight_driver.gd").new(test)
 				var ticks:=0
+				var farthest:=0.0
 				var targets:Array=boss.combat_targets() if boss.has_method("combat_targets") else [boss]
 				if mode=="stationary":await driver.shoot_safe(targets[0])
 				for iteration in range(2400):
@@ -52,12 +53,15 @@ func run()->void:
 						world.player.weapon.try_attack(world.player.global_position,(targets[0].global_position-world.player.global_position).normalized(),world.player.stats)
 						await test.frames(3)
 					ticks+=3
+					farthest=maxf(farthest,world.player.global_position.distance_to(targets[0].global_position))
 					if iteration==70:test.capture(str(definition.id)+"_"+mode+"_pressure")
 				var actions:int=boss.get("skills_executed")
 				var skips:int=boss.get("phase_skip_count") if boss.get("phase_skip_count")!=null else 0
 				var phases:Array=boss.get("phases_seen").keys()
 				var row:={"boss":str(definition.id),"floor":number,"relics":count,"build_seed":77,"build_ids":build_ids,"mode":mode,"seconds":ticks/60.0,"cycles":boss.get("cycles"),"combos":boss.get("combinations"),"actions":actions,"phases":phases,"phase_skips":skips,"phase_actions":boss.get("phase_actions"),"hp_lost":80-world.player.health.current_hp,"defeated":world.current_room.boss_encounter.finished,"player_dead":world.player.health.is_dead,"below_action_reference":actions<number+2}
 				records.append(row)
+				row["farthest_distance"]=farthest
+				row["player_baseline"]={"speed":world.player.stats.move_speed,"attack_speed":world.player.stats.attack_speed,"projectile_lifetime":world.player.stats.projectile_lifetime}
 				print("[Natural Boss] ",JSON.stringify(row))
 				test.check(world.current_room.boss_encounter.finished or world.player.health.is_dead,"Natural Build produces finite combat outcome: "+str(definition.id)+" "+mode)
 				if mode=="moving":test.check(world.current_room.boss_encounter.finished,"Safe-point moving weapon driver defeats natural Boss: "+str(definition.id))

@@ -43,7 +43,7 @@ func shoot_enemy(enemy: Enemy) -> void:
 		var player := session.world.player
 		var fired := player.weapon.try_attack(player.global_position, (enemy.global_position - player.global_position).normalized(), player.stats)
 		check.call(fired, "Player fires at active " + str(enemy.definition.id))
-		await frames(14)
+		await frames(int(ceil(session.world.player.weapon.cooldown_remaining*60))+2)
 	check.call(not is_instance_valid(enemy) or enemy.health.is_dead, "Active enemy defeated through Player weapon")
 
 
@@ -176,7 +176,7 @@ func run() -> void:
 	for scarab in scarabs:
 		if is_instance_valid(scarab):
 			await shoot_enemy(scarab)
-	await frames(14)
+	await frames(int(ceil(session.world.player.weapon.cooldown_remaining*60))+2)
 	check.call(world.player.health.current_hp > 0.0 and room.enemy_spawner.get_remaining() == 0 and cleared[0] == 1 and room.room_state.status == RoomState.Status.CLEARED, "Mixed active AI room clears exactly once")
 	check.call(room.doors.values().all(func(door: Door) -> bool: return door.is_open), "Mixed room opens connected doors")
 	room.enter()
@@ -194,7 +194,7 @@ func run() -> void:
 	# 回房覆盖用 Health 加速邻居清场；此前混合房已通过活跃 AI 和真实弹丸。
 	for enemy in world.current_room.enemy_spawner.get_children():
 		enemy.take_damage(1000.0)
-	await frames(14)
+	await frames(int(ceil(session.world.player.weapon.cooldown_remaining*60))+2)
 	await walk(Door.opposite(side))
 	check.call(world.current_id == mixed_id and world.current_room.room_state.status == RoomState.Status.CLEARED and world.current_room.enemy_spawner.get_child_count() == 0, "Revisit CLEARED never respawns enemies")
 	await walk(Door.opposite(start_side))

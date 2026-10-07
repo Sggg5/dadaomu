@@ -2,6 +2,7 @@ extends RefCounted
 var test:SceneTree
 func _init(context:SceneTree)->void:test=context
 func run()->void:
+	test.set_meta("endurance_records",[])
 	var flow:=preload("res://scenes/main/game_flow.tscn").instantiate() as GameFlow
 	flow.profile_store=MuseumProfileStore.in_memory()
 	flow.campaign_seed_override=52
@@ -52,5 +53,6 @@ func run()->void:
 	test.key(KEY_E)
 	await test.frames(5)
 	test.check(flow.current_day==2 and flow.dungeon==null,"Five Boss run returns to real Day2 Museum")
+	FileAccess.open("res://logs/normal_endurance_statistics.json",FileAccess.WRITE).store_string(JSON.stringify(test.get_meta("endurance_records",[]),"  "))
 	flow.queue_free()
 	await test.frames(3)

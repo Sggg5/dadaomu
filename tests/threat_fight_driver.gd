@@ -2,6 +2,8 @@ extends "res://tests/density_fight_driver.gd"
 func fight() -> void:
 	var world:RoomController=test.session.world
 	if world.current_room.room_state.status!=RoomState.Status.ACTIVE:return
+	var start_frame:=Engine.get_physics_frames()
+	var start_hp:=world.player.health.current_hp
 	for cycle in range(2000):
 		var actors:=CombatGeometry.targets(world.current_room)
 		if actors.is_empty():
@@ -18,6 +20,10 @@ func fight() -> void:
 			break
 		await shoot_safe(enemy)
 	print("[threat fight] ",world.current_id," hp=",world.player.health.current_hp," remaining=",world.current_room.enemy_spawner.get_remaining()," build=",world.player.relics.inventory.ids())
+	var record:={"floor":test.session.floor_number,"room":str(world.current_id),"encounter":str(world.current_room.definition.room_id),"seconds":(Engine.get_physics_frames()-start_frame)/60.0,"hp_lost":start_hp-world.player.health.current_hp,"died":world.player.health.is_dead}
+	var records:Array=test.get_meta("endurance_records",[])
+	records.append(record)
+	test.set_meta("endurance_records",records)
 	test.check(not world.player.health.is_dead and world.current_room.room_state.status==RoomState.Status.CLEARED,"Density room including dynamic summons really clears")
 	await claim()
 func shoot_safe(enemy:Enemy) -> void:
@@ -29,7 +35,7 @@ func shoot_safe(enemy:Enemy) -> void:
 			var point:=Vector2(x,y)
 			var enemy_local:=world.current_room.to_local(enemy.global_position)
 			var distance:=point.distance_to(enemy_local)
-			if distance<230 or distance>800:continue
+			if distance<230 or distance>minf(800,world.player.stats.projectile_speed*world.player.stats.projectile_lifetime*0.8):continue
 			if world.current_room.obstacles().any(func(rect:Rect2)->bool:return rect.grow(24).has_point(point)):continue
 			var ray:=PhysicsRayQueryParameters2D.create(enemy.global_position,world.current_room.to_global(point),1,[enemy.get_rid()])
 			if not enemy.get_world_2d().direct_space_state.intersect_ray(ray).is_empty():continue

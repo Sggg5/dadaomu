@@ -159,3 +159,8 @@ func death_spawns() -> Array[EnemySpawnDefinition]:
 	return []
 ## 空间占位用于出土/出生合法性，不参与攻击或难度决策。
 func reserved_world_position()->Vector2:return global_position
+
+## 实际场景身体半径；查询不修改共享Shape。
+func body_radius()->float:
+	var collider:=get_node_or_null("CollisionShape2D") as CollisionShape2D
+	return (collider.shape as CircleShape2D).radius if collider!=null and collider.shape is CircleShape2D else 14.0

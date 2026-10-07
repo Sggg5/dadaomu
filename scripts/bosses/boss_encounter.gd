@@ -24,6 +24,12 @@ func safe_point(preferred: Vector2, radius: float, reserved: Array[Vector2], dis
 	candidates.sort_custom(func(a: Vector2,b: Vector2) -> bool: return a.distance_squared_to(preferred) < b.distance_squared_to(preferred))
 	for point in candidates:
 		if not Room.ROOM_RECT.grow(-radius).has_point(point): continue
+		# 召唤物与Boss分别按真实半径预留，避免大身体挤入小实体。
+		if is_instance_valid(boss):
+			var occupied:=false
+			for actor in targets():
+				if actor is Enemy and point.distance_to(room.to_local(actor.global_position))<radius+actor.body_radius()+20:occupied=true;break
+			if occupied:continue
 		if point.distance_to(room.to_local(room.combat_target.global_position)) < distance: continue
 		if room.obstacles().any(func(rect: Rect2) -> bool: return rect.grow(radius + 2).has_point(point)): continue
 		if reserved.any(func(other: Vector2) -> bool: return point.distance_to(other) < radius * 2 + 20): continue
@@ -37,7 +43,7 @@ func start() -> void:
 	started = true
 	boss = definition.boss_scene.instantiate() as Enemy
 	assert(boss != null, "Boss scene root must implement Enemy")
-	boss.position = safe_point(Room.ROOM_RECT.get_center(), 34, [], 120)
+	boss.position = safe_point(Room.ROOM_RECT.get_center(), boss.body_radius(), [], 120)
 	assert(boss.position.is_finite(), "Boss requires a safe point")
 	boss.configure_spawn(room.combat_target, room.projectiles, definition, room.difficulty)
 	boss.encounter_room=room
@@ -59,11 +65,12 @@ func _summon(count: int) -> void:
 	for actor in alive: reserved.append(actor.position)
 	for index in range(mini(count,mini(cap-alive.size(),int(definition.parameters.get("summon_total",18))-total_summons))):
 		var preferred := boss.position + Vector2.RIGHT.rotated(index * TAU / count) * 110
-		var point := safe_point(preferred, 16, reserved, 100)
-		if not point.is_finite(): continue
-		reserved.append(point)
 		var actor := SCARAB.instantiate() as Enemy
+		var point := safe_point(preferred, actor.body_radius(), reserved, 100)
+		if not point.is_finite(): actor.free();continue
+		reserved.append(point)
 		actor.position = point
+		actor.encounter_room=room
 		var data:EnemyDefinition=SCARAB_DATA
 		if definition.parameters.get("weak_summons",false):
 			data=SCARAB_DATA.duplicate() as EnemyDefinition
@@ -121,10 +128,10 @@ func create_eggs(count:int,cap:int=4)->void:
 	var reserved:Array[Vector2]=[boss.position]
 	for egg in eggs:reserved.append(egg.position)
 	for i in range(mini(count,cap-eggs.size())):
-		var point:=safe_point(boss.position+Vector2.RIGHT.rotated(i*TAU/maxi(1,count))*130,18,reserved,80)
-		if not point.is_finite():continue
-		reserved.append(point)
 		var egg:=preload("res://scenes/bosses/boss_egg.tscn").instantiate() as BossEgg
+		var point:=safe_point(boss.position+Vector2.RIGHT.rotated(i*TAU/maxi(1,count))*130,egg.body_radius(),reserved,80)
+		if not point.is_finite():egg.free();continue
+		reserved.append(point)
 		egg.encounter=self
 		egg.encounter_room=room
 		egg.position=point

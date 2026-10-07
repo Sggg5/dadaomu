@@ -19,7 +19,7 @@ func run() -> void:
 			world.player.position = origin
 			world.player.velocity = Vector2.ZERO
 			world.player.weapon.try_attack(origin, (enemy.position - origin).normalized(), world.player.stats)
-			await test.frames(14)
+			await test.frames(int(ceil(world.player.weapon.cooldown_remaining*60))+2)
 	test.check(content.remaining() == 0 and not world.player.health.is_dead and content.service.results[content.source(actor.event)].wave_completed, "Live coffin ambush dies to real Weapon/Projectile with active AI")
 	var pickup := content.get_node("RiskLoot_%s" % actor.event.id) as AntiquePedestal
 	var definition := pickup.definition
