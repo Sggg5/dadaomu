@@ -50,6 +50,8 @@ func open(target_case: StringName = &"") -> void:
 		var definition := MuseumState.POOL.find_by_id(item.definition_id)
 		var location := state.case_for(item.instance_id)
 		var details := "品相%d · 吸引力%d · %s" % [item.condition,state.appeal_for(item.instance_id),AntiqueDefinition.money(definition.base_value)] if item.identified else "待正式鉴定 · 第%d天入藏" % item.acquired_day
+		if item.identified: details += " · 市场%s" % AntiqueDefinition.money(AntiqueMarketService.market_value(item,definition))
+		if state.is_auction_locked(item.instance_id): details += " · 待拍锁定"
 		list.add_item("%s · %s · %s · %s" % [item.instance_id,definition.display_name,details,"库房" if location == &"" else str(location).replace("CASE_","展柜")])
 	panel.get_node("VBoxContainer/Choose").visible = case_id != &""
 	panel.show()
@@ -62,7 +64,7 @@ func choose_selected() -> bool:
 	if case_id == &"" or list.get_selected_items().is_empty(): return false
 	var id := _ids[list.get_selected_items()[0]]
 	if not state.assign(case_id,id):
-		heading.text = "该古董尚未鉴定" if not state.collection.find(id).identified else "这件藏品已在其他展柜，或营业中不能调整展品"
+		heading.text = "该古董尚未鉴定" if not state.collection.find(id).identified else ("该古董已委托拍卖，暂时锁定" if state.is_auction_locked(id) else "这件藏品已在其他展柜，或营业中不能调整展品")
 		return false
 	close()
 	return true

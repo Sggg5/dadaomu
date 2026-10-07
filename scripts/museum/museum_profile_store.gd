@@ -1,7 +1,7 @@
 class_name MuseumProfileStore
 extends RefCounted
 ## 版本化地面JSON。只编码纯值，内存/路径可注入；不保存Night Run。
-const VERSION: int = 2
+const VERSION: int = 3
 var save_path: String = "user://museum_profile_v1.json"
 var memory_only: bool = false
 var save_count: int = 0
@@ -21,7 +21,7 @@ func encode(state: MuseumState) -> Dictionary:
 		items.append({"instance_id":str(item.instance_id),"definition_id":str(item.definition_id),"acquired_day":item.acquired_day,"identified":item.identified,"condition":item.condition})
 	var assignments: Dictionary[String,String] = {}
 	for id in state.display_assignments: assignments[str(id)] = str(state.display_assignments[id])
-	return {"version":VERSION,"day_number":state.day_number,"phase":"EVENING" if state.phase == MuseumState.Phase.EVENING else "MORNING","cash":state.cash,"museum_level":state.museum_level,"next_antique_id":state.collection.next_id(),"collection":items,"display_assignments":assignments,"last_day_visitors":state.last_day_visitors,"last_day_ticket_income":state.last_day_ticket_income}
+	return {"version":VERSION,"day_number":state.day_number,"phase":"EVENING" if state.phase == MuseumState.Phase.EVENING else "MORNING","cash":state.cash,"museum_level":state.museum_level,"next_antique_id":state.collection.next_id(),"collection":items,"display_assignments":assignments,"last_day_visitors":state.last_day_visitors,"last_day_ticket_income":state.last_day_ticket_income,"auction_lot_instance_id":str(state.auction_lot_instance_id),"auction_reserve_mode":state.auction_reserve_mode}
 
 
 func save_profile(state: MuseumState) -> bool:
@@ -96,8 +96,8 @@ func decode(payload: Variant) -> MuseumState:
 			_failed("跳过未知定义/重复或非法馆藏ID")
 			continue
 		var item := OwnedAntique.new()
-		# v1已有合法展品保留满品相；v2逐条验证，异常条目跳过。
-		if int(payload.version) == 2 and (not row.get("identified") is bool or not _integer(row.get("condition"),0,100)):
+		# v1已有合法展品保留满品相；v2+逐条验证，异常条目跳过。
+		if int(payload.version) >= 2 and (not row.get("identified") is bool or not _integer(row.get("condition"),0,100)):
 			_failed("跳过异常鉴定/品相条目")
 			continue
 		item.identified = true if int(payload.version) == 1 else bool(row.identified)
@@ -111,6 +111,14 @@ func decode(payload: Variant) -> MuseumState:
 	for case_id in payload.display_assignments:
 		var id: Variant = payload.display_assignments[case_id]
 		if not case_id is String or not id is String or not state.assign(StringName(case_id),StringName(id)): _failed("忽略非法/未解锁/重复展柜归属")
+	# 先恢复展柜归属再检查待拍，发生冲突时优先保留旧展品。
+	if int(payload.version) >= 3:
+		var pending: Variant = payload.get("auction_lot_instance_id","")
+		var mode: Variant = payload.get("auction_reserve_mode",AntiqueMarketService.Reserve.NORMAL)
+		if not pending is String or not _integer(mode,0,2):
+			_failed("清理异常待拍字段")
+		elif pending != "" and not state.consign(StringName(pending),int(mode)):
+			_failed("清理不存在/未鉴定/已展出待拍品，优先保留展柜")
 	for key in ["last_day_visitors","last_day_ticket_income"]:
 		if _integer(payload.get(key,0),0,1000000000): state.set(key,int(payload.get(key,0)))
 	state.phase = MuseumState.Phase.EVENING if payload.get("phase","MORNING") == "EVENING" else MuseumState.Phase.MORNING

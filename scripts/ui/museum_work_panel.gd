@@ -55,7 +55,7 @@ func open() -> bool:
 	label.text = "修复到品相100 · 现金 %s" % AntiqueDefinition.money(state.cash) if restoration else "正式馆藏鉴定 · 免费"
 	for item in state.collection.all_items():
 		if (restoration and not item.identified) or (not restoration and item.identified): continue
-		if restoration and item.condition >= 100: continue
+		if restoration and not state.can_repair(item.instance_id): continue
 		_ids.append(item.instance_id)
 		var definition := MuseumState.POOL.find_by_id(item.definition_id)
 		list.add_item("%s · 品相%d → 100 · 费用%s" % [definition.display_name,item.condition,AntiqueDefinition.money(state.restoration_cost(item.instance_id))] if restoration else "%s · 待正式鉴定 · 第%d天入藏" % [definition.display_name,item.acquired_day])

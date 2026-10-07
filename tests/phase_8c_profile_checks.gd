@@ -27,8 +27,8 @@ func run() -> void:
 	file.close()
 	var migrated := store.load_profile()
 	test.check(migrated.collection.all_items().size() == 2 and migrated.collection.all_items().all(func(item: OwnedAntique) -> bool: return item.identified and item.condition == 100) and migrated.cash == 777 and migrated.museum_level == 1 and migrated.display_assignments.size() == 2,"Real v1 disk migration preserves existing exhibits/cash/level, all identified100")
-	test.check(store.save_profile(migrated) and JSON.parse_string(FileAccess.get_file_as_string(store.save_path)).version == 2,"Next save upgrades same existing filename to version2")
-	# 正式GameFlow初始化同样读v1并自动保存v2，而不是只有手动Store可迁移。
+	test.check(store.save_profile(migrated) and JSON.parse_string(FileAccess.get_file_as_string(store.save_path)).version == MuseumProfileStore.VERSION,"Next save upgrades same existing filename to current schema")
+	# 正式GameFlow初始化同样读v1并自动保存当前schema，而不是只有手动Store可迁移。
 	file = FileAccess.open(store.save_path,FileAccess.WRITE)
 	file.store_string(JSON.stringify(v1))
 	file.close()
@@ -36,7 +36,7 @@ func run() -> void:
 	flow.profile_store = store
 	test.root.add_child(flow)
 	await test.frames(3)
-	test.check(flow.museum_state.collection.all_items().size() == 2 and flow.museum_state.display_assignments.size() == 2 and JSON.parse_string(FileAccess.get_file_as_string(store.save_path)).version == 2,"Actual GameFlow startup migrates legacy profile and rewritesv2 without clearing exhibition")
+	test.check(flow.museum_state.collection.all_items().size() == 2 and flow.museum_state.display_assignments.size() == 2 and JSON.parse_string(FileAccess.get_file_as_string(store.save_path)).version == MuseumProfileStore.VERSION,"Actual GameFlow startup migrates legacy profile and rewrites current schema without clearing exhibition")
 	flow.queue_free()
 	await test.frames(3)
 	test.check(migrated.collection.add(&"republic_silver_coin",3).instance_id == &"A000003","Migrated next antique ID remains stable")
@@ -52,7 +52,7 @@ func run() -> void:
 	var invalid_assignment := store.encode(state)
 	invalid_assignment.display_assignments["CASE_5"] = str(waiting.instance_id)
 	test.check(store.decode(invalid_assignment).display_assignments.size() == 1,"v2 cannot restore illegal unidentified exhibition")
-	for version in [0,3]:
+	for version in [0,MuseumProfileStore.VERSION+1]:
 		var unsupported := store.encode(state)
 		unsupported.version = version
 		test.check(store.decode(unsupported).collection.all_items().is_empty(),"Unsupported schema safely defaults version%d" % version)

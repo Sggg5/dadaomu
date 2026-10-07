@@ -3,9 +3,11 @@ extends Node
 ## 顶层只装配白天/夜晚，安全结果按ID转成馆藏实例；不接触房间或游客算法。
 const MUSEUM_SCENE: PackedScene = preload("res://scenes/museum/museum.tscn")
 const DUNGEON_SCENE: PackedScene = preload("res://scenes/main/dungeon_test.tscn")
+const AUCTION_SCENE: PackedScene = preload("res://scenes/auction/auction_session.tscn")
 @export var museum_config: MuseumConfig = preload("res://data/museum/default_config.tres")
 @export var museum_seed: int = 192034
 @export var night_seed: int = 192034
+@export var auction_seed: int = 192034
 # 仅自动测试显式启用；正式新游戏没有赠送馆藏。
 @export var initial_test_collection: bool = false
 @export var profile_path: String = "user://museum_profile_v1.json"
@@ -14,6 +16,8 @@ var museum_state := MuseumState.new()
 var current_dungeon_result: RunResult
 var museum: Museum
 var dungeon: DungeonSession
+var auction: AuctionSession
+var current_auction_result: AuctionResult
 var _changing: bool = false
 var current_day: int:
 	get: return museum_state.day_number
@@ -44,11 +48,18 @@ func _show_museum(notice: String, phase: MuseumState.Phase = MuseumState.Phase.M
 	museum.museum_seed = museum_seed
 	museum.morning_notice = notice
 	museum.night_requested.connect(start_night)
+	museum.auction_requested.connect(start_auction)
 	add_child(museum)
 	_changing = false
 
 
 func start_night() -> bool:
+	if not _prepare_night(): return false
+	_enter_night.call_deferred()
+	return true
+
+
+func _prepare_night() -> bool:
 	if _changing or current_phase not in [MuseumState.Phase.MORNING,MuseumState.Phase.EVENING]: return false
 	if current_phase == MuseumState.Phase.MORNING:
 		museum_state.last_day_visitors = 0
@@ -57,8 +68,51 @@ func start_night() -> bool:
 	_changing = true
 	museum.player.controls_enabled = false
 	museum_state.phase = MuseumState.Phase.NIGHT
-	_enter_night.call_deferred()
 	return true
+
+
+func start_auction() -> bool:
+	var item := museum_state.collection.find(museum_state.auction_lot_instance_id)
+	if item == null or not item.identified or museum_state.case_for(item.instance_id) != &"": return false
+	if not _prepare_night(): return false
+	_enter_auction.call_deferred()
+	return true
+
+
+func _enter_auction() -> void:
+	remove_child(museum)
+	museum.queue_free()
+	museum = null
+	current_dungeon_result = null
+	current_auction_result = null
+	auction = AUCTION_SCENE.instantiate() as AuctionSession
+	var item := museum_state.collection.find(museum_state.auction_lot_instance_id)
+	auction.configure(item,MuseumState.POOL.find_by_id(item.definition_id),current_day,auction_seed,museum_state.auction_reserve_mode)
+	auction.return_requested.connect(return_from_auction)
+	add_child(auction)
+	_changing = false
+
+
+func return_from_auction(result: AuctionResult) -> bool:
+	if _changing or current_phase != MuseumState.Phase.NIGHT or auction == null or not auction.bidding.finished or result != auction.bidding.result: return false
+	_changing = true
+	_return_auction_morning.call_deferred(result)
+	return true
+
+
+func _return_auction_morning(result: AuctionResult) -> void:
+	if not museum_state.settle_auction(result):
+		_changing = false
+		auction.info.text = "拍卖结算数据不一致，无法重复提交。请退出后恢复安全地面。"
+		return
+	current_auction_result = result
+	var notice := "昨夜拍卖成交 · 成交%s · 佣金%s · 实际到账%s" % [AntiqueDefinition.money(result.final_bid),AntiqueDefinition.money(result.commission),AntiqueDefinition.money(result.net_proceeds)] if result.sold else "昨夜流拍 · 古董已退回库房，待拍锁定解除 · 本次无收入"
+	remove_child(auction)
+	auction.queue_free()
+	auction = null
+	museum_state.day_number += 1
+	_show_museum(notice)
+	_save_profile()
 
 
 func _enter_night() -> void:
@@ -66,6 +120,7 @@ func _enter_night() -> void:
 	museum.queue_free()
 	museum = null
 	current_dungeon_result = null
+	current_auction_result = null
 	dungeon = DUNGEON_SCENE.instantiate() as DungeonSession
 	dungeon.hub_mode = true
 	dungeon.collection_day = current_day
