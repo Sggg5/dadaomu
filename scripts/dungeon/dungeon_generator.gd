@@ -22,7 +22,7 @@ static func generate(seed_value: int, config: DungeonConfig) -> DungeonLayout:
 	var secondary := (primary + 1 + 2 * rng.randi_range(0, 1)) % 4
 	var tip := start.room_id
 	# 两个正交的单调方向保证无碰撞、无环，且必然达到要求深度，无需重试。
-	for depth in range(config.min_boss_distance):
+	for depth in range(config.min_terminal_distance):
 		var direction := primary if rng.randi_range(0, 1) == 0 else secondary
 		tip = _append_room(layout, tip, direction)
 	for index in range(count - layout.rooms.size()):
@@ -68,22 +68,24 @@ static func _frontier(layout: DungeonLayout) -> Array[Dictionary]:
 
 static func _assign_special_rooms(layout: DungeonLayout, config: DungeonConfig, rng: RandomNumberGenerator) -> void:
 	var deepest: int = -1
-	var boss_candidates: Array[StringName] = []
+	var terminal_candidates: Array[StringName] = []
 	for room_id in layout.ordered_ids():
 		var room := layout.rooms[room_id]
 		if room_id == layout.start_id or room.neighbors.size() != 1:
 			continue
 		if room.distance_from_start > deepest:
 			deepest = room.distance_from_start
-			boss_candidates.clear()
+			terminal_candidates.clear()
 		if room.distance_from_start == deepest:
-			boss_candidates.append(room_id)
-	assert(deepest >= config.min_boss_distance)
-	layout.boss_id = boss_candidates[rng.randi_range(0, boss_candidates.size() - 1)]
-	layout.rooms[layout.boss_id].room_type = RoomDefinition.Type.BOSS
+			terminal_candidates.append(room_id)
+	assert(deepest >= config.min_terminal_distance)
+	layout.terminal_id = terminal_candidates[rng.randi_range(0, terminal_candidates.size() - 1)]
+	if config.terminal_is_boss:
+		layout.boss_id = layout.terminal_id
+		layout.rooms[layout.terminal_id].room_type = RoomDefinition.Type.BOSS
 	var antique_candidates: Array[StringName] = []
 	for room_id in layout.ordered_ids():
-		if room_id != layout.start_id and room_id != layout.boss_id and layout.rooms[room_id].distance_from_start >= config.min_antique_distance:
+		if room_id != layout.start_id and room_id != layout.terminal_id and layout.rooms[room_id].distance_from_start >= config.min_antique_distance:
 			antique_candidates.append(room_id)
 	assert(not antique_candidates.is_empty())
 	layout.antique_id = antique_candidates[rng.randi_range(0, antique_candidates.size() - 1)]

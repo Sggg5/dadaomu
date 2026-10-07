@@ -9,6 +9,7 @@ const AUCTION_SCENE: PackedScene = preload("res://scenes/auction/auction_session
 @export var campaign_seed_override: int = 0 # 仅首次初始化新档/旧档迁移；已有有效Seed不重写。
 @export var forced_night_seed: int = 0 # 测试夹具专用，生产默认0（使用Campaign/Day/Site）。
 @export var auction_seed: int = 192034
+@export var tomb: TombDefinition = preload("res://data/tombs/default_tomb.tres")
 @export var tomb_exploration_enabled: bool = true
 # 仅自动测试显式启用；正式新游戏没有赠送馆藏。
 @export var initial_test_collection: bool = false
@@ -132,6 +133,7 @@ func _enter_night() -> void:
 	current_auction_result = null
 	dungeon = DUNGEON_SCENE.instantiate() as DungeonSession
 	dungeon.hub_mode = true
+	dungeon.tomb = tomb
 	dungeon.exploration_enabled = tomb_exploration_enabled
 	dungeon.collection_day = current_day
 	dungeon.seed_value = forced_night_seed if forced_night_seed != 0 else ExpeditionSeedService.derive(museum_state.campaign_seed, current_day)

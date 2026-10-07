@@ -38,6 +38,7 @@ func run() -> void:
 	file.store_string(JSON.stringify(legacy))
 	file.close()
 	var flow := preload("res://scenes/main/game_flow.tscn").instantiate() as GameFlow
+	flow.tomb = preload("res://tests/fixtures/legacy_two_floor_tomb.tres")
 	flow.profile_store = store
 	flow.campaign_seed_override = 777
 	test.root.add_child(flow)
@@ -48,6 +49,7 @@ func run() -> void:
 	flow.queue_free()
 	await test.frames(3)
 	flow = preload("res://scenes/main/game_flow.tscn").instantiate() as GameFlow
+	flow.tomb = preload("res://tests/fixtures/legacy_two_floor_tomb.tres")
 	flow.profile_store = store
 	flow.campaign_seed_override = 999
 	test.root.add_child(flow)

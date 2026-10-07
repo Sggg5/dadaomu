@@ -83,6 +83,7 @@ func enter_fixture(world: RoomController, id: StringName) -> void:
 
 func interactions() -> void:
 	var session := preload("res://scenes/main/dungeon_test.tscn").instantiate() as DungeonSession
+	session.tomb = preload("res://tests/fixtures/legacy_two_floor_tomb.tres")
 	session.seed_value = 52
 	test.session = session
 	test.root.add_child(session)
@@ -147,6 +148,7 @@ func rng_isolation() -> void:
 	var baseline: Dictionary
 	for inspected in [false, true]:
 		var session := preload("res://scenes/main/dungeon_test.tscn").instantiate() as DungeonSession
+		session.tomb = preload("res://tests/fixtures/legacy_two_floor_tomb.tres")
 		session.seed_value = 52
 		test.session = session
 		test.root.add_child(session)

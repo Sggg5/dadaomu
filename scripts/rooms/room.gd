@@ -28,6 +28,10 @@ var difficulty: EncounterDifficulty = EncounterDifficulty.from_depth(0)
 var boss_definition: BossDefinition
 var boss_encounter: BossEncounter
 var final_floor: bool = false
+var is_terminal: bool = false
+var rest_amount: int = 0
+var next_floor_number: int = 2
+var next_floor_name: String = ""
 var antique_definition: AntiqueDefinition
 var cache_definition: AntiqueDefinition
 var risk_content: TombRiskContent
@@ -65,7 +69,7 @@ func enter() -> void:
 		_set_doors_open(true)
 		_create_antique()
 		_create_cache()
-		if room_type == RoomDefinition.Type.BOSS and boss_definition != null: _create_boss_exit()
+		if is_terminal: _create_terminal_exit()
 		return
 	if room_type not in [RoomDefinition.Type.COMBAT, RoomDefinition.Type.START, RoomDefinition.Type.BOSS, RoomDefinition.Type.ANTIQUE, RoomDefinition.Type.TRAP, RoomDefinition.Type.SECRET]:
 		push_error("This room type has no entry policy yet")
@@ -135,10 +139,19 @@ func stop_combat() -> void:
 func _boss_defeated() -> void:
 	boss_defeated.emit()
 	_on_all_defeated()
-	_create_boss_exit()
+	_create_terminal_exit()
 
 
-func _create_boss_exit() -> void:
+func _create_terminal_exit() -> void:
+	if rest_amount > 0 and not final_floor and not room_state.is_loot_claimed(&"rest_point") and not has_node("RestPoint"):
+		var rest := RestPoint.new()
+		rest.name = "RestPoint"
+		rest.player = combat_target
+		rest.room_state = room_state
+		rest.amount = rest_amount
+		rest.can_use = can_exit
+		rest.position = RestPoint.safe_position(self)
+		add_child(rest)
 	if final_floor:
 		if has_node("RunExit"): return
 		var run_exit := RunExit.new()
@@ -152,6 +165,8 @@ func _create_boss_exit() -> void:
 	var exit := ExpeditionExit.new()
 	exit.name = "ExpeditionExit"
 	exit.can_choose = can_exit
+	exit.next_floor_number = next_floor_number
+	exit.next_floor_name = next_floor_name
 	exit.player = combat_target
 	exit.position = RelicPedestal.safe_position(self)
 	exit.descend_requested.connect(func() -> void: floor_exit_requested.emit())
@@ -175,6 +190,7 @@ func _on_all_defeated() -> void:
 	if room_state.clear():
 		cleared.emit()
 		_create_cache()
+		if is_terminal: _create_terminal_exit()
 
 
 func _on_state_changed(value: RoomState.Status) -> void:

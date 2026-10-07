@@ -80,6 +80,7 @@ func run() -> void:
 
 func find_pressure_seed() -> void:
 	var detached := preload("res://scenes/main/dungeon_test.tscn").instantiate() as DungeonSession
+	detached.tomb = preload("res://tests/fixtures/legacy_two_floor_tomb.tres")
 	var seeds: Array[int] = [192034]
 	for number in range(100): seeds.append(number)
 	for seed_value in seeds:

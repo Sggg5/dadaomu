@@ -9,7 +9,7 @@ func configure(run_seed: int, floor_number: int, layout: DungeonLayout) -> void:
 	selected_rooms.clear()
 	var candidates: Array[StringName] = []
 	for id in layout.rooms:
-		if layout.rooms[id].room_type == RoomDefinition.Type.COMBAT: candidates.append(id)
+		if id != layout.terminal_id and layout.rooms[id].room_type == RoomDefinition.Type.COMBAT: candidates.append(id)
 	candidates.sort_custom(func(a: StringName,b: StringName) -> bool:
 		var first := AntiquePool.stable_score(run_seed,floor_number,a,&"cache_room",VERSION)
 		var second := AntiquePool.stable_score(run_seed,floor_number,b,&"cache_room",VERSION)

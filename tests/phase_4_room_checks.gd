@@ -92,6 +92,7 @@ func key(code: Key) -> void:
 
 func run() -> void:
 	session = SESSION.instantiate() as DungeonSession
+	session.tomb = preload("res://tests/fixtures/legacy_two_floor_tomb.tres")
 	# 历史回归使用原主图夹具；Phase9A单独覆盖正式探索入口。
 	session.exploration_enabled = false
 	# 有限选择首个相邻房为混合 COMBAT 的 Seed，保持真实生成和过门链。

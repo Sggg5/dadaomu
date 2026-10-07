@@ -3,8 +3,6 @@ extends Node2D
 ## 新Run重置所有状态；下一层更换World并保留Run奖励。
 const WORLD_SCENE: PackedScene = preload("res://scenes/main/room_test.tscn")
 const DEFAULT_CONFIG: DungeonConfig = preload("res://data/tombs/default_dungeon_config.tres")
-const WARLORD_BOSS: BossDefinition = preload("res://data/enemies/jinbei_warlord_corpse.tres")
-const TOMB_BEAST: BossDefinition = preload("res://data/enemies/tomb_guardian_beast.tres")
 signal result_ready(result: RunResult)
 signal run_started
 signal return_requested(result: RunResult)
@@ -13,7 +11,8 @@ signal return_requested(result: RunResult)
 # 仅结算品相的确定性元数据，绝不参与地图/掉落/战斗计算。
 var collection_day: int = 1
 var _returning: bool = false
-@export var config: DungeonConfig = DEFAULT_CONFIG
+@export var tomb: TombDefinition = preload("res://data/tombs/default_tomb.tres")
+var config: DungeonConfig = DEFAULT_CONFIG # 历史测试只读兼容；生产配置来自tomb.floors。
 @export var seed_value: int = 192034
 var run_seed: int
 var floor_number: int = 1
@@ -27,7 +26,8 @@ var run_completed: bool:
 	set(value): run_ended = value
 var bosses_defeated: int = 0
 var complete_screen: RunCompleteScreen
-var _defeated_floors: Dictionary[int, bool] = {}
+var _boss_defeated_floors: Dictionary[int, bool] = {}
+var cleared_floors: Dictionary[int, bool] = {}
 var _changing: bool = false
 var _seed_rng := RandomNumberGenerator.new()
 
@@ -39,7 +39,7 @@ func _ready() -> void:
 			if argument.begins_with("--seed=") and argument.trim_prefix("--seed=").is_valid_int():
 				seed_value = argument.trim_prefix("--seed=").to_int()
 	_seed_rng.randomize()
-	_start_new_run(DungeonGenerator.generate(seed_value, config))
+	_start_new_run(floor_layout(1, seed_value))
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -47,16 +47,16 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _restart_current() -> void:
-	if not _changing: _schedule_new_run(DungeonGenerator.generate(run_seed, config))
+	if not _changing: _schedule_new_run(floor_layout(1, run_seed))
 
 
 func regenerate() -> bool:
 	if _changing: return false
-	var original := DungeonGenerator.generate(run_seed, config)
+	var original := floor_layout(1, run_seed)
 	for attempt in range(16):
 		var candidate_seed := int(_seed_rng.randi())
 		if candidate_seed == run_seed: continue
-		var candidate := DungeonGenerator.generate(candidate_seed, config)
+		var candidate := floor_layout(1, candidate_seed)
 		if candidate != null and candidate.spatial_signature() != original.spatial_signature():
 			_schedule_new_run(candidate)
 			return true
@@ -84,7 +84,8 @@ func _start_new_run(layout: DungeonLayout) -> void:
 	run_ended = false
 	_returning = false
 	bosses_defeated = 0
-	_defeated_floors.clear()
+	_boss_defeated_floors.clear()
+	cleared_floors.clear()
 	_drop_world()
 	if is_instance_valid(rewards):
 		remove_child(rewards)
@@ -110,7 +111,15 @@ func _assemble_world(layout: DungeonLayout) -> void:
 	world.floor_number = floor_number
 	world.floor_offset = (floor_number - 1) * 3
 	world.boss_definition = boss_for_floor(floor_number)
-	world.final_floor = floor_number == 2
+	world.final_floor = floor_number == tomb.floors.size()
+	var floor_data := tomb.floor_at(floor_number)
+	world.floor_count = tomb.floors.size()
+	world.floor_name = floor_data.display_name
+	world.rest_amount = floor_data.rest_amount
+	world.antique_reward_profile = floor_data.antique_reward_profile
+	world.next_floor_number = floor_number + 1
+	world.next_floor_name = tomb.floor_at(floor_number + 1).display_name if not world.final_floor else ""
+	world.terminal_cleared.connect(_on_terminal_cleared)
 	world.boss_defeated.connect(_on_boss_defeated)
 	world.run_complete_requested.connect(request_run_complete)
 	world.extraction_requested.connect(request_extraction)
@@ -121,18 +130,17 @@ func _assemble_world(layout: DungeonLayout) -> void:
 	world.hud.new_seed_requested.connect(regenerate)
 
 
+func floor_layout(number: int, base_seed: int = run_seed) -> DungeonLayout:
+	return TombFloorGenerator.generate(base_seed, number, tomb)
+
+
 func next_floor_layout() -> DungeonLayout:
-	var first := DungeonGenerator.generate(run_seed, config)
-	for attempt in range(16):
-		var candidate_seed := (run_seed ^ (2 * 104729)) + attempt * 7919
-		var layout := DungeonGenerator.generate(candidate_seed, config)
-		if layout != null and layout.spatial_signature() != first.spatial_signature(): return layout
-	return null
+	return floor_layout(floor_number + 1)
 
 
 func request_next_floor() -> bool:
 	if run_ended: return false
-	if _changing or floor_number != 1 or world.player.health.is_dead or world.current_room.room_type != RoomDefinition.Type.BOSS or world.current_room.room_state.status != RoomState.Status.CLEARED:
+	if _changing or floor_number >= tomb.floors.size() or world.player.health.is_dead or world.current_id != world.layout.terminal_id or world.current_room.room_state.status != RoomState.Status.CLEARED:
 		return false
 	var layout := next_floor_layout()
 	if layout == null: return false
@@ -149,7 +157,7 @@ func _enter_next_floor(layout: DungeonLayout, carry: RunCarryState) -> void:
 		_changing = false
 		return
 	_drop_world()
-	floor_number = 2
+	floor_number += 1
 	current_floor_seed = layout.seed_value
 	_assemble_world(layout)
 	carry.apply(world.player)
@@ -157,25 +165,27 @@ func _enter_next_floor(layout: DungeonLayout, carry: RunCarryState) -> void:
 
 
 func boss_for_floor(floor: int) -> BossDefinition:
-	match floor:
-		1: return WARLORD_BOSS
-		2: return TOMB_BEAST
-		_: return null
+	var data := tomb.floor_at(floor)
+	return data.boss_definition if data != null else null
+
+
+func _on_terminal_cleared() -> void:
+	cleared_floors[floor_number] = true
 
 
 func _on_boss_defeated() -> void:
-	if _defeated_floors.has(floor_number): return
-	_defeated_floors[floor_number] = true
+	if _boss_defeated_floors.has(floor_number): return
+	_boss_defeated_floors[floor_number] = true
 	bosses_defeated += 1
 
 
 func request_run_complete() -> bool:
-	if run_ended or _changing or floor_number != 2 or world.player.health.is_dead or world.current_room.room_type != RoomDefinition.Type.BOSS or world.current_room.room_state.status != RoomState.Status.CLEARED or bosses_defeated != 2: return false
+	if run_ended or _changing or floor_number != tomb.floors.size() or world.player.health.is_dead or world.current_id != world.layout.terminal_id or world.current_room.room_state.status != RoomState.Status.CLEARED or not cleared_floors.has(floor_number): return false
 	return _finish_run(RunResult.Outcome.COMPLETED)
 
 
 func request_extraction() -> bool:
-	if run_ended or _changing or floor_number != 1 or world.player.health.is_dead or world.current_room.room_type != RoomDefinition.Type.BOSS or world.current_room.room_state.status != RoomState.Status.CLEARED or bosses_defeated != 1: return false
+	if run_ended or _changing or floor_number >= tomb.floors.size() or world.player.health.is_dead or world.current_id != world.layout.terminal_id or world.current_room.room_state.status != RoomState.Status.CLEARED or not cleared_floors.has(floor_number): return false
 	return _finish_run(RunResult.Outcome.EXTRACTED)
 
 
@@ -190,7 +200,7 @@ func _finish_run(outcome: RunResult.Outcome) -> bool:
 	var result := RunResult.new()
 	result.outcome = outcome
 	result.run_seed = run_seed
-	result.floors_cleared = _defeated_floors.size()
+	result.floors_cleared = cleared_floors.size()
 	result.floor_reached = floor_number
 	result.current_hp = world.player.health.current_hp
 	result.max_hp = world.player.health.max_hp

@@ -9,6 +9,7 @@ func event_in(content: TombRiskContent, event: TombRiskEvent) -> TombRiskInterac
 
 func fixture(kind: int, ambush_reward: bool = false) -> TombRiskContent:
 	var session := preload("res://scenes/main/dungeon_test.tscn").instantiate() as DungeonSession
+	session.tomb = preload("res://tests/fixtures/legacy_two_floor_tomb.tres")
 	test.session = session
 	test.root.add_child(session)
 	await test.frames(3)

@@ -5,6 +5,7 @@ const VERSION: int = 1
 const POOL: AntiquePool = preload("res://data/antiques/formal_pool.tres")
 var run_seed: int
 var floor_number: int
+var reward_profile: AntiqueRewardProfile
 var results: Dictionary[StringName, TombRiskResult] = {}
 
 func _init(seed_value: int = 0, floor_value: int = 1) -> void:
@@ -45,7 +46,8 @@ func resolve(room_id: StringName, event: TombRiskEvent) -> TombRiskResult:
 
 func reward(room_id: StringName, event: TombRiskEvent) -> AntiqueDefinition:
 	if not event.high_value_reward:
-		return POOL.pick(run_seed, floor_number, room_id, StringName("risk_reward:%s" % event.id))
+		var source := StringName("risk_reward:%s" % event.id)
+		return POOL.pick_profiled(run_seed, floor_number, room_id, source, reward_profile) if reward_profile != null else POOL.pick(run_seed, floor_number, room_id, source)
 	# 轻量高价值机会：稀有池独立抽取，并不保证TREASURE。
 	var candidates: Array[AntiqueDefinition] = []
 	for item in POOL.antiques:

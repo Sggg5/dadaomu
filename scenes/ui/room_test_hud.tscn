@@ -20,7 +20,7 @@ offset_left = 64.0
 offset_top = 20.0
 theme_override_colors/font_color = Color(0.86, 0.72, 0.43, 1)
 theme_override_font_sizes/font_size = 26
-text = "大盗墓时代 · 墓室风险与隐藏探索"
+text = "大盗墓时代 · 多层墓穴与单局续航"
 mouse_filter = 2
 
 [node name="HP" type="Label" parent="Root"]
@@ -57,14 +57,14 @@ script = ExtResource("2")
 [node name="Instructions" type="Label" parent="Root"]
 offset_left = 64.0
 offset_top = 634.0
-text = "WASD 移动 · 鼠标瞄准 · 按住左键射击\n躲开攻击前摇与红色弹丸 · 第一Boss后 E 深入 / F 撤离 · 第二Boss后 E 返回"
+text = "WASD 移动 · 鼠标瞄准 · 按住左键射击\n非最终层终点 E 深入 / F 撤离 · 最终层 E 返回"
 mouse_filter = 2
 
 [node name="Legend" type="Label" parent="Root"]
 offset_left = 64.0
 offset_top = 688.0
 theme_override_font_sizes/font_size = 12
-text = "地图：暗色未访 / 绿色已访 / 金框当前 · S 出生 / B Boss房 / A 古董房"
+text = "地图：暗色未访 / 绿色已访 / 金框当前 · S 出生 / B Boss / T 终点 / A 古董"
 mouse_filter = 2
 
 [node name="Death" type="Label" parent="Root"]

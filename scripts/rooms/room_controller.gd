@@ -10,6 +10,7 @@ signal floor_exit_requested
 signal run_complete_requested
 signal boss_defeated
 signal extraction_requested
+signal terminal_cleared
 
 const ROOM_SCENE: PackedScene = preload("res://scenes/rooms/room.tscn")
 const PROJECTILE_SCENE: PackedScene = preload("res://scenes/player/projectile.tscn")
@@ -22,9 +23,15 @@ var antique_loot: AntiqueLootService = AntiqueLootService.new()
 var layout: DungeonLayout
 var rewards: RelicRewardService
 var floor_number: int = 1
+var floor_count: int = 0
+var floor_name: String = ""
 var floor_offset: int = 0
 var boss_definition: BossDefinition
 var final_floor: bool = false
+var rest_amount: int = 0
+var next_floor_number: int = 2
+var next_floor_name: String = ""
+var antique_reward_profile: AntiqueRewardProfile
 var run_finished: bool = false
 var antique_panel: AntiqueInventoryPanel
 
@@ -46,6 +53,7 @@ func _ready() -> void:
 		exploration = TombExplorationPlan.build(layout, run_seed, floor_number)
 		layout = exploration.layout
 		risk_service = TombRiskService.new(run_seed, floor_number)
+		risk_service.reward_profile = antique_reward_profile
 	for room_id in layout.rooms:
 		assert(layout.rooms[room_id].definition != null)
 		states[room_id] = RoomState.new()
@@ -137,9 +145,13 @@ func _switch_room(target_id: StringName, entry_side: int) -> void:
 		if layout.rooms[node.neighbors[side]].room_type == RoomDefinition.Type.TRAP: current_room.route_warning_sides.append(side)
 	current_room.boss_definition = boss_definition
 	current_room.can_exit = func() -> bool: return not run_finished and not transitioning and not _restarting
-	if node.room_type == RoomDefinition.Type.ANTIQUE: current_room.antique_definition = ANTIQUE_POOL.pick(run_seed,floor_number,target_id)
-	if antique_loot.has_cache(target_id): current_room.cache_definition = ANTIQUE_POOL.pick(run_seed,floor_number,target_id,&"combat_cache")
+	if node.room_type == RoomDefinition.Type.ANTIQUE: current_room.antique_definition = _pick_antique(target_id, &"antique_room")
+	if antique_loot.has_cache(target_id): current_room.cache_definition = _pick_antique(target_id, &"combat_cache")
 	current_room.final_floor = final_floor
+	current_room.is_terminal = target_id == layout.terminal_id
+	current_room.rest_amount = rest_amount
+	current_room.next_floor_number = next_floor_number
+	current_room.next_floor_name = next_floor_name
 	current_room.boss_defeated.connect(func() -> void: boss_defeated.emit())
 	current_room.run_complete_requested.connect(func() -> void: run_complete_requested.emit())
 	current_room.extraction_requested.connect(func() -> void: extraction_requested.emit())
@@ -227,13 +239,14 @@ func _refresh_hud() -> void:
 		visible_layout.seed_value = layout.seed_value
 		visible_layout.start_id = layout.start_id
 		visible_layout.boss_id = layout.boss_id
+		visible_layout.terminal_id = layout.terminal_id
 		visible_layout.antique_id = layout.antique_id
 		for id in layout.ordered_ids():
 			if id != exploration.secret_id: visible_layout.add_room(layout.rooms[id])
 		hud.show_map(visible_layout, states, current_id)
 	else: hud.show_map(layout, states, current_id)
 	hud.show_run_seed(run_seed, layout.seed_value)
-	hud.show_floor(floor_number, current_room.difficulty.depth, current_room.difficulty.tier)
+	hud.show_floor(floor_number, current_room.difficulty.depth, current_room.difficulty.tier, floor_count, floor_name)
 
 
 func _on_player_died() -> void:
@@ -248,10 +261,11 @@ func _on_player_died() -> void:
 
 
 func _on_room_cleared() -> void:
+	if current_id == layout.terminal_id: terminal_cleared.emit()
 	var context := RoomClearContext.new()
 	context.room_id = scoped_room_id(current_id)
 	context.room_type = current_room.room_type
-	context.was_combat = context.room_type == RoomDefinition.Type.COMBAT
+	context.was_combat = context.room_type == RoomDefinition.Type.COMBAT and current_id != layout.terminal_id
 	context.enemy_count = 1 if current_room.boss_definition != null and context.room_type == RoomDefinition.Type.BOSS else (current_room.definition.spawns.size() if context.room_type in [RoomDefinition.Type.COMBAT, RoomDefinition.Type.BOSS] else 0)
 	player.relics.notify_room_cleared(context)
 	room_cleared.emit(context)
@@ -270,3 +284,7 @@ func _create_pedestal(definition: RelicDefinition, room_id: StringName) -> void:
 
 func scoped_room_id(id: StringName) -> StringName:
 	return id if floor_number == 1 else StringName("F%d:%s" % [floor_number, id])
+
+
+func _pick_antique(id: StringName, source: StringName) -> AntiqueDefinition:
+	return ANTIQUE_POOL.pick_profiled(run_seed, floor_number, id, source, antique_reward_profile) if antique_reward_profile != null else ANTIQUE_POOL.pick(run_seed, floor_number, id, source)

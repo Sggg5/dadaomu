@@ -1,6 +1,20 @@
 # 大盗墓时代
 
-Phase9A/9A.1最终人工验收已通过（2026-10-07）；当前授权一次性封版commit/push到codex/phase-9a-tomb-risk-exploration，不合并main、不进入9B。风险数值本阶段冻结，后续平衡待多层结构完成再评估。旧等待反馈/未提交说明为历史，以此及docs/PHASE_9A_VERIFICATION.md最终结论为准。
+## Phase 9B：多层墓穴与单局续航（当前开发）
+
+基线 main `aaefb2e653cdbfa1dd87deb4e46ba5772fdef72c`，分支 `codex/phase-9b-multifloor-endurance`。本阶段授权验证后commit/push本分支，不合并main、不进入后续阶段。下方旧阶段规则为历史；当前以本节和用户9B要求为准。
+
+正式GameFlow/DungeonSession默认使用`data/tombs/default_tomb.tres`：浅层4～6普通终点、前墓5～7大帅尸、中层7～9普通终点、深层8～11普通终点、主墓6～9镇墓兽。普通终点仍是真实COMBAT，不伪装BOSS；基础房数不含9A可选附加房。四次可选撤离/深入，第五层RunExit E完成。HUD显示层数/总层数/层名，小地图T表示普通终点。
+
+TombDefinition持有只读FloorDefinition顺序；每层配置、Boss引用、rest_amount和AntiqueRewardProfile独立资源。最终层只有数组位置这一真相。DungeonGenerator仍只生成单层；DungeonLayout.terminal_id代表终点，boss_id仅真实Boss层有效。RoomController只消费布局；Room复用原场景。
+
+TombFloorGenerator派生楼层：F1=Run Seed，F2保留旧XOR/最多16次空间差异策略，F3+按Run/Floor/Tomb ID独立稳定混合。Campaign/Day/Site→Expedition生命周期与Profile VERSION4保持；不保存墓内中途状态。RunCarryState继续传HP/古董/遗物定义，新World重新装配临时实例；RelicRewardService仍整Run共享2/4/7进度。终点不计普通清房奖励和陪葬匣候选。
+
+cleared_floors与defeated_bosses分开计数，五层全通=5层/2Boss。每个非最终层终点清场后恢复ExpeditionExit，最终层只RunExit。F2医疗包+15、F4+20，其他层无；64px E只调用Health.heal，满血不消费，死亡不可用，RoomState source一次领取，重访不重生，未用治疗随旧层World作废，不能携带或购买。
+
+普通古董来源使用当前层Profile，权重依次55/30/12/3、35/35/22/8、20/35/30/15、10/25/40/25、5/15/40/40；独立稳定RNG先稀有度再组内稳定ID选择，缺组重新归一化。旧Pool.pick保持历史语义，legacy两层fixture不注入Profile；祭台/暗室高价值池继续RARE/TREASURE。80HP、8格背包、两敌人/两Boss参数、Tier3上限、9A风险数值冻结；Museum不进入治疗/收益计算。
+
+历史Phase1～9A测试显式注入`tests/fixtures/legacy_two_floor_tomb.tres`，保留核心断言。9B另跑生产五层真实战斗/拾取/满包Delete换货/休整/四次早退/最终回馆；人工手感与自动驾驶分开。完整结果见`docs/PHASE_9B_VERIFICATION.md`，未获得人工反馈不能宣称手感验收通过。
 
 ## Phase 9A.1：墓室风险与完整回馆修正（当前实现，同9A分支）
 
@@ -111,11 +125,9 @@ Phase 1～7B 共 10 套回归均通过；专项 722 项、0 失败。用户人�
 
 ## 当前状态
 
-当前 **Phase 9A 墓室风险选择与隐藏探索**（开发分支，未合并main）。默认从博物馆开始；以下为夜间玩法说明。正式下墓由存档Campaign Seed、日期和DEFAULT_TOMB派生本次Run Seed（新档只初始化Campaign一次），每层基础主图为 8～12 个房间，独立 RNG 重现原正交树；探索装配层可附加汇合绕路与隐藏房。START 固定在 (0,0)，Boss 是距离至少 5 的最远叶子，ANTIQUE 距离至少 2。
+当前 **Phase 9B 多层墓穴与单局续航**，开发分支尚未合并main。正式入口从博物馆开始，夜间默认五层墓穴，各层规模和终点见顶部配置说明。Campaign/Day/Site派生Run Seed，再稳定派生各Floor Seed；每层START安全、ANTIQUE有底座，普通战斗清场后开门，重访不刷怪。
 
-随机节点决定位置/连接/类型，五份原有普通房配置作为共享模板池。玩家、战斗、门和房间生命周期继续复用：首次进入锁门，击杀后开门，过门保留生命，重访已清场房不刷怪。
-
-START 为安全出生房，忽略模板刷怪并立即清场开门；第一层BOSS为晋北大帅尸，胜利后 E 深入第二层或 F 撤离；第二层BOSS为镇墓兽，胜利后E返回地面显示通关结算，无第三层。ANTIQUE安全清场并提供古董底座，地面鉴定/商人/拍卖沿用8C～8D规则。已实现尸蟞追击咬击、盗墓枪手保持距离与射击。战斗房入房有 0.35 秒观察期，敌人暂停行动；橙色表示攻击前摇，红色菱形是敌方弹丸。第一层Boss已获用户人工验收；第二层Boss与结算手感待本阶段试玩。
+F1/F3/F4普通终点，F2大帅尸，F5镇墓兽。非最终层清终点后E深入/F撤离，最终层RunExit E完成并结算E回馆。F2/F4医疗包各恢复15/20HP，满血不消耗。跨层保留HP、八格古董背包与遗物Build；R/N从第一层空库存重开。古董品质随Floor Profile改善，满包仍需Tab/Delete自行取舍。80HP与战斗数值保持，人工五层时长/压力待反馈。
 
 ## 开发环境与运行
 

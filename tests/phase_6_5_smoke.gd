@@ -13,6 +13,7 @@ func capture(name: String) -> void:
 func run() -> void:
 	DirAccess.make_dir_recursive_absolute("res://logs")
 	session = SESSION.instantiate() as DungeonSession
+	session.tomb = preload("res://tests/fixtures/legacy_two_floor_tomb.tres")
 	# 历史回归使用原主图夹具；Phase9A单独覆盖正式探索入口。
 	session.exploration_enabled = false
 	session.seed_value = 192034

@@ -24,6 +24,7 @@ static func build(base: DungeonLayout, run_seed: int, floor_number: int) -> Tomb
 	plan.layout.seed_value = base.seed_value
 	plan.layout.start_id = base.start_id
 	plan.layout.boss_id = base.boss_id
+	plan.layout.terminal_id = base.terminal_id
 	plan.layout.antique_id = base.antique_id
 	for id in base.ordered_ids():
 		var old := base.rooms[id]
@@ -37,7 +38,7 @@ static func build(base: DungeonLayout, run_seed: int, floor_number: int) -> Tomb
 		plan.layout.add_room(node)
 	var candidates: Array[StringName] = []
 	for id in base.ordered_ids():
-		if base.rooms[id].room_type == RoomDefinition.Type.COMBAT: candidates.append(id)
+		if id != base.terminal_id and base.rooms[id].room_type == RoomDefinition.Type.COMBAT: candidates.append(id)
 	candidates.sort_custom(func(a: StringName, b: StringName) -> bool:
 		var first := AntiquePool.stable_score(run_seed, floor_number, a, &"exploration", VERSION)
 		var second := AntiquePool.stable_score(run_seed, floor_number, b, &"exploration", VERSION)

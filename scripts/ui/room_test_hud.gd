@@ -85,5 +85,5 @@ func hide_boss() -> void:
 	boss_display.hide()
 
 
-func show_floor(number: int, depth: int, tier: int) -> void:
-	$Root/EncounterDepth.text = "墓层：%d · 深度：%d · Tier %d" % [number,depth,tier]
+func show_floor(number: int, depth: int, tier: int, total: int = 0, floor_name: String = "") -> void:
+	$Root/EncounterDepth.text = "墓层：%d%s %s · 深度：%d · Tier %d" % [number, ("/%d" % total) if total > 0 else "", floor_name, depth, tier]

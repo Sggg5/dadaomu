@@ -5,6 +5,8 @@ signal descend_requested
 signal extract_requested
 var player: Player
 var used: bool = false
+var next_floor_number: int = 2
+var next_floor_name: String = ""
 var label: Label
 var can_choose: Callable
 
@@ -45,7 +47,7 @@ func _process(_delta: float) -> void: _refresh()
 
 func _refresh() -> void:
 	var value := AntiqueDefinition.money(player.antiques.total_value())
-	label.text = "墓道更深处传来阴气……\n当前携带：%d / %d格\n估值：%s\n撤离可保住：%s\n[E] 继续深入第二层\n[F] 带着古董撤离" % [player.antiques.used_slots(),player.antiques.capacity,value,value]
+	label.text = "墓道更深处传来阴气……\n当前携带：%d / %d格\n估值：%s\n撤离可保住：%s\n当前生命：%.0f / %.0f\n[E] 继续深入第%d层 · %s\n[F] 带着古董撤离" % [player.antiques.used_slots(),player.antiques.capacity,value,value,player.health.current_hp,player.health.max_hp,next_floor_number,next_floor_name]
 
 
 func _unhandled_input(event: InputEvent) -> void:

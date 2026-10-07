@@ -6,6 +6,7 @@ const GENERATION_VERSION: int = 1
 
 var seed_value: int = 0
 var start_id: StringName = &"START"
+var terminal_id: StringName
 var boss_id: StringName
 var antique_id: StringName
 var rooms: Dictionary[StringName, DungeonRoom] = {}
@@ -47,7 +48,7 @@ func signature(include_templates: bool = true) -> String:
 			row.append(str(room.definition.room_id))
 			row.append(room.definition.resource_path)
 		rows.append(row)
-	return JSON.stringify([GENERATION_VERSION, str(start_id), str(boss_id), str(antique_id), rows])
+	return JSON.stringify([GENERATION_VERSION, str(start_id), str(boss_id), str(antique_id), str(terminal_id), rows])
 
 
 func spatial_signature() -> String:
