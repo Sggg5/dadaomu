@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="RelicDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/relics/relic_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/relics/effects/cinnabar_seal_effect.gd" id="2"]
+[resource]
+script = ExtResource("1")
+id = &"cinnabar_seal"
+display_name = "朱砂符"
+description = "命中附加较强的四段朱砂燃烧。"
+effect_script = ExtResource("2")
+parameters = {"damage": 5.0, "interval": 0.3, "ticks": 4}

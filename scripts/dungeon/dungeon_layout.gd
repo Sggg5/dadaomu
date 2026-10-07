@@ -8,6 +8,7 @@ var seed_value: int = 0
 var start_id: StringName = &"START"
 var terminal_id: StringName
 var boss_id: StringName
+var relic_id: StringName
 var antique_id: StringName
 var rooms: Dictionary[StringName, DungeonRoom] = {}
 var coordinates: Dictionary[Vector2i, StringName] = {}

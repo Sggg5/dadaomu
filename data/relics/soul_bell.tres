@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="RelicDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/relics/relic_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/relics/effects/soul_bell_effect.gd" id="2"]
+[resource]
+script = ExtResource("1")
+id = &"soul_bell"
+display_name = "招魂铃"
+description = "击杀向另一目标释放弱追踪魂弹，每房最多十二次。"
+effect_script = ExtResource("2")

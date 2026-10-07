@@ -26,6 +26,7 @@ static func build(base: DungeonLayout, run_seed: int, floor_number: int) -> Tomb
 	plan.layout.boss_id = base.boss_id
 	plan.layout.terminal_id = base.terminal_id
 	plan.layout.antique_id = base.antique_id
+	plan.layout.relic_id = base.relic_id
 	for id in base.ordered_ids():
 		var old := base.rooms[id]
 		var node := DungeonRoom.new()

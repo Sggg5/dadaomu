@@ -23,6 +23,7 @@ func run() -> void:
 
 func create(store: MuseumProfileStore) -> GameFlow:
 	var flow := preload("res://scenes/main/game_flow.tscn").instantiate() as GameFlow
+	flow.progressive_relics = false
 	flow.tomb = preload("res://tests/fixtures/legacy_two_floor_tomb.tres")
 	flow.profile_store = store
 	flow.campaign_seed_override = 52

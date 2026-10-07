@@ -44,7 +44,7 @@ func show_antiques(inventory: AntiqueInventory) -> void:
 
 func show_room(room: DungeonRoom, state: RoomState, remaining: int) -> void:
 	$Root/EncounterDepth.text = "深度：%d · 威胁：Tier %d" % [room.distance_from_start, EncounterDifficulty.from_depth(room.distance_from_start).tier]
-	var type_label: String = ["战斗", "古董房", "商人", "机关", "秘密", "Boss房", "出生房"][room.room_type]
+	var type_label: String = ["战斗", "古董房", "商人", "机关", "秘密", "Boss房", "出生房", "遗物房"][room.room_type]
 	var status_label := "伏击中 · 门已关闭" if state.status == RoomState.Status.CLEARED and remaining > 0 else state.get_label()
 	$Root/RoomInfo.text = "%s · %s  |  %s" % [room.definition.title, type_label, status_label]
 	$Root/RoomInfo.tooltip_text = str(room.room_id)

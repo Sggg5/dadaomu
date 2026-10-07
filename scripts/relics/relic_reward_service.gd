@@ -3,7 +3,13 @@ extends Node
 ## 一局奖励进度和独立 RNG；不执行遗物效果、不持有房间节点。
 signal reward_available(definition: RelicDefinition, room_id: StringName)
 const DEFAULT_POOL: RelicPool = preload("res://data/relics/formal_pool.tres")
-const THRESHOLDS: Array[int] = [2, 4, 7]
+const LEGACY_POOL: RelicPool = preload("res://tests/fixtures/legacy_relic_pool.tres")
+const LEGACY_THRESHOLDS: Array[int] = [2,4,7]
+const THRESHOLDS: Array[int] = [4,12,24]
+const PRODUCTION_POOL: RelicPool = DEFAULT_POOL
+const PRODUCTION_THRESHOLDS: Array[int] = THRESHOLDS
+var plan: RelicRewardPlan
+var milestones: Array[int] = PRODUCTION_THRESHOLDS.duplicate()
 var pool: RelicPool
 var sequence: Array[RelicDefinition] = []
 var combat_clears: int = 0
@@ -13,9 +19,11 @@ var _seen: Dictionary[StringName, bool] = {}
 var _rng := RandomNumberGenerator.new()
 
 
-func configure(seed_value: int, data: RelicPool = DEFAULT_POOL) -> void:
+func configure(seed_value: int, data: RelicPool = DEFAULT_POOL, thresholds: Array[int] = PRODUCTION_THRESHOLDS) -> void:
 	pool = data
-	assert(pool.is_valid(), "Formal reward pool must contain eight unique non-test relics")
+	milestones = thresholds.duplicate()
+	plan = null
+	assert(pool.is_valid(), "Reward pool must contain valid unique non-test relics")
 	sequence.assign(pool.relics)
 	sequence.sort_custom(func(a: RelicDefinition, b: RelicDefinition) -> bool: return str(a.id) < str(b.id))
 	_rng.seed = seed_value ^ (pool.reward_version * 7919)
@@ -35,8 +43,8 @@ func on_room_cleared(context: RoomClearContext) -> void:
 		return
 	_seen[context.room_id] = true
 	combat_clears += 1
-	if combat_clears in THRESHOLDS and rewards_given < sequence.size():
-		var reward := sequence[rewards_given]
+	if combat_clears in milestones and rewards_given < sequence.size():
+		var reward: RelicDefinition = plan.assigned[StringName("MILESTONE:%d" % combat_clears)] if plan != null else sequence[rewards_given]
 		rewards_given += 1
 		reward_available.emit(reward, context.room_id)
 

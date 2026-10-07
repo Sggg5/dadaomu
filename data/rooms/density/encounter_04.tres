@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="RoomDefinition" load_steps=12 format=3]
+[ext_resource type="Script" path="res://scripts/rooms/room_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/rooms/enemy_spawn_definition.gd" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/corpse_dog.tscn" id="S0"]
+[ext_resource type="Resource" path="res://data/enemies/corpse_dog.tres" id="D0"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/scarab_enemy.tscn" id="S1"]
+[ext_resource type="Resource" path="res://data/enemies/scarab.tres" id="D1"]
+[sub_resource type="Resource" id="Spawn0"]
+script = ExtResource("2")
+enemy_scene = ExtResource("S0")
+enemy_definition = ExtResource("D0")
+position = Vector2(960,240)
+[sub_resource type="Resource" id="Spawn1"]
+script = ExtResource("2")
+enemy_scene = ExtResource("S0")
+enemy_definition = ExtResource("D0")
+position = Vector2(320,304)
+[sub_resource type="Resource" id="Spawn2"]
+script = ExtResource("2")
+enemy_scene = ExtResource("S1")
+enemy_definition = ExtResource("D1")
+position = Vector2(400,304)
+[sub_resource type="Resource" id="Spawn3"]
+script = ExtResource("2")
+enemy_scene = ExtResource("S1")
+enemy_definition = ExtResource("D1")
+position = Vector2(480,304)
+[sub_resource type="Resource" id="Spawn4"]
+script = ExtResource("2")
+enemy_scene = ExtResource("S1")
+enemy_definition = ExtResource("D1")
+position = Vector2(800,304)
+[resource]
+script = ExtResource("1")
+room_id = &"encounter_04"
+title = "尸犬栈道"
+entry_grace_time = 0.35
+spawns = Array[Resource]([SubResource("Spawn0"), SubResource("Spawn1"), SubResource("Spawn2"), SubResource("Spawn3"), SubResource("Spawn4")])
+obstacles = Array[Rect2]([Rect2(604,312,72,112)])

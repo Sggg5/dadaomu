@@ -11,4 +11,4 @@ func is_valid() -> bool:
 		if relic == null or relic.id == &"" or str(relic.id).begins_with("test_") or ids.has(relic.id):
 			return false
 		ids[relic.id] = true
-	return relics.size() == 8
+	return relics.size() >= 8

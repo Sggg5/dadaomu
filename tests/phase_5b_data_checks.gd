@@ -1,7 +1,7 @@
 extends RefCounted
 var test: SceneTree
 var completed: bool = false
-var pool: RelicPool = RelicRewardService.DEFAULT_POOL
+var pool: RelicPool = RelicRewardService.LEGACY_POOL
 
 
 func _init(context: SceneTree) -> void:
@@ -35,14 +35,14 @@ func run() -> void:
 	test.check(pool.is_valid() and pool.relics.size() == 8 and pool.relics.all(func(item: RelicDefinition) -> bool: return not str(item.id).begins_with("test_")), "Formal pool has exactly eight unique non-engineering relics")
 	var a := RelicRewardService.new()
 	var b := RelicRewardService.new()
-	a.configure(192034)
-	b.configure(192034)
+	a.configure(192034,pool,RelicRewardService.LEGACY_THRESHOLDS)
+	b.configure(192034,pool,RelicRewardService.LEGACY_THRESHOLDS)
 	var digest := FileAccess.open("res://logs/phase_5b_rewards_%s.txt" % DisplayServer.get_name(), FileAccess.WRITE)
 	digest.store_string(signature(a))
 	test.check(signature(a) == signature(b) and a._rng != b._rng, "Same Seed reward order uses independent RNG instances")
 	var variants: Dictionary[String, bool] = {}
 	for seed_value in range(20):
-		b.configure(seed_value)
+		b.configure(seed_value,pool,RelicRewardService.LEGACY_THRESHOLDS)
 		variants[signature(b)] = true
 	test.check(variants.size() > 10, "Different Seeds normally produce different reward sequences")
 	var unique: Dictionary[StringName, bool] = {}
@@ -61,7 +61,7 @@ func run() -> void:
 	boss.room_type = RoomDefinition.Type.BOSS
 	a.on_room_cleared(boss)
 	test.check(a.combat_clears == 0, "START ANTIQUE and Boss placeholder never count rewards")
-	test.check(RelicRewardService.THRESHOLDS == [2, 4, 7], "Formal rewards use thresholds 2/4/7")
+	test.check(RelicRewardService.LEGACY_THRESHOLDS == [2, 4, 7], "Formal rewards use thresholds 2/4/7")
 	for index in range(1, 8):
 		var clear := RoomClearContext.new()
 		clear.room_id = StringName("COMBAT_%d" % index)

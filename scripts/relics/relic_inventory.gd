@@ -58,6 +58,7 @@ func modify_attack(context: AttackContext) -> void:
 		var effect := get_effect(id)
 		if effect != null and effect.installed:
 			effect.modify_attack(context)
+			if context.requests.size() > AttackContext.MAX_PROJECTILES: context.requests.resize(AttackContext.MAX_PROJECTILES)
 
 
 func attack_order() -> Array[StringName]:

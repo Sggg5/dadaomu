@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BossDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/bosses/boss_definition.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/scarab_nest.tscn" id="2"]
+[resource]
+script = ExtResource("1")
+boss_scene = ExtResource("2")
+id = &"scarab_nest"
+display_name = "尸蟞母巢"
+max_hp = 380.0
+move_speed = 0.0
+body_color = Color(0.52,0.62,0.28,1)

@@ -90,3 +90,10 @@ static func _assign_special_rooms(layout: DungeonLayout, config: DungeonConfig, 
 	assert(not antique_candidates.is_empty())
 	layout.antique_id = antique_candidates[rng.randi_range(0, antique_candidates.size() - 1)]
 	layout.rooms[layout.antique_id].room_type = RoomDefinition.Type.ANTIQUE
+	if config.include_relic_room:
+		var relic_candidates: Array[StringName] = []
+		for id in layout.ordered_ids():
+			if id != layout.terminal_id and layout.rooms[id].room_type == RoomDefinition.Type.COMBAT: relic_candidates.append(id)
+		assert(not relic_candidates.is_empty())
+		layout.relic_id = relic_candidates[rng.randi_range(0, relic_candidates.size()-1)]
+		layout.rooms[layout.relic_id].room_type = RoomDefinition.Type.RELIC

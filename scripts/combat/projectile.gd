@@ -4,6 +4,8 @@ signal hit(context: ProjectileHitContext)
 ## 使用运动扫掠检测，避免高速弹丸只靠重叠检测穿过薄墙。
 ## 基础弹丸首次碰撞消耗；通用穿透参数与已命中集合，不知道任何遗物 ID。
 
+var homing_target: WeakRef
+var homing_turn_rate: float = 0
 var damage: float = 0.0
 var remaining_lifetime: float = 0.0
 var consumed: bool = false
@@ -20,6 +22,8 @@ func setup(request: AttackRequest) -> void:
 	damage = request.damage
 	remaining_lifetime = request.lifetime
 	origin = request.origin
+	homing_target = request.homing_target
+	homing_turn_rate = request.homing_turn_rate
 	pierce_remaining = request.pierce_count
 	scale = Vector2.ONE * request.projectile_scale
 	tags = request.tags.duplicate()
@@ -32,6 +36,11 @@ func _physics_process(delta: float) -> void:
 	if remaining_lifetime <= 0.0:
 		_consume()
 		return
+	if homing_target != null:
+		var actor := homing_target.get_ref() as Node2D
+		if is_instance_valid(actor):
+			var desired := (actor.global_position-global_position).normalized()*velocity.length()
+			velocity = velocity.lerp(desired,minf(1,homing_turn_rate*delta)).normalized()*velocity.length()
 	var collision := move_and_collide(velocity * delta)
 	if collision:
 		var target := collision.get_collider()
@@ -68,6 +77,10 @@ func _consume() -> void:
 
 
 func _draw() -> void:
+	if tags.has(&"soul"):
+		draw_circle(Vector2.ZERO,6,Color("99dedd"))
+		draw_arc(Vector2.ZERO,9,0,TAU,16,Color("60a1ba"),2)
+		return
 	if tags.has(&"heavy"):
 		draw_colored_polygon(PackedVector2Array([Vector2(-8,-10),Vector2(13,0),Vector2(-8,10)]), Color("b7e3ed"))
 		return

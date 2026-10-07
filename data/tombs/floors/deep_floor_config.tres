@@ -1,17 +1,15 @@
-[gd_resource type="Resource" script_class="DungeonConfig" load_steps=7 format=3]
+[gd_resource type="Resource" script_class="DungeonConfig" load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/dungeon/dungeon_config.gd" id="1"]
-[ext_resource type="Resource" path="res://data/rooms/test_center.tres" id="2"]
-[ext_resource type="Resource" path="res://data/rooms/test_north.tres" id="3"]
-[ext_resource type="Resource" path="res://data/rooms/test_south.tres" id="4"]
-[ext_resource type="Resource" path="res://data/rooms/test_east.tres" id="5"]
-[ext_resource type="Resource" path="res://data/rooms/test_west.tres" id="6"]
-
+[ext_resource type="Resource" path="res://data/rooms/density/encounter_10.tres" id="2"]
+[ext_resource type="Resource" path="res://data/rooms/density/encounter_11.tres" id="3"]
+[ext_resource type="Resource" path="res://data/rooms/density/encounter_12.tres" id="4"]
 [resource]
 script = ExtResource("1")
-min_rooms = 8
-max_rooms = 11
+min_rooms = 14
+max_rooms = 17
 min_terminal_distance = 6
 min_antique_distance = 3
-terminal_is_boss = false
-templates = Array[Resource]([ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5"), ExtResource("6")])
+terminal_is_boss = true
+templates = Array[Resource]([ExtResource("2"),ExtResource("3"),ExtResource("4")])
+include_relic_room = true

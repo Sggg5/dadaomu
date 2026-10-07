@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="RelicDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/relics/relic_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/relics/effects/red_rope_effect.gd" id="2"]
+[resource]
+script = ExtResource("1")
+id = &"red_rope"
+display_name = "红绳结"
+description = "每六次攻击释放八方向弱环弹。"
+effect_script = ExtResource("2")

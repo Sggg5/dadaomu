@@ -8,6 +8,7 @@ func _init(context: SceneTree) -> void: test = context
 
 func run() -> void:
 	var flow := preload("res://scenes/main/game_flow.tscn").instantiate() as GameFlow
+	flow.progressive_relics = false
 	flow.tomb = preload("res://tests/fixtures/legacy_two_floor_tomb.tres")
 	# 旧功能固定Run夹具；正式派生Seed由9A专项另外覆盖。
 	flow.forced_night_seed = 192034

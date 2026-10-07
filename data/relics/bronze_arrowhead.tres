@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="RelicDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/relics/relic_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/relics/effects/bronze_arrowhead_effect.gd" id="2"]
+[resource]
+script = ExtResource("1")
+id = &"bronze_arrowhead"
+display_name = "青铜箭簇"
+description = "高速小弹，额外穿透一次。"
+effect_script = ExtResource("2")

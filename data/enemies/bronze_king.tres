@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BossDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/bosses/boss_definition.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/bronze_king.tscn" id="2"]
+[resource]
+script = ExtResource("1")
+boss_scene = ExtResource("2")
+id = &"bronze_king"
+display_name = "铜甲尸王"
+max_hp = 600.0
+move_speed = 65.0
+body_color = Color(0.47,0.55,0.43,1)

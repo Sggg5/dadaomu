@@ -3,7 +3,7 @@ const SCARAB: PackedScene = preload("res://scenes/enemies/scarab_enemy.tscn")
 const ENEMY_BULLET: PackedScene = preload("res://scenes/enemies/enemy_projectile.tscn")
 var test: SceneTree
 var completed: bool = false
-var pool: RelicPool = RelicRewardService.DEFAULT_POOL
+var pool: RelicPool = RelicRewardService.LEGACY_POOL
 
 
 func _init(context: SceneTree) -> void:

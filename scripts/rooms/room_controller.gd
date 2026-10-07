@@ -170,6 +170,7 @@ func _switch_room(target_id: StringName, entry_side: int) -> void:
 	player.global_position = current_room.to_global(current_room.get_entry_position(entry_side))
 	player.velocity = Vector2.ZERO
 	current_room.enter()
+	_restore_planned_rewards()
 	_attach_exploration()
 	transitioning = false
 	player.set_controls_enabled(true)
@@ -226,6 +227,7 @@ func _spawn_projectile(request: AttackRequest) -> void:
 	if run_finished: return
 	if transitioning or player.health.is_dead or _restarting:
 		return
+	if current_room.projectiles.get_child_count() >= 256: return
 	var projectile := PROJECTILE_SCENE.instantiate() as Projectile
 	current_room.projectiles.add_child(projectile)
 	projectile.setup(request)
@@ -242,6 +244,7 @@ func _refresh_hud() -> void:
 		visible_layout.boss_id = layout.boss_id
 		visible_layout.terminal_id = layout.terminal_id
 		visible_layout.antique_id = layout.antique_id
+		visible_layout.relic_id = layout.relic_id
 		for id in layout.ordered_ids():
 			if id != exploration.secret_id: visible_layout.add_room(layout.rooms[id])
 		hud.show_map(visible_layout, states, current_id)
@@ -262,6 +265,7 @@ func _on_player_died() -> void:
 
 
 func _on_room_cleared() -> void:
+	_restore_planned_rewards()
 	if current_id == layout.terminal_id: terminal_cleared.emit()
 	var context := RoomClearContext.new()
 	context.room_id = scoped_room_id(current_id)
@@ -289,3 +293,20 @@ func scoped_room_id(id: StringName) -> StringName:
 
 func _pick_antique(id: StringName, source: StringName) -> AntiqueDefinition:
 	return ANTIQUE_POOL.pick_profiled(run_seed, floor_number, id, source, antique_reward_profile) if antique_reward_profile != null else ANTIQUE_POOL.pick(run_seed, floor_number, id, source)
+
+
+func _restore_planned_rewards() -> void:
+	if run_finished or player.health.is_dead or rewards == null or rewards.plan == null or current_room.room_state.status != RoomState.Status.CLEARED: return
+	var source: StringName = &""
+	if current_id == layout.relic_id: source = StringName("F%d:ITEM" % floor_number)
+	elif current_id == layout.boss_id: source = StringName("F%d:BOSS" % floor_number)
+	if source == &"" or current_room.room_state.is_loot_claimed(source) or current_room.has_node("PlannedRelic"): return
+	var pedestal := RelicPedestal.new()
+	pedestal.name = "PlannedRelic"
+	pedestal.definition = rewards.plan.assigned[source]
+	pedestal.player = player
+	pedestal.room_state = current_room.room_state
+	pedestal.source_id = source
+	pedestal.position = Vector2(960,240) if current_id == layout.boss_id else RelicPedestal.safe_position(current_room)
+	if current_room.definition.obstacles.any(func(rect: Rect2) -> bool: return rect.grow(45).has_point(pedestal.position)): pedestal.position = AntiqueCache.safe_position(current_room)
+	current_room.add_child(pedestal)

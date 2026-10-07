@@ -4,6 +4,8 @@ extends Node2D
 var definition: RelicDefinition
 var player: Player
 var claimed: bool = false
+var room_state: RoomState
+var source_id: StringName
 var label: Label
 
 
@@ -40,6 +42,7 @@ func try_pickup() -> bool:
 	if not can_pickup() or not player.relics.inventory.add(definition):
 		return false
 	claimed = true
+	if room_state != null: room_state.claim_loot(source_id)
 	queue_free()
 	return true
 

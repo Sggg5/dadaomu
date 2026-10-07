@@ -11,6 +11,10 @@ var started: bool = false
 var target: Player
 var difficulty: EncounterDifficulty = EncounterDifficulty.from_depth(0)
 var projectile_parent: Node2D
+var _summon_owners: Dictionary[int,int] = {}
+const MAX_SUMMONS: int = 4
+const MAX_TOTAL_SUMMONS: int = 8
+var summons_created: int = 0
 var _spawning: bool = false
 var _failed: bool = false
 var _finished: bool = false
@@ -42,6 +46,7 @@ func spawn(definition: RoomDefinition) -> void:
 		if enemy is Enemy:
 			enemy.configure_spawn(target, projectile_parent, entry.enemy_definition, difficulty)
 			enemy.activation_remaining = definition.entry_grace_time
+		if enemy.has_signal("summon_requested"): enemy.connect("summon_requested",_request_summon.bind(enemy))
 		add_child(enemy)
 	_spawning = false
 	remaining_changed.emit(get_remaining())
@@ -63,6 +68,7 @@ func _on_enemy_died(enemy_id: int) -> void:
 		return
 	var enemy := _living[enemy_id]
 	_living.erase(enemy_id)
+	_summon_owners.erase(enemy_id)
 	enemy_killed.emit(enemy)
 	remaining_changed.emit(get_remaining())
 	_check_finished()
@@ -72,3 +78,50 @@ func _check_finished() -> void:
 	if started and not _spawning and not _failed and not _finished and _living.is_empty():
 		_finished = true
 		all_defeated.emit()
+
+
+func _request_summon(count: int, owner: Enemy) -> void:
+	_spawn_summons.call_deferred(count,weakref(owner))
+
+func _spawn_summons(count: int, reference: WeakRef) -> void:
+	var owner := reference.get_ref() as Enemy
+	if not is_instance_valid(owner) or owner.health.is_dead or not owner.can_act() or _finished: return
+	var owner_id := owner.get_instance_id()
+	for index in range(mini(count,2)):
+		var live_count := 0
+		for id in _summon_owners:
+			if _living.has(id): live_count+=1
+		if live_count>=MAX_SUMMONS or summons_created>=MAX_TOTAL_SUMMONS: return
+		var own_count := 0
+		for id in _summon_owners:
+			if _living.has(id) and _summon_owners[id]==owner_id: own_count+=1
+		if own_count>=2: return
+		var point := Vector2.INF
+		for y in range(224,520,72):
+			for x in range(280,1080,80):
+				var candidate := Vector2(x,y)
+				if candidate.distance_to(target.position)<180: continue
+				var room := get_parent() as Room
+				if room.definition.obstacles.any(func(rect: Rect2) -> bool: return rect.grow(18).has_point(candidate)): continue
+				var near_entry := false
+				for side in range(4):
+					if room.get_entry_position(side).distance_to(candidate)<180: near_entry=true
+				if near_entry: continue
+				if _living.values().any(func(actor: Node2D) -> bool: return actor.position.distance_to(candidate)<48): continue
+				var ray := PhysicsRayQueryParameters2D.create(candidate,candidate+Vector2(1,0),1)
+				if not get_world_2d().direct_space_state.intersect_ray(ray).is_empty(): continue
+				point=candidate
+				break
+			if point.is_finite(): break
+		if not point.is_finite(): return
+		var actor := preload("res://scenes/enemies/scarab_enemy.tscn").instantiate() as Enemy
+		actor.position=point
+		actor.configure_spawn(target,projectile_parent,preload("res://data/enemies/scarab.tres"),difficulty)
+		actor.activation_remaining=0.35
+		var id := actor.get_instance_id()
+		_living[id]=actor
+		_summon_owners[id]=owner_id
+		summons_created+=1
+		(actor.get_node("Health") as Health).died.connect(_on_enemy_died.bind(id),CONNECT_ONE_SHOT)
+		add_child(actor)
+	remaining_changed.emit(get_remaining())

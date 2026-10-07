@@ -21,8 +21,12 @@ func _ready() -> void:
 	formal_panel = PanelContainer.new()
 	formal_panel.position = Vector2(864, 160)
 	formal_panel.visible = false
+	var scroll := ScrollContainer.new()
+	scroll.custom_minimum_size = Vector2(330,410)
+	formal_panel.add_child(scroll)
 	var list := VBoxContainer.new()
-	formal_panel.add_child(list)
+	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(list)
 	for definition in RelicRewardService.DEFAULT_POOL.relics:
 		var button := Button.new()
 		button.text = "添加 " + definition.display_name
@@ -42,7 +46,8 @@ func refresh() -> void:
 	var names := PackedStringArray()
 	for id in runtime.inventory.ids():
 		names.append(runtime.inventory.get_effect(id).definition.display_name)
-	label.text = "工程遗物：%s   |   1/2/3 添加 · Backspace 全移除" % ("、".join(names) if not names.is_empty() else "无")
+	var visible_names := names.slice(0,5)
+	label.text = "遗物 %d件：%s%s   |   1/2/3 添加 · Backspace 全移除" % [names.size(),"、".join(visible_names) if not names.is_empty() else "无","……" if names.size()>5 else ""]
 	label.text = label.text.replace("工程遗物", "遗物") + " · F2 正式遗物调试"
 	label.tooltip_text = "、".join(names)
 

@@ -1,5 +1,5 @@
 extends RefCounted
-const TOMB: TombDefinition = preload("res://data/tombs/default_tomb.tres")
+const TOMB: TombDefinition = preload("res://tests/fixtures/pre_density_tomb.tres")
 const POOL: AntiquePool = preload("res://data/antiques/formal_pool.tres")
 var test: SceneTree
 func _init(context: SceneTree) -> void: test = context

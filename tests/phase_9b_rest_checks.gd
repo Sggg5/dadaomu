@@ -3,6 +3,8 @@ var test: SceneTree
 func _init(context: SceneTree) -> void: test = context
 func run() -> void:
 	var session := preload("res://scenes/main/dungeon_test.tscn").instantiate() as DungeonSession
+	session.progressive_relics = false
+	session.tomb = preload("res://tests/fixtures/pre_density_tomb.tres")
 	session.exploration_enabled = false
 	test.root.add_child(session)
 	await test.frames(3)

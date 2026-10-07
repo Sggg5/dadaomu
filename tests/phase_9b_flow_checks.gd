@@ -12,6 +12,8 @@ func run() -> void:
 
 func play(exit_floor: int) -> void:
 	var flow := preload("res://scenes/main/game_flow.tscn").instantiate() as GameFlow
+	flow.progressive_relics = false
+	flow.tomb = preload("res://tests/fixtures/pre_density_tomb.tres")
 	flow.profile_store = MuseumProfileStore.in_memory()
 	flow.campaign_seed_override = 52
 	flow.forced_night_seed = 33

@@ -13,7 +13,7 @@ func run() -> void:
 	var player: Player = arena.player
 	var room: Room = arena.room
 	boss.stop_ai()
-	var pool: RelicPool = RelicRewardService.DEFAULT_POOL
+	var pool: RelicPool = RelicRewardService.LEGACY_POOL
 	for data in pool.relics:
 		player.relics.inventory.clear()
 		room.discard_projectiles()

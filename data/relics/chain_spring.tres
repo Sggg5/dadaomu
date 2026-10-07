@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="RelicDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/relics/relic_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/relics/effects/chain_spring_effect.gd" id="2"]
+[resource]
+script = ExtResource("1")
+id = &"chain_spring"
+display_name = "连珠簧"
+description = "追加一枚主弹，每枚伤害降低。"
+effect_script = ExtResource("2")

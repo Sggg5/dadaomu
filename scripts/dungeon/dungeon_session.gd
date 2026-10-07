@@ -7,6 +7,7 @@ signal result_ready(result: RunResult)
 signal run_started
 signal return_requested(result: RunResult)
 @export var hub_mode: bool = false
+@export var progressive_relics: bool = true
 @export var exploration_enabled: bool = true
 # 仅结算品相的确定性元数据，绝不参与地图/掉落/战斗计算。
 var collection_day: int = 1
@@ -95,7 +96,10 @@ func _start_new_run(layout: DungeonLayout) -> void:
 	floor_number = 1
 	current_floor_seed = run_seed
 	rewards = RelicRewardService.new()
-	rewards.configure(run_seed)
+	rewards.configure(run_seed, RelicRewardService.PRODUCTION_POOL if progressive_relics else RelicRewardService.LEGACY_POOL, RelicRewardService.PRODUCTION_THRESHOLDS if progressive_relics else RelicRewardService.LEGACY_THRESHOLDS)
+	if progressive_relics:
+		rewards.milestones = [4,12,24]
+		rewards.plan = RelicRewardPlan.build(run_seed,tomb.floors.size(),RelicRewardService.PRODUCTION_POOL)
 	add_child(rewards)
 	_assemble_world(layout)
 	_changing = false

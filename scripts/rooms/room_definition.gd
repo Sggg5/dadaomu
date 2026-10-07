@@ -4,7 +4,7 @@ extends Resource
 ## room_id 是历史命名的模板 ID；map_position 仅用于旧测试夹具。
 ## 随机图的位置、身份与类型属于 DungeonRoom，不从这些模板元数据读取。
 
-enum Type { COMBAT, ANTIQUE, MERCHANT, TRAP, SECRET, BOSS, START }
+enum Type { COMBAT, ANTIQUE, MERCHANT, TRAP, SECRET, BOSS, START, RELIC }
 
 @export var room_id: StringName
 @export var title: String

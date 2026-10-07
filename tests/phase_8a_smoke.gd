@@ -18,6 +18,7 @@ func run() -> void:
 	var first_exhibit = preload("res://tests/phase_8a_first_exhibit_checks.gd").new(self)
 	await first_exhibit.run()
 	flow = FLOW_SCENE.instantiate() as GameFlow
+	flow.progressive_relics = false
 	flow.tomb = preload("res://tests/fixtures/legacy_two_floor_tomb.tres")
 	# 旧功能固定Run夹具；正式派生Seed由9A专项另外覆盖。
 	flow.forced_night_seed = 192034

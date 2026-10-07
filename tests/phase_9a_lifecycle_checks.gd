@@ -67,6 +67,7 @@ func run() -> void:
 func exit_restore() -> void:
 	var store := MuseumProfileStore.in_memory()
 	var flow := preload("res://scenes/main/game_flow.tscn").instantiate() as GameFlow
+	flow.progressive_relics = false
 	flow.tomb = preload("res://tests/fixtures/legacy_two_floor_tomb.tres")
 	# 旧功能固定Run夹具；正式派生Seed由9A专项另外覆盖。
 	flow.forced_night_seed = 192034
@@ -97,6 +98,7 @@ func exit_restore() -> void:
 	flow.queue_free()
 	await test.frames(4)
 	flow = preload("res://scenes/main/game_flow.tscn").instantiate() as GameFlow
+	flow.progressive_relics = false
 	flow.tomb = preload("res://tests/fixtures/legacy_two_floor_tomb.tres")
 	# 旧功能固定Run夹具；正式派生Seed由9A专项另外覆盖。
 	flow.forced_night_seed = 192034
@@ -117,6 +119,7 @@ func rng_integration() -> void:
 	var fixture_seed: int = preload("res://tests/phase_9a_flow_checks.gd").new(test).choose_seed()
 	for opened in [false, true]:
 		var session := preload("res://scenes/main/dungeon_test.tscn").instantiate() as DungeonSession
+		session.progressive_relics = false
 		session.tomb = preload("res://tests/fixtures/legacy_two_floor_tomb.tres")
 		session.seed_value = fixture_seed
 		test.session = session

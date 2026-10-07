@@ -11,7 +11,7 @@ func _init(context: SceneTree) -> void:
 
 
 func definition(id: StringName) -> RelicDefinition:
-	var pool: RelicPool = RelicRewardService.DEFAULT_POOL
+	var pool: RelicPool = RelicRewardService.LEGACY_POOL
 	for data in pool.relics:
 		if data.id == id: return data
 	return null

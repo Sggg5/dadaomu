@@ -1,5 +1,7 @@
 # Phase 9B 验证记录
 
+**9B初版人工手感未通过，当前已按9B.2授权调整。以下为历史初版/审查修正记录，最新生产配置与验收状态见[PHASE_9B_2_VERIFICATION.md](PHASE_9B_2_VERIFICATION.md)。不得用本文件旧两Boss/房量/奖励数量作为当前生产规则。**
+
 基线：`aaefb2e653cdbfa1dd87deb4e46ba5772fdef72c`。开发分支：`codex/phase-9b-multifloor-endurance`。不合并main、不进入后续阶段。
 
 ## 本次审查修正（基于3a18df5）

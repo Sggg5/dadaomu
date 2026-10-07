@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="RelicDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/relics/relic_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/relics/effects/yin_yang_coin_effect.gd" id="2"]
+[resource]
+script = ExtResource("1")
+id = &"yin_yang_coin"
+display_name = "阴阳钱"
+description = "奇偶攻击交替弱化和强化。"
+effect_script = ExtResource("2")

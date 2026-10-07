@@ -44,8 +44,15 @@ func start() -> void:
 
 
 func _summon(count: int) -> void:
+	if finished or not is_instance_valid(boss) or boss.health.is_dead: return
+	var alive: Array[Enemy] = []
+	for actor in summons:
+		if is_instance_valid(actor) and not actor.health.is_dead: alive.append(actor)
+	summons = alive
+	if alive.size() >= 6: return
 	var reserved: Array[Vector2] = [boss.position]
-	for index in range(count):
+	for actor in alive: reserved.append(actor.position)
+	for index in range(mini(count,6-alive.size())):
 		var preferred := boss.position + Vector2.RIGHT.rotated(index * TAU / count) * 110
 		var point := safe_point(preferred, 16, reserved, 100)
 		if not point.is_finite(): continue

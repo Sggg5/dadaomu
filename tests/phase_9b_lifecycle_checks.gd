@@ -4,6 +4,8 @@ var test: SceneTree
 func _init(context: SceneTree) -> void: test = context
 func run() -> void:
 	var session := preload("res://scenes/main/dungeon_test.tscn").instantiate() as DungeonSession
+	session.progressive_relics = false
+	session.tomb = preload("res://tests/fixtures/pre_density_tomb.tres")
 	session.seed_value = 33
 	test.root.add_child(session)
 	test.current_scene = session
@@ -82,9 +84,11 @@ func run() -> void:
 
 	# 一层普通终点墓也通过同一生产生命周期完成。
 	session = preload("res://scenes/main/dungeon_test.tscn").instantiate() as DungeonSession
+	session.progressive_relics = false
+	session.tomb = preload("res://tests/fixtures/pre_density_tomb.tres")
 	var one := TombDefinition.new()
 	one.id = &"ONE_FLOOR"
-	one.floors.assign([preload("res://data/tombs/default_tomb.tres").floor_at(1)])
+	one.floors.assign([preload("res://tests/fixtures/pre_density_tomb.tres").floor_at(1)])
 	session.tomb = one
 	session.seed_value = 33
 	session.exploration_enabled = false

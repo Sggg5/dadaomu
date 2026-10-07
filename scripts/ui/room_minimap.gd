@@ -46,6 +46,7 @@ func _draw() -> void:
 			RoomDefinition.Type.START: marker = "S"
 			RoomDefinition.Type.BOSS: marker = "B"
 			RoomDefinition.Type.ANTIQUE: marker = "A"
+			RoomDefinition.Type.RELIC: marker = "I"
 		if marker.is_empty() and room.room_id == _layout.terminal_id: marker = "T"
 		if not marker.is_empty():
 			var font := ThemeDB.fallback_font

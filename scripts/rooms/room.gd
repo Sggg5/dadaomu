@@ -71,12 +71,12 @@ func enter() -> void:
 		_create_cache()
 		if is_terminal: _create_terminal_exit()
 		return
-	if room_type not in [RoomDefinition.Type.COMBAT, RoomDefinition.Type.START, RoomDefinition.Type.BOSS, RoomDefinition.Type.ANTIQUE, RoomDefinition.Type.TRAP, RoomDefinition.Type.SECRET]:
+	if room_type not in [RoomDefinition.Type.COMBAT, RoomDefinition.Type.START, RoomDefinition.Type.BOSS, RoomDefinition.Type.ANTIQUE, RoomDefinition.Type.TRAP, RoomDefinition.Type.SECRET, RoomDefinition.Type.RELIC]:
 		push_error("This room type has no entry policy yet")
 		return
 	room_state.activate()
 	# START安全清场；ANTIQUE安全开门并放古董；正式BOSS由数据场景装配。
-	if room_type in [RoomDefinition.Type.START, RoomDefinition.Type.ANTIQUE, RoomDefinition.Type.TRAP, RoomDefinition.Type.SECRET]:
+	if room_type in [RoomDefinition.Type.START, RoomDefinition.Type.ANTIQUE, RoomDefinition.Type.TRAP, RoomDefinition.Type.SECRET, RoomDefinition.Type.RELIC]:
 		_on_all_defeated()
 		_create_antique()
 		return
@@ -97,7 +97,12 @@ func enter() -> void:
 
 func get_entry_position(side: int = -1) -> Vector2:
 	if side < 0:
-		return ROOM_RECT.get_center()
+		# 安全房也会抽到障碍模板，出生点不能落进中央障碍。
+		var center := ROOM_RECT.get_center()
+		for offset in [Vector2.ZERO,Vector2(0,-112),Vector2(256,0),Vector2(-256,0),Vector2(0,112)]:
+			var point: Vector2 = center+offset
+			if definition.obstacles.all(func(rect: Rect2) -> bool: return not rect.grow(20).has_point(point)): return point
+		return center
 	return _door_position(side) - Vector2.UP.rotated(side * PI * 0.5) * 64.0
 
 

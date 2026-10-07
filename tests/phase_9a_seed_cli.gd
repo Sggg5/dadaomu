@@ -17,6 +17,7 @@ func run() -> void:
 	var hub := "--mode=hub" in OS.get_cmdline_user_args()
 	if not hub:
 		var session := preload("res://scenes/main/dungeon_test.tscn").instantiate() as DungeonSession
+		session.progressive_relics = false
 		session.tomb = preload("res://tests/fixtures/legacy_two_floor_tomb.tres")
 		root.add_child(session)
 		await frames(3)
@@ -25,6 +26,7 @@ func run() -> void:
 		quit(0 if valid else 1)
 		return
 	flow = preload("res://scenes/main/game_flow.tscn").instantiate() as GameFlow
+	flow.progressive_relics = false
 	flow.tomb = preload("res://tests/fixtures/legacy_two_floor_tomb.tres")
 	flow.profile_store = MuseumProfileStore.in_memory()
 	root.add_child(flow)

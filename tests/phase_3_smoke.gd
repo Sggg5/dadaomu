@@ -185,6 +185,7 @@ func _run() -> void:
 		quit(1)
 		return
 	session = SESSION_SCENE.instantiate() as DungeonSession
+	session.progressive_relics = false
 	session.tomb = preload("res://tests/fixtures/legacy_two_floor_tomb.tres")
 	# 历史回归使用原主图夹具；Phase9A单独覆盖正式探索入口。
 	session.exploration_enabled = false

@@ -3,7 +3,7 @@ extends RefCounted
 var test: SceneTree
 var completed: bool = false
 var picked: Array[StringName] = []
-var pool: RelicPool = RelicRewardService.DEFAULT_POOL
+var pool: RelicPool = RelicRewardService.LEGACY_POOL
 var shot_attempts: int = 32
 var avoid_optional_rooms: bool = false
 
