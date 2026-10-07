@@ -47,13 +47,18 @@ func run() -> void:
 		for rounds in range(100):
 			if first.finished: break
 			var old := first.current_bid
+			var previous_bidder := first.highest_bidder
 			first.next_round()
 			second.next_round()
 			if first.current_bid > old:
+				test.check(first.highest_bidder != previous_bidder,"Successive bids must come from competing bidders, never self-raise")
 				test.check(first.current_bid <= first.budgets[first.highest_bidder] and first.current_bid == (first.starting_bid if old == 0 else old+first.bid_step),"One legal incremental quote within winning NPC budget")
 		test.check(first.finished and first.history == second.history and first.result.sold == second.result.sold and first.result.final_bid == second.result.final_bid,"Bounded same-input full auction result/history deterministic seed%d" % seed)
 		var final_history := first.history.duplicate()
-		test.check(first.budgets.all(func(budget: int) -> bool: return budget < first.current_bid+first.bid_step),"Auction finishes only when all three budgets are below next quote")
+		var competition_finished: bool = true
+		for index in range(first.budgets.size()):
+			if index != first.highest_bidder and first.budgets[index] >= first.current_bid+first.bid_step: competition_finished = false
+		test.check(competition_finished,"Auction ends when no other bidder can beat current leader")
 		test.check(not first.next_round() and first.history == final_history,"Completed bidding cannot emit another quote")
 		for mode in range(3):
 			var bidding := AuctionBidding.new()
@@ -80,6 +85,20 @@ func run() -> void:
 			if comparison.result.sold: common_rates[mode] += 1
 	test.check(common_rates[0] > common_rates[1] and common_rates[1] > common_rates[2],"COMMON fixed sample demonstrates strict LOW>NORMAL>HIGH sale rate differences")
 	print("[8D common rates] LOW=%d NORMAL=%d HIGH=%d /512" % common_rates)
+	var lone := AuctionBidding.new()
+	lone.configure(replacement,definition,5,1,0)
+	lone.budgets = [lone.starting_bid+10*lone.bid_step,0,0]
+	test.check(lone.next_round() and lone.highest_bidder == 0 and lone.current_bid == lone.starting_bid,"Single eligible bidder wins starting quote despite surplus budget")
+	test.check(not lone.next_round() and lone.finished and lone.result.final_bid == lone.starting_bid,"Single remaining bidder cannot inflate its own bid to reserve")
+	var competing := AuctionBidding.new()
+	competing.configure(replacement,definition,5,1,0)
+	competing.budgets = [competing.starting_bid+10*competing.bid_step,competing.starting_bid+competing.bid_step,0]
+	competing.next_round()
+	competing.next_round()
+	test.check(competing.highest_bidder == 1,"Another eligible bidder genuinely raises price")
+	competing.next_round()
+	test.check(competing.highest_bidder == 0 and competing.current_bid == competing.starting_bid+2*competing.bid_step,"Former leader may counterbid after rival overtakes it")
+	test.check(not competing.next_round() and competing.finished,"Competition ends without further self-raising")
 	# Settlement unit edge: only the pending ID admits one transaction, even under repeated calls.
 	state.consign(replacement.instance_id,0)
 	var bidding := AuctionBidding.new()

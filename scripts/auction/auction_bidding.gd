@@ -30,6 +30,8 @@ func next_round() -> bool:
 	var next_price := starting_bid if current_bid == 0 else current_bid+bid_step
 	for offset in range(budgets.size()):
 		var index := (_cursor+offset)%budgets.size()
+		# 领先者没有竞争报价时不应自己抬价，即使其预算仍有余量。
+		if index == highest_bidder: continue
 		if budgets[index] < next_price:
 			if not _withdrawn.has(index):
 				_withdrawn[index] = true
