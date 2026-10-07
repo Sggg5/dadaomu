@@ -21,7 +21,10 @@ func _tick_ai(delta:float)->void:
 		State.BURIED:
 			velocity=Vector2.ZERO
 			if timer<=0:
-				landing=EncounterGeometry.safe_point(encounter_room,target.position+target.velocity*0.45,72)
+				# Player/Enemy可能不与Room同父节点；世界预测先转换为Room局部坐标。
+				var predicted:=encounter_room.to_local(target.global_position+target.velocity*0.45)
+				var origin:=encounter_room.to_local(global_position)
+				landing=EncounterGeometry.safe_reachable_point(encounter_room,predicted,origin,72,0,get_rid())
 				if not landing.is_finite():state=State.SURFACE;timer=2;$CollisionShape2D.set_deferred("disabled",false);return
 				marker=encounter_room.hazards.blast(landing,0.8,52,definition.contact_damage,weakref(self))
 				state=State.WARNING
@@ -29,7 +32,7 @@ func _tick_ai(delta:float)->void:
 		State.WARNING:
 			velocity=Vector2.ZERO
 			if timer<=0:
-				position=landing
+				global_position=encounter_room.to_global(landing)
 				state=State.SURFACE
 				timer=3.0
 				eruptions+=1

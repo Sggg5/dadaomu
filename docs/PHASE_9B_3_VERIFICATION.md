@@ -2,7 +2,7 @@
 
 ## 范围与状态
 
-基准 a10ceb39517321cabad2d6a509a9eeb9f1b129e3；当前 codex/phase-9b-multifloor-endurance。代码、自动/图形验证通过，人工三局试玩待完成；不合并main，不进入后续阶段。9B.2乐趣反馈保留，但普通怪威胁不足，因此不能把旧阶段或自动驾驶封为最终手感验收。
+基准 a10ceb39517321cabad2d6a509a9eeb9f1b129e3；当前 codex/phase-9b-multifloor-endurance。代码、自动/图形验证通过，三局人工结果已记录，潜地穿墙修复后的人工复验待完成；不合并main，不进入后续阶段。9B.2乐趣反馈保留，但普通怪威胁不足，因此不能把旧阶段或自动驾驶封为最终手感验收。
 
 ## 敌人与Encounter
 
@@ -58,7 +58,7 @@ Combat只统计主图普通战斗节点，精英是每房至多一例，环境�
 
 ## 实际流程与边界验证
 
-真实GameFlow、内存隔离Profile、Campaign52/Run33：博物馆情报板E→五层。每层真实Door、活跃AI、Player武器、E领取遗物房/清房/Boss底座，真实古董E和满包Tab/Delete换货；击败五Boss，第一/第二层Boss间F2+15、第四层+20规则原样，最终出口E→结算→E回Day2。
+以下表格保留960a362首次验证的历史驾驶记录；本次修复后重跑数据见文末。真实GameFlow、内存隔离Profile、Campaign52/Run33：博物馆情报板E→五层。每层真实Door、活跃AI、Player武器、E领取遗物房/清房/Boss底座，真实古董E和满包Tab/Delete换货；击败五Boss，第一/第二层Boss间F2+15、第四层+20规则原样，最终出口E→结算→E回Day2。
 
 | 层 | 含可选房实际房数 | HP | 遗物 | 累计Combat | 背包估值 |
 |---|---:|---:|---:|---:|---:|
@@ -97,9 +97,9 @@ Combat只统计主图普通战斗节点，精英是每房至多一例，环境�
 | 9a | 10510 | 0 |
 | 9b | 30753 | 0 |
 | 9b2 | 4842 | 0 |
-| 9b3 | 29049 | 0 |
+| 9b3 | 29072 | 0 |
 
-总计 **80,484项，0失败**。9B.3 graphical **29,049项，0失败**，截图已检查（潜地/弩手/悬棺预警、组合和五层Build），无Script Error/ERROR。导入与正式入口隔离Profile启动退出0。Profile VERSION4，没有正式用户存档写入。
+总计 **80,507项，0失败**。9B.3 graphical **29,072项，0失败**，截图已检查（潜地/弩手/悬棺预警、组合和五层Build），无Script Error/ERROR。导入与正式入口隔离Profile启动退出0。Profile VERSION4，没有正式用户存档写入。
 
 PowerShell复现（$godot为本机Godot4.6.2 console路径）：
 
@@ -116,8 +116,24 @@ foreach ($phase in @('1','2','3','4','5a','5b','6','6_5','7a','7b','8a','8b','8c
 
 新增六普通+三精英脚本/场景/Definition、分裂碎尸资源、30个variety RoomDefinition、四个Encounter模块、16Effect/Definition、BriefSlow、RewardProfile及三个权重资源，phase_9b3五组专项与threat驾驶。修改Enemy基础数据接口、Spawner死亡记录、Room挂Hazards、Generator权重模板选择、AttackRequest/Projectile/Player/Runtime、RewardPlan/Service、Session/GameFlow装配、开发tooltip、生产五层模板池。BossEncounter只增加Room引用注入，不改BossAI。更新四份主文档和本验收文档，旧测试只改明确历史夹具选择。
 
-## 已知限制与人工待验收
+## 已知限制与修复后人工待复验
 
 几何占位美术，静态棺椁不可破坏；没有新Boss、词缀、难度选择或永久战斗成长。役割和power_band只读开发元数据；没有DPS动态调怪。二选一只预留API。新敌人/组合/Build实际强弱、五层疲劳和两次回血是否足够，自动测试无法决定。
 
-正式GUI使用隔离人工档，从Museum下墓，禁止F2添加遗物。请至少三局到F2/F3：一局正常移动，一局关注潜地/弩手/爆尸，一局较高Build关注精英/空间。反馈新敌人辨识、预警、优先级、高Build走位、无解伤害、普通房疲劳、死亡原因和Build差异。人工通过前不宣称体验目标完成；不合并main，不进入下一阶段。
+三局人工反馈已记录：Run1高Build按住攻击清屏并通五层；Run2到F4主动撤离；Run3死亡且古董全部丢失。已出现完整通关、撤离、死亡三种结果，本次没有证据要求整体平衡调整。正式GUI使用隔离人工档，修复后只需重点复验中央棺椁/实体墙的潜地落点与开放空间预测；不合并main，不进入下一阶段。
+
+## 人工试玩后Bug修正：潜地落点可达性
+
+基准960a3628706ec084ce60598623592a2316aa67fe，继续当前9B分支。只改潜地尸和独立几何查询；不改RewardPlan VERSION3、36遗物/CORE/profile/13来源、敌人总体数量、其他敌人、三精英、30模板、四环境、五Boss、RestPoint、80HP、F2+15/F4+20、8格及古董经济。
+
+**原因**：safe_point仅验证落点边界、障碍clearance和玩家距离，随后直接position=landing；合法落点不等于从当前潜地区域可达，因此会从棺椁/隔离墙一侧跳到另一侧。
+
+**修复**：新增EncounterGeometry.safe_reachable_point。仍按离预测点最近排序有限候选（首选+原32px网格），先验证原合法性，再将Room-local origin/candidate分别to_global，用layer1实体PhysicsRay验证，允许排除自身RID。被挡继续搜索替代点；只有全部失败才返回INF。潜地尸将Player世界位置+velocity×0.45转换到Room-local，origin也由自身global_position转换，0.8s圈按Room-local保存，出土使用Room.to_global写global_position。父节点偏移不再泄露到物理射线/落点。原2s初始表面、0.6s潜地、0.8s预警、3s表面追击及伤害均保留；地下仍仅8px土包，不画完整实体。
+
+**新增23断言**：真实中央Rect2(604,312,72,112)挡首选而替代点ray无碰撞/保留72px clearance；Room与Spawner偏移重复验证；完整竖墙Rect2(604,144,72,448)只能同侧出土；开放空间移动预测精确、前进超过300px、0.8s预警和表面碰撞恢复；无合法点回退SURFACE、重置2s且可受伤；地下及预警期间死亡不再生成/保留marker；实际RoomController切房不留marker/actor/延迟伤害。原死亡/卸载断言继续保留。
+
+完整流程初轮旧自动驾驶在第三层死亡，57个后续断言连带失败；已修正测试驾驶跳过已潜地/即将潜地目标，增加最多0.3s移动提前量。只修改测试瞄准，不改攻击数值、AI或血量，不删除断言，不直接杀怪，不注入奖励。修复后真实Museum→五层→五Boss→全部E奖励→最终出口→Day2回馆再通过；本次自动驾驶F1～F5各80HP，遗物3/5/8/11/13，不能据此推断真人难度。上文17.9HP表为旧版本真实历史记录。
+
+**最终结果**：Phase1～9B.3 80,507项0失败；9B.3 headless与graphical各29,072项0失败；独立障碍图形23项0失败。中央障碍、完整墙、开放预测截图已检查；全日志无Script Error/ERROR/泄漏报告。导入与正式入口隔离档启动退出0。日志/PNG/测试入口脚本位于ignored logs，不提交用户存档或临时文件。
+
+本次文件：scripts/rooms/encounter_geometry.gd、scripts/enemies/burrowing_corpse.gd；新增tests/phase_9b3_burrow_reachability_checks.gd及uid，修改phase_9b3_smoke.gd注册与threat_fight_driver.gd测试驾驶；更新本验收文档。当前分支commit/push后重开正式入口，等待穿墙修复人工复验，停止。

@@ -10,9 +10,12 @@ func fight() -> void:
 			continue
 		if world.player.health.is_dead:break
 		if cycle%200==0:print('[AI trace] ',world.current_id,' HP=',world.player.health.current_hp,' actors=',actors.map(func(a:Enemy)->String:return str(a.definition.id)+':'+str(a.health.current_hp)))
+		# 不能继续向即将潜地/已经地下的旧实体位置浪费弹丸；先打仍可命中的压力源。
 		var enemy:=actors[0] as Enemy
 		for actor in actors:
-			if actor is BurrowingCorpse and actor.state==BurrowingCorpse.State.SURFACE:enemy=actor;break
+			if actor is BurrowingCorpse and (actor.state!=BurrowingCorpse.State.SURFACE or actor.timer<0.4):continue
+			enemy=actor
+			break
 		await shoot_safe(enemy)
 	print("[threat fight] ",world.current_id," hp=",world.player.health.current_hp," remaining=",world.current_room.enemy_spawner.get_remaining()," build=",world.player.relics.inventory.ids())
 	test.check(not world.player.health.is_dead and world.current_room.room_state.status==RoomState.Status.CLEARED,"Density room including dynamic summons really clears")
@@ -46,7 +49,10 @@ func shoot_safe(enemy:Enemy) -> void:
 			if score>best:best=score;safest=point
 	world.player.position=safest
 	world.player.velocity=Vector2.ZERO
-	world.player.weapon.try_attack(safest,(enemy.position-safest).normalized(),world.player.stats)
+	# 活跃移动目标做短距离提前量；只改变自动驾驶瞄准，不改武器/敌人数值。
+	var travel:=minf(0.3,safest.distance_to(enemy.position)/world.player.stats.projectile_speed)
+	var aim_point:=enemy.position+enemy.velocity*travel
+	world.player.weapon.try_attack(safest,(aim_point-safest).normalized(),world.player.stats)
 	await test.frames(3)
 func boss_fight() -> void:
 	var room:Room=test.session.world.current_room
