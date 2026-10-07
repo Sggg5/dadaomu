@@ -8,6 +8,8 @@ signal killed
 @export var definition: EnemyDefinition
 @onready var health: Health = $Health
 
+var encounter_room: Room
+var movement_modifiers: Dictionary[int,float] = {}
 var target: Player
 var projectile_parent: Node2D
 var telegraphing: bool = false
@@ -124,7 +126,9 @@ func move_actor(direction: Vector2, delta: float) -> void:
 			_avoid_direction = tangent
 			_avoid_remaining = definition.avoidance_hold_time
 			movement = tangent
-	velocity = movement * definition.move_speed
+	var factor := 1.0
+	for value in movement_modifiers.values(): factor = minf(factor,value)
+	velocity = movement * definition.move_speed * factor
 	move_and_slide()
 
 
@@ -139,6 +143,7 @@ func _draw() -> void:
 	elif activation_remaining > 0.0:
 		color = color.lightened(0.35)
 	_draw_body(color)
+	if definition.elite: draw_arc(Vector2.ZERO,26,0,TAU,32,Color("efd477"),3)
 	if telegraphing:
 		draw_arc(Vector2.ZERO, 23, 0, TAU, 24, Color("ff784f"), 2)
 	if is_instance_valid(health) and not dying:
@@ -148,3 +153,7 @@ func _draw() -> void:
 
 func _draw_body(color: Color) -> void:
 	draw_circle(Vector2.ZERO, 14, color)
+
+
+func death_spawns() -> Array[EnemySpawnDefinition]:
+	return []

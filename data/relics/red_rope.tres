@@ -7,3 +7,6 @@ id = &"red_rope"
 display_name = "红绳结"
 description = "每六次攻击释放八方向弱环弹。"
 effect_script = ExtResource("2")
+design_role = 0
+power_band = 4
+archetype_tags = Array[StringName]([&"PROJECTILE"])

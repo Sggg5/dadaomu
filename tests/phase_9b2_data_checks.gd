@@ -1,5 +1,5 @@
 extends RefCounted
-const TOMB: TombDefinition = preload("res://data/tombs/default_tomb.tres")
+const TOMB: TombDefinition = preload("res://tests/fixtures/pre_threat_tomb.tres")
 var test: SceneTree
 func _init(context: SceneTree) -> void: test=context
 func run() -> void:
@@ -37,10 +37,10 @@ func run() -> void:
 		print("[9B.2 map average] F%d base_rooms=%.3f" % [index+1,map_sums[index]/100])
 		if index>0 and index<4:test.check(map_sums[index]>map_sums[index-1],"Map scale expands F1 through F4")
 	test.check(map_sums[4]<map_sums[3],"F5 contracts relative to F4 without becoming a small map")
-	test.check(template_ids.size()>=15 and RelicRewardService.PRODUCTION_POOL.relics.size()>=20,"Fifteen battle templates and twenty formal relics")
+	test.check(template_ids.size()>=15 and RelicRewardService.PRE_VARIATION_POOL.relics.size()>=20,"Fifteen battle templates and twenty formal relics")
 	for seed_value in range(100):
-		var plan := RelicRewardPlan.build(seed_value,5,RelicRewardService.PRODUCTION_POOL)
-		var repeated := RelicRewardPlan.build(seed_value,5,RelicRewardService.PRODUCTION_POOL)
+		var plan := RelicRewardPlan.build_uniform(seed_value,5,RelicRewardService.PRE_VARIATION_POOL)
+		var repeated := RelicRewardPlan.build_uniform(seed_value,5,RelicRewardService.PRE_VARIATION_POOL)
 		var ids := {}
 		for source in plan.assigned:
 			ids[plan.assigned[source].id]=true

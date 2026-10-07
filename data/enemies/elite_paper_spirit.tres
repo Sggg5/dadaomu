@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/enemies/enemy_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"elite_paper_spirit"
+display_name = "精英纸人"
+max_hp = 55.0
+move_speed = 110.0
+contact_damage = 8.0
+attack_cooldown = 1.7
+windup_time = 0.55
+body_color = Color(0.9,0.82,0.61,1)
+roles = 34
+family_id = &"paper_spirit"
+response_hint = "从散射间隙换位"
+elite = true

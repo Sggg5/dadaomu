@@ -3,6 +3,8 @@ var test: SceneTree
 func _init(context: SceneTree) -> void:test=context
 func run() -> void:
 	var session := preload("res://scenes/main/dungeon_test.tscn").instantiate() as DungeonSession
+	session.tomb=preload("res://tests/fixtures/pre_threat_tomb.tres")
+	session.profiled_relic_rewards=false
 	session.seed_value=33
 	test.root.add_child(session)
 	test.session=session
@@ -12,7 +14,7 @@ func run() -> void:
 	for count in [5,8,12]:
 		session.world.player.relics.inventory.clear()
 		for index in range(count):
-			for data: Variant in RelicRewardService.PRODUCTION_POOL.relics:
+			for data: Variant in RelicRewardService.PRE_VARIATION_POOL.relics:
 				if data.id==ids[index]:test.check(session.world.player.relics.inventory.add(data),"Independent effect installs")
 		var peak := 0
 		for attack in range(30):
@@ -33,7 +35,7 @@ func run() -> void:
 		session.world.current_room.discard_projectiles()
 		await test.frames(2)
 	session.world.player.relics.inventory.clear()
-	for data: Variant in RelicRewardService.PRODUCTION_POOL.relics: session.world.player.relics.inventory.add(data)
+	for data: Variant in RelicRewardService.PRE_VARIATION_POOL.relics: session.world.player.relics.inventory.add(data)
 	var world:=session.world
 	world._switch_room(world.layout.rooms[world.layout.start_id].neighbors.values()[0],-1)
 	# 当前房可安全，单项装配一个耐久靶，不以此替代完整实战流程。

@@ -7,3 +7,6 @@ id = &"soul_bell"
 display_name = "招魂铃"
 description = "击杀向另一目标释放弱追踪魂弹，每房最多十二次。"
 effect_script = ExtResource("2")
+design_role = 0
+power_band = 3
+archetype_tags = Array[StringName]([&"KILL_TRIGGER"])

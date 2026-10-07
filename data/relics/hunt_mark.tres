@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/relics/relic_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/relics/effects/hunt_mark_effect.gd" id="2"]
+[resource]
+script = ExtResource("1")
+id = &"hunt_mark"
+display_name = "追猎印"
+description = "击杀后下次攻击强化，未击杀时无额外收益。"
+effect_script = ExtResource("2")
+design_role = 1
+power_band = 2
+archetype_tags = Array[StringName]([&"KILL_TRIGGER"])

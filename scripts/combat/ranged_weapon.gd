@@ -25,6 +25,7 @@ func try_attack(origin: Vector2, direction: Vector2, stats: PlayerStats) -> bool
 	var requests: Array[AttackRequest] = [request]
 	if attack_modifier.is_valid():
 		requests = attack_modifier.call(request)
+	if not requests.is_empty(): cooldown_remaining *= clampf(requests[0].cooldown_multiplier,0.5,2.0)
 	for modified in requests:
 		attack_requested.emit(modified)
 	return true

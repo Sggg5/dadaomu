@@ -1,6 +1,16 @@
 # 项目开发计划
 
-## Phase 9B.2：肉鸽密度、每层Boss与Build加速（当前实现）
+## Phase 9B.3：敌人威胁、组合战斗与Build波动（当前实现，人工验收待完成）
+
+基于 `a10ceb39517321cabad2d6a509a9eeb9f1b129e3`，继续 `codex/phase-9b-multifloor-endurance`。9B.2 的 Build 乐趣已获得反馈，普通敌人威胁不足，本轮用功能性敌人、组合和空间压力调整。完成代码验证后只 commit/push 本分支，不合并 main、不进入后续阶段。
+
+普通敌人12类：保留尸蟞/枪手/尸犬/披甲尸/纸人/母体，新增潜地尸、胀爆尸、分裂尸、墓穴弩手、腐尸和悬棺尸。三种独立精英变体：尸犬侧波、纸人死亡慢环、母体临终两虫；不修改共享 EnemyDefinition。30个生产模板按楼层独立池加权选择，威胁1～5只作开发数据/tooltip；保留轻松房。地刺/箭孔有预警和周期，石棺复用静态障碍，积水仅0.75移动倍率。临时危险归Room管理，死亡/卸载取消；死亡子体先计pending再延迟生成，最多24，总清房数包含子体。
+
+正式遗物池36件，新增16个独立Effect，按CORE/SYNERGY/UTILITY/TRADEOFF和只读power_band记录。RelicRewardPlan VERSION3按固定source与独立RNG无放回预分配；遗物房40/35/15/10、Boss10/45/35/10、里程碑10/30/30/30为基础角色权重，叠加温和Run archetype和核心数量软倾向，不查询DPS/背包/博物馆。最低两个核心，通常2～6个，允许偶发更高；power proxy不等同实战强度。每层遗物房+Boss、4/12/24清房里程碑总上限仍13；choices只预留互斥选项API，生产仍单件，不自动补发。跳过来源不影响后续，R复现、N重建。
+
+冻结五Boss AI/数值、Tier3上限、80HP、8格、F2+15/F4+20、每层1古董房+1Cache、古董质量曲线、9A风险、Profile VERSION4与跨日Seed。48弹/单攻、256弹/房、四污水池、十二危险区域、弱引用/限寿命/卸载取消继续约束。历史9B.2测试显式pre_threat_tomb/pre_variation_relic_pool/build_uniform夹具，保留原断言；生产专项单独验证。详见 `docs/PHASE_9B_3_VERIFICATION.md`；自动驾驶通过不代表人工难度通过。
+
+## Phase 9B.2：肉鸽密度、每层Boss与Build加速（历史版本）
 
 基于`b668fe37e2adc915fe610097e205df755ec5822a`，继续`codex/phase-9b-multifloor-endurance`。9B初版工程通过但人工手感未通过：房间/怪物/道具偏少、每层需要Boss。本次按用户授权调整，不封版旧9B，不合并main、不进入后续阶段；以下旧章节为历史。
 

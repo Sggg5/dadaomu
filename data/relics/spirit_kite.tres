@@ -9,3 +9,6 @@ description = "有效非致命受伤后，下一攻击追加±15°侧弹并消�
 rarity = 1
 effect_script = ExtResource("2")
 parameters = {"angle_degrees": 15.0}
+design_role = 2
+power_band = 2
+archetype_tags = Array[StringName]([&"MIXED"])

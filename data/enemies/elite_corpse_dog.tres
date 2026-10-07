@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/enemies/enemy_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"elite_corpse_dog"
+display_name = "精英尸犬"
+max_hp = 40.0
+move_speed = 220.0
+contact_damage = 12.0
+attack_cooldown = 0.8
+windup_time = 0.32
+body_color = Color(0.65,0.38,0.27,1)
+roles = 4
+family_id = &"corpse_dog"
+response_hint = "读前摇避开冲线"
+elite = true

@@ -6,6 +6,7 @@ const DEFAULT_POOL: RelicPool = preload("res://data/relics/formal_pool.tres")
 const LEGACY_POOL: RelicPool = preload("res://tests/fixtures/legacy_relic_pool.tres")
 const LEGACY_THRESHOLDS: Array[int] = [2,4,7]
 const THRESHOLDS: Array[int] = [4,12,24]
+const PRE_VARIATION_POOL: RelicPool = preload("res://tests/fixtures/pre_variation_relic_pool.tres")
 const PRODUCTION_POOL: RelicPool = DEFAULT_POOL
 const PRODUCTION_THRESHOLDS: Array[int] = THRESHOLDS
 var plan: RelicRewardPlan

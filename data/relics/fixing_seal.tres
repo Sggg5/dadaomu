@@ -7,3 +7,6 @@ id = &"fixing_seal"
 display_name = "定尸符"
 description = "连续命中Boss六次后强化下次攻击，最高五层充能。"
 effect_script = ExtResource("2")
+design_role = 1
+power_band = 2
+archetype_tags = Array[StringName]([&"MIXED"])

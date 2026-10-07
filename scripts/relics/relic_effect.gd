@@ -49,3 +49,8 @@ func _on_install() -> void:
 
 func _on_uninstall() -> void:
 	pass
+
+
+func tick(_delta: float) -> void: pass
+func movement_multiplier() -> float: return 1.0
+func received_damage(amount: float) -> float: return amount

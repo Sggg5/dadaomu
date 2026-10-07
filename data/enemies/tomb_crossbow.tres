@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/enemies/enemy_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"tomb_crossbow"
+family_id = &"tomb_crossbow"
+display_name = "墓弩手"
+max_hp = 55.0
+move_speed = 30.0
+contact_damage = 20.0
+attack_cooldown = 2.4
+windup_time = 0.8
+roles = 130
+response_hint = "预警线出现后离开直线"
+body_color = Color(0.65,0.58,0.4,1)

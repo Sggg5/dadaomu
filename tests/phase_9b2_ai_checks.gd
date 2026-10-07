@@ -3,6 +3,8 @@ var test:SceneTree
 func _init(context:SceneTree)->void:test=context
 func run()->void:
 	var session:=preload("res://scenes/main/dungeon_test.tscn").instantiate() as DungeonSession
+	session.tomb=preload("res://tests/fixtures/pre_threat_tomb.tres")
+	session.profiled_relic_rewards=false
 	session.seed_value=33
 	test.root.add_child(session)
 	test.session=session
@@ -56,6 +58,8 @@ func run()->void:
 	await test.frames(3)
 	for number in [1,3,4]:
 		session=preload("res://scenes/main/dungeon_test.tscn").instantiate() as DungeonSession
+		session.tomb=preload("res://tests/fixtures/pre_threat_tomb.tres")
+		session.profiled_relic_rewards=false
 		session.seed_value=33
 		test.root.add_child(session)
 		test.session=session

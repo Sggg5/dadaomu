@@ -9,3 +9,6 @@ description = "命中时爆炸：半径72，伤害为本枚弹丸的50%。"
 rarity = 1
 effect_script = ExtResource("2")
 parameters = {"radius": 72.0, "damage_multiplier": 0.5}
+design_role = 0
+power_band = 4
+archetype_tags = Array[StringName]([&"EXPLOSION"])

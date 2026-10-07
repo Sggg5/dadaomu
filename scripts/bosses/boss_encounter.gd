@@ -37,6 +37,7 @@ func start() -> void:
 	boss.position = safe_point(Room.ROOM_RECT.get_center(), 34, [], 120)
 	assert(boss.position.is_finite(), "Boss requires a safe point")
 	boss.configure_spawn(room.combat_target, room.projectiles, definition, room.difficulty)
+	boss.encounter_room=room
 	boss.killed.connect(_on_defeated)
 	if boss.has_signal("summon_requested"): boss.connect("summon_requested", _summon)
 	add_child(boss)

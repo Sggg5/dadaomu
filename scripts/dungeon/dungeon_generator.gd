@@ -35,7 +35,7 @@ static func generate(seed_value: int, config: DungeonConfig) -> DungeonLayout:
 		_append_room(layout, edge["parent"], edge["direction"])
 	_assign_special_rooms(layout, config, rng)
 	for room_id in layout.ordered_ids():
-		layout.rooms[room_id].definition = config.templates[rng.randi_range(0, config.templates.size() - 1)]
+		layout.rooms[room_id].definition = _template(config,rng)
 	return layout
 
 
@@ -97,3 +97,14 @@ static func _assign_special_rooms(layout: DungeonLayout, config: DungeonConfig, 
 		assert(not relic_candidates.is_empty())
 		layout.relic_id = relic_candidates[rng.randi_range(0, relic_candidates.size()-1)]
 		layout.rooms[layout.relic_id].room_type = RoomDefinition.Type.RELIC
+
+
+static func _template(config: DungeonConfig,rng: RandomNumberGenerator) -> RoomDefinition:
+	var total:=0
+	for template in config.templates: total+=template.selection_weight
+	# All legacy weights=1 retain the exact former randi_range draw and template index.
+	var roll:=rng.randi_range(0,total-1)
+	for template in config.templates:
+		roll-=template.selection_weight
+		if roll<0:return template
+	return config.templates.back()

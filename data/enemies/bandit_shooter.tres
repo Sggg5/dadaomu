@@ -20,3 +20,6 @@ projectile_lifetime = 3.0
 preferred_distance = 240.0
 distance_tolerance = 40.0
 minimum_fire_distance = 90.0
+roles = 2
+family_id = &"bandit_shooter"
+response_hint = "横向躲定向枪弹"

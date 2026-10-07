@@ -7,3 +7,6 @@ id = &"bagua_mirror"
 display_name = "八卦镜"
 description = "每四次攻击向背后追加弹丸。"
 effect_script = ExtResource("2")
+design_role = 1
+power_band = 3
+archetype_tags = Array[StringName]([&"PROJECTILE"])

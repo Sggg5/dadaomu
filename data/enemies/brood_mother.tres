@@ -10,3 +10,6 @@ contact_damage = 5.0
 attack_cooldown = 4.0
 windup_time = 0.7
 body_color = Color(0.51,0.51,0.23,1)
+roles = 144
+family_id = &"brood_mother"
+response_hint = "优先清除召唤源"

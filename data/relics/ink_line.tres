@@ -9,3 +9,6 @@ description = "命中回扫起点到命中点的墨线，宽24，其他敌人受
 rarity = 1
 effect_script = ExtResource("2")
 parameters = {"width": 24.0, "damage": 6.0, "duration": 0.3}
+design_role = 1
+power_band = 3
+archetype_tags = Array[StringName]([&"PROJECTILE"])

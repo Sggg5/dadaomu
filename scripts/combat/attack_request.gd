@@ -10,6 +10,10 @@ var speed: float
 var lifetime: float
 var pierce_count: int = 0
 var projectile_scale: float = 1.0
+var cooldown_multiplier: float = 1.0
+var bounce_count: int = 0
+var orbit_owner: WeakRef
+var orbit_time: float = 0
 var homing_target: WeakRef
 var homing_turn_rate: float = 0
 var tags: Array[StringName] = []
@@ -24,6 +28,10 @@ func copy() -> AttackRequest:
 	result.lifetime = lifetime
 	result.pierce_count = pierce_count
 	result.projectile_scale = projectile_scale
+	result.cooldown_multiplier = cooldown_multiplier
+	result.bounce_count = bounce_count
+	result.orbit_owner = orbit_owner
+	result.orbit_time = orbit_time
 	result.homing_target = homing_target
 	result.homing_turn_rate = homing_turn_rate
 	result.tags = tags.duplicate()

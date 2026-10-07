@@ -10,6 +10,7 @@ signal died
 @onready var weapon: RangedWeapon = $Weapon
 @onready var relics: RelicRuntime = $Relics
 
+var environment_speed_multiplier: float = 1.0
 var aim_direction: Vector2 = Vector2.RIGHT
 var invulnerability_remaining: float = 0.0
 var mouse_viewport_position: Vector2 = Vector2.ZERO
@@ -36,7 +37,7 @@ func _physics_process(delta: float) -> void:
 		return
 	var input_direction := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	var change_rate := stats.deceleration if input_direction.is_zero_approx() else stats.acceleration
-	velocity = velocity.move_toward(input_direction * stats.move_speed, change_rate * delta)
+	velocity = velocity.move_toward(input_direction * stats.move_speed * environment_speed_multiplier * relics.movement_multiplier(), change_rate * delta)
 	move_and_slide()
 	# 输入采样与物理步分离；每帧转为世界坐标，移动中仍瞄准同一鼠标位置。
 	var mouse_world_position := get_canvas_transform().affine_inverse() * mouse_viewport_position
@@ -52,7 +53,7 @@ func _physics_process(delta: float) -> void:
 func take_damage(amount: float) -> bool:
 	if invulnerability_remaining > 0.0 or health.is_dead:
 		return false
-	if not health.take_damage(amount):
+	if not health.take_damage(relics.received_damage(amount)):
 		return false
 	invulnerability_remaining = stats.hurt_invulnerability
 	queue_redraw()

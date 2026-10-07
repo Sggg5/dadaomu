@@ -8,3 +8,6 @@ display_name = "镇尸钉"
 description = "玩家弹丸穿透一个敌人，撞墙消失。"
 rarity = 0
 effect_script = ExtResource("2")
+design_role = 1
+power_band = 3
+archetype_tags = Array[StringName]([&"PROJECTILE"])

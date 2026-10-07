@@ -82,3 +82,19 @@ func _exit_tree() -> void:
 			health.died.disconnect(shutdown)
 	# RefCounted inventory/effects 回指 runtime，离树时明确断开所有权。
 	inventory = null
+
+
+func _physics_process(delta: float) -> void:
+	if not is_active():return
+	for id in inventory.ids():inventory.get_effect(id).tick(delta)
+
+func movement_multiplier() -> float:
+	if not is_active():return 1.0
+	var factor:=1.0
+	for id in inventory.ids():factor*=inventory.get_effect(id).movement_multiplier()
+	return clampf(factor,0.5,1.5)
+
+func received_damage(amount: float) -> float:
+	if not is_active():return amount
+	for id in inventory.ids():amount=inventory.get_effect(id).received_damage(amount)
+	return maxf(0,amount)

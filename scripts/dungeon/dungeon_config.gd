@@ -27,6 +27,7 @@ func validation_error() -> String:
 	for template in templates:
 		if template == null or template.room_type != RoomDefinition.Type.COMBAT:
 			return "Templates must be valid combat definitions"
+		if template.selection_weight < 1 or template.threat_rating < 1 or template.threat_rating > 5: return "Invalid encounter classification"
 		for entry in template.spawns:
 			if entry == null or entry.enemy_scene == null:
 				return "Template requires valid spawn records"

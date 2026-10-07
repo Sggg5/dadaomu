@@ -7,3 +7,6 @@ id = &"chain_spring"
 display_name = "连珠簧"
 description = "追加一枚主弹，每枚伤害降低。"
 effect_script = ExtResource("2")
+design_role = 3
+power_band = 3
+archetype_tags = Array[StringName]([&"PROJECTILE"])

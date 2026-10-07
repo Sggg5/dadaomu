@@ -1,0 +1,5 @@
+[gd_resource type="Resource" script_class="RelicRewardProfile" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/relics/relic_reward_profile.gd" id="1"]
+[resource]
+script = ExtResource("1")
+role_weights = PackedFloat32Array(10,45,35,10)

@@ -7,3 +7,6 @@ id = &"yin_yang_coin"
 display_name = "阴阳钱"
 description = "奇偶攻击交替弱化和强化。"
 effect_script = ExtResource("2")
+design_role = 3
+power_band = 2
+archetype_tags = Array[StringName]([&"MIXED"])

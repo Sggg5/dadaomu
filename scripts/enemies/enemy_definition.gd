@@ -2,6 +2,12 @@ class_name EnemyDefinition
 extends Resource
 ## 共享只读属性，不包含 AI 类型分支；运行时生命和计时器属于敌人实例。
 
+enum Role { PURSUER=1, RANGED=2, DIVER=4, TANK=8, SPAWNER=16, ZONER=32, AMBUSHER=64, PRIORITY=128 }
+@export_flags("PURSUER","RANGED","DIVER","TANK","SPAWNER","ZONER","AMBUSHER","PRIORITY") var roles: int = 0
+@export var family_id: StringName
+@export var response_hint: String
+@export var elite: bool = false
+@export var parameters: Dictionary = {}
 @export var id: StringName
 @export var display_name: String
 @export_range(1, 1000) var max_hp: float = 50.0

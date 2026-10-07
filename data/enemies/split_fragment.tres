@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/enemies/enemy_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"split_fragment"
+family_id = &"splitting_corpse"
+display_name = "分裂子体"
+max_hp = 20.0
+move_speed = 230.0
+contact_damage = 6.0
+attack_cooldown = 0.7
+windup_time = 0.2
+roles = 1
+response_hint = "快速小单位，无再次分裂"
+body_color = Color(0.68,0.59,0.75,1)

@@ -14,3 +14,6 @@ windup_time = 0.25
 recovery_time = 0.28
 attack_range = 42.0
 body_color = Color(0.596, 0.71, 0.408, 1)
+roles = 1
+family_id = &"scarab"
+response_hint = "保持移动，不贴脸吃咬击"

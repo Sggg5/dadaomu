@@ -6,6 +6,10 @@ extends Resource
 
 enum Type { COMBAT, ANTIQUE, MERCHANT, TRAP, SECRET, BOSS, START, RELIC }
 
+@export_range(1,5) var threat_rating: int = 2
+@export_range(1,100) var selection_weight: int = 1
+@export var coffin_style: bool = false
+@export var environments: Array[EncounterHazardDefinition] = []
 @export var room_id: StringName
 @export var title: String
 @export var room_type: Type = Type.COMBAT

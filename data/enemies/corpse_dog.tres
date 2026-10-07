@@ -10,3 +10,6 @@ contact_damage = 12.0
 attack_cooldown = 0.8
 windup_time = 0.32
 body_color = Color(0.65,0.38,0.27,1)
+roles = 4
+family_id = &"corpse_dog"
+response_hint = "读前摇避开冲线"

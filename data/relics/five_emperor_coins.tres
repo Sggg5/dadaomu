@@ -9,3 +9,6 @@ description = "每次攻击发射±5°双弹，每发伤害为80%。"
 rarity = 0
 effect_script = ExtResource("2")
 parameters = {"angle_degrees": 5.0, "damage_multiplier": 0.8}
+design_role = 0
+power_band = 4
+archetype_tags = Array[StringName]([&"PROJECTILE"])

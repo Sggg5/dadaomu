@@ -34,6 +34,7 @@ var next_floor_number: int = 2
 var next_floor_name: String = ""
 var antique_definition: AntiqueDefinition
 var cache_definition: AntiqueDefinition
+var hazards: EncounterHazards
 var risk_content: TombRiskContent
 var route_warning_sides: Array[int] = []
 var can_exit: Callable
@@ -55,6 +56,9 @@ func configure(data: RoomDefinition, state: RoomState, connected_sides: Array[in
 func _ready() -> void:
 	assert(definition != null and room_state != null, "Room must be configured before entering tree")
 	_build_geometry()
+	hazards=EncounterHazards.new()
+	hazards.room=self
+	add_child(hazards)
 	enemy_spawner.target = combat_target
 	enemy_spawner.difficulty = difficulty
 	enemy_spawner.projectile_parent = projectiles
@@ -135,9 +139,10 @@ func discard_projectiles() -> void:
 
 
 func stop_combat() -> void:
+	if is_instance_valid(hazards):hazards.stop()
 	if is_instance_valid(risk_content): risk_content.stop()
 	if is_instance_valid(boss_encounter): boss_encounter.stop()
-	enemy_spawner.stop_all()
+	enemy_spawner.stop_all(true)
 	discard_projectiles()
 
 
@@ -276,6 +281,11 @@ func _draw() -> void:
 	for rect in _wall_rects:
 		draw_rect(rect, Color("4f4b43"))
 		draw_rect(rect, Color("9b8c68"), false, 2.0)
+	if definition.coffin_style:
+		for rect in definition.obstacles:
+			draw_rect(rect,Color("574433"))
+			draw_rect(rect,Color("bb9371"),false,2)
+			draw_line(rect.position+Vector2(5,8),rect.end-Vector2(5,8),Color("30261f"),3)
 	for side in route_warning_sides:
 		var point := get_entry_position(side)
 		draw_circle(point + Vector2(22, 0), 8, Color("78382f"))

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/enemies/enemy_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"elite_brood_mother"
+display_name = "精英尸虫母体"
+max_hp = 100.0
+move_speed = 0.0
+contact_damage = 5.0
+attack_cooldown = 3.5
+windup_time = 0.7
+body_color = Color(0.51,0.51,0.23,1)
+roles = 144
+family_id = &"brood_mother"
+response_hint = "优先清除召唤源"
+elite = true

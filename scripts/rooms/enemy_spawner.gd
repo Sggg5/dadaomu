@@ -15,6 +15,9 @@ var _summon_owners: Dictionary[int,int] = {}
 const MAX_SUMMONS: int = 4
 const MAX_TOTAL_SUMMONS: int = 8
 var summons_created: int = 0
+var pending_births:int=0
+var death_births:int=0
+var stopped:bool=false
 var _spawning: bool = false
 var _failed: bool = false
 var _finished: bool = false
@@ -46,6 +49,7 @@ func spawn(definition: RoomDefinition) -> void:
 		if enemy is Enemy:
 			enemy.configure_spawn(target, projectile_parent, entry.enemy_definition, difficulty)
 			enemy.activation_remaining = definition.entry_grace_time
+			enemy.encounter_room = get_parent() as Room
 		if enemy.has_signal("summon_requested"): enemy.connect("summon_requested",_request_summon.bind(enemy))
 		add_child(enemy)
 	_spawning = false
@@ -54,10 +58,11 @@ func spawn(definition: RoomDefinition) -> void:
 
 
 func get_remaining() -> int:
-	return _living.size()
+	return _living.size()+pending_births
 
 
-func stop_all() -> void:
+func stop_all(cancel_encounter: bool = false) -> void:
+	stopped=cancel_encounter
 	for child in get_children():
 		if child is Enemy:
 			child.stop_ai()
@@ -67,6 +72,11 @@ func _on_enemy_died(enemy_id: int) -> void:
 	if not _living.has(enemy_id):
 		return
 	var enemy := _living[enemy_id]
+	if enemy is Enemy and not stopped:
+		var records:Array[EnemySpawnDefinition]=enemy.death_spawns()
+		if not records.is_empty():
+			pending_births+=records.size()
+			_spawn_death_records.call_deferred(records)
 	_living.erase(enemy_id)
 	_summon_owners.erase(enemy_id)
 	enemy_killed.emit(enemy)
@@ -75,7 +85,7 @@ func _on_enemy_died(enemy_id: int) -> void:
 
 
 func _check_finished() -> void:
-	if started and not _spawning and not _failed and not _finished and _living.is_empty():
+	if started and not _spawning and not _failed and not _finished and not stopped and pending_births==0 and _living.is_empty():
 		_finished = true
 		all_defeated.emit()
 
@@ -118,6 +128,7 @@ func _spawn_summons(count: int, reference: WeakRef) -> void:
 		actor.position=point
 		actor.configure_spawn(target,projectile_parent,preload("res://data/enemies/scarab.tres"),difficulty)
 		actor.activation_remaining=0.35
+		actor.encounter_room=get_parent() as Room
 		var id := actor.get_instance_id()
 		_living[id]=actor
 		_summon_owners[id]=owner_id
@@ -125,3 +136,34 @@ func _spawn_summons(count: int, reference: WeakRef) -> void:
 		(actor.get_node("Health") as Health).died.connect(_on_enemy_died.bind(id),CONNECT_ONE_SHOT)
 		add_child(actor)
 	remaining_changed.emit(get_remaining())
+
+
+func _spawn_death_records(records:Array[EnemySpawnDefinition])->void:
+	if stopped or not is_inside_tree() or target.health.is_dead:
+		pending_births=maxi(0,pending_births-records.size())
+		return
+	var room:=get_parent() as Room
+	for record in records:
+		pending_births-=1
+		if death_births>=24:continue
+		var reserved:Array[Vector2]=[]
+		for actor in _living.values():reserved.append(actor.position)
+		var preferred:=record.position
+		var point:=EncounterGeometry.safe_point(room,preferred,24,80)
+		if not point.is_finite():continue
+		# 已占点则用有限横移候选，避免两个子体重叠。
+		for offset in [Vector2.ZERO,Vector2(48,0),Vector2(-48,0),Vector2(0,48)]:
+			var candidate:=EncounterGeometry.safe_point(room,point+offset,24,80)
+			if candidate.is_finite() and reserved.all(func(other:Vector2)->bool:return other.distance_to(candidate)>=40):point=candidate;break
+		var actor:=record.enemy_scene.instantiate() as Enemy
+		actor.position=point
+		actor.configure_spawn(target,projectile_parent,record.enemy_definition,difficulty)
+		actor.encounter_room=room
+		actor.activation_remaining=0.35
+		var id:=actor.get_instance_id()
+		_living[id]=actor
+		death_births+=1
+		(actor.get_node("Health") as Health).died.connect(_on_enemy_died.bind(id),CONNECT_ONE_SHOT)
+		add_child(actor)
+	remaining_changed.emit(get_remaining())
+	_check_finished()

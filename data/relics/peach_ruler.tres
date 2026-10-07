@@ -7,3 +7,6 @@ id = &"peach_ruler"
 display_name = "桃木尺"
 description = "近距离命中附加一次弱伤害。"
 effect_script = ExtResource("2")
+design_role = 1
+power_band = 2
+archetype_tags = Array[StringName]([&"CLOSE_RANGE"])

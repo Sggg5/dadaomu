@@ -9,3 +9,6 @@ description = "每第3次攻击在最终批次两侧各复制一组镜像弹。"
 rarity = 1
 effect_script = ExtResource("2")
 parameters = {"period": 3, "angle_degrees": 20.0}
+design_role = 0
+power_band = 3
+archetype_tags = Array[StringName]([&"PROJECTILE"])

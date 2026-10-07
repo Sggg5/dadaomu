@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/enemies/enemy_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"hanging_corpse"
+family_id = &"hanging_corpse"
+display_name = "吊尸"
+max_hp = 65.0
+move_speed = 0.0
+contact_damage = 12.0
+attack_cooldown = 3.0
+windup_time = 1.0
+roles = 160
+response_hint = "离开脚下预警，不长期站角落"
+body_color = Color(0.47,0.44,0.52,1)

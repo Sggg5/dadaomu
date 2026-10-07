@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/enemies/enemy_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"splitting_corpse"
+family_id = &"splitting_corpse"
+display_name = "分裂尸"
+max_hp = 75.0
+move_speed = 80.0
+contact_damage = 12.0
+attack_cooldown = 1.1
+windup_time = 0.4
+roles = 1
+response_hint = "考虑击杀顺序，处理两只快速子体"
+body_color = Color(0.58,0.47,0.65,1)

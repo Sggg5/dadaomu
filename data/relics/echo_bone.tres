@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/relics/relic_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/relics/effects/echo_bone_effect.gd" id="2"]
+[resource]
+script = ExtResource("1")
+id = &"echo_bone"
+display_name = "回声骨"
+description = "每五次主弹命中追加一枚弱弹，弱弹不继续追加。"
+effect_script = ExtResource("2")
+design_role = 1
+power_band = 2
+archetype_tags = Array[StringName]([&"PROJECTILE"])

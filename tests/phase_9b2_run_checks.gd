@@ -3,6 +3,8 @@ var test:SceneTree
 func _init(context:SceneTree)->void:test=context
 func run()->void:
 	var flow:=preload("res://scenes/main/game_flow.tscn").instantiate() as GameFlow
+	flow.tomb=preload("res://tests/fixtures/pre_threat_tomb.tres")
+	flow.profiled_relic_rewards=false
 	flow.profile_store=MuseumProfileStore.in_memory()
 	flow.campaign_seed_override=52
 	flow.forced_night_seed=33

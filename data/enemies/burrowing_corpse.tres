@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/enemies/enemy_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"burrowing_corpse"
+family_id = &"burrowing_corpse"
+display_name = "钻地尸"
+max_hp = 60.0
+move_speed = 115.0
+contact_damage = 14.0
+attack_cooldown = 1.0
+windup_time = 0.8
+roles = 64
+response_hint = "持续改变走位，离开土尘预警圈"
+body_color = Color(0.59,0.49,0.34,1)

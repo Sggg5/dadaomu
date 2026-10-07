@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/enemies/enemy_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"exploding_corpse"
+family_id = &"exploding_corpse"
+display_name = "爆尸"
+max_hp = 55.0
+move_speed = 90.0
+contact_damage = 18.0
+attack_cooldown = 1.0
+windup_time = 0.8
+roles = 32
+response_hint = "保持距离，选择击杀位置"
+body_color = Color(0.65,0.35,0.28,1)

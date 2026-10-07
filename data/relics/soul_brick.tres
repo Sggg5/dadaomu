@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/relics/relic_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/relics/effects/soul_brick_effect.gd" id="2"]
+[resource]
+script = ExtResource("1")
+id = &"soul_brick"
+display_name = "封魂砖"
+description = "主弹集中成一枚巨型慢弹，提高伤害和穿透；放弃主弹数量。"
+effect_script = ExtResource("2")
+design_role = 3
+power_band = 3
+archetype_tags = Array[StringName]([&"PROJECTILE"])

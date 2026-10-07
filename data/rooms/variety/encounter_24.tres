@@ -1,0 +1,81 @@
+[gd_resource type="Resource" script_class="RoomDefinition" load_steps=24 format=3]
+[ext_resource type="Script" path="res://scripts/rooms/room_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/rooms/enemy_spawn_definition.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/rooms/encounter_hazard_definition.gd" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/hanging_corpse.tscn" id="S0"]
+[ext_resource type="Resource" path="res://data/enemies/hanging_corpse.tres" id="D0"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/tomb_crossbow.tscn" id="S1"]
+[ext_resource type="Resource" path="res://data/enemies/tomb_crossbow.tres" id="D1"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/burrowing_corpse.tscn" id="S2"]
+[ext_resource type="Resource" path="res://data/enemies/burrowing_corpse.tres" id="D2"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/armored_corpse.tscn" id="S3"]
+[ext_resource type="Resource" path="res://data/enemies/armored_corpse.tres" id="D3"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/brood_mother.tscn" id="S4"]
+[ext_resource type="Resource" path="res://data/enemies/brood_mother.tres" id="D4"]
+[sub_resource type="Resource" id="Spawn0"]
+script = ExtResource("2")
+enemy_scene = ExtResource("S0")
+enemy_definition = ExtResource("D0")
+position = Vector2(320,240)
+[sub_resource type="Resource" id="Spawn1"]
+script = ExtResource("2")
+enemy_scene = ExtResource("S0")
+enemy_definition = ExtResource("D0")
+position = Vector2(400,240)
+[sub_resource type="Resource" id="Spawn2"]
+script = ExtResource("2")
+enemy_scene = ExtResource("S1")
+enemy_definition = ExtResource("D1")
+position = Vector2(880,240)
+[sub_resource type="Resource" id="Spawn3"]
+script = ExtResource("2")
+enemy_scene = ExtResource("S1")
+enemy_definition = ExtResource("D1")
+position = Vector2(960,240)
+[sub_resource type="Resource" id="Spawn4"]
+script = ExtResource("2")
+enemy_scene = ExtResource("S2")
+enemy_definition = ExtResource("D2")
+position = Vector2(320,304)
+[sub_resource type="Resource" id="Spawn5"]
+script = ExtResource("2")
+enemy_scene = ExtResource("S3")
+enemy_definition = ExtResource("D3")
+position = Vector2(400,304)
+[sub_resource type="Resource" id="Spawn6"]
+script = ExtResource("2")
+enemy_scene = ExtResource("S3")
+enemy_definition = ExtResource("D3")
+position = Vector2(480,304)
+[sub_resource type="Resource" id="Spawn7"]
+script = ExtResource("2")
+enemy_scene = ExtResource("S4")
+enemy_definition = ExtResource("D4")
+position = Vector2(800,304)
+[sub_resource type="Resource" id="Hazard0"]
+script = ExtResource("3")
+kind = 0
+position = Vector2(480,256)
+radius = 36.0
+warning_time = 0.9
+interval = 4.0
+damage = 8.0
+[sub_resource type="Resource" id="Hazard1"]
+script = ExtResource("3")
+kind = 1
+position = Vector2(88,448)
+radius = 48.0
+warning_time = 0.9
+interval = 4.0
+damage = 10.0
+[resource]
+script = ExtResource("1")
+room_id = &"variety_24"
+title = "深墓机关室"
+threat_rating = 5
+selection_weight = 1
+coffin_style = true
+entry_grace_time = 0.35
+spawns = Array[Resource]([SubResource("Spawn0"), SubResource("Spawn1"), SubResource("Spawn2"), SubResource("Spawn3"), SubResource("Spawn4"), SubResource("Spawn5"), SubResource("Spawn6"), SubResource("Spawn7")])
+obstacles = Array[Rect2]([Rect2(604,312,72,112)])
+environments = Array[Resource]([SubResource("Hazard0"), SubResource("Hazard1")])

@@ -7,3 +7,6 @@ id = &"seven_nails"
 display_name = "七星钉"
 description = "每五次攻击追加五枚扇形钉弹。"
 effect_script = ExtResource("2")
+design_role = 0
+power_band = 3
+archetype_tags = Array[StringName]([&"PROJECTILE"])

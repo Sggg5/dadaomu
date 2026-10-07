@@ -9,3 +9,6 @@ description = "命中附加燃烧：3次3伤害，间隔0.35秒；再命中刷�
 rarity = 0
 effect_script = ExtResource("2")
 parameters = {"damage": 3.0, "ticks": 3, "interval": 0.35}
+design_role = 0
+power_band = 3
+archetype_tags = Array[StringName]([&"DOT"])

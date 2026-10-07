@@ -7,3 +7,6 @@ id = &"bronze_arrowhead"
 display_name = "青铜箭簇"
 description = "高速小弹，额外穿透一次。"
 effect_script = ExtResource("2")
+design_role = 2
+power_band = 2
+archetype_tags = Array[StringName]([&"PROJECTILE"])

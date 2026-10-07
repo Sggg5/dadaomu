@@ -7,3 +7,6 @@ id = &"powder_packet"
 display_name = "火药纸包"
 description = "命中追加大范围弱爆炸，但弹速下降。"
 effect_script = ExtResource("2")
+design_role = 3
+power_band = 3
+archetype_tags = Array[StringName]([&"EXPLOSION"])

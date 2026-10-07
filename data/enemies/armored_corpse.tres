@@ -10,3 +10,6 @@ contact_damage = 20.0
 attack_cooldown = 1.3
 windup_time = 0.6
 body_color = Color(0.43,0.51,0.48,1)
+roles = 8
+family_id = &"armored_corpse"
+response_hint = "绕开肉盾抓空档"

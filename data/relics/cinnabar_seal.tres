@@ -8,3 +8,6 @@ display_name = "朱砂符"
 description = "命中附加较强的四段朱砂燃烧。"
 effect_script = ExtResource("2")
 parameters = {"damage": 5.0, "interval": 0.3, "ticks": 4}
+design_role = 1
+power_band = 2
+archetype_tags = Array[StringName]([&"DOT"])
