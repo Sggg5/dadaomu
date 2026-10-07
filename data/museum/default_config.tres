@@ -6,7 +6,7 @@
 script = ExtResource("1")
 open_duration = 60.0
 ticket_price = 5
-base_visitors = 10
+base_visitors = 5
 max_active_visitors = 8
 visitor_speed = 320.0
 view_duration = 1.5

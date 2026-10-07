@@ -37,9 +37,9 @@ DisplayCase在场景真实更新名称与几何符号，新增符号仅呈现，
 
 ## 游客、营业与票款
 
-MuseumConfig默认open_duration60秒，ticket_price5，max_active_visitors8；时间显示10:00→17:00。目标clamp(10+floor(total_appeal*0.5),10,60)，每0.35秒且有空位时进一人，离场后补客，不一次塞满60人。
+MuseumConfig默认open_duration60秒，ticket_price5，max_active_visitors8；时间显示10:00→17:00。0件展品不能开馆且目标0；至少1件展品即可开馆，目标clamp(5+floor(total_appeal*0.5),1,60)，每0.35秒且有空位时进一人，离场后补客，不一次塞满60人。
 
-Visitor状态ENTER→CHOOSE_EXHIBIT→WALK_TO_EXHIBIT→VIEW→下一柜或EXIT。门口→售票台→通道→展柜观看→门口离开；可看第二柜，不重复选已经看的柜。museum_seed/day/index派生独立RNG，按已有展品吸引力加权；银元仍有概率，未展出不参与；空馆安全离开。E交谈只显示一条正在看的古董反应，无剧情树。
+Visitor状态ENTER→CHOOSE_EXHIBIT→WALK_TO_EXHIBIT→VIEW→下一柜或EXIT。门口→售票台→通道→展柜观看→门口离开；可看第二柜，不重复选已经看的柜。museum_seed/day/index派生独立RNG，按已有展品吸引力加权；银元仍有概率，未展出不参与；正式空馆不生成游客，Visitor本身仍保留无展品时的安全离场边界。E交谈只显示一条正在看的古董反应，无剧情树。
 
 游客自身ticket_paid和Business._paid索引共同去重。仅完成售票时cash +=5，visitors_today/income_today同步。到时停止补客，现客进入EXIT，全部离开后转EVENING并保存当天实际售票人数/收入。目标不是保证到客数；营业长度和路线可能使实际少于目标。现金只记录门票，古董估值不会转为现金。
 
@@ -104,6 +104,42 @@ foreach ($phase in @('1','2','3','4','5a','5b','6','6_5','7a','7b','8a')) {
 
 ## 正式入口取消测试赠品修复（2026-10-07）
 
-GameFlow.initial_test_collection默认false，正式场景没有true覆盖；Museum默认提示也不再显示测试唐三彩马。Phase8A完整布展测试显式启用夹具；空馆测试直接实例化未改参数的正式入口，新增验证默认开关关闭、馆藏/展柜为空、现金0、提示不含赠品。正式空馆仍可开馆或直接下墓，成功出墓入藏逻辑保持。
+GameFlow.initial_test_collection默认false，正式场景没有true覆盖；Museum默认提示也不再显示测试唐三彩马。Phase8A完整布展测试显式启用夹具；空馆测试直接实例化未改参数的正式入口，新增验证默认开关关闭、馆藏/展柜为空、现金0、提示不含赠品。正式空馆可直接下墓；开馆资格修订见下一节，成功出墓入藏逻辑保持。
 
 本修复Godot导入/启动无错误，Phase8A专项721项/0失败，日志logs/phase_8a_no_gift_import.log、phase_8a_no_gift_start.log、phase_8a_no_gift_smoke.log。此前718项图形与全阶段回归保留为阶段历史结果，本修复未声称重跑所有旧阶段。仅修改默认值、提示、夹具与文档，不改战斗和收益规则。
+
+## 正式开馆资格修订（2026-10-07，当前规则）
+
+继续在当前8A分支，保留已提交8fec3ca的initial_test_collection=false，正式Day1馆藏0/三柜空/现金0。需要初始唐三彩马的旧完整布展夹具显式启用测试开关；新增正式首次展览流程不启用、不调用collection.add代替夜间获取。
+
+MuseumBusiness.can_open集中判断display_assignments非空，start在任何营业状态变更前再次校验。空馆售票台提示『暂无展品，无法开馆』，真实E及直接start均拒绝；保持MORNING、target0，不生成游客/票款，不改现金、当天计数或原非零上日统计。至少一件合法实例布置到任一柜即可，无价格、吸引力、稀有度、多样性门槛。
+
+新公式：展品数0→游客目标0；展品数≥1→clamp(5+floor(total_appeal*0.5),1,60)。配置base_visitors从10改5；银元一件6人、唐三彩马一件30人、唐马+玉璧42人；票价5、活客上限8、收费去重保持。Morning直接下墓与OPEN提前闭馆待游客离场后下墓均保持，通过原真实输入路径回归。
+
+### 正式空馆到第一次开馆真实流程
+
+Seed192034：正式GameFlow默认启动→Day1馆藏0、三柜空、现金0→WASD到售票台→真实E拒绝且提示明确→WASD到情报板E直接NIGHT→真实Door/活敌人/武器推进→ANTIQUE房E仅拾一件正式唐三彩马→真实武器/弹丸击杀大帅尸→F撤离→结果E回馆→Day2唯一OwnedAntique（acquired_day1），现金仍0→走到展柜2 E打开选择、按钮亲手布展唯一一件→走到售票台E开馆→真实游客进入/付票/观看，玩家E交谈→正常闭馆EVENING。
+
+测试独立营业配置5秒，游客速度1200，玩家仍默认300；游客目标30，实际12人，收入¥60。目标不等于强制到客数。主流程没有collection.add或Inventory.add注入馆藏；夜间驾驶沿用现有真实武器/AI与射击位置辅助，不声称人工手感验收。
+
+### 测试变更与结果
+
+旧『Empty exhibition still sells once tickets』和每帧空馆游客循环已移除，改为正式入口默认空、direct start/E拒绝、MORNING/target0、无游客/收入、上日非零统计不变。新增phase_8a_first_exhibit_checks.gd覆盖空馆夜间带回唯一真实古董后首次营业；data_checks更新公式和单银元资格。Phase1～7B脚本及原断言未修改。
+
+| 回归 | 断言 | 失败 |
+|---|---:|---:|
+| Phase1 | 27 | 0 |
+| Phase2 | 204 | 0 |
+| Phase3 | 94 | 0 |
+| Phase4 | 105 | 0 |
+| Phase5A | 61 | 0 |
+| Phase5B | 236 | 0 |
+| Phase6 | 164 | 0 |
+| Phase6.5 | 174 | 0 |
+| Phase7A | 306 | 0 |
+| Phase7B | 722 | 0 |
+| Phase8A | 468 | 0 |
+
+本次总2561项/0失败，Phase8A headless与graphical均468项/0失败；专项计数下降因旧空馆每帧售票断言正式废弃，不通过保留错误逻辑维持数字。导入/正式入口启动无错误。命令使用上文同样的11套脚本与图形--capture；日志logs/phase_8a_exhibits_import.log、phase_8a_exhibits_start.log、phase_8a_exhibits_regression_*.log、phase_8a_exhibits_graphical.log。已目视检查first_empty_ticket、first_real_exhibit、first_exhibition_income截图，显示0→唯一真实藏品→首次收入。
+
+修改Business/Config/default_config、Museum售票提示，Phase8A三个旧测试，并新增首次展览helper及.uid。README/ARCHITECTURE/PROJECT_PLAN/AGENTS同步当前规则。未改变夜间、Phase8B、票价或其他经营机制。此前阶段与取消赠品的结果为历史记录，以本节最新规则与结果为准。完成后commit/push开发分支，禁止合并main，停止。

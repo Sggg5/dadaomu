@@ -58,7 +58,8 @@ func _ready() -> void:
 		add_child(body)
 	storage = _point("库房",Vector2(180,500),Color("8e9a74"),func() -> String: return "[E] 查看库房",func() -> void: collection_panel.open())
 	ticket = _point("售票台",Vector2(1080,500),Color("d5b371"),_ticket_prompt,func() -> void:
-		if not business.start(): message.text = "营业尚未结束" if state.phase == MuseumState.Phase.OPEN else "今日已闭馆，请到情报板出发")
+		if not business.start():
+			message.text = "暂无展品，无法开馆" if not business.can_open() else ("营业尚未结束" if state.phase == MuseumState.Phase.OPEN else "今日已闭馆，请到情报板出发"))
 	board = _point("情报板 · 晋北军阀墓",Vector2(1060,185),Color("a588b3"),func() -> String:
 		return "正在闭馆，游客离场后出发" if _night_after_close else ("[E] 提前闭馆并下墓" if state.phase == MuseumState.Phase.OPEN else "[E] 今晚下墓（无需开馆）"),_request_night)
 	business = MuseumBusiness.new()
@@ -106,6 +107,7 @@ func _visitor_arrived(visitor: MuseumVisitor) -> void:
 
 
 func _ticket_prompt() -> String:
+	if not business.can_open(): return "暂无展品，无法开馆"
 	return "展出 %d件 · 吸引力 %d · 票价 ¥5 · %s" % [state.display_assignments.size(),state.total_appeal(),"[E] 开馆" if state.phase == MuseumState.Phase.MORNING else "[E] 查看营业状态"]
 
 

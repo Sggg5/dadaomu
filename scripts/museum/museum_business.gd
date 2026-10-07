@@ -20,12 +20,18 @@ var _paid: Dictionary[int,bool] = {}
 var _spawn_timer: float = 0.0
 
 
-func visitor_target(appeal: int) -> int: return clampi(config.base_visitors+floori(appeal*.5),10,60)
+func can_open() -> bool:
+	return state != null and not state.display_assignments.is_empty()
+
+
+func visitor_target(appeal: int, displayed_count: int) -> int:
+	if displayed_count == 0: return 0
+	return clampi(config.base_visitors+floori(appeal*.5),1,60)
 
 
 func start() -> bool:
-	if running or state.phase != MuseumState.Phase.MORNING: return false
-	target = visitor_target(state.total_appeal())
+	if running or state.phase != MuseumState.Phase.MORNING or not can_open(): return false
+	target = visitor_target(state.total_appeal(),state.display_assignments.size())
 	running = true
 	closing = false
 	state.phase = MuseumState.Phase.OPEN

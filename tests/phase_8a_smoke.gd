@@ -15,6 +15,8 @@ func run() -> void:
 	await data.run()
 	var hub = preload("res://tests/phase_8a_hub_checks.gd").new(self)
 	await hub.run()
+	var first_exhibit = preload("res://tests/phase_8a_first_exhibit_checks.gd").new(self)
+	await first_exhibit.run()
 	flow = FLOW_SCENE.instantiate() as GameFlow
 	# 真实布展流程的测试夹具，不能依赖正式入口赠送馆藏。
 	flow.initial_test_collection = true

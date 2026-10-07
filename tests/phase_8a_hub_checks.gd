@@ -19,15 +19,14 @@ func run() -> void:
 	test.check(not flow.museum.message.text.contains("唐三彩马"),"Official morning notice does not advertise gifted test antique")
 	var business := flow.museum.business
 	test.check(business.active.is_empty() and business.spawned == 0,"Empty morning never generates visitors")
-	business.start()
-	var peak: int = 0
-	for frame in range(600):
-		peak = maxi(peak,business.active.size())
-		if flow.current_phase == MuseumState.Phase.EVENING: break
-		for visitor in business.active:
-			test.check(visitor.chosen_case == null,"Empty museum visitor never chooses nonexistent display")
-		await test.frames(1)
-	test.check(flow.current_phase == MuseumState.Phase.EVENING and peak <= 8 and business.active.is_empty() and business.visitors_today > 0,"Empty exhibition still sells once tickets, exits and closes safely")
+	test.check(not business.can_open() and not business.start(),"Empty exhibition cannot open even through direct Business.start")
+	await test.frames(180)
+	test.check(flow.current_phase == MuseumState.Phase.MORNING and business.target == 0 and not business.running and business.spawned == 0 and business.active.is_empty(),"Rejected empty opening leaves MORNING/zero target/no visitors")
+	test.check(business.visitors_today == 0 and business.income_today == 0 and flow.museum_state.cash == 0 and flow.museum_state.last_day_visitors == 0 and flow.museum_state.last_day_ticket_income == 0,"Empty exhibition earns no ticket income and preserves all cash/day statistics")
+	test.check(flow.museum.ticket.prompt.call() == "暂无展品，无法开馆","Empty ticket prompt explains exhibit requirement")
+	flow.museum_state.last_day_visitors = 9
+	flow.museum_state.last_day_ticket_income = 45
+	test.check(not business.start() and flow.museum_state.last_day_visitors == 9 and flow.museum_state.last_day_ticket_income == 45,"Rejected opening also preserves nonzero previous-day totals")
 	var cash_before := flow.museum_state.cash
 	flow.start_night()
 	await test.frames(5)
