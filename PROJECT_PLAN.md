@@ -1,6 +1,21 @@
 # 项目开发计划
 
-## Phase 8B：当前执行范围与验收
+## Phase 8C：古董鉴定、品相与修复（当前实现）
+
+基准main 125080906182bc2b01ed4bcdca73050f90946369（8B已合并），工作分支codex/phase-8c-appraisal-restoration。仅授权鉴定/品相/修复，验收后提交push，不合并main、不进入8D。以下旧阶段章节为历史，以本节为准。
+
+现场获得不等于正式馆藏鉴定：夜间名称、基础估值、格数与风险取舍不变。结算RunResult新增与antique_ids等长的antique_conditions；独立AntiqueCondition RNG按run_seed/definition_id/cargo_index/出发日期生成55～90品相，不污染地宫RNG。成功EXTRACTED/COMPLETED入藏时identified=false、condition取快照；DEAD不入藏。
+
+馆长办公室旁新增鉴定台和修复台，靠近E打开，选中后E确认，Tab关闭；成功后关闭重开才可处理下一件。鉴定免费，未鉴定不能布展且不贡献吸引力。Morning/Evening可作业，OPEN/NIGHT在MuseumState数据层拒绝。修复可选，不是开馆前置；费用ceil((100-condition)/10)×稀有度单位20/40/60/100，一次恢复100，资金不足/重复修复不扣款。没有战斗属性、出售或小游戏。
+
+MuseumState.appeal_for集中计算max(1,round(base_appeal×condition/100))，未鉴定为0。HUD、库房、展柜、营业目标和游客选择读取同一结果；共享AntiqueDefinition不修改，修复无需重新布展。MuseumWorkPanel共用选择/确认逻辑，Appraisal/Restoration仅区分作业。
+
+地面存档升级schema VERSION=2，保留user://museum_profile_v1.json原路径以读取旧档。v1所有已有馆藏迁移identified=true/condition=100，保持展柜/现金/等级/日期/next ID；下一次保存自动写v2。v2非法condition或非bool identified跳过该条目，非法归属继续拒绝。鉴定/修复成功立即触发安全地面保存。测试只使用in_memory或user://tests/phase_8c等隔离路径，禁止读写正式档。
+
+Day1空馆→真实夜间拾取/击杀Boss/F撤离→Day2库房待鉴定→免费E鉴定→低品相直接布展营业；真实门票收入可支付可选修复。Phase1～8C及8C headless/graphical/import/startup必须通过。手感人工验收与程序驱动图形验证分开报告，见docs/PHASE_8C_VERIFICATION.md。鉴定/修复/现金/馆舍成长不得改变80HP、8格背包、地图/Seed、武器、敌人、Boss、遗物或古董掉落。
+
+
+## Phase 8B：历史执行范围与验收
 
 基准main b3c6dbc，新分支codex/phase-8b-museum-progression，仅经营成长：门票→现金→馆舍扩建→更多展柜/更高游客容量。Level0/1/2为3/5/8柜、30/45/60容量，升级1000/3000，最高2。统一Resource配置、建设牌E原子交易、真实展厅开放、旧展品保留；禁止战斗加成或新经营消费。
 
@@ -62,6 +77,7 @@ Phase 1～7B 共 10 套回归均通过；专项 722 项、0 失败。用户人�
 | 7B 贪心与撤离 | 陪葬匣、二层高稀有度、统一来源、撤离与死亡遗失 | 三条真实流程、背包取舍和全部回归通过 |
 | 8A 博物馆昼夜闭环 | 馆藏实例、3展柜、自由走动交互、游客门票、夜晚安全转移 | 真实两日布展/营业/下墓/回馆；死亡保留原收藏与现金 |
 | 8B 持久化博物馆成长 | Level/展柜/游客上限、建设牌与地面存档 | 真实门票升级、重启/死亡恢复、隔离回归 |
+| 8C 鉴定、品相与修复 | 稳定结算品相、免费鉴定、可选现金修复、有效展览吸引力、v1→v2迁移 | 真实首次鉴定布展/门票修复、存档迁移、Phase1～8C与夜间隔离回归 |
 | 9 地面黑市 | 选择墓穴、鉴定、出售、收藏交互 | 返回黑市可处理收益并再次出发；买卖不可重复结算 |
 | 10 存档与永久解锁 | 版本化本地存档、收藏/货币/解锁持久化 | 重启恢复；损坏存档可安全回退；写入失败有提示 |
 | 11 UI/音效/反馈 | 统一 UI、受击/命中反馈、音效、基础设置 | 操作清晰、反馈及时；设置可保存；不遮挡攻击预警 |

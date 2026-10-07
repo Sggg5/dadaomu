@@ -7,6 +7,9 @@ var state: MuseumState
 func refresh() -> void:
 	var definition := state.definition_for(case_id)
 	title = "%s\n%s" % [str(case_id).replace("CASE_","展柜"), definition.display_name if definition != null else "空柜"]
+	if definition != null:
+		var item := state.collection.find(state.display_assignments[case_id])
+		title += "\n品相%d · 吸引力%d" % [item.condition,state.appeal_for(item.instance_id)]
 	super.refresh()
 
 

@@ -19,8 +19,8 @@ func run() -> void:
 	state.day_number = 5
 	state.cash = 1260
 	state.museum_level = 1
-	var one := state.collection.add(&"gold_thread_jade",1)
-	var two := state.collection.add(&"gold_thread_jade",2)
+	var one := state.collection.add(&"gold_thread_jade",1,100,true)
+	var two := state.collection.add(&"gold_thread_jade",2,100,true)
 	state.assign(&"CASE_1",one.instance_id)
 	state.assign(&"CASE_5",two.instance_id)
 	state.phase = MuseumState.Phase.EVENING
@@ -30,11 +30,11 @@ func run() -> void:
 	test.check(store.save_profile(state),"Atomic replacement supports existing Windows save file")
 	var restored := store.load_profile()
 	test.check(store.encode(restored) == store.encode(state) and restored.phase == MuseumState.Phase.EVENING,"Disk reload preserves all IDs/day/cash/level/assignments and closed business phase")
-	var newer := restored.collection.add(&"republic_silver_coin",5)
+	var newer := restored.collection.add(&"republic_silver_coin",5,100,true)
 	test.check(newer.instance_id == &"A000003" and newer.instance_id != one.instance_id and newer.instance_id != two.instance_id,"Reload resumes next owned ID without duplicate")
 	var data := store.encode(state)
 	data.next_antique_id = 1
-	test.check(store.decode(data).collection.add(&"han_jade_disc",5).instance_id == &"A000003","Too-low saved next ID is repaired from existing instances")
+	test.check(store.decode(data).collection.add(&"han_jade_disc",5,100,true).instance_id == &"A000003","Too-low saved next ID is repaired from existing instances")
 	for phase in [MuseumState.Phase.OPEN,MuseumState.Phase.NIGHT]:
 		state.phase = phase
 		var saves := store.save_count

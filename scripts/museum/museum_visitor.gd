@@ -40,13 +40,13 @@ func choose_exhibit() -> DisplayCase:
 	var total: int = 0
 	for exhibit in cases:
 		var definition := exhibit.state.definition_for(exhibit.case_id)
-		if definition != null and exhibit.case_id not in seen_cases:
+		if definition != null and exhibit.state.appeal_for(exhibit.state.display_assignments.get(exhibit.case_id,&"")) > 0 and exhibit.case_id not in seen_cases:
 			candidates.append(exhibit)
-			total += maxi(1,definition.exhibit_appeal)
+			total += exhibit.state.appeal_for(exhibit.state.display_assignments[exhibit.case_id])
 	if candidates.is_empty(): return null
 	var roll := rng.randi_range(1,total)
 	for exhibit in candidates:
-		roll -= maxi(1,exhibit.state.definition_for(exhibit.case_id).exhibit_appeal)
+		roll -= exhibit.state.appeal_for(exhibit.state.display_assignments[exhibit.case_id])
 		if roll <= 0: return exhibit
 	return candidates.back()
 

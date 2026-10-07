@@ -1,7 +1,7 @@
 class_name MuseumProfileStore
 extends RefCounted
 ## 版本化地面JSON。只编码纯值，内存/路径可注入；不保存Night Run。
-const VERSION: int = 1
+const VERSION: int = 2
 var save_path: String = "user://museum_profile_v1.json"
 var memory_only: bool = false
 var save_count: int = 0
@@ -18,7 +18,7 @@ static func in_memory() -> MuseumProfileStore:
 func encode(state: MuseumState) -> Dictionary:
 	var items: Array[Dictionary] = []
 	for item in state.collection.all_items():
-		items.append({"instance_id":str(item.instance_id),"definition_id":str(item.definition_id),"acquired_day":item.acquired_day})
+		items.append({"instance_id":str(item.instance_id),"definition_id":str(item.definition_id),"acquired_day":item.acquired_day,"identified":item.identified,"condition":item.condition})
 	var assignments: Dictionary[String,String] = {}
 	for id in state.display_assignments: assignments[str(id)] = str(state.display_assignments[id])
 	return {"version":VERSION,"day_number":state.day_number,"phase":"EVENING" if state.phase == MuseumState.Phase.EVENING else "MORNING","cash":state.cash,"museum_level":state.museum_level,"next_antique_id":state.collection.next_id(),"collection":items,"display_assignments":assignments,"last_day_visitors":state.last_day_visitors,"last_day_ticket_income":state.last_day_ticket_income}
@@ -69,7 +69,7 @@ func decode(payload: Variant) -> MuseumState:
 	if not payload is Dictionary:
 		_failed("存档根字段异常，使用新档")
 		return state
-	var bounds := {"version":[VERSION,VERSION],"day_number":[1,1000000],"cash":[0,1000000000],"museum_level":[0,MuseumState.LEVELS.highest_level()],"next_antique_id":[1,1000000000]}
+	var bounds := {"version":[1,VERSION],"day_number":[1,1000000],"cash":[0,1000000000],"museum_level":[0,MuseumState.LEVELS.highest_level()],"next_antique_id":[1,1000000000]}
 	for key in bounds:
 		var range_value: Array = bounds[key]
 		if not _integer(payload.get(key),range_value[0],range_value[1]):
@@ -96,6 +96,12 @@ func decode(payload: Variant) -> MuseumState:
 			_failed("跳过未知定义/重复或非法馆藏ID")
 			continue
 		var item := OwnedAntique.new()
+		# v1已有合法展品保留满品相；v2逐条验证，异常条目跳过。
+		if int(payload.version) == 2 and (not row.get("identified") is bool or not _integer(row.get("condition"),0,100)):
+			_failed("跳过异常鉴定/品相条目")
+			continue
+		item.identified = true if int(payload.version) == 1 else bool(row.identified)
+		item.condition = 100 if int(payload.version) == 1 else int(row.condition)
 		item.instance_id = id
 		item.definition_id = StringName(row.definition_id)
 		item.acquired_day = int(row.acquired_day)

@@ -22,7 +22,7 @@ func run() -> void:
 		test.check(state.case_ids().size() == cases_expected[level] and state.case_ids()[0] == &"CASE_1" and state.case_ids().back() == StringName("CASE_%d" % cases_expected[level]),"Stable case IDs grow with level "+str(level))
 		test.check(business.visitor_target(200,3) == capacities[level] and business.visitor_target(200,0) == 0,"Capacity clamps same appeal and empty exhibit still means0 at level "+str(level))
 	state.museum_level = 0
-	var owned := state.collection.add(&"tang_sancai_horse",1)
+	var owned := state.collection.add(&"tang_sancai_horse",1,100,true)
 	test.check(state.assign(&"CASE_1",owned.instance_id) and not state.assign(&"CASE_4",owned.instance_id),"Level0 rejects locked case")
 	state.cash = 999
 	test.check(not state.upgrade(0) and state.cash == 999 and state.museum_level == 0,"Insufficient upgrade is atomic")
@@ -30,7 +30,7 @@ func run() -> void:
 	var collection := state.collection
 	test.check(state.upgrade(0) and state.cash == 4000 and state.museum_level == 1 and state.collection == collection and state.display_assignments[&"CASE_1"] == owned.instance_id,"First upgrade deducts exactly1000, preserves collection and original assignment")
 	test.check(not state.upgrade(0) and state.cash == 4000 and state.museum_level == 1,"Duplicate old upgrade request cannot charge or skip another level")
-	var duplicate := state.collection.add(&"tang_sancai_horse",1)
+	var duplicate := state.collection.add(&"tang_sancai_horse",1,100,true)
 	test.check(state.assign(&"CASE_4",duplicate.instance_id),"Newly unlocked case accepts independent duplicate")
 	state.phase = MuseumState.Phase.OPEN
 	test.check(not state.upgrade(1) and not state.unassign(&"CASE_4") and state.cash == 4000,"Open-stage upgrade and changing exhibits rejected")

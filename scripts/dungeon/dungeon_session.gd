@@ -9,6 +9,8 @@ signal result_ready(result: RunResult)
 signal run_started
 signal return_requested(result: RunResult)
 @export var hub_mode: bool = false
+# 仅结算品相的确定性元数据，绝不参与地图/掉落/战斗计算。
+var collection_day: int = 1
 var _returning: bool = false
 @export var config: DungeonConfig = DEFAULT_CONFIG
 @export var seed_value: int = 192034
@@ -195,6 +197,7 @@ func _finish_run(outcome: RunResult.Outcome) -> bool:
 		result.antique_ids.append(item.id)
 		result.antique_names.append(item.display_name)
 		result.antique_values.append(item.base_value)
+		result.antique_conditions.append(AntiqueCondition.generate(run_seed,item.id,result.antique_ids.size()-1,collection_day))
 	for id in world.player.relics.inventory.ids(): result.relic_names.append(world.player.relics.inventory.get_effect(id).definition.display_name)
 	world.run_finished = true
 	world.player.set_controls_enabled(false)

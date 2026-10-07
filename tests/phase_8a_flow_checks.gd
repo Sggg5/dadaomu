@@ -24,6 +24,7 @@ func walk_to(target: Vector2) -> void:
 
 
 func place(case_index: int, owned_id: StringName) -> void:
+	if not flow.museum_state.collection.find(owned_id).identified: await appraise(owned_id)
 	var museum := flow.museum
 	await walk_to(Vector2(museum.cases[case_index].position.x,380))
 	await walk_to(museum.cases[case_index].position+Vector2(0,48))
@@ -38,6 +39,26 @@ func place(case_index: int, owned_id: StringName) -> void:
 	museum.collection_panel.panel.get_node("VBoxContainer/Choose").pressed.emit()
 	await test.frames(2)
 	test.check(flow.museum_state.display_assignments.get(museum.cases[case_index].case_id) == owned_id and museum.cases[case_index].label.text.contains(MuseumState.POOL.find_by_id(flow.museum_state.collection.find(owned_id).definition_id).display_name),"UI choice updates actual scene exhibit and instance assignment")
+
+
+func appraise(owned_id: StringName) -> void:
+	var museum := flow.museum
+	await walk_to(Vector2(920,450))
+	await walk_to(Vector2(920,230))
+	await walk_to(museum.appraisal.position+Vector2(0,40))
+	test.key(KEY_E)
+	await test.frames(2)
+	var index := museum.appraisal_panel._ids.find(owned_id)
+	test.check(museum.appraisal_panel.panel.visible and index >= 0,"Actual appraisal station E lists unidentified owned instance")
+	if index >= 0: museum.appraisal_panel.list.select(index)
+	test.key(KEY_E)
+	await test.frames(2)
+	test.check(flow.museum_state.collection.find(owned_id).identified and museum.appraisal_panel.label.text.contains("鉴定完成"),"Actual appraisal confirmation E registers antique for exhibition")
+	test.capture("appraisal_result")
+	test.key(KEY_TAB)
+	await test.frames(2)
+	await walk_to(Vector2(920,230))
+	await walk_to(Vector2(920,380))
 
 
 func open_and_close(interact_visitor: bool) -> void:

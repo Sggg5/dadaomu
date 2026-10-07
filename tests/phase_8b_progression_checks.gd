@@ -53,6 +53,7 @@ func construction() -> void:
 
 
 func place_new_case(item: OwnedAntique) -> void:
+	if not item.identified: await daytime.appraise(item.instance_id)
 	await daytime.walk_to(Vector2(940,450))
 	await daytime.walk_to(Vector2(940,348))
 	await daytime.walk_to(Vector2(1060,348))

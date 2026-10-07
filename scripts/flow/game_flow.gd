@@ -30,7 +30,7 @@ func _ready() -> void:
 		if argument.begins_with("--profile-path="): profile_store.save_path = argument.trim_prefix("--profile-path=")
 	museum_state = profile_store.load_profile()
 	museum_state.changed.connect(_save_profile)
-	if initial_test_collection: museum_state.collection.add(&"tang_sancai_horse",0)
+	if initial_test_collection: museum_state.collection.add(&"tang_sancai_horse",0,100,true)
 	_show_museum("原型馆藏：唐三彩马 · 可布展/开馆，也可到情报板直接下墓" if initial_test_collection else "地面状态已恢复 · 可整理展品，也可到情报板下墓",museum_state.phase)
 	if not profile_store.last_error.is_empty(): museum.message.text = profile_store.last_error
 	_save_profile()
@@ -68,6 +68,7 @@ func _enter_night() -> void:
 	current_dungeon_result = null
 	dungeon = DUNGEON_SCENE.instantiate() as DungeonSession
 	dungeon.hub_mode = true
+	dungeon.collection_day = current_day
 	dungeon.seed_value = night_seed
 	dungeon.run_started.connect(func() -> void: current_dungeon_result = null)
 	dungeon.result_ready.connect(func(result: RunResult) -> void: current_dungeon_result = result)
@@ -87,12 +88,14 @@ func _return_morning(result: RunResult) -> void:
 	current_dungeon_result = result
 	var names: Array[String] = []
 	if result.outcome in [RunResult.Outcome.EXTRACTED,RunResult.Outcome.COMPLETED]:
-		for id in result.antique_ids:
+		for index in range(result.antique_ids.size()):
+			var id := result.antique_ids[index]
 			var definition := MuseumState.POOL.find_by_id(id)
 			if definition == null: continue
-			museum_state.collection.add(id,current_day)
+			if index >= result.antique_conditions.size(): continue
+			museum_state.collection.add(id,current_day,result.antique_conditions[index],false)
 			names.append(definition.display_name)
-	var notice := "昨夜新入藏：%s · 已存入库房" % ("、".join(names) if not names.is_empty() else "无")
+	var notice := "昨夜新入藏：%s · 已存入库房，待正式鉴定" % ("、".join(names) if not names.is_empty() else "无")
 	if result.outcome == RunResult.Outcome.DEAD: notice = "昨夜探墓失败 · 遗失古董 %s · 没有新藏品带回" % AntiqueDefinition.money(result.antique_value)
 	remove_child(dungeon)
 	dungeon.queue_free()

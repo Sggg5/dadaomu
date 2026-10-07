@@ -55,6 +55,7 @@ func run() -> void:
 	test.check(items.size() == 2 and items[0].instance_id != items[1].instance_id and items[0].acquired_day == 1 and flow.current_day == 2,"COMPLETED return creates two independent owned antiques exactly once")
 	test.check(state.cash == cash_before and state.collection is MuseumCollection,"Night cargo creates collection only, never converted to ticket cash")
 	test.check(not flow.return_from_night(result),"Duplicate old result cannot advance morning or import again")
+	for item in items: state.identify(item.instance_id)
 	state.assign(&"CASE_1",items[0].instance_id)
 	state.assign(&"CASE_2",items[1].instance_id)
 	state.phase = MuseumState.Phase.OPEN

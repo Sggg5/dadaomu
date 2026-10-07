@@ -46,6 +46,7 @@ func can_edit() -> bool: return phase in [Phase.MORNING, Phase.EVENING]
 
 func assign(case_id: StringName, instance_id: StringName) -> bool:
 	if not can_edit() or case_id not in case_ids() or not collection.contains(instance_id): return false
+	if not collection.find(instance_id).identified: return false
 	if case_for(instance_id) != &"" and case_for(instance_id) != case_id: return false
 	display_assignments[case_id] = instance_id
 	changed.emit()
@@ -67,6 +68,39 @@ func definition_for(case_id: StringName) -> AntiqueDefinition:
 func total_appeal() -> int:
 	var appeal: int = 0
 	for id in case_ids():
-		var definition := definition_for(id)
-		if definition != null: appeal += definition.exhibit_appeal
+		appeal += appeal_for(display_assignments.get(id,&""))
 	return appeal
+
+
+func appeal_for(instance_id: StringName) -> int:
+	var item := collection.find(instance_id)
+	if item == null or not item.identified: return 0
+	var definition := POOL.find_by_id(item.definition_id)
+	return maxi(1,roundi(definition.exhibit_appeal*item.condition/100.0)) if definition != null else 0
+
+
+func identify(instance_id: StringName) -> bool:
+	var item := collection.find(instance_id)
+	if not can_edit() or item == null or item.identified: return false
+	item.identified = true
+	changed.emit()
+	return true
+
+
+func restoration_cost(instance_id: StringName) -> int:
+	var item := collection.find(instance_id)
+	if item == null or not item.identified or item.condition >= 100: return 0
+	var definition := POOL.find_by_id(item.definition_id)
+	if definition == null: return 0
+	var unit_cost: int = [20,40,60,100][definition.rarity]
+	return ceili((100-item.condition)/10.0)*unit_cost
+
+
+func repair(instance_id: StringName) -> bool:
+	var cost := restoration_cost(instance_id)
+	if not can_edit() or cost <= 0 or cash < cost: return false
+	# 原子事务后通知存档/UI；满品相再次调用拒绝，不产生半完成状态。
+	cash -= cost
+	collection.find(instance_id).condition = 100
+	changed.emit()
+	return true

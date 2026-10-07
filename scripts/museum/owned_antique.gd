@@ -4,3 +4,5 @@ extends RefCounted
 var instance_id: StringName
 var definition_id: StringName
 var acquired_day: int
+var identified: bool = false
+var condition: int = 100

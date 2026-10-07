@@ -11,6 +11,10 @@ var business: MuseumBusiness
 var collection_panel: MuseumCollectionPanel
 var construction_panel: MuseumConstructionPanel
 var construction: MuseumInteractable
+var appraisal: MuseumInteractable
+var restoration: MuseumInteractable
+var appraisal_panel: MuseumAppraisalPanel
+var restoration_panel: MuseumRestorationPanel
 var cases: Array[DisplayCase] = []
 var storage: MuseumInteractable
 var ticket: MuseumInteractable
@@ -43,6 +47,22 @@ func _ready() -> void:
 	add_child(construction_panel)
 	construction = _point("馆舍建设",Vector2(400,190),Color("b99b7f"),func() -> String: return "[E] 查看扩建",func() -> void: construction_panel.open())
 	storage = _point("库房",Vector2(180,500),Color("8e9a74"),func() -> String: return "[E] 查看库房",func() -> void: collection_panel.open())
+	appraisal_panel = MuseumAppraisalPanel.new()
+	appraisal_panel.state = state
+	appraisal_panel.player = player
+	add_child(appraisal_panel)
+	appraisal_panel.work_completed.connect(func(notice: String) -> void:
+		if not message.text.begins_with("保存失败"): message.text = notice)
+	restoration_panel = MuseumRestorationPanel.new()
+	restoration_panel.state = state
+	restoration_panel.player = player
+	add_child(restoration_panel)
+	restoration_panel.work_completed.connect(func(notice: String) -> void:
+		if not message.text.begins_with("保存失败"): message.text = notice)
+	appraisal = _point("鉴定台",Vector2(540,190),Color("94b4b0"),func() -> String: return "[E] 鉴定古董（免费）" if state.can_edit() else "营业中无法进行馆藏作业",func() -> void:
+		if not appraisal_panel.open(): message.text = "营业中无法进行馆藏作业")
+	restoration = _point("修复台",Vector2(730,190),Color("b39a6c"),func() -> String: return "[E] 修复古董" if state.can_edit() else "营业中无法进行馆藏作业",func() -> void:
+		if not restoration_panel.open(): message.text = "营业中无法进行馆藏作业")
 	ticket = _point("售票台",Vector2(1080,500),Color("d5b371"),_ticket_prompt,func() -> void:
 		if not business.start():
 			message.text = "暂无展品，无法开馆" if not business.can_open() else ("营业尚未结束" if state.phase == MuseumState.Phase.OPEN else "今日已闭馆，请到情报板出发"))
@@ -142,7 +162,7 @@ func _process(_delta: float) -> void:
 	if state.phase == MuseumState.Phase.EVENING: minutes = 1020
 	var visitors := state.last_day_visitors if state.phase == MuseumState.Phase.EVENING else business.visitors_today
 	var income := state.last_day_ticket_income if state.phase == MuseumState.Phase.EVENING else business.income_today
-	status.text = "%02d:%02d · 现金 %s · 展柜 %d / %d · 游客容量 %d\n馆藏 %d件 · 今日游客 %d人 · 门票 %s" % [minutes/60,minutes%60,AntiqueDefinition.money(state.cash),state.display_assignments.size(),state.level_definition().case_count,state.level_definition().visitor_capacity,state.collection.all_items().size(),visitors,AntiqueDefinition.money(income)]
+	status.text = "%02d:%02d · 现金 %s · 展柜 %d / %d · 游客容量 %d · 吸引力%d\n馆藏 %d件 · 今日游客 %d人 · 门票 %s" % [minutes/60,minutes%60,AntiqueDefinition.money(state.cash),state.display_assignments.size(),state.level_definition().case_count,state.level_definition().visitor_capacity,state.total_appeal(),state.collection.all_items().size(),visitors,AntiqueDefinition.money(income)]
 
 
 func _make_hud() -> void:

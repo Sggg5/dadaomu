@@ -5,12 +5,14 @@ var _items: Array[OwnedAntique] = []
 var _next_id: int = 1
 
 
-func add(definition_id: StringName, day: int) -> OwnedAntique:
+func add(definition_id: StringName, day: int, condition: int = 100, identified: bool = false) -> OwnedAntique:
 	var item := OwnedAntique.new()
 	item.instance_id = StringName("A%06d" % _next_id)
 	_next_id += 1
 	item.definition_id = definition_id
 	item.acquired_day = day
+	item.condition = clampi(condition,0,100)
+	item.identified = identified
 	_items.append(item)
 	changed.emit()
 	return item
