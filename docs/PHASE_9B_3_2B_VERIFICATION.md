@@ -147,3 +147,12 @@ Godot_v4.6.2-stable_win64_console.exe --headless --path . --quit-after 10 -- --p
 没有新增场景复制、插件、Boss/怪/遗物或存档版本。固定Room矩形和当前简单AI保持；离线格子校验不是全尺寸导航证明，有限自动驾驶也无法证明不存在所有绕掩体策略。中央稳定圆柱路径已删除，但“同组合不同打法、连续5～10房空间变化、Boss无永久安全绕柱点”必须人工试玩，当前未标人工通过。
 
 正式GameFlow试玩使用隔离测试profile；不使用F2加物。交付后停止，不合并main、不再调Boss Pressure，等待人工验收。
+
+## 9B.3.2a-c 顺序复验：B补齐（2026-10-08）
+
+A提交51909c6之后继续现有架构，新增WIDE_OPEN：生产普通池13种（OPEN/WIDE_OPEN都无实体障碍，WIDE标签预留弹幕/高速空间语义，不扩房尺寸）。四角Boss掩体现在是真实四角小棺，中心仍开放。大帅兼容OPEN/WIDE_HALL。RoomGeometryPlan升级GEOMETRY_VERSION2：中央weight12，其它8，每层ceil(COMBAT/10)有限配额，允许小层偶发中央布局；整体占比由1000Seed统计断言<=10%保护。
+
+1000Seed五层共42032战斗房，中央3549（8.4436%，低于硬上限，略高于建议5～8%）；13种均覆盖，邻接重复0，Boss中央柱0，十Boss所有兼容Arena覆盖。390种Encounter/Geometry配对验证全波出生无墙内/入口封堵；四入口与活动区洪泛连通。新增风险拓扑/events/secret/fork独立随机流比较；地图/Boss/Relic/Antique/cache原断言继续保留。
+
+图形专项206582项0失败：13普通Geometry、6Arena与铜甲SIDE_WALLS/双生DUAL_OPEN/镇兽OPEN/墓主人EDGE_COVER截图均生成于ignored logs；目检四角Arena与真实Boss/召唤。R稳定、N变化、实际清房过门、五层回馆通过。Softlock1030项0失败。自动驾驶位置选择不是人工难度结论，空间打法与永久绕掩体问题仍需最终人工验收。
+B全回归21套291528项、0失败；加Softlock共292558项、0失败。导入/隔离Profile正式入口启动正常。

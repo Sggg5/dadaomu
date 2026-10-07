@@ -2,7 +2,7 @@
 [ext_resource type="Script" path="res://scripts/rooms/room_geometry_definition.gd" id="1"]
 [resource]
 script = ExtResource("1")
-id = &"CENTRAL_COFFIN"
-selection_weight = 12
-tags = Array[StringName]([&"CENTRAL_BIG", &"COFFIN"])
-obstacles = Array[Rect2]([Rect2(604,312,72,112)])
+id = &"WIDE_OPEN"
+selection_weight = 8
+tags = Array[StringName]([&"WIDE", &"BARRAGE"])
+obstacles = Array[Rect2]([])

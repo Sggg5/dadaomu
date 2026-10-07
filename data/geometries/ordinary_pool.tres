@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="RoomGeometryPool" load_steps=14 format=3]
+[gd_resource type="Resource" script_class="RoomGeometryPool" load_steps=15 format=3]
 [ext_resource type="Script" path="res://scripts/rooms/room_geometry_pool.gd" id="1"]
 [ext_resource type="Resource" path="res://data/geometries/open.tres" id="2"]
 [ext_resource type="Resource" path="res://data/geometries/offset_coffin.tres" id="3"]
@@ -12,7 +12,8 @@
 [ext_resource type="Resource" path="res://data/geometries/scattered_small_cover.tres" id="11"]
 [ext_resource type="Resource" path="res://data/geometries/water_channel.tres" id="12"]
 [ext_resource type="Resource" path="res://data/geometries/central_coffin.tres" id="13"]
+[ext_resource type="Resource" path="res://data/geometries/wide_open.tres" id="14"]
 [resource]
 script = ExtResource("1")
 id = &"ORDINARY_GEOMETRY"
-geometries = Array[Resource]([ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5"), ExtResource("6"), ExtResource("7"), ExtResource("8"), ExtResource("9"), ExtResource("10"), ExtResource("11"), ExtResource("12"), ExtResource("13")])
+geometries = Array[Resource]([ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5"), ExtResource("6"), ExtResource("7"), ExtResource("8"), ExtResource("9"), ExtResource("10"), ExtResource("11"), ExtResource("12"), ExtResource("13"), ExtResource("14")])

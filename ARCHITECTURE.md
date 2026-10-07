@@ -447,3 +447,4 @@ Controller接收Session.run_seed，调用Pool选择并注入Room.antique_definit
 Controller创建AntiqueInventoryPanel，注入Inventory与can_manage回调；Panel只是Tab/选择/Delete UI，不查Session，不暂停战斗。HUD底部局部订阅changed更新槽位/估值；死亡和完成隐藏Panel。库存只持定义，无Pickup/UI引用。
 
 RunCarryState增加antique_definitions，旧World/Panel释放、新Player加入新库存并更新新HUD；不搬节点。Session通关构建RunResult.antique_names/antique_value数值快照，结算独立ScrollContainer与固定R/N提示，不持Inventory或Resource。R/N仍整Run重建，HP/遗物与奖励规则不改。没有死亡掉落、钱包、永久货币或磁盘写入。
+`RoomGeometryPlan.GEOMETRY_VERSION=2`，中央有限配额ceil(COMBAT/10)，邻接去重；普通池13种。Boss四角Arena保持四入口及中心开放；风险事件独立流有专项比较。

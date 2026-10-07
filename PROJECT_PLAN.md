@@ -273,3 +273,4 @@ HP倍率仍1.00/1.15/1.30；伤害倍率改1.00/1.15/1.35。三Tier实际咬击1
 从main 8b19dfb在codex/phase-7a-antique-inventory完成8件古董只读Definition、独立池/8格库存、安全古董房E拾取、Tab/Delete管理、HUD、跨层保留与本Run通关估值。完整验证见docs/PHASE_7A_VERIFICATION.md。
 
 本阶段古董没有战斗效果和永久经济，价值只是原型数字。未实现撤离、死亡掉落、黑市、出售、永久货币、鉴定/真假、存档或新Boss/第三层。后续7B范围等待授权，完成提交push后停止。
+9B.3.2a生命周期已提交51909c6；9B.3.2b补齐WIDE_OPEN/四角Arena/风险流隔离，保留既有空间解耦。完成B回归后才执行C玩家成长/体型。

@@ -1,7 +1,7 @@
 class_name RoomGeometryPlan
 extends RefCounted
 ## 后装配空间，不修改DungeonLayout/模板/任何其它RNG。稳定邻居去重与中央障碍配额。
-const GEOMETRY_VERSION:int=1
+const GEOMETRY_VERSION:int=2
 var assigned:Dictionary[StringName,RoomGeometryDefinition]={}
 static func pick(run_seed:int,floor_number:int,room_id:StringName,pool_id:StringName,candidates:Array[RoomGeometryDefinition])->RoomGeometryDefinition:
 	assert(not candidates.is_empty(),"No legal geometry candidates")
@@ -24,7 +24,8 @@ static func build(run_seed:int,floor_number:int,layout:DungeonLayout,pool:RoomGe
 	var count:=0
 	for id in ids:
 		if layout.rooms[id].room_type==RoomDefinition.Type.COMBAT:count+=1
-	var central_budget:=int(count/10.0)
+	# 小层也允许偶发中央布局；有限配额防止同层大量堆柱，整体占比由1000Seed专项守住。
+	var central_budget:=int(ceil(count/10.0))
 	for id in ids:
 		var room:=layout.rooms[id]
 		if room.room_type!=RoomDefinition.Type.COMBAT:

@@ -5,4 +5,4 @@ script = ExtResource("1")
 id = &"BOSS_CORNER_COVER"
 selection_weight = 8
 tags = Array[StringName]([&"CORNER_COVER"])
-obstacles = Array[Rect2]([Rect2(224,208,56,48), Rect2(1000,480,56,48)])
+obstacles = Array[Rect2]([Rect2(224,208,56,48), Rect2(1000,208,56,48), Rect2(224,480,56,48), Rect2(1000,480,56,48)])

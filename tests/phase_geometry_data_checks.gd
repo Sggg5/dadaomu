@@ -20,12 +20,15 @@ func run()->void:
 		for floor_number in range(1,6):
 			var layout:=TombFloorGenerator.generate(seed_value,floor_number,TOMB)
 			var signature:=layout.signature()
+			var risk_before:=TombExplorationPlan.build(layout,seed_value,floor_number)
 			var antique_before:=RoomController.ANTIQUE_POOL.pick(seed_value,floor_number,layout.antique_id,&"antique_room").id
 			var profile:=TOMB.floor_at(floor_number).antique_reward_profile
 			var profiled_before:=RoomController.ANTIQUE_POOL.pick_profiled(seed_value,floor_number,layout.antique_id,&"antique_room",profile).id
 			var loot_before:=AntiqueLootService.new()
 			loot_before.configure(seed_value,floor_number,layout,1)
 			var plan:=RoomGeometryPlan.build(seed_value,floor_number,layout,POOL)
+			var risk_after:=TombExplorationPlan.build(layout,seed_value,floor_number)
+			test.check(risk_before.layout.signature()==risk_after.layout.signature() and risk_before.events==risk_after.events and risk_before.secret_id==risk_after.secret_id and risk_before.fork==risk_after.fork,"Geometry cannot disturb risk-event independent random stream")
 			test.check(plan.signature()==RoomGeometryPlan.build(seed_value,floor_number,layout,POOL).signature(),"Independent geometry determinism")
 			test.check(layout.signature()==signature,"Geometry leaves topology/template signature unchanged")
 			for id in plan.assigned:
