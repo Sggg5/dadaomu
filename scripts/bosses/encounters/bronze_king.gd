@@ -11,8 +11,10 @@ func _tick_ai(delta:float)->void:
 	if state==&"RECOVERY" and broken<=0:armor_direction=aim_direction
 	super._tick_ai(delta)
 func choose_actions(_distance:float)->Array:
-	if cycles%2==0:return [action(&"CHARGE",0.65,18,{"speed":450,"duration":0.65})]
-	return [action(&"CIRCLE",0.8,18,{"count":1,"spread":0,"centered":true,"radius":155}),action(&"CIRCLE",0.65,18,{"count":1,"spread":0,"centered":true,"radius":155})] if phase_index>=2 else [action(&"CIRCLE",0.8,18,{"count":1,"spread":0,"centered":true,"radius":155})]
+	var charge:=action(&"CHARGE",0.65,18,{"speed":450,"duration":0.65,"gap":0.1})
+	var slam:=action(&"CIRCLE",0.8,18,{"count":1,"centered":true,"radius":155,"gap":0.1})
+	if cycles%2==0:return [charge,slam] if phase_index>=2 or pressure_due() else [charge]
+	return [slam,action(&"CIRCLE",0.65,18,{"count":1,"centered":true,"radius":155,"gap":0.1}),charge] if phase_index>=2 or cycles%4==3 else [slam]
 func _on_skill_finished(kind:StringName)->void:
 	if (kind==&"CHARGE" and wall_hit) or (kind==&"CIRCLE" and (global_position.distance_to(target.global_position)>155 or not has_line_to_target())):
 		broken=2.5

@@ -9,3 +9,5 @@ display_name = "纸扎将军"
 max_hp = 500.0
 move_speed = 90.0
 body_color = Color(0.87,0.78,0.52,1)
+boss_recovery_time = 0.7
+combo_recovery_time = 1.05

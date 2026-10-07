@@ -18,7 +18,9 @@ func _tick_ai(delta:float)->void:
 	for i in range(segments.size()):segments[i].position=-forward*float((i+1)*26)+forward.orthogonal()*sin(cycles+i)*8
 func _init()->void:phase_thresholds=[0.5,0.25]
 func choose_actions(_distance:float)->Array:
-	if phase_index==3:return [action(&"CURVE",0.65,14,{"speed":500,"duration":0.65}),action(&"SWEEP",0.7,16)]
+	if phase_index>=2 or pressure_due() or cycles%4==3:
+		if cycles%2==0:return [action(&"EGGS",0.8,0,{"count":2,"gap":0.05}),action(&"CURVE",0.8,14,{"speed":430,"duration":0.75,"gap":0.05}),action(&"SWEEP",0.7,16)]
+		return [action(&"CURVE",0.65,14,{"speed":500,"duration":0.65,"gap":0.05}),action(&"SWEEP",0.7,16)]
 	match cycles%3:
 		0:return [action(&"CURVE",0.8,14,{"speed":430,"duration":0.75})]
 		1:return [action(&"EGGS",0.8,0,{"count":3})]

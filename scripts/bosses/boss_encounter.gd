@@ -106,15 +106,21 @@ func _on_defeated() -> void:
 	enemy_killed.emit(boss)
 	defeated.emit()
 
-func create_eggs(count:int)->void:
+func create_eggs(count:int,cap:int=4)->void:
 	if stopped or finished or not is_instance_valid(boss) or boss.health.is_dead:return
 	var alive_eggs:Array[BossEgg]=[]
 	for egg in eggs:
 		if is_instance_valid(egg) and not egg.health.is_dead:alive_eggs.append(egg)
 	eggs=alive_eggs
+	cap=clampi(cap,0,4)
+	# Phase-specific cap retires excess eggs without kills/rewards or deferred hatch.
+	while eggs.size()>cap:
+		var extra:BossEgg=eggs.pop_back()
+		extra.stop_ai()
+		extra.queue_free()
 	var reserved:Array[Vector2]=[boss.position]
 	for egg in eggs:reserved.append(egg.position)
-	for i in range(mini(count,4-eggs.size())):
+	for i in range(mini(count,cap-eggs.size())):
 		var point:=safe_point(boss.position+Vector2.RIGHT.rotated(i*TAU/maxi(1,count))*130,18,reserved,80)
 		if not point.is_finite():continue
 		reserved.append(point)

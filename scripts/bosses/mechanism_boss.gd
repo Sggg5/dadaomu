@@ -3,8 +3,10 @@ extends Enemy
 ## 共享有限技能执行器。子类决定阶段/决策/组合；不读取Build或奖励，不用全局RNG。
 signal summon_requested(count:int)
 signal cycle_completed
+signal cycle_started
 var phase_index:int=1
 var phases_seen:Dictionary={1:true}
+var phase_actions:Dictionary={}
 var skills_executed:int=0
 var skill_history:Array[StringName]=[]
 var combinations:int=0
@@ -23,25 +25,64 @@ var path_points:PackedVector2Array=[]
 var path_time:float=0
 var dash_origin:Vector2
 var owned:Array[WeakRef]=[]
+var cycle_history:Array[bool]=[]
+var pressure_cycles:int=0
+var _cycle_combo:bool=false
+var transition_remaining:float=0
+var transition_count:int=0
+var phase_skip_count:int=0
+## Recent cycles belong to this actor, independent of Player Build and global randomness.
+func pressure_due()->bool:
+	return cycle_history.size()>=3 and not cycle_history.slice(-3).has(true)
+func recovery_duration()->float:
+	var data:=definition as BossDefinition
+	return data.combo_recovery_time if _cycle_combo else data.boss_recovery_time
+func take_damage(amount:float)->bool:
+	var accepted:=super.take_damage(amount*0.5 if transition_remaining>0 else amount)
+	if accepted and not health.is_dead:_update_phase()
+	return accepted
+func _update_phase()->void:
+	var next:=1
+	for threshold in phase_thresholds:
+		if health.current_hp/health.max_hp<=threshold:next+=1
+	if next<=phase_index:return
+	phase_skip_count+=maxi(0,next-phase_index-1)
+	phase_index=next
+	phases_seen[next]=true
+	transition_count+=1
+	transition_remaining=0.4
+	# Discard in-flight warnings and dash plans together, so an expired warning never resumes damage.
+	for ref in owned:
+		var node:=ref.get_ref() as Node
+		if is_instance_valid(node):node.queue_free()
+	owned.clear()
+	pending.clear()
+	state=&"TRANSITION"
+	timer=0.5
+	telegraphing=false
+	velocity=Vector2.ZERO
 func action(kind:StringName,warning:float=0.8,damage:float=14,args:Dictionary={})->Dictionary:
 	var value:Dictionary={"kind":kind,"warning":warning,"damage":damage}
 	value.merge(args,true)
 	return value
 func choose_actions(_distance:float)->Array:return [action(&"FAN")]
 func _tick_ai(delta:float)->void:
-	var fraction:=health.current_hp/health.max_hp
-	phase_index=1
-	for threshold in phase_thresholds:
-		if fraction<=threshold:phase_index+=1
-	phases_seen[phase_index]=true
+	transition_remaining=maxf(0,transition_remaining-delta)
+	_update_phase()
 	timer-=delta
 	match state:
+		&"TRANSITION":
+			if timer<=0:state=&"RECOVERY";timer=0.05
 		&"INTRO",&"RECOVERY":
 			velocity=Vector2.ZERO
 			if timer<=0 and may_attack:
 				pending=choose_actions(global_position.distance_to(target.global_position))
 				cycles+=1
-				if pending.size()>1:combinations+=1
+				_cycle_combo=pending.size()>1
+				if _cycle_combo:combinations+=1;pressure_cycles+=1
+				cycle_history.append(_cycle_combo)
+				if cycle_history.size()>8:cycle_history.pop_front()
+				cycle_started.emit()
 				_next_action()
 		&"WINDUP":
 			velocity=Vector2.ZERO
@@ -52,7 +93,7 @@ func _tick_ai(delta:float)->void:
 func _next_action()->void:
 	if pending.is_empty():
 		state=&"RECOVERY"
-		timer=1.0
+		timer=recovery_duration()
 		telegraphing=false
 		velocity=Vector2.ZERO
 		cycle_completed.emit()
@@ -120,6 +161,7 @@ func zone(shape:BossTelegraph.Shape,point:Vector2,radius:float,warning:float,dam
 func _execute()->void:
 	telegraphing=false
 	skills_executed+=1
+	phase_actions[phase_index]=phase_actions.get(phase_index,0)+1
 	skill_history.append(current.kind)
 	var kind:StringName=current.kind
 	match kind:
@@ -128,7 +170,7 @@ func _execute()->void:
 			for i in range(10):EnemyVolley.fire(self,Vector2.RIGHT.rotated(i*TAU/10+cycles*0.15),1,0,current.damage,190)
 		&"SUMMON":summon_requested.emit(current.get("count",2))
 		&"EGGS":
-			if encounter_room.boss_encounter!=null:encounter_room.boss_encounter.create_eggs(current.get("count",3))
+			if encounter_room.boss_encounter!=null:encounter_room.boss_encounter.create_eggs(current.get("count",3),current.get("egg_cap",4))
 		&"BARRIER":
 			for i in [-1,1]:
 				var point:=encounter_room.to_global(Vector2(640+i*160,220))
@@ -186,6 +228,9 @@ func stop_ai()->void:
 		var node:=ref.get_ref() as Node
 		if is_instance_valid(node):node.queue_free()
 	owned.clear()
+func _draw()->void:
+	super._draw()
+	if state==&"TRANSITION":draw_arc(Vector2.ZERO,48+sin(timer*24)*5,0,TAU,48,Color("ffb749"),5)
 func _draw_body(color:Color)->void:
 	draw_circle(Vector2.ZERO,28,color)
 	draw_arc(Vector2.ZERO,34,-PI/2,-PI/2+TAU*(health.current_hp/health.max_hp),32,Color("cfa471"),3)

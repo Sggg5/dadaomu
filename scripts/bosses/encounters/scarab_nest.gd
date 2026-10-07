@@ -2,7 +2,8 @@ extends MechanismBoss
 ## 虫卵/虫群教学→换位错拍→有限虫卵与慢环收尾。
 func _init()->void:phase_thresholds=[0.65,0.3]
 func choose_actions(_distance:float)->Array:
-	if phase_index==3:return [action(&"RING",0.7,7),action(&"CHARGE",0.6,12,{"speed":260,"duration":0.6})] if cycles%2==0 else [action(&"EGGS",0.7,0,{"count":1})]
+	if pressure_due() or phase_index==3 or cycles%4==3:
+		return [action(&"EGGS",0.7,0,{"count":2,"egg_cap":2 if phase_index==3 else 4,"gap":0.0}),action(&"RING",0.5,9,{"gap":0.05}),action(&"CHARGE",0.6,12,{"speed":300,"duration":0.6})]
 	match cycles%3:
 		0:return [action(&"EGGS",0.7,0,{"count":3}),action(&"CHARGE",0.6,10,{"speed":260,"duration":0.4})] if phase_index==2 else [action(&"EGGS",0.7,0,{"count":3})]
 		1:return [action(&"FAN",0.7,7,{"count":5,"speed":240})]

@@ -64,6 +64,11 @@ func run()->void:
 				await test.frames(3)
 			var world:=session.world
 			world.boss_definition=definition
+			# A fixed-position firing probe requires open LOS. Moving/specific-wall suites
+			# keep real obstacles; otherwise a twin moving behind a coffin is a timeout,
+			# rather than a measurement of standing still against the new combo rhythm.
+			world.layout.rooms[world.layout.boss_id].definition=world.layout.rooms[world.layout.boss_id].definition.duplicate()
+			world.layout.rooms[world.layout.boss_id].definition.obstacles=[]
 			var plan:=RelicRewardPlan.build(77,5,RelicRewardService.PRODUCTION_POOL)
 			var index:=0
 			for source in plan.assigned:

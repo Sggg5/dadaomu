@@ -57,7 +57,7 @@ func run()->void:
 			var phases:Dictionary=boss.get("phases_seen")
 			test.check(phases.size()>=2,"Real HP loss activates Boss phases: "+str(definition.id))
 			test.check(int(boss.get("skills_executed"))>=3,"Multiple real skills execute: "+str(definition.id))
-			if boss is MechanismBoss:test.check(boss.combinations>0 and boss.state in [&"RECOVERY",&"WAIT",&"WINDUP",&"DASH"],"Boss combines skills with explicit recovery state")
+			if boss is MechanismBoss:test.check(boss.combinations>0 and boss.state in [&"RECOVERY",&"WAIT",&"WINDUP",&"DASH",&"TRANSITION"],"Boss combines skills with explicit recovery/transition state")
 			test.capture(str(definition.id)+"_phase_low")
 			var old_room:=world.current_room
 			world.player.health.take_damage(9999)

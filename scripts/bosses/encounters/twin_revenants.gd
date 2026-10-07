@@ -3,6 +3,12 @@ extends Enemy
 var members:Array[TwinAvatar]=[]
 var turn:int=0
 var skills_executed:int=0
+var cycles:int=0
+var combinations:int=0
+var support_actions:int=0
+var retired_actions:int=0
+var phase_skip_count:int=0
+var phase_actions:Dictionary={}
 var phases_seen:Dictionary={1:true}
 func _ready()->void:
 	super._ready()
@@ -24,6 +30,7 @@ func _ready()->void:
 		child.may_attack=i==0
 		child.get_node("Health").changed.connect(_member_changed)
 		child.cycle_completed.connect(_advance_turn.bind(i))
+		child.cycle_started.connect(_support.bind(i))
 		child.killed.connect(_member_dead.bind(i))
 		members.append(child)
 		add_child(child)
@@ -46,11 +53,27 @@ func _advance_turn(index:int)->void:
 	turn=1-index
 	for i in range(members.size()):
 		if is_instance_valid(members[i]):members[i].may_attack=i==turn
+func _support(index:int)->void:
+	cycles+=1
+	if members[index]._cycle_combo:combinations+=1
+	phase_actions[2 if members[index].solo else 1]=phase_actions.get(2 if members[index].solo else 1,0)+1
+	if combat_targets().size()!=2 or cycles%3!=0:return
+	# The secondary body adds one delayed area, without entering a second attack windup.
+	var partner:=members[1-index]
+	partner.zone(BossTelegraph.Shape.CIRCLE,target.global_position,64,1.1,12)
+	support_actions+=1
+	combinations+=1
 func _member_dead(index:int)->void:
+	retired_actions+=members[index].skills_executed
+	phase_skip_count+=members[index].phase_skip_count
 	phases_seen[2]=true
 	var survivor:=members[1-index]
 	if is_instance_valid(survivor) and not survivor.health.is_dead:survivor.solo=true;survivor.may_attack=true
-func _tick_ai(_delta:float)->void:velocity=Vector2.ZERO
+func _tick_ai(_delta:float)->void:
+	velocity=Vector2.ZERO
+	skills_executed=retired_actions
+	for actor in members:
+		if is_instance_valid(actor) and not actor.health.is_dead:skills_executed+=actor.skills_executed
 func stop_ai()->void:
 	super.stop_ai()
 	for actor in members:

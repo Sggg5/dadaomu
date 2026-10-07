@@ -13,3 +13,6 @@ extends EnemyDefinition
 @export var phase_two_threshold: float = 0.5
 @export var decision_cooldown: float = 1.0
 @export var phase_two_cooldown_multiplier: float = 0.8
+## Production mechanism rhythm; historical Boss actors retain their original cooldown fields.
+@export_range(0.45, 1.3) var boss_recovery_time: float = 0.8
+@export_range(0.9, 1.3) var combo_recovery_time: float = 1.05

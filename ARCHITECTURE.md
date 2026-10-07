@@ -1,6 +1,16 @@
 # 技术架构
 
-## Phase 9B.3.2：Boss Pool与机制重构（当前实现，人工待验收）
+## Phase 9B.3.3：Boss压力调优（当前实现，人工待验收）
+
+基线 `9f3ced053ea8e0f6e3ce3115fb4dbaeb715f7288`，继续 `codex/phase-9b-multifloor-endurance`，只commit/push，不合并main、不进入下一阶段。十Boss通过静态连段和近期Cycle历史提高压力；不按Player Build/DPS/HP/携货/Museum缩放。BossRunPlan VERSION1、随机池与所有独立随机流保持。
+
+MechanismBoss使用BossDefinition.boss_recovery_time（F1→F5：0.9/0.8/0.7/0.6/0.55s）及combo_recovery_time（1.05～1.1s）。每3个普通Cycle后优先高压轮；阶段转换0.5s可视反馈，跨阈值第一击全额，随后0.4s×0.5减伤，无无敌/锁血/DPS上限。转换取消旧预警与旧冲锋计划，不能恢复无预警攻击。生产HP辅助调整F1+25%、F2/F4+20%、百足+20%、F5+30%；纸将军500不改。历史Boss数据/Actor保持。
+
+母巢卵→环→短冲、老尸拍击/冲撞接手、大帅距离连段、铁索钩→扫、百足卵/曲线→腐液→尾扫、铜甲冲/砸、双生每3共享轮副方地圈且孤煞恢复×0.82、镇兽低血三段、墓主人场地命令接本体攻击；纸将军仅提高假身存在和低血旋转。组合后保留输出窗口。普通怪/36遗物/RewardPlan v3/13来源/80HP/0.25s受伤无敌/8格/F2+15/F4+20/经济/Profile v4均冻结。
+
+`tests/phase_9b33_smoke.gd`覆盖自然3/5/8/11/13遗物十Boss、移动/站桩、实际技能/阶段/连段/HP损失与五层真实回馆；站桩用无障碍夹具，移动保留真实障碍。自动驾驶可瞬移到安全点，不是真人难度或时长结论。详见 `docs/PHASE_9B_3_3_VERIFICATION.md`。此前普通房2敌人不可见卡门反馈仍未复现/解决，不得标为已修复。
+
+## Phase 9B.3.2：Boss Pool与机制重构（历史基线）
 
 基于 `0a5cb37a6f6314c8f232131da07d5ddd15777245`，继续 `codex/phase-9b-multifloor-endurance`。9B.3三局人工已出现完整通关、F4撤离和死亡丢货，普通怪/Build方向保留。本次只新增随机Boss遭遇与机制，不合并main、不进入下一阶段。
 
