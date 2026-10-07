@@ -1,6 +1,23 @@
 # 项目开发计划
 
-## Phase 7B：贪心与撤离（当前授权和实现）
+## Phase 8A：博物馆昼夜循环（当前授权）
+
+基准 main 0a8784d193b6c96471538027fe0d00dfba2c1c46；工作分支 codex/phase-8a-museum-day-night-loop。仅实现可玩昼夜闭环，验证后提交并push，不合并main、不进入8B。旧阶段章节为历史，以本节授权为准。没有磁盘存档；门票现金仅本进程记录，无消费、出售、拍卖、鉴定、真假、修复、员工、成本、扩建或新墓穴。
+
+GameFlow持有MuseumState、日期、阶段和当前RunResult，只装配Museum与现有DungeonSession。MORNING自由布展→售票台E开馆→OPEN游客营业→停止进客并等现有游客离开→EVENING→情报板E进入NIGHT→结算E回馆→次日MORNING。营业是可选的：MORNING可从情报板E直接下墓；OPEN可从情报板E提前闭馆并出发，停止进客、现客离场后自动进入NIGHT，无需等满60秒。跳过营业不产生票款，当日营业统计为0。只在夜晚结果实际回馆时日期+1；R/N夜间重试不推进日期，也不转移战利品。
+
+OwnedAntique按instance_id/definition_id/acquired_day保存单件；MuseumCollection与夜间AntiqueInventory是不同对象。成功EXTRACTED/COMPLETED结果antique_ids逐件入藏，重复定义仍有不同实例ID；DEAD只显示遗失，无新入藏，已有收藏/展柜/现金不变。acquired_day记录实际出墓当晚日期，回馆后日期再+1。初始一件唐三彩马明确作为原型测试馆藏（day0），可关闭GameFlow.initial_test_collection。
+
+MuseumPlayer只有加减速移动、朝向和统一64px交互，不带Weapon/Health/RelicRuntime。3个DisplayCase按实例归属，场景真实显示名称/几何图标；同件不可双柜、不同重复件可以。E选择/查看、柜旁R撤展；白天没有删除/出售入口。营业中禁止调整，闭馆后恢复。库房无限，Tab/E关闭面板。
+
+MuseumBusiness默认营业60秒，10:00至17:00，票价¥5；目标clamp(10+floor(appeal*0.5),10,60)，同时最多8名，分批入场。Visitor独立RNG以museum_seed/day/index稳定派生，按已有展品吸引力加权选择、看一至两柜后离场，未展出藏品不会被选择，无展品也能安全营业。票款由游客和营业索引双重一次保护，实际售票人数可能小于目标。时间结束不再补客，所有现客退出后结算门票收入。
+
+主入口scenes/main/game_flow.tscn；scenes/main/dungeon_test.tscn仍可单独运行并保留R/N。DungeonSession可选hub_mode只增加结果/返回信号和E回馆，完全不知道展柜/游客/票款。夜间战斗数据、地图/掉落算法、两Boss和奖励2/4/7保持。
+
+详见docs/PHASE_8A_VERIFICATION.md。人工反馈与自动/图形验证分开记录，不以测试驾驶代替手感验收。完成本阶段后停止。
+
+
+## Phase 7B：贪心与撤离（历史验收）
 
 工作分支 codex/phase-7b-greed-extraction，基于 main 150390aba5b1efbb1321de453893c450cba963b7。用户授权验证后提交并 push，禁止合并 main。旧阶段条款是历史记录，当前以本节为准；禁止黑市、钱包、出售、鉴定、存档、第三层及新阶段。
 
@@ -32,7 +49,8 @@ Phase 1～7B 共 10 套回归均通过；专项 722 项、0 失败。用户人�
 | 6.5 镇墓兽与两层结局 | Boss场景数据驱动、镇墓兽三机制/狂暴、返回出口、RunResult结算 | 两层真实武器击杀→E通关→R/N新局，Phase1～6.5回归 |
 | 7A 古董拾取与有限背包 | 8件Definition/Pool、ANTIQUE底座、8格库存、Tab/Delete、跨层与结果估值 | 真实两层E拾取和武器击杀结算；Phase1～7A回归 |
 | 7B 贪心与撤离 | 陪葬匣、二层高稀有度、统一来源、撤离与死亡遗失 | 三条真实流程、背包取舍和全部回归通过 |
-| 8 单局 Run | Run 状态、深入/撤离、死亡、结算、重开 | 完整单局循环；收益结算幂等；重开不继承临时效果 |
+| 8A 博物馆昼夜闭环 | 馆藏实例、3展柜、自由走动交互、游客门票、夜晚安全转移 | 真实两日布展/营业/下墓/回馆；死亡保留原收藏与现金 |
+| 8B 后续经营 | 等待单独授权 | 不自动开始 |
 | 9 地面黑市 | 选择墓穴、鉴定、出售、收藏交互 | 返回黑市可处理收益并再次出发；买卖不可重复结算 |
 | 10 存档与永久解锁 | 版本化本地存档、收藏/货币/解锁持久化 | 重启恢复；损坏存档可安全回退；写入失败有提示 |
 | 11 UI/音效/反馈 | 统一 UI、受击/命中反馈、音效、基础设置 | 操作清晰、反馈及时；设置可保存；不遮挡攻击预警 |

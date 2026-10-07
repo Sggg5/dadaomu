@@ -5,6 +5,11 @@ const WORLD_SCENE: PackedScene = preload("res://scenes/main/room_test.tscn")
 const DEFAULT_CONFIG: DungeonConfig = preload("res://data/tombs/default_dungeon_config.tres")
 const WARLORD_BOSS: BossDefinition = preload("res://data/enemies/jinbei_warlord_corpse.tres")
 const TOMB_BEAST: BossDefinition = preload("res://data/enemies/tomb_guardian_beast.tres")
+signal result_ready(result: RunResult)
+signal run_started
+signal return_requested(result: RunResult)
+@export var hub_mode: bool = false
+var _returning: bool = false
 @export var config: DungeonConfig = DEFAULT_CONFIG
 @export var seed_value: int = 192034
 var run_seed: int
@@ -72,6 +77,7 @@ func _start_new_run(layout: DungeonLayout) -> void:
 	assert(layout != null)
 	if is_instance_valid(complete_screen): complete_screen.queue_free()
 	run_ended = false
+	_returning = false
 	bosses_defeated = 0
 	_defeated_floors.clear()
 	_drop_world()
@@ -87,6 +93,7 @@ func _start_new_run(layout: DungeonLayout) -> void:
 	add_child(rewards)
 	_assemble_world(layout)
 	_changing = false
+	run_started.emit()
 
 
 func _assemble_world(layout: DungeonLayout) -> void:
@@ -185,6 +192,7 @@ func _finish_run(outcome: RunResult.Outcome) -> bool:
 	result.bosses_defeated = bosses_defeated
 	result.antique_value = world.player.antiques.total_value()
 	for item in world.player.antiques.items():
+		result.antique_ids.append(item.id)
 		result.antique_names.append(item.display_name)
 		result.antique_values.append(item.base_value)
 	for id in world.player.relics.inventory.ids(): result.relic_names.append(world.player.relics.inventory.get_effect(id).definition.display_name)
@@ -198,5 +206,14 @@ func _finish_run(outcome: RunResult.Outcome) -> bool:
 	if outcome == RunResult.Outcome.DEAD: world.player.antiques.clear()
 	complete_screen = RunCompleteScreen.new()
 	complete_screen.result = result
+	complete_screen.hub_mode = hub_mode
+	complete_screen.return_requested.connect(_return_to_hub)
 	add_child(complete_screen)
+	result_ready.emit(result)
 	return true
+
+
+func _return_to_hub() -> void:
+	if not hub_mode or not run_ended or _returning: return
+	_returning = true
+	return_requested.emit(complete_screen.result)

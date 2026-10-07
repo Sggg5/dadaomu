@@ -8,3 +8,4 @@ description = "绘着卷草纹的小罐，釉色尚存。"
 base_value = 350
 slots = 2
 rarity = 0
+exhibit_appeal = 12

@@ -3,6 +3,8 @@ extends CanvasLayer
 ## 单纯展示不可变RunResult；Outcome明确决定安全带回或全部遗失，无永久经济。
 var result: RunResult
 var label: Label
+signal return_requested
+var hub_mode: bool = false
 
 
 func _ready() -> void:
@@ -46,5 +48,11 @@ func _ready() -> void:
 	actions.size.x = 860
 	actions.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	actions.add_theme_font_size_override("font_size",24)
-	actions.text = "[R] 同 Seed 再来一次    [N] 新地宫"
+	actions.text = "[E] 返回地面    [R] 同 Seed 重试    [N] 新地宫" if hub_mode else "[R] 同 Seed 再来一次    [N] 新地宫"
 	add_child(actions)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if hub_mode and event.is_action_pressed("interact") and not event.is_echo():
+		get_viewport().set_input_as_handled()
+		return_requested.emit()

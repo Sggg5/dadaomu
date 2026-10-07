@@ -1,0 +1,32 @@
+extends "res://tests/phase_7b_smoke.gd"
+const FLOW_SCENE: PackedScene = preload("res://scenes/main/game_flow.tscn")
+var flow: GameFlow
+
+
+func capture(name: String) -> void:
+	if DisplayServer.get_name() != "headless" and "--capture" in OS.get_cmdline_user_args():
+		RenderingServer.force_draw()
+		root.get_texture().get_image().save_png("res://logs/phase_8a_%s.png" % name)
+
+
+func run() -> void:
+	DirAccess.make_dir_recursive_absolute("res://logs")
+	var data = preload("res://tests/phase_8a_data_checks.gd").new(self)
+	await data.run()
+	var hub = preload("res://tests/phase_8a_hub_checks.gd").new(self)
+	await hub.run()
+	flow = FLOW_SCENE.instantiate() as GameFlow
+	var config := MuseumConfig.new()
+	config.open_duration = 5
+	config.visitor_speed = 1200
+	config.view_duration = 2
+	flow.museum_config = config
+	root.add_child(flow)
+	current_scene = flow
+	await frames(3)
+	var helper = preload("res://tests/phase_8a_flow_checks.gd").new(self,flow)
+	await helper.run()
+	flow.queue_free()
+	await frames(3)
+	print("[Phase 8A] %d checks, %d failures" % [checks,failures])
+	quit(0 if failures == 0 else 1)

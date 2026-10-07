@@ -3,9 +3,9 @@ config_version=5
 
 [application]
 config/name="大盗墓时代"
-run/main_scene="res://scenes/main/dungeon_test.tscn"
+run/main_scene="res://scenes/main/game_flow.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/description="原创盗墓主题 2D 房间式 Roguelite — Phase 5B 正式遗物奖励与 Build 协同"
+config/description="原创盗墓主题 2D Roguelite — Phase 8A 博物馆昼夜循环原型"
 
 [display]
 window/size/viewport_width=1280

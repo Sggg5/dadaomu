@@ -8,3 +8,4 @@ description = "镜背纹饰嵌有金银细线。"
 base_value = 1200
 slots = 2
 rarity = 2
+exhibit_appeal = 35

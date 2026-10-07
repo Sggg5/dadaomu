@@ -8,3 +8,4 @@ description = "三色釉彩交错，马首昂起。"
 base_value = 1600
 slots = 3
 rarity = 2
+exhibit_appeal = 50

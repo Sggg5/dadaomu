@@ -11,6 +11,7 @@ var relic_names: Array[String] = []
 var combat_clears: int
 var bosses_defeated: int
 var antique_names: Array[String] = []
+var antique_ids: Array[StringName] = []
 var antique_value: int
 var antique_values: Array[int] = []
 var floor_reached: int = 1

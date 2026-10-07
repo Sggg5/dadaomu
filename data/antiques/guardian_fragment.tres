@@ -8,3 +8,4 @@ description = "一块石刻残片，仍可辨认兽纹。"
 base_value = 3000
 slots = 3
 rarity = 3
+exhibit_appeal = 60

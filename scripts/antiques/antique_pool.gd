@@ -5,6 +5,12 @@ extends Resource
 const VERSION: int = 2
 
 
+func find_by_id(id: StringName) -> AntiqueDefinition:
+	for item in antiques:
+		if item.id == id: return item
+	return null
+
+
 func is_valid() -> bool:
 	var seen: Dictionary[StringName,bool] = {}
 	for item in antiques:

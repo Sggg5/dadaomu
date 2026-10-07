@@ -8,3 +8,4 @@ description = "刻有旧年号的银元，币面已有磨损。"
 base_value = 120
 slots = 1
 rarity = 0
+exhibit_appeal = 3

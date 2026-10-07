@@ -1,6 +1,23 @@
 # 大盗墓时代
 
-## Phase 7B：贪心与撤离（当前授权和实现）
+## Phase 8A：博物馆昼夜循环（当前授权）
+
+基准 main 0a8784d193b6c96471538027fe0d00dfba2c1c46；工作分支 codex/phase-8a-museum-day-night-loop。仅实现可玩昼夜闭环，验证后提交并push，不合并main、不进入8B。旧阶段章节为历史，以本节授权为准。没有磁盘存档；门票现金仅本进程记录，无消费、出售、拍卖、鉴定、真假、修复、员工、成本、扩建或新墓穴。
+
+GameFlow持有MuseumState、日期、阶段和当前RunResult，只装配Museum与现有DungeonSession。MORNING自由布展→售票台E开馆→OPEN游客营业→停止进客并等现有游客离开→EVENING→情报板E进入NIGHT→结算E回馆→次日MORNING。营业是可选的：MORNING可从情报板E直接下墓；OPEN可从情报板E提前闭馆并出发，停止进客、现客离场后自动进入NIGHT，无需等满60秒。跳过营业不产生票款，当日营业统计为0。只在夜晚结果实际回馆时日期+1；R/N夜间重试不推进日期，也不转移战利品。
+
+OwnedAntique按instance_id/definition_id/acquired_day保存单件；MuseumCollection与夜间AntiqueInventory是不同对象。成功EXTRACTED/COMPLETED结果antique_ids逐件入藏，重复定义仍有不同实例ID；DEAD只显示遗失，无新入藏，已有收藏/展柜/现金不变。acquired_day记录实际出墓当晚日期，回馆后日期再+1。初始一件唐三彩马明确作为原型测试馆藏（day0），可关闭GameFlow.initial_test_collection。
+
+MuseumPlayer只有加减速移动、朝向和统一64px交互，不带Weapon/Health/RelicRuntime。3个DisplayCase按实例归属，场景真实显示名称/几何图标；同件不可双柜、不同重复件可以。E选择/查看、柜旁R撤展；白天没有删除/出售入口。营业中禁止调整，闭馆后恢复。库房无限，Tab/E关闭面板。
+
+MuseumBusiness默认营业60秒，10:00至17:00，票价¥5；目标clamp(10+floor(appeal*0.5),10,60)，同时最多8名，分批入场。Visitor独立RNG以museum_seed/day/index稳定派生，按已有展品吸引力加权选择、看一至两柜后离场，未展出藏品不会被选择，无展品也能安全营业。票款由游客和营业索引双重一次保护，实际售票人数可能小于目标。时间结束不再补客，所有现客退出后结算门票收入。
+
+主入口scenes/main/game_flow.tscn；scenes/main/dungeon_test.tscn仍可单独运行并保留R/N。DungeonSession可选hub_mode只增加结果/返回信号和E回馆，完全不知道展柜/游客/票款。夜间战斗数据、地图/掉落算法、两Boss和奖励2/4/7保持。
+
+详见docs/PHASE_8A_VERIFICATION.md。人工反馈与自动/图形验证分开记录，不以测试驾驶代替手感验收。完成本阶段后停止。
+
+
+## Phase 7B：贪心与撤离（历史验收）
 
 工作分支 codex/phase-7b-greed-extraction，基于 main 150390aba5b1efbb1321de453893c450cba963b7。用户授权验证后提交并 push，禁止合并 main。旧阶段条款是历史记录，当前以本节为准；禁止黑市、钱包、出售、鉴定、存档、第三层及新阶段。
 
@@ -19,7 +36,7 @@ Phase 1～7B 共 10 套回归均通过；专项 722 项、0 失败。用户人�
 
 ## 当前状态
 
-当前 **Phase 7B 贪心、撤离与古董风险**（开发分支，未合并main）。默认 Seed 为 `192034`，每图 8～12 个房间，独立 RNG 可重现正交树状布局。START 固定在 (0,0)，Boss 是距离至少 5 的最远叶子，ANTIQUE 距离至少 2。
+当前 **Phase 8A 博物馆昼夜闭环**（开发分支，未合并main）。默认从博物馆开始；以下为夜间玩法说明。默认 Seed 为 `192034`，每图 8～12 个房间，独立 RNG 可重现正交树状布局。START 固定在 (0,0)，Boss 是距离至少 5 的最远叶子，ANTIQUE 距离至少 2。
 
 随机节点决定位置/连接/类型，五份原有普通房配置作为共享模板池。玩家、战斗、门和房间生命周期继续复用：首次进入锁门，击杀后开门，过门保留生命，重访已清场房不刷怪。
 
@@ -72,7 +89,7 @@ godot --path . -- --seed=192034
 | tests/ | 后续核心行为验证场景与脚本 |
 | docs/ | 后续设计记录和验证报告 |
 
-尚未实现的目录由 `.gitkeep` 保留。当前运行入口为 `scenes/main/dungeon_test.tscn`；`room_test.tscn` 是需注入布局的控制器装配场景，不直接 F6 运行。Phase 0/1 独立入口保留；Phase 2 原始十字图位于 `tests/fixtures/fixed_room_test.tscn`，原来的 204 个断言全部保留。
+尚未实现的目录由 `.gitkeep` 保留。当前运行入口为 `scenes/main/game_flow.tscn`，独立夜间入口为 `scenes/main/dungeon_test.tscn`；`room_test.tscn` 是需注入布局的控制器装配场景，不直接 F6 运行。Phase 0/1 独立入口保留；Phase 2 原始十字图位于 `tests/fixtures/fixed_room_test.tscn`，原来的 204 个断言全部保留。
 
 ## 文档与 Git
 
@@ -207,3 +224,15 @@ godot --path . --script res://tests/phase_7a_smoke.gd -- --capture
 ```
 
 详细资源表、实际拾取与回归结果见docs/PHASE_7A_VERIFICATION.md。当前分支codex/phase-7a-antique-inventory，提交push后停止，不合并main。
+
+## Phase8A 独立入口与测试
+
+```powershell
+godot --path . -- --seed=192034
+# 单独运行夜间（不经过博物馆）：
+godot --path . scenes/main/dungeon_test.tscn -- --seed=192034
+godot --headless --fixed-fps 60 --path . --script tests/phase_8a_smoke.gd
+godot --path . --disable-vsync --fixed-fps 60 --script tests/phase_8a_smoke.gd -- --capture
+```
+
+Phase1～8A最终回归2811项/0失败；8A专项与图形均718项/0失败。用户提出“不必一直等着”，已改为可跳过营业或提前闭馆出发；完整人工手感复验待完成。命令、文件列表和限制见 docs/PHASE_8A_VERIFICATION.md。

@@ -8,6 +8,7 @@ enum Rarity { COMMON, UNCOMMON, RARE, TREASURE }
 @export var base_value: int = 1
 @export var slots: int = 1
 @export var rarity: Rarity = Rarity.COMMON
+@export var exhibit_appeal: int = 1
 
 
 func is_valid() -> bool:

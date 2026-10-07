@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MuseumConfig" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/museum/museum_config.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+open_duration = 60.0
+ticket_price = 5
+base_visitors = 10
+max_active_visitors = 8
+visitor_speed = 320.0
+view_duration = 1.5
+player_speed = 300.0
