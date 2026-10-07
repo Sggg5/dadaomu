@@ -16,6 +16,8 @@ func run() -> void:
 	var hub = preload("res://tests/phase_8a_hub_checks.gd").new(self)
 	await hub.run()
 	flow = FLOW_SCENE.instantiate() as GameFlow
+	# 真实布展流程的测试夹具，不能依赖正式入口赠送馆藏。
+	flow.initial_test_collection = true
 	var config := MuseumConfig.new()
 	config.open_duration = 5
 	config.visitor_speed = 1200

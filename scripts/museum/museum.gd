@@ -5,7 +5,7 @@ signal night_requested
 var state: MuseumState
 var config: MuseumConfig
 var museum_seed: int = 192034
-var morning_notice: String = "原型初始馆藏：唐三彩马（用于首日布展）"
+var morning_notice: String = "早晨 · 可开馆，也可到情报板直接下墓"
 var player: MuseumPlayer
 var business: MuseumBusiness
 var collection_panel: MuseumCollectionPanel

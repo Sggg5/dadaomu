@@ -8,13 +8,15 @@ func _init(context: SceneTree) -> void: test = context
 
 func run() -> void:
 	var flow := preload("res://scenes/main/game_flow.tscn").instantiate() as GameFlow
-	flow.initial_test_collection = false
+	test.check(not flow.initial_test_collection,"Official entry defaults to no test collection")
 	var config := MuseumConfig.new()
 	config.open_duration = 2
 	config.visitor_speed = 1200
 	flow.museum_config = config
 	test.root.add_child(flow)
 	await test.frames(3)
+	test.check(flow.museum_state.collection.all_items().is_empty() and flow.museum_state.display_assignments.is_empty() and flow.museum_state.cash == 0,"Unmodified official entry begins with empty collection/displays/zero cash")
+	test.check(not flow.museum.message.text.contains("唐三彩马"),"Official morning notice does not advertise gifted test antique")
 	var business := flow.museum.business
 	test.check(business.active.is_empty() and business.spawned == 0,"Empty morning never generates visitors")
 	business.start()

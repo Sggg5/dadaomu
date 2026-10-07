@@ -29,7 +29,7 @@ OwnedAntique仅保存instance_id/definition_id/acquired_day。MuseumCollection�
 | 金丝玉佩 | 32 |
 | 镇墓兽残片 | 60 |
 
-吸引力固定配置，独立于base_value。原型初始一件唐三彩马（day0测试馆藏），通过GameFlow.initial_test_collection可以关闭，界面明确注明。
+吸引力固定配置，独立于base_value。正式主入口默认空馆藏/空展柜/零现金，不赠送古董。仅布展自动测试显式启用GameFlow.initial_test_collection，注入一件day0测试唐三彩马。
 
 MuseumState保存day_number/cash/collection/display_assignments/last_day_visitors/last_day_ticket_income。三柜各一件，按instance_id查重；一件不可双柜，重复定义不同实例可以。assign/unassign数据层也拒绝OPEN时修改；换展只是替换归属，撤展不删除馆藏。库房显示所有实例、名称、吸引力、估值、库房/展柜状态；无限容量，无出售/删除按钮。
 
@@ -101,3 +101,9 @@ foreach ($phase in @('1','2','3','4','5a','5b','6','6_5','7a','7b','8a')) {
 已打开游戏供用户试玩。用户反馈『其实不白天也可以下墓，不必一直等着吧』，已落实可跳过营业与提前闭馆两条实际入口；完整昼夜手感及新入口的人工复验待完成。图形程序驾驶与人工体验分开，不声称最终手感通过。
 
 几何占位，游客使用固定通道路线而非复杂寻路/避让，允许游客相互重叠；不是正式经营平衡。当前只有三柜和已完成墓穴；夜间默认Seed192034，可命令行指定和R/N重试。长馆藏名称列表可滚动，回馆提示为简短总览。藏品无白天删除/出售，门票现金暂不消费。所有长期状态仅在程序运行期，不保存；不做员工、成本、票价调整、扩建、专题展、任务、拍卖、鉴定、修复或8B内容。完成commit/push后停止，不合并main。
+
+## 正式入口取消测试赠品修复（2026-10-07）
+
+GameFlow.initial_test_collection默认false，正式场景没有true覆盖；Museum默认提示也不再显示测试唐三彩马。Phase8A完整布展测试显式启用夹具；空馆测试直接实例化未改参数的正式入口，新增验证默认开关关闭、馆藏/展柜为空、现金0、提示不含赠品。正式空馆仍可开馆或直接下墓，成功出墓入藏逻辑保持。
+
+本修复Godot导入/启动无错误，Phase8A专项721项/0失败，日志logs/phase_8a_no_gift_import.log、phase_8a_no_gift_start.log、phase_8a_no_gift_smoke.log。此前718项图形与全阶段回归保留为阶段历史结果，本修复未声称重跑所有旧阶段。仅修改默认值、提示、夹具与文档，不改战斗和收益规则。

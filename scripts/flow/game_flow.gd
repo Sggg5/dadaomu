@@ -6,7 +6,8 @@ const DUNGEON_SCENE: PackedScene = preload("res://scenes/main/dungeon_test.tscn"
 @export var museum_config: MuseumConfig = preload("res://data/museum/default_config.tres")
 @export var museum_seed: int = 192034
 @export var night_seed: int = 192034
-@export var initial_test_collection: bool = true
+# 仅自动测试显式启用；正式新游戏没有赠送馆藏。
+@export var initial_test_collection: bool = false
 var museum_state := MuseumState.new()
 var current_dungeon_result: RunResult
 var museum: Museum
