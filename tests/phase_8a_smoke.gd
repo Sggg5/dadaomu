@@ -18,6 +18,9 @@ func run() -> void:
 	var first_exhibit = preload("res://tests/phase_8a_first_exhibit_checks.gd").new(self)
 	await first_exhibit.run()
 	flow = FLOW_SCENE.instantiate() as GameFlow
+	# 旧功能固定Run夹具；正式派生Seed由9A专项另外覆盖。
+	flow.forced_night_seed = 192034
+	flow.campaign_seed_override = 52
 	# 历史回归使用原主图夹具；Phase9A单独覆盖正式探索入口。
 	flow.tomb_exploration_enabled = false
 	flow.profile_store = MuseumProfileStore.in_memory()

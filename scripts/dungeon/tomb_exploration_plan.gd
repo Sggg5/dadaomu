@@ -6,13 +6,16 @@ const ALTAR: TombRiskEvent = preload("res://data/dungeon/events/risk_altar.tres"
 const HIDDEN_REWARD: TombRiskEvent = preload("res://data/dungeon/events/hidden_reward.tres")
 const QUIET: RoomDefinition = preload("res://data/dungeon/events/quiet_chamber.tres")
 const CONFIG: TombExplorationConfig = preload("res://data/dungeon/events/exploration_config.tres")
-const VERSION: int = 1
+const VERSION: int = 2
 var layout: DungeonLayout
 var events: Dictionary[StringName, Array] = {}
 var secret_id: StringName = &""
 var secret_parent: StringName = &""
 var secret_side: int = -1
 var secret_discovered: bool = false
+var secret_inspected: bool = false
+var wall_marks: Dictionary[StringName, Array] = {}
+var checked_wall_marks: Dictionary[StringName, bool] = {}
 var fork: Array[StringName] = []
 
 static func build(base: DungeonLayout, run_seed: int, floor_number: int) -> TombExplorationPlan:
@@ -36,24 +39,31 @@ static func build(base: DungeonLayout, run_seed: int, floor_number: int) -> Tomb
 	for id in base.ordered_ids():
 		if base.rooms[id].room_type == RoomDefinition.Type.COMBAT: candidates.append(id)
 	candidates.sort_custom(func(a: StringName, b: StringName) -> bool:
-		var first := AntiquePool.stable_score(run_seed, floor_number, a, &"exploration", 1)
-		var second := AntiquePool.stable_score(run_seed, floor_number, b, &"exploration", 1)
+		var first := AntiquePool.stable_score(run_seed, floor_number, a, &"exploration", VERSION)
+		var second := AntiquePool.stable_score(run_seed, floor_number, b, &"exploration", VERSION)
 		return first < second or (first == second and str(a) < str(b)))
-	for index in range(mini(2, candidates.size())):
-		plan.events[candidates[index]] = [COFFIN]
 	var rng := RandomNumberGenerator.new()
-	rng.seed = AntiquePool.stable_score(run_seed, floor_number, &"FLOOR", &"exploration", 1)
+	rng.seed = AntiquePool.stable_score(run_seed, floor_number, &"FLOOR", &"exploration", VERSION)
 	# 在既有COMBAT连边旁加长度3的平行绕路，原安全边保留，绝不缩短Boss距离。
 	if rng.randf() < CONFIG.fork_chance: plan._attach_fork(candidates)
 	if rng.randf() < CONFIG.secret_chance: plan._attach_secret(candidates)
 	if not plan.fork.is_empty():
 		plan.events[plan.fork[2]] = [ALTAR]
-		if plan.secret_id != &"":
-			plan.events.erase(candidates[0])
-			plan.events[plan.secret_id] = [HIDDEN_REWARD, COFFIN]
-	elif plan.secret_id != &"": plan.events[plan.secret_id] = [HIDDEN_REWARD, ALTAR]
-	elif rng.randf() < CONFIG.standalone_altar_chance and candidates.size() > 2: plan.events[candidates[2]] = [ALTAR]
+	elif rng.randf() < CONFIG.standalone_altar_chance and candidates.size() > 1: plan.events[candidates[1]] = [ALTAR]
+	if plan.secret_id != &"": plan.events[plan.secret_id] = [HIDDEN_REWARD, COFFIN]
+	# 普通棺椁单独一次抽签，不按目标数量补发；暗室内事件不占此配额。
+	var coffin_rng := RandomNumberGenerator.new()
+	coffin_rng.seed = AntiquePool.stable_score(run_seed, floor_number, &"FLOOR", &"ordinary_coffin", VERSION)
+	if not candidates.is_empty() and coffin_rng.randf() < CONFIG.coffin_chance:
+		plan.events[&"RISK_PATH" if not plan.fork.is_empty() else candidates[0]] = [COFFIN]
+	WallMarkGenerator.decorate(plan, run_seed, floor_number)
 	return plan
+
+func inspect_wall_mark(mark: WallMarkDefinition) -> bool:
+	if checked_wall_marks.has(mark.id): return false
+	checked_wall_marks[mark.id] = true
+	if mark.is_secret: secret_inspected = true
+	return true
 
 func _add(id: StringName, coordinate: Vector2i, type: RoomDefinition.Type, depth: int) -> void:
 	var node := DungeonRoom.new()
@@ -81,9 +91,6 @@ func _attach_fork(candidates: Array[StringName]) -> void:
 				layout.connect_rooms(&"RISK_PATH", direction, &"RISK_REWARD")
 				layout.connect_rooms(&"RISK_REWARD", (perpendicular + 2) % 4, second.room_id)
 				fork = [id, &"RISK_PATH", &"RISK_REWARD", second.room_id]
-				events[&"RISK_PATH"] = [COFFIN]
-				# 总棺椁保持每层2个，避免新增路线提高按钮密度。
-				if candidates.size() > 1: events.erase(candidates[1])
 				return
 
 func _attach_secret(candidates: Array[StringName]) -> void:
@@ -91,6 +98,7 @@ func _attach_secret(candidates: Array[StringName]) -> void:
 		for side in range(4):
 			var coordinate := layout.rooms[id].coordinate + DungeonRoom.OFFSETS[side]
 			if layout.coordinates.has(coordinate): continue
+			if not WallMarkGenerator.accessible(layout.rooms[id].definition, WallMarkGenerator.anchor(side), side): continue
 			secret_id = &"SECRET_CHAMBER"
 			secret_parent = id
 			secret_side = side

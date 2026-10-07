@@ -174,22 +174,34 @@ func _attach_exploration() -> void:
 		content.events = exploration.events[current_id]
 		current_room.risk_content = content
 		current_room.add_child(content)
-	if current_id not in [exploration.secret_parent, exploration.secret_id] or exploration.secret_id == &"": return
+	for definition: WallMarkDefinition in exploration.wall_marks.get(current_id, []):
+		var mark := WallMark.new()
+		mark.definition = definition
+		mark.plan = exploration
+		mark.player = player
+		mark.position = definition.position
+		mark.can_inspect = _can_inspect_wall
+		mark.reveal_callback = _request_secret_traversal
+		current_room.add_child(mark)
+	if current_id != exploration.secret_id or exploration.secret_id == &"": return
 	var entrance := HiddenRoomEntrance.new()
 	entrance.player = player
-	entrance.is_return = current_id == exploration.secret_id
-	entrance.inspected = exploration.secret_discovered
-	var side := exploration.secret_side if not entrance.is_return else Door.opposite(exploration.secret_side)
-	entrance.position = current_room.get_entry_position(side) + Vector2.UP.rotated(side * PI / 2) * 40
-	entrance.can_enter = func() -> bool: return not run_finished and not transitioning and current_room.room_state.status == RoomState.Status.CLEARED and current_room.remaining_count() == 0 and not (is_instance_valid(current_room.risk_content) and current_room.risk_content.confirming)
+	var side := Door.opposite(exploration.secret_side)
+	entrance.position = WallMarkGenerator.anchor(side)
+	entrance.can_enter = _can_inspect_wall
 	entrance.enter = _request_secret_traversal
 	current_room.add_child(entrance)
+
+
+func _can_inspect_wall() -> bool:
+	return not run_finished and not transitioning and current_room.room_state.status == RoomState.Status.CLEARED and current_room.remaining_count() == 0 and not (is_instance_valid(current_room.risk_content) and current_room.risk_content.confirming)
 
 
 func _request_secret_traversal() -> bool:
 	if exploration == null or run_finished or transitioning or player.health.is_dead or not player.controls_enabled or current_room.remaining_count() > 0 or current_room.room_state.status != RoomState.Status.CLEARED: return false
 	var returning := current_id == exploration.secret_id
 	if not returning and current_id != exploration.secret_parent: return false
+	if not returning and not exploration.secret_inspected: return false
 	exploration.secret_discovered = true
 	transitioning = true
 	player.set_controls_enabled(false)
@@ -211,10 +223,16 @@ func _refresh_hud() -> void:
 	hud.show_room(layout.rooms[current_id], current_room.room_state, current_room.remaining_count())
 	if exploration != null and not exploration.secret_discovered and exploration.secret_id != &"":
 		var visible_layout := DungeonLayout.new()
+		# 过滤未发现暗室只改变可见节点，仍保留真实Seed与主图身份。
+		visible_layout.seed_value = layout.seed_value
+		visible_layout.start_id = layout.start_id
+		visible_layout.boss_id = layout.boss_id
+		visible_layout.antique_id = layout.antique_id
 		for id in layout.ordered_ids():
 			if id != exploration.secret_id: visible_layout.add_room(layout.rooms[id])
 		hud.show_map(visible_layout, states, current_id)
 	else: hud.show_map(layout, states, current_id)
+	hud.show_run_seed(run_seed, layout.seed_value)
 	hud.show_floor(floor_number, current_room.difficulty.depth, current_room.difficulty.tier)
 
 

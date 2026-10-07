@@ -7,7 +7,7 @@ func event_in(content: TombRiskContent, event: TombRiskEvent) -> TombRiskInterac
 		if child is TombRiskInteractable and child.event == event: return child
 	return null
 
-func fixture(kind: int) -> TombRiskContent:
+func fixture(kind: int, ambush_reward: bool = false) -> TombRiskContent:
 	var session := preload("res://scenes/main/dungeon_test.tscn").instantiate() as DungeonSession
 	test.session = session
 	test.root.add_child(session)
@@ -19,6 +19,7 @@ func fixture(kind: int) -> TombRiskContent:
 	event.id = StringName("fixture_%d" % kind)
 	event.weights = PackedInt32Array([0, 0, 0, 0])
 	event.weights[kind] = 1
+	event.ambush_reward = ambush_reward # 可选奖励生命周期夹具显式开启，不依赖生产默认。
 	var content := TombRiskContent.new()
 	content.room = world.current_room
 	content.room_id = world.current_id
@@ -49,7 +50,7 @@ func run() -> void:
 		var result := content.service.results[content.source(interactable.event)]
 		test.check(result.outcome == kind and not content.resolve(interactable.event, interactable.position), "Interaction resolves once%d" % kind)
 		if kind == TombRiskResult.Outcome.TRAP:
-			test.check(player.health.current_hp == hp - 15 and result.damage_taken == 15, "Trap formally damages Health once")
+			test.check(player.health.current_hp == hp - 20 and result.damage_taken == 20, "Trap formally damages Health by20 once")
 		elif kind == TombRiskResult.Outcome.EMPTY:
 			test.check(player.health.current_hp == hp and result.antique_ids.is_empty() and content.message.text.contains("空棺"), "Empty coffin has no consolation loot")
 		elif kind == TombRiskResult.Outcome.AMBUSH:
@@ -59,6 +60,7 @@ func run() -> void:
 			for enemy in content.ambush.get_children(): enemy.take_damage(10000)
 			await test.frames(3)
 			test.check(result.wave_completed and content.remaining() == 0 and test.session.rewards.combat_clears == old_clears and test.session.world.current_room.doors.values().all(func(door: Door) -> bool: return door.is_open), "Ambush defeat opens doors without duplicate COMBAT/relic clear")
+			test.check(result.antique_ids.is_empty() and content.get_node_or_null("RiskLoot_%s" % interactable.event.id) == null, "Official ambush gives no guaranteed antique or consolation reward")
 		if not result.antique_ids.is_empty():
 			var pickup := content.get_node("RiskLoot_%s" % interactable.event.id) as AntiquePedestal
 			var before_stats := player.stats.duplicate()
@@ -78,6 +80,47 @@ func run() -> void:
 		test.session.queue_free()
 		await test.frames(4)
 	await altar_boundary()
+	await trap_boundary()
+	await hidden_distance()
+
+func trap_boundary() -> void:
+	var content := await fixture(TombRiskResult.Outcome.TRAP)
+	var actor := event_in(content, content.events[0])
+	var player := test.session.world.player as Player
+	player.health.restore(20) # 独立致死边界，不用于正式主流程。
+	player.position = actor.position + Vector2(24, 0)
+	test.key(KEY_E)
+	test.key(KEY_E)
+	await test.frames(2)
+	test.check(player.health.is_dead and test.session.run_ended and content.service.results[content.source(actor.event)].damage_taken == 20, "Official20HP coffin mechanism can kill via Health")
+	test.session.queue_free()
+	await test.frames(3)
+
+func hidden_distance() -> void:
+	var content := await fixture(TombRiskResult.Outcome.EMPTY)
+	var entrance := WallMark.new()
+	entrance.player = test.session.world.player
+	entrance.definition = WallMarkDefinition.new()
+	entrance.definition.id = &"distance_fixture"
+	entrance.definition.side = 0
+	entrance.definition.inspect_result = "只是年代久远造成的破损。"
+	entrance.plan = test.session.world.exploration
+	entrance.can_inspect = func() -> bool: return true
+	entrance.reveal_callback = func() -> bool: return false
+	entrance.position = Vector2(400, 520)
+	content.room.add_child(entrance)
+	for distance in [64, 40, 32]:
+		entrance.player.position = entrance.position + Vector2(distance, 0)
+		await test.frames(1)
+		test.key(KEY_E)
+		test.check(not entrance.in_range() and entrance.label.text.is_empty() and not entrance.plan.checked_wall_marks.has(entrance.definition.id), "Wall clue has no E hint/interaction at%dpx" % distance)
+	entrance.player.position = entrance.position + Vector2(30, 0)
+	await test.frames(1)
+	test.check(entrance.in_range() and entrance.label.text == "[E] 检查墙面", "Neutral wall hint appears only within30px")
+	test.key(KEY_E)
+	test.check(entrance.plan.checked_wall_marks.has(entrance.definition.id), "Close-range E records wall inspection")
+	test.session.queue_free()
+	await test.frames(3)
 
 func altar_boundary() -> void:
 	var content := await fixture(TombRiskResult.Outcome.EMPTY)
@@ -89,20 +132,27 @@ func altar_boundary() -> void:
 	interactable.position = Vector2(950, 480)
 	content.add_child(interactable)
 	var player := test.session.world.player as Player
-	player.health.restore(15) # 单项致死边界；真实贪心死亡流程不注入HP。
+	player.health.restore(63) # 单项UI/致死边界；真实主流程不注入HP。
 	player.invulnerability_remaining = 10
 	var damage_events := {"count": 0}
 	player.health.damaged.connect(func(_amount: float) -> void: damage_events.count += 1)
 	player.position = interactable.position + Vector2(24, 0)
 	test.key(KEY_E)
+	test.check(interactable.confirmation_label.text.contains("63.0 → 38.0") and not interactable.confirmation_label.text.contains("这会导致死亡"), "Altar preview shows actual currentHP and25HP loss without false warning")
+	await test.frames(1)
+	test.capture("altar_safe_preview")
 	test.key(KEY_TAB)
-	test.check(player.health.current_hp == 15 and damage_events.count == 0, "Altar cancel leaves Health untouched")
+	test.check(player.health.current_hp == 63 and damage_events.count == 0, "Altar cancel leaves Health untouched")
+	player.health.restore(20)
 	test.key(KEY_E)
+	test.check(interactable.confirmation_label.text.contains("20.0 → 0.0") and interactable.confirmation_label.text.contains("警告：这会导致死亡"), "Altar explicitly warns fatal payment and still allows confirmation")
+	await test.frames(1)
+	test.capture("altar_fatal_preview")
 	test.key(KEY_E)
 	test.key(KEY_E)
 	await test.frames(3)
 	var result := content.service.results[content.source(event)]
-	test.check(player.health.is_dead and damage_events.count == 1 and result.damage_taken == 15 and result.antique_ids.size() == 1 and test.session.run_ended, "Altar cost bypasses defensive grace, formally kills once, generates one inaccessible offering")
+	test.check(player.health.is_dead and damage_events.count == 1 and result.damage_taken == 20 and result.antique_ids.size() == 1 and test.session.run_ended, "25HP altar cost formally kills20HP player once and produces only inaccessible offering")
 	test.check(player.antiques.items().is_empty() and not content.resolve(event, interactable.position), "Death cannot collect/retrigger altar reward")
 	test.session.queue_free()
 	await test.frames(4)

@@ -5,5 +5,5 @@ script = ExtResource("1")
 id = &"blood_altar"
 display_name = "残破祭台"
 kind = 1
-hp_cost = 15.0
+hp_cost = 25.0
 high_value_reward = true

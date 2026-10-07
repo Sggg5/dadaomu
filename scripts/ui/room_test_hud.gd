@@ -63,6 +63,11 @@ func show_map(layout: DungeonLayout, states: Dictionary[StringName, RoomState], 
 		$Root/Progress.text = "全图已清场  ·  可自由重访"
 
 
+func show_run_seed(run_seed: int, floor_seed: int) -> void:
+	$Root/Seed.text = "Run Seed: %d" % run_seed
+	$Root/Seed.tooltip_text = "本次实际Run Seed：%d\n当前墓层Seed：%d" % [run_seed, floor_seed]
+
+
 func show_death() -> void:
 	$Root/Death.text = "你已倒下\nR 同 Seed 重开 / N 新地宫"
 	$Root/Progress.text = "本次测试结束 · 重开会重置所有房间状态"

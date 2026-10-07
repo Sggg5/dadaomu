@@ -259,3 +259,10 @@ func _draw() -> void:
 		var point := get_entry_position(side)
 		draw_circle(point + Vector2(22, 0), 8, Color("78382f"))
 		draw_line(point + Vector2(-30, 10), point + Vector2(25, -8), Color("a35b4c"), 3)
+	if room_type == RoomDefinition.Type.TRAP:
+		# 只作风险路线环境表达：断裂棺木、擦痕和机关孔，不引入额外伤害机制。
+		for offset in [Vector2.ZERO, Vector2(22, 18), Vector2(-18, 26)]:
+			draw_line(Vector2(740, 330) + offset, Vector2(790, 348) + offset, Color("675349"), 5)
+		for x in range(480, 720, 48):
+			draw_circle(Vector2(x, 164), 3, Color("101416"))
+		draw_line(Vector2(760, 360), Vector2(840, 390), Color("6b352e"), 3)

@@ -44,11 +44,12 @@ func _ready() -> void:
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	scroll.add_child(label)
 	var actions := Label.new()
+	actions.name = "Actions"
 	actions.position = Vector2(210,650)
 	actions.size.x = 860
 	actions.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	actions.add_theme_font_size_override("font_size",24)
-	actions.text = "[E] 返回地面    [R] 同 Seed 重试    [N] 新地宫" if hub_mode else "[R] 同 Seed 再来一次    [N] 新地宫"
+	actions.text = "[E] 返回地面    [R] 同 Seed 重试    [N] 新地宫" if hub_mode else "独立地宫测试模式\n[R] 同 Seed 重试    [N] 新地宫"
 	add_child(actions)
 
 

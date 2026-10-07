@@ -38,8 +38,12 @@ func run() -> void:
 	var baseline: Dictionary
 	for level in [0,1,2]:
 		var flow := preload("res://scenes/main/game_flow.tscn").instantiate() as GameFlow
+		# 旧功能固定Run夹具；正式派生Seed由9A专项另外覆盖。
+		flow.forced_night_seed = 192034
+		flow.campaign_seed_override = 52
 		flow.profile_store = MuseumProfileStore.in_memory()
 		var state := MuseumState.new()
+		state.campaign_seed = 52 # 明确的有效v4存档夹具。
 		state.museum_level = level
 		flow.profile_store.save_profile(state)
 		test.root.add_child(flow)

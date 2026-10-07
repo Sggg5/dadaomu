@@ -7,6 +7,7 @@ func _init(context: SceneTree) -> void: test = context
 
 func run() -> void:
 	var state := MuseumState.new()
+	state.campaign_seed = 52 # 明确的有效v4存档夹具。
 	var item := state.collection.add(&"tang_sancai_horse",1,55)
 	var duplicate := state.collection.add(&"tang_sancai_horse",1,90)
 	test.check(not item.identified and item.condition == 55 and duplicate.condition == 90 and item != duplicate,"Owned antique registration defaults unidentified, per-instance condition independent")

@@ -1,16 +1,20 @@
 # 大盗墓时代
 
-## Phase 9A：墓室风险选择与隐藏探索（当前实现）
+Phase9A/9A.1最终人工验收已通过（2026-10-07）；当前授权一次性封版commit/push到codex/phase-9a-tomb-risk-exploration，不合并main、不进入9B。风险数值本阶段冻结，后续平衡待多层结构完成再评估。旧等待反馈/未提交说明为历史，以此及docs/PHASE_9A_VERIFICATION.md最终结论为准。
+
+## Phase 9A.1：墓室风险与完整回馆修正（当前实现，同9A分支）
 
 基于已合并main b74bb35d4e7d4059f8272681f7fb8652629e7e18，开发分支codex/phase-9a-tomb-risk-exploration。仅墓内可选探索；完成后提交并push本分支，不合并main、不进入9B。下方旧阶段为历史记录，以本节为准。
 
-每层1～2口危险棺椁、0～1间隐藏墓室、0～1座祭台、0～1处汇合分岔。棺椁在64px内E查看风险，再E确认，Tab取消；正式权重古董/伏击/机关/空棺=50/25/15/10。伏击为现有两只尸蟞，0.35秒观察期，安全出生点，清掉后开门并留下古董；不重复统计普通COMBAT或发遗物。祭台明确支付15HP，可致死，换取RARE/TREASURE池中的一件机会，不保证传奇。空棺无奖励。
+每层普通棺椁0～1口（独立65%抽签，不补数量），暗室中的棺椁不占此配额；暗室0～1间、祭台0～1座、汇合分岔0～1处。正式棺椁权重古董/伏击/机关/空棺=35/25/20/20；机关20HP，伏击两只现有尸蟞且不送安慰古董。伏击保留0.35秒观察期和安全出生点，不重复普通清场/遗物。祭台支付25HP、可致死，仍用RARE/TREASURE池；确认显示当前生命→支付后生命和致死警告。频率fork/secret/standalone_altar/coffin=0.45/0.35/0.25/0.65。
 
-墙边细小裂缝E检查，再E进入；未发现的隐藏房不出现在小地图和已清房总数中，发现后本层可重访。危险墓道用血迹与偏殿暗色表达，原安全连边保留，另加两房绕路后汇合；不强制走风险路线，Boss最短距离不变。隐藏房有高价值供物和一次风险交互。基础8～12房主图保持，最多额外增加2个绕路房和1个隐藏房，仍复用room.tscn。
+真假墙面异常共用3种外观，普通COMBAT也会有0～2处假线索；只有30px内显示“[E] 检查墙面”，真线索检查两次才进入，假线索只反馈一次；未发现的隐藏房不出现在小地图和已清房总数中，发现后本层可重访。危险墓道用血迹与偏殿暗色表达，原安全连边保留，另加两房绕路后汇合；不强制走风险路线，Boss最短距离不变。隐藏房有高价值供物和一次风险交互。基础8～12房主图保持，最多额外增加2个绕路房和1个隐藏房，仍复用room.tscn。
 
 TombRiskEvent只读资源与TombRiskResult纯结果分离；TombExplorationPlan在原生成器之后装配可选图，TombRiskService持本层一次性账本，TombRiskContent只装配局部交互/波次/现有拾取物。普通古董源先从原主图选择；事件RNG独立派生run_seed/floor/room/event/version，不消费地图、遗物、Boss、普通敌人或普通古董流。频率与事件配置位于data/dungeon/events/。
 
 事件奖励只进入AntiqueInventory，容量仍8格；满包不消耗Pickup，整理后可捡，未捡离房重访恢复。已领取/已丢弃不重生。伤害使用Health正式入口与红闪；主动代价不能被受伤无敌免单。确认锁与数据账本双重防重复；死亡/结束不能再触发。R同Seed重置事件/发现/库存，N新Run，跨层新账本；仅已捡古董随既有Carry保留。不保存墓穴中途状态。
+
+探索装配版本2，事件抽样版本1（新配置内同Seed复现）。正式完整试玩从GameFlow启动，Museum→两层真实战斗→RunExit E→结算E→次日回馆。独立dungeon_test只作墓穴手感测试，结算明确显示“独立地宫测试模式”与R/N，绝不自行创建Museum。5晚人工选择记录与自动驾驶分开，未取得记录不宣称手感目标完成。
 
 玩家仍80HP，两敌人/两Boss/武器/遗物2-4-7/八格背包数值未改。市场、现金、等级、待拍、拍卖结果不参与探索或战斗计算。历史回归显式关闭探索使用原主图夹具，保留全部断言；9A正式入口、完整流程、开启探索的Museum隔离与新功能另外覆盖。验收命令、真实结果及人工手感状态见docs/PHASE_9A_VERIFICATION.md。禁止新Museum功能、永久战斗成长、背包扩容、新敌人/Boss或9B。
 
@@ -107,7 +111,7 @@ Phase 1～7B 共 10 套回归均通过；专项 722 项、0 失败。用户人�
 
 ## 当前状态
 
-当前 **Phase 9A 墓室风险选择与隐藏探索**（开发分支，未合并main）。默认从博物馆开始；以下为夜间玩法说明。默认 Seed 为 `192034`，每层基础主图为 8～12 个房间，独立 RNG 重现原正交树；探索装配层可附加汇合绕路与隐藏房。START 固定在 (0,0)，Boss 是距离至少 5 的最远叶子，ANTIQUE 距离至少 2。
+当前 **Phase 9A 墓室风险选择与隐藏探索**（开发分支，未合并main）。默认从博物馆开始；以下为夜间玩法说明。正式下墓由存档Campaign Seed、日期和DEFAULT_TOMB派生本次Run Seed（新档只初始化Campaign一次），每层基础主图为 8～12 个房间，独立 RNG 重现原正交树；探索装配层可附加汇合绕路与隐藏房。START 固定在 (0,0)，Boss 是距离至少 5 的最远叶子，ANTIQUE 距离至少 2。
 
 随机节点决定位置/连接/类型，五份原有普通房配置作为共享模板池。玩家、战斗、门和房间生命周期继续复用：首次进入锁门，击杀后开门，过门保留生命，重访已清场房不刷怪。
 
@@ -133,13 +137,13 @@ START 为安全出生房，忽略模板刷怪并立即清场开门；第一层BO
 - Phase 3 完整检查：`godot --headless --path . --script res://tests/phase_3_smoke.gd`。
 - Phase 3 图形检查：`godot --path . --script res://tests/phase_3_smoke.gd -- --capture`。
 
-复现指定 Seed：
+正式GameFlow的`--seed`用于新档Campaign初始化；已有有效Campaign不会被覆盖。复现HUD报告的实际Run Seed应使用独立地宫：
 
 ```powershell
-godot --path . -- --seed=192034
+godot --path . res://scenes/main/dungeon_test.tscn -- --seed=192034
 ```
 
-也可修改 `dungeon_test.tscn` 根节点 Inspector 的 `seed_value`。不传参数时从默认 Seed 开始；选到新 Seed 后 R 重复该 Seed。关闭程序不会保存所选 Seed，请记录 HUD 值或用命令行再次指定。
+也可修改 `dungeon_test.tscn` 根节点 Inspector 的 `seed_value`。不传参数时从默认 Seed 开始；选到新 Seed 后 R 重复该 Seed。独立/开发N选择的Run Seed不持久化；正式退出重进按已保存Campaign和当日恢复，应记录HUD的实际Run Seed用于独立复现。
 
 相同引擎（当前验证为 Godot 4.6.2）、生成版本、配置与模板池顺序下，相同 Seed 重现完整拓扑与模板选择。不同 Seed 不保证每次都得到不同图，所以 N 最多尝试 16 个候选，失败保留当前图并提示警告。无窗口与图形测试还会在 `logs/phase_3_digest_*.txt` 保存 100 Seed 的结果摘要供跨进程比较。
 
@@ -224,7 +228,7 @@ E是正常获得方式。F2打开/关闭正式遗物开发添加按钮；1/2/3�
 ```powershell
 godot --headless --path . --script res://tests/phase_5b_smoke.gd
 godot --path . --script res://tests/phase_5b_smoke.gd -- --capture
-godot --path . -- --seed=192034
+godot --path . res://scenes/main/dungeon_test.tscn -- --seed=192034
 ```
 
 Seed192034正常测试在第2/4/7次清房获得墨斗/五帝钱/黑火药，再继续战斗。详细测试、文件清单和人工验收状态见docs/PHASE_5B_VERIFICATION.md。以上为Phase5B历史验收；当前分支codex/phase-6-5-tomb-beast-finale，完成后停止。
@@ -257,7 +261,7 @@ HUD显示墓层、当前层Seed、有效深度与Tier。R在第二层也重开�
 ```powershell
 godot --headless --path . --script res://tests/phase_6_smoke.gd
 godot --path . --script res://tests/phase_6_smoke.gd -- --capture
-godot --path . -- --seed=192034
+godot --path . res://scenes/main/dungeon_test.tscn -- --seed=192034
 ```
 
 详细实际结果和人工验收状态见`docs/PHASE_6_VERIFICATION.md`。Phase6历史范围不含第二Boss；当前Phase6.5已补第二Boss与通关，仍无古董、撤离经济、第三层或存档。
@@ -276,7 +280,7 @@ godot --path . -- --seed=192034
 ```powershell
 godot --headless --fixed-fps 60 --path . --script res://tests/phase_6_5_smoke.gd
 godot --path . --script res://tests/phase_6_5_smoke.gd -- --capture
-godot --path . -- --seed=192034
+godot --path . res://scenes/main/dungeon_test.tscn -- --seed=192034
 ```
 
 新增代码、真实流程、测试与人工状态见docs/PHASE_6_5_VERIFICATION.md。第一层与第二层Seed、跨层Build、2/4/7整局奖励规则保持。
@@ -299,7 +303,7 @@ godot --path . --script res://tests/phase_7a_smoke.gd -- --capture
 ## Phase8A 独立入口与测试
 
 ```powershell
-godot --path . -- --seed=192034
+godot --path . res://scenes/main/dungeon_test.tscn -- --seed=192034
 # 单独运行夜间（不经过博物馆）：
 godot --path . scenes/main/dungeon_test.tscn -- --seed=192034
 godot --headless --fixed-fps 60 --path . --script tests/phase_8a_smoke.gd

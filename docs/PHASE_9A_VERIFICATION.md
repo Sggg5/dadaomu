@@ -1,5 +1,204 @@
 # Phase 9A：墓室风险选择与隐藏探索
 
+## 最终封版与人工验收：正式通过（2026-10-07）
+
+用户已明确确认Phase9A/9A.1最终人工试玩通过，包括风险影响撤离/深入决策、满包/低HP贪心压力、真假墙面不直接暴露暗室、普通房假线索、无需刻意扫墙仍可自然发现、跨日换图/同日退出复现、正式两层回馆、Profile v4迁移及80HP/8格/原战斗参数保持。
+
+最终结论：
+
+> Phase 9A已经证明HP、8格背包、当前携货价值和继续深入之间能够形成真实风险决策。隐藏墓室采用真假WallMark后，不再通过专属视觉符号直接暴露答案。正式GameFlow跨日使用不同Expedition Seed，同一天异常退出后仍可稳定复现当前墓穴。
+
+> 本阶段不继续调整风险概率、伤害、隐藏房频率或奖励数值，后续平衡等待多层墓穴结构完成后重新评估。
+
+最终自动验收：Phase1～9A共15,840项、0失败；9A图形专项10,510项、0失败；导入与正式入口启动正常。封版只更新文档，没有新增生产代码改动，因此沿用上次完整回归，并补做导入/正式入口启动确认。
+
+人工验收已正式完成。用户未提供逐晚开/不开数量等原始统计，不补造数字；下方早期“待反馈”表格仅为当时历史记录，全部以本节最终结论为准。授权一次性提交并push当前9A分支；不合并main、不进入9B，封版后停止。
+
+## 正式下墓Seed生命周期实现与验证
+
+修复GameFlow每天直接复用固定night_seed的问题，保留全部已有9A.1/WallMark工作区修改；不修改风险数值、WallMark规则、80HP/8格、DungeonGenerator/TombExplorationPlan/WallMarkGenerator或掉落/敌人/Boss/遗物算法。新增纯ExpeditionSeedService与3份Seed专项脚本及.uid。
+
+### 生命周期与Profile v4
+
+`campaign_seed → day_number → site_id(DEFAULT_TOMB) → expedition_seed → DungeonSession`。
+
+MuseumState.campaign_seed默认0，表示尚未初始化；正式有效范围1～2147483647，JSON数值精度安全。MuseumProfileStore VERSION=4新增字段，v1/v2/v3保留馆藏、鉴定/品相、展柜、等级、现金、日期、next ID和v3待拍，纯decode不随机，暂留0。GameFlow启动时才初始化并保存：测试campaign_seed_override可指定确定值，生产默认0则独立RNG生成一次。已有有效Campaign永久保留，即便后续传入不同override也不重写。
+
+非法v4 campaign字段（缺失/0/负数/超界/小数/字符串/bool/null/非有限值）安全修复为待初始化，保留其他合法地面数据。直接保存未初始化0拒绝，不产生非法v4正式档。原museum_profile_v1.json路径保留。所有测试in_memory或user://tests/phase_9a1隔离路径，不读取/写入正式档。
+
+ExpeditionSeedService.VERSION=1：`1 + AntiquePool.stable_score(campaign_seed, day_number, site_id, "EXPEDITION", 1)`，稳定字符混合，范围正31位，不使用简单相加/全局RNG/时钟。没有额外下墓计数器，拍卖消耗的夜晚也按同一日期推进。
+
+### 实际三天与退出恢复
+
+固定Campaign52，真实GameFlow从Day1空馆开始，forced_night_seed=0：
+
+| 日期 | 实际Expedition/Run Seed | 路径 |
+|---|---:|---|
+| Day1 | 522269330 | 真实情报板E下墓、普通房/古董E、实际武器击杀第一Boss、F撤离、E回Day2 |
+| Day2 | 1639431332 | 真实情报板E下墓、活跃敌人攻击致死、E回Day3 |
+| Day3 | 609109687 | 真实情报板E下墓、记录当日图、R/N边界、直接退出不结算后重建/再下墓 |
+
+三天Seed和空间签名均不同。Campaign始终52。Day3在墓中销毁Flow后重建恢复Day3安全地面，重新下墓仍为609109687及相同完整空间签名；N生成的临时Seed不保存，退出重进恢复正式当天图。R当前Seed/图完全一致。正式成功/死亡路径没有调用_finish_run伪造结果，战斗使用真实Weapon/Projectile/AI，古董通过E，地面与夜间入口使用实际WASD/E。
+
+Day2鉴定/布展在真实地面执行；资金修复/升级隔离断言使用单独状态副本，不给真实三日流程注入现金。相同日期/遗址不会因这些地面操作重新播种。实际AuctionSession逐口E竞价→E回馆推进Day1→Day2，随后下墓正确使用1639431332；Campaign不受拍卖收入影响。
+
+HUD始终显示实际Run Seed，tooltip保留当前Floor Seed；结果快照也为实际Run Seed。开发日志输出Campaign/Day/Site/Expedition，玩家UI不展开这些内部元数据。
+
+### 迁移与CLI实际进程验证
+
+构造正式v3磁盘档（Day5、现金2468、Level1、两件已鉴定/品相藏品、CASE4展出、HIGH待拍、营业统计和next ID）：纯decode全部保持、Campaign0。GameFlow用初始化override777加载并写v4；第二次启动即便override999，仍Campaign777，所有原字段相同。31位边界1/2147483647磁盘JSON往返精确。
+
+两个独立Godot进程实际传入--seed=52：正式GameFlow初始化Campaign52，Day1为522269330、Day2为1639431332，子DungeonSession不再覆盖成52；独立dungeon_test的run_seed=52。CLI单位测试用正式Health死亡回馆驱动日期，真正活跃敌人死亡和Boss撤离另由上方完整流程覆盖。
+
+```powershell
+# 新测试档/旧档首次迁移：52是Campaign Seed，不是本次Run Seed。
+godot --path . res://scenes/main/game_flow.tscn -- --seed=52 --profile-path=user://tests/phase_9a1/campaign_playtest.json
+# 复现HUD报告的实际Run Seed，使用独立地宫入口：
+godot --path . res://scenes/main/dungeon_test.tscn -- --seed=522269330
+```
+
+已有有效Campaign的存档不会被--seed重新播种；如需独立Campaign序列，使用新的隔离测试档。下方旧人工命令中的GameFlow--seed在当前版本均应按此新语义解释。
+
+### 当前回归与工作区
+
+旧固定Run功能夹具显式forced_night_seed，存档单位夹具显式有效campaign_seed；保留全部旧断言，新派生路径单独验证。v3字面版本断言改为当前VERSION；v1纯迁移后的直接保存单位夹具显式初始化Campaign，以符合v4正式规则，不在decode中随机。
+
+Phase1～8D仍5,330项/0失败；当前9A headless **10,510项/0失败**，15套合计**15,840项/0失败**。9A graphical另计**10,510项/0失败**。导入/正式入口headless与graphical启动无错误。修复Seed生命周期同时保留WallMark、风险事件与真实两层回馆全部覆盖。日志logs/phase_9a1_seed_regression_*.log、phase_9a1_seed_graphical.log、phase_9a1_seed_import_final.log、phase_9a1_seed_startup*.log。
+
+技术三天/退出行为由真实程序流程验证，最终用户亦已人工确认通过。按顶部封版授权提交push，不合并main、不进入9B。
+
+## 9A.1墙面真假线索实现与验证
+
+用户进一步反馈：原专属裂纹无论提示多小，仍等于“看见就知道是暗室”。本次改为**看见异常不等于知道答案**，保留石棺35/25/20/20、20HP机关、25HP祭台、普通棺椁0～1、暗室35%、绕路45%、80HP、8格等已确认参数，未进入9B。
+
+新增WallMarkDefinition / WallMarkGenerator / WallMark及各.uid，统一真假外观和初始文案；新增phase_9a_wall_checks.gd及.uid。修改TombExplorationPlan、本层Controller装配、HiddenRoomEntrance（仅暗室返回）、9A真实探索/交互测试与smoke、ARCHITECTURE。其他9A.1未提交修改完整保留，项目说明中的旧36px提示已同步为30px。
+
+### 生成与流程
+
+所有普通COMBAT房参与环境流：55%概率生成假线索，命中后15%概率增加第二个，结果0～2处；不是每间房都有。隐藏父房保证一个真实线索，35%概率附加一个假线索。真假数量分布互相重叠，均从裂纹/砖缝/掉灰三个程序绘制variant抽取，无秘密专属颜色/图标/光效。位置也从共用墙段候选中抽取，真线索不固定在墙中央。
+
+候选只在N/E/S/W墙段，避开普通门、风险门、大型障碍、真实线索位置与既有底座交互区；仅COMBAT，故不与Boss出口冲突。交互锚点在墙内20px，绘制在墙体中线；玩家站位有18px障碍余量。已对100个Seed所有生成点执行16px网格连通验证，确认可从正常室内连通区域到达。
+
+30px内、房间清场时，初始统一**[E] 检查墙面**；32/40/64px均不提示或接受检查。未检查不出现暗门/隐藏房等文字。假线索第一次E给出固定实心/自然破损/掉灰反馈，记录已查，无重复E提示；重复E不会刷文本。真线索第一次E提示“敲击声有些发空。[E] 继续检查”；第二次E才打开并进入。已打开重访提示推开暗门，暗室内保留返回墓道操作。
+
+第一次真检查仅secret_inspected=true，SECRET_CHAMBER仍不显示；第二次实际打开设置secret_discovered=true并切房，小地图才显示。真/假检查状态均存TombExplorationPlan.checked_wall_marks，稳定ID为room:wall:side:index；离房重访保留，新Run/换层清空。没有Profile字段或中途存档。
+
+### 确定性与隔离
+
+环境流VERSION=1，以run_seed/floor_number/room_id/"wall_mark"/version稳定混合后使用局部RNG；数量、位置、variant、真假和假检查反馈均可复现。不消费地图/敌人/Boss/普通古董/遗物/棺椁流。inspect-none和通过真实E第一次检查全部活WallMark的对照：上述快照及棺椁结果全部相同；检查全部不等于打开暗门，没有提前泄露地图。
+
+100个Seed样本：60张完全没有暗室的地图仍出现假墙痕；非父房一处假痕327间、两处假痕52间；隐藏父房一个真痕22间、真+假17间。真假都覆盖3种variant。样本数量仅记录当前结果，不作为精确概率或人工KPI。
+
+检查还发现旧小地图过滤视图遗漏Seed元数据，导致有未发现暗室时HUD可能显示Seed0。已修正为保留实际Seed、START/BOSS/ANTIQUE身份，新增断言，方便多Seed人工记录；不改变生成结果。
+
+### 自动与图形结果
+
+Phase1～8D再次重跑：5,330项、0失败。当前9A headless **10,279项、0失败**；总计 **15,609项、0失败**。9A graphical另计 **10,279项、0失败**；导入/正式入口启动无错误。真实两层回馆与原风险撤离/死亡、满包、RNG隔离、80HP/8格等断言全部保留。
+
+新增覆盖：无暗室也有假痕迹、真假数量/variant重叠、初始文案一致、墙段/站位可达、假墙一次性、真墙两次E与小地图时机、真假离房重访、新Run/换层重置、真实inspect-all随机隔离与全局RNG不消耗。图形查看中性提示、假墙实心反馈、真墙发空反馈及进入暗室；程序图形检验不代替人工惊喜/无聊感。
+
+日志为logs/phase_9a1_wall_regression_*.log、phase_9a1_wall_final.log、phase_9a1_wall_graphical_final.log、phase_9a1_wall_import_final.log、phase_9a1_wall_startup*.log；截图仍在忽略的logs/phase_9a_*.png。仅in_memory/隔离测试档，不触碰正式档。
+
+### 墙面人工验收（正式通过）
+
+用户最终确认真假墙面机制正常、不再一眼暴露；普通房有假线索，未刻意扫墙仍可自然发现暗室。隐藏发现机制整体验收通过。其余单项未提供独立主观评分，不编造评价：
+
+| 观察 | 状态 |
+|---|---|
+| 是否仍能一眼识别真暗门 | 通过：不再一眼暴露 |
+| 假线索是否打破“看见就知道”的规律 | 通过：真假墙面机制正常，普通房假线索存在 |
+| 是否变成无聊贴墙扫E | 通过：未刻意扫墙仍可自然发现 |
+| 发空反馈是否带来发现异常的感觉 | 整体通过，未提供单项评分 |
+| 假线索是否过多 | 整体通过，未提供单项评分 |
+| 找到暗室是否仍有惊喜 | 整体通过，未提供单项评分 |
+
+当前按最终封版授权提交并push，不合并main、不进入9B。原9A.1完整回馆修正及历史测试记录保留如下。
+
+## 前一轮Phase 9A.1修正记录（墙面修正前）
+
+继续同一分支`codex/phase-9a-tomb-risk-exploration`，基于`17c7703800f6b710aefc81f17f0299e068ef8c01`；没有创建9B分支，不合并main。本节为当前配置与验收；后文原9A记录保留为历史，旧概率/15HP/测试数量不再代表当前版本。
+
+### 人工反馈与修正
+
+用户对原9A实际试玩反馈：棺椁基本都会开、祭台基本都会开、暗门过于明显、风险绕路不值得、墓内古董产出过高；从独立dungeon_test两层完成后不能返回地面。
+
+| 项目 | 9A.1正式规则 |
+|---|---|
+| 普通石棺 | ANTIQUE/AMBUSH/TRAP/EMPTY权重35/25/20/20 |
+| 伏击奖励 | ambush_reward=false，杀完开门但不送古董、没有安慰奖励 |
+| 石棺机关 | 正式Health入口20HP，可以致死 |
+| 祭台 | 25HP，保留RARE/TREASURE高价值池，可以致死 |
+| 祭台确认 | 展示当前HP→支付后HP，clamp下限0；HP≤25警告“这会导致死亡”，允许确认 |
+| 出现频率 | fork=.45 / secret=.35 / standalone_altar=.25 / coffin=.65 |
+| 普通棺椁数量 | 每层0～1口，只抽一次，不补数量；暗室中的棺椁另计 |
+| 隐藏入口 | 裂纹约旧版60%大小、低对比近墙色、不发光；36px内才显示/接受E |
+| 风险环境 | 原血迹/暗色偏殿加断裂木板、擦痕和机关孔，仅视觉，不新增伤害机制 |
+
+探索装配版本2、事件抽样版本1。新配置内确定性保持，旧配置的事件位置与结果不作为跨版本兼容契约。普通棺椁使用独立`ordinary_coffin`流；有绕路时可放在RISK_PATH，无绕路时选一间COMBAT。风险路线终点仍为高价值祭台，不额外塞普通古董。暗室保留供物+独立风险棺椁，不要求玩家必须开棺才能带走已发现的供物。无绕路时按25%候选放一座独立祭台，仍最多一座。
+
+### 1,000 Seed样本
+
+连续Seed0～999：直接古董357、伏击260、机关196、空棺187；暗室340层、绕路426层、无普通棺椁345层。全部主图/确定性/一次性/RNG隔离断言通过；普通棺椁每层最多1口。测试只断言四类都存在、古董结果明显非多数、有缺席层等稳健边界，不断言精确概率。
+
+满包不吞奖励、真实Tab/Delete腾空间、领取后丢弃不重生、重访恢复未领取奖励、死亡遗失、80HP/8格、R/N、开启所有事件与完全不打开事件的RNG隔离、Museum/市场/拍卖Dungeon隔离均保留。正式伏击无古董新增断言；可配置伏击奖励的生命周期单元夹具明确开启ambush_reward=true，只用于保持原可选奖励能力覆盖，不影响正式石棺。
+
+### 正式GameFlow两层通关与回馆
+
+新增`tests/phase_9a_complete_flow_checks.gd`。正式GameFlow / Seed33 / in_memory隔离存档：Day1空馆→实际情报板E→Night→真实普通房战斗/E拾货→真实Weapon/Projectile击杀Boss1→ExpeditionExit E深入→Floor2真实战斗/拾货→真实Weapon/Projectile击杀Boss2→RunExit64px外E不能结束→靠近E→RunCompleteScreen。
+
+验证真实结果：`COMPLETED`、`floor_reached=2`、`bosses_defeated=2`、`floors_cleared=2`。没有直接调用_finish_run(COMPLETED)、没有向主流程注入库存/HP、没有F2、Boss AI保持开启。程序驾驶使用安全位置定位，不称为人工游玩。
+
+`hub_mode=true`的结算显示**[E] 返回地面**。连续快速E实际返回：旧DungeonSession释放、Museum重新创建、MORNING、Day1→Day2恰好一次。带回战国错金银铜镜×2、唐三彩马、金丝玉佩，共4件、基础估值**¥6,200**；均成为未鉴定OwnedAntique，品相与RunResult逐件一致、acquired_day=1，现金仍0。额外E/旧结果重复提交不会再次入藏或推进日期。两层都未结算风险事件/进入暗室，继续证明主路径不依赖额外机会。
+
+独立`dungeon_test.tscn`继续`hub_mode=false`，不强行生成Museum。独立结算底部明确为“独立地宫测试模式 / [R] 同Seed重试 / [N] 新地宫”，没有E返回提示，E不发送回馆信号。旧Phase6.5独立真实两层战斗回归保留；新UI测试显示刚才真实两层完成的结果快照，仅检测独立展示边界。
+
+### 风险撤离与死亡回归
+
+新配置按有限0～999扫描选到正式机会齐备的Seed52，不能强行补事件。真实主流程清房/拾货→风险石棺→墙缝E进入暗室→供物与棺椁→25HP祭台→满包取舍→真实Boss/F撤离→E回馆：4个事件，共丢弃5件，带回唐三彩马、镇墓兽残片、战国错金银铜镜，估值**¥5,800**，Day2三件未鉴定馆藏。
+
+另一晚同Seed继续贪心探索，携货**¥4,800**，真实敌人致死；本Run背包清空，E回Day3不入新货，之前三件安全馆藏仍在。祭台取消不扣血、25HP支付可致死、20HP棺椁机关可致死、伤害入口和重复E一次性都另有单项覆盖。
+
+### 当前自动/图形结果
+
+原Phase1～8D的14套回归仍为**5,330项，0失败**（逐套数量见后文历史表，均重跑）。当前Phase9A专项headless **8,139项，0失败**，15套合计**13,469项，0失败**。当前9A graphical另计**8,139项，0失败**。导入解析无错误；正式入口headless/graphical启动正常。已实际查看祭台普通/致死预览、正式两层结算、回馆四件藏品HUD与独立模式底部截图。
+
+日志：logs/phase_9a1_regression_*.log、phase_9a1_final.log、phase_9a1_graphical_final.log、phase_9a1_import_final.log、phase_9a1_startup*.log；截图仍以logs/phase_9a_*.png保存当前结果。日志/截图不入Git；测试只用in_memory或user://tests/phase_9a1，未碰正式档。
+
+### 当前人工入口与五晚记录
+
+完整白天→夜晚→两层→回馆必须使用正式主场景：
+
+```powershell
+$godot = 'C:\Users\atian\Downloads\Godot_v4.6.2-stable_win64.exe\Godot_v4.6.2-stable_win64_console.exe'
+& $godot --path . res://scenes/main/game_flow.tscn -- --seed=33
+# 需要隔离人工测试档、保持真实空馆Day1：
+& $godot --path . res://scenes/main/game_flow.tscn -- --seed=33 --profile-path=user://tests/phase_9a1/manual_playtest.json
+# dungeon_test仅作独立墓穴手感，结果只提供R/N：
+& $godot --path . res://scenes/main/dungeon_test.tscn -- --seed=33
+```
+
+已打开可见正式GameFlow测试窗口（Seed33、独立测试档），请求不用F2完成至少5晚并记录选择。夜间N可换Seed，R同Seed重试。**目前尚未收到新版五晚人工数据，不能宣称手感目标完成，也不能将程序驾驶五条流程计作人工五晚。**
+
+| Night | Seed | 棺椁开/不开 | 祭台开/不开（当时HP） | 暗室发现 | 风险路线走/放弃 | 因HP/携货主动撤退 |
+|---|---|---|---|---|---|---|
+| 1 | 待反馈 | 待反馈 | 待反馈 | 待反馈 | 待反馈 | 待反馈 |
+| 2 | 待反馈 | 待反馈 | 待反馈 | 待反馈 | 待反馈 | 待反馈 |
+| 3 | 待反馈 | 待反馈 | 待反馈 | 待反馈 | 待反馈 | 待反馈 |
+| 4 | 待反馈 | 待反馈 | 待反馈 | 待反馈 | 待反馈 | 待反馈 |
+| 5 | 待反馈 | 待反馈 | 待反馈 | 待反馈 | 待反馈 | 待反馈 |
+
+不要求固定选择率；若仍全部开棺/祭台/走风险路线，不能判为风险手感验收通过。
+
+### 本次文件与限制
+
+修改三份正式事件/频率资源；事件/探索配置默认值；TombExplorationPlan密度与版本；TombRiskInteractable损失预览；HiddenRoomEntrance视觉/距离；Room风险环境；RunCompleteScreen独立提示；原9A数据、交互、生命周期和真实撤离/死亡测试；5B测试驾驶增加默认关闭的避开可选房开关。新增正式两层回馆集成脚本及.uid，接入9A smoke。同步四份项目文档与本文件。
+
+原玩家、敌人/Boss、遗物、背包容量、Museum功能与保存边界均未修改。高价值池没有贬值。主观手感与5晚记录待人工反馈，不能把数值目标/程序零失败等同主观目标完成。仅9A.1，不合并main、不进入9B。
+
+---
+
+## 原Phase9A工程验收（历史：17c7703）
+
 ## 范围与基线
 
 基于已合并 main `b74bb35d4e7d4059f8272681f7fb8652629e7e18`，分支 `codex/phase-9a-tomb-risk-exploration`。仅本阶段墓内可选探索，提交并 push，不合并 main，不进入 9B。Godot 4.6.2 / Windows / Compatibility。

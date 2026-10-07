@@ -5,8 +5,12 @@ func run() -> void:
 	var baseline: Dictionary
 	for variant in range(3):
 		var flow := preload("res://scenes/main/game_flow.tscn").instantiate() as GameFlow
+		# 旧功能固定Run夹具；正式派生Seed由9A专项另外覆盖。
+		flow.forced_night_seed = 192034
+		flow.campaign_seed_override = 52
 		flow.profile_store = MuseumProfileStore.in_memory()
 		var state := MuseumState.new()
+		state.campaign_seed = 52 # 明确的有效v4存档夹具。
 		state.cash = 5000*variant
 		state.museum_level = variant
 		var item := state.collection.add(&"tang_sancai_horse",1,55)

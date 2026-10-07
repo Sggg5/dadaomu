@@ -7,6 +7,7 @@ func _init(context: SceneTree) -> void: test = context
 
 func run() -> void:
 	var state := MuseumState.new()
+	state.campaign_seed = 52 # 明确的有效v4存档夹具。
 	var item := state.collection.add(&"tang_sancai_horse",1,76)
 	var definition := MuseumState.POOL.find_by_id(item.definition_id)
 	test.check(not state.can_sell(item.instance_id) and not state.sell_to_dealer(item.instance_id) and not state.consign(item.instance_id,1),"Unidentified instance cannot sell/consign")

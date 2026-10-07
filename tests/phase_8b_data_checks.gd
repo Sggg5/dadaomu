@@ -7,6 +7,7 @@ func _init(context: SceneTree) -> void: test = context
 
 func run() -> void:
 	var state := MuseumState.new()
+	state.campaign_seed = 52 # 明确的有效v4存档夹具。
 	var config := MuseumConfig.new()
 	var business := MuseumBusiness.new()
 	business.config = config

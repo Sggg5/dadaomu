@@ -5,6 +5,7 @@
 script = ExtResource("1")
 id = &"stone_coffin"
 display_name = "危险石棺"
-weights = PackedInt32Array(50, 25, 15, 10)
-hp_cost = 15.0
+weights = PackedInt32Array(35, 25, 20, 20)
+hp_cost = 20.0
+ambush_reward = false
 wave = ExtResource("2")

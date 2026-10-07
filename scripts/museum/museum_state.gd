@@ -6,6 +6,7 @@ const LEVELS: MuseumLevels = preload("res://data/museum/levels.tres")
 const POOL: AntiquePool = preload("res://data/antiques/formal_pool.tres")
 signal changed
 var day_number: int = 1
+var campaign_seed: int = 0 # 0仅为新档/迁移待初始化，正式v4存档必须是正31位整数。
 var cash: int = 0
 var museum_level: int = 0
 var phase: Phase = Phase.MORNING

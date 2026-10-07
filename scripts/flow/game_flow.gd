@@ -6,7 +6,8 @@ const DUNGEON_SCENE: PackedScene = preload("res://scenes/main/dungeon_test.tscn"
 const AUCTION_SCENE: PackedScene = preload("res://scenes/auction/auction_session.tscn")
 @export var museum_config: MuseumConfig = preload("res://data/museum/default_config.tres")
 @export var museum_seed: int = 192034
-@export var night_seed: int = 192034
+@export var campaign_seed_override: int = 0 # 仅首次初始化新档/旧档迁移；已有有效Seed不重写。
+@export var forced_night_seed: int = 0 # 测试夹具专用，生产默认0（使用Campaign/Day/Site）。
 @export var auction_seed: int = 192034
 @export var tomb_exploration_enabled: bool = true
 # 仅自动测试显式启用；正式新游戏没有赠送馆藏。
@@ -31,9 +32,16 @@ func _ready() -> void:
 		profile_store = MuseumProfileStore.new()
 		profile_store.save_path = profile_path
 	for argument in OS.get_cmdline_user_args():
-		if argument.begins_with("--seed=") and argument.trim_prefix("--seed=").is_valid_int(): night_seed = argument.trim_prefix("--seed=").to_int()
+		if argument.begins_with("--seed=") and argument.trim_prefix("--seed=").is_valid_int(): campaign_seed_override = argument.trim_prefix("--seed=").to_int()
 		if argument.begins_with("--profile-path="): profile_store.save_path = argument.trim_prefix("--profile-path=")
 	museum_state = profile_store.load_profile()
+	if museum_state.campaign_seed == 0:
+		if campaign_seed_override >= 1 and campaign_seed_override <= ExpeditionSeedService.MAX_SEED:
+			museum_state.campaign_seed = campaign_seed_override
+		else:
+			var rng := RandomNumberGenerator.new()
+			rng.randomize()
+			museum_state.campaign_seed = rng.randi_range(1, ExpeditionSeedService.MAX_SEED)
 	museum_state.changed.connect(_save_profile)
 	if initial_test_collection: museum_state.collection.add(&"tang_sancai_horse",0,100,true)
 	_show_museum("原型馆藏：唐三彩马 · 可布展/开馆，也可到情报板直接下墓" if initial_test_collection else "地面状态已恢复 · 可整理展品，也可到情报板下墓",museum_state.phase)
@@ -126,7 +134,8 @@ func _enter_night() -> void:
 	dungeon.hub_mode = true
 	dungeon.exploration_enabled = tomb_exploration_enabled
 	dungeon.collection_day = current_day
-	dungeon.seed_value = night_seed
+	dungeon.seed_value = forced_night_seed if forced_night_seed != 0 else ExpeditionSeedService.derive(museum_state.campaign_seed, current_day)
+	print("[Expedition] Campaign=%d Day=%d Site=%s Expedition=%d" % [museum_state.campaign_seed, current_day, ExpeditionSeedService.DEFAULT_SITE_ID, dungeon.seed_value])
 	dungeon.run_started.connect(func() -> void: current_dungeon_result = null)
 	dungeon.result_ready.connect(func(result: RunResult) -> void: current_dungeon_result = result)
 	dungeon.return_requested.connect(return_from_night)

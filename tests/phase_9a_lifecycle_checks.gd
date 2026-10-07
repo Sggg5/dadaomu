@@ -4,7 +4,7 @@ func _init(context: SceneTree) -> void: test = context
 
 func run() -> void:
 	var boundary = preload("res://tests/phase_9a_interaction_checks.gd").new(test)
-	var content: TombRiskContent = await boundary.fixture(TombRiskResult.Outcome.AMBUSH)
+	var content: TombRiskContent = await boundary.fixture(TombRiskResult.Outcome.AMBUSH, true)
 	var world := test.session.world as RoomController
 	var actor: TombRiskInteractable = boundary.event_in(content, content.events[0])
 	world.player.position = actor.position + Vector2(24, 0)
@@ -67,8 +67,12 @@ func run() -> void:
 func exit_restore() -> void:
 	var store := MuseumProfileStore.in_memory()
 	var flow := preload("res://scenes/main/game_flow.tscn").instantiate() as GameFlow
+	# 旧功能固定Run夹具；正式派生Seed由9A专项另外覆盖。
+	flow.forced_night_seed = 192034
+	flow.campaign_seed_override = 52
 	flow.profile_store = store
-	flow.night_seed = 33
+	flow.forced_night_seed = preload("res://tests/phase_9a_flow_checks.gd").new(test).choose_seed()
+	var fixture_seed := flow.forced_night_seed
 	test.root.add_child(flow)
 	await test.frames(3)
 	flow.start_night()
@@ -88,12 +92,15 @@ func exit_restore() -> void:
 	world.player.position = pickup.position + Vector2(24, 0)
 	test.key(KEY_E)
 	await test.frames(2)
-	test.check(world.player.health.current_hp == 65 and world.player.antiques.used_slots() > 0 and store.save_count == saves, "Real altar/cargo make no mid-Dungeon save or museum writes")
+	test.check(world.player.health.current_hp == 55 and world.player.antiques.used_slots() > 0 and store.save_count == saves, "Real25HP altar/cargo make no mid-Dungeon save or museum writes")
 	flow.queue_free()
 	await test.frames(4)
 	flow = preload("res://scenes/main/game_flow.tscn").instantiate() as GameFlow
+	# 旧功能固定Run夹具；正式派生Seed由9A专项另外覆盖。
+	flow.forced_night_seed = 192034
+	flow.campaign_seed_override = 52
 	flow.profile_store = store
-	flow.night_seed = 33
+	flow.forced_night_seed = fixture_seed
 	test.root.add_child(flow)
 	await test.frames(3)
 	test.check(flow.current_day == 1 and flow.current_phase == MuseumState.Phase.MORNING and flow.museum_state.collection.all_items().is_empty(), "Quit during risk exploration restores preceding safe ground, no imported cargo")
@@ -105,14 +112,17 @@ func exit_restore() -> void:
 
 func rng_integration() -> void:
 	var baseline: Dictionary
+	var fixture_seed: int = preload("res://tests/phase_9a_flow_checks.gd").new(test).choose_seed()
 	for opened in [false, true]:
 		var session := preload("res://scenes/main/dungeon_test.tscn").instantiate() as DungeonSession
-		session.seed_value = 33
+		session.seed_value = fixture_seed
 		test.session = session
 		test.root.add_child(session)
 		await test.frames(3)
 		var world := session.world
 		var plan := world.exploration
+		var expected_events := 0
+		for id in plan.events: expected_events += plan.events[id].size()
 		if opened:
 			for id in plan.events:
 				world._switch_room(id, -1)
@@ -123,6 +133,7 @@ func rng_integration() -> void:
 					if is_instance_valid(world.current_room.risk_content.ambush):
 						for enemy in world.current_room.risk_content.ambush.get_children(): enemy.take_damage(10000)
 					await test.frames(3)
+		test.check(expected_events > 0 and world.risk_service.results.size() == (expected_events if opened else 0), "RNG comparison really executes nonempty open-all versus untouched open-none")
 		var snapshot := preload("res://tests/phase_8b_isolation_checks.gd").new(test).snapshot(session)
 		var actors: Array = []
 		for id in world.layout.ordered_ids():

@@ -9,6 +9,7 @@ func run() -> void:
 	var store := MuseumProfileStore.new()
 	store.save_path = "user://tests/phase_8d/%d_profile.json" % OS.get_process_id()
 	var state := MuseumState.new()
+	state.campaign_seed = 52 # 明确的有效v4存档夹具。
 	state.day_number = 5
 	state.cash = 1234
 	state.museum_level = 1
@@ -25,12 +26,15 @@ func run() -> void:
 	file.store_string(JSON.stringify(v2))
 	file.close()
 	var flow := preload("res://scenes/main/game_flow.tscn").instantiate() as GameFlow
+	# 旧功能固定Run夹具；正式派生Seed由9A专项另外覆盖。
+	flow.forced_night_seed = 192034
+	flow.campaign_seed_override = 52
 	flow.profile_store = store
 	test.root.add_child(flow)
 	await test.frames(3)
 	var migrated := flow.museum_state
 	test.check(migrated.auction_lot_instance_id == &"" and migrated.cash == 1234 and migrated.museum_level == 1 and migrated.day_number == 5 and migrated.collection.find(item.instance_id).condition == 76 and migrated.collection.find(item.instance_id).identified and migrated.display_assignments == state.display_assignments,"Actual v2 migration keeps complete old museum state and starts without pending lot")
-	test.check(JSON.parse_string(FileAccess.get_file_as_string(store.save_path)).version == 3 and migrated.collection.next_id() == state.collection.next_id(),"Startup writesv3 with unchanged next antique ID")
+	test.check(JSON.parse_string(FileAccess.get_file_as_string(store.save_path)).version == MuseumProfileStore.VERSION and migrated.collection.next_id() == state.collection.next_id(),"Startup writes current schema with unchanged next antique ID")
 	flow.queue_free()
 	await test.frames(3)
 	state.consign(item.instance_id,2)

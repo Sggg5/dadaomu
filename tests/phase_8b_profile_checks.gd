@@ -16,6 +16,7 @@ func run() -> void:
 	var fresh := store.load_profile()
 	test.check(fresh.day_number == 1 and fresh.cash == 0 and fresh.museum_level == 0 and fresh.collection.all_items().is_empty(),"Missing profile returns official empty Day1/Level0")
 	var state := MuseumState.new()
+	state.campaign_seed = 52 # 明确的有效v4存档夹具。
 	state.day_number = 5
 	state.cash = 1260
 	state.museum_level = 1

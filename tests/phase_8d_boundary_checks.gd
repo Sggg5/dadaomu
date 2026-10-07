@@ -7,6 +7,7 @@ func _init(context: SceneTree) -> void: test = context
 
 func run() -> void:
 	var state := MuseumState.new()
+	state.campaign_seed = 52 # 明确的有效v4存档夹具。
 	var available := state.collection.add(&"tang_sancai_horse",1,60,true)
 	var displayed := state.collection.add(&"han_jade_disc",1,60,true)
 	var waiting := state.collection.add(&"blue_white_jar",1,60)
@@ -38,6 +39,7 @@ func run() -> void:
 	await test.frames(3)
 	# Exactly-once与不可信结算边界，不用伪造结果去代替完整竞价流程。
 	state = MuseumState.new()
+	state.campaign_seed = 52 # 明确的有效v4存档夹具。
 	var item := state.collection.add(&"tang_sancai_horse",1,60,true)
 	state.consign(item.instance_id,2)
 	state.phase = MuseumState.Phase.NIGHT

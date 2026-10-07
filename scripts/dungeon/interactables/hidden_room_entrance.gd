@@ -1,12 +1,11 @@
 class_name HiddenRoomEntrance
 extends Node2D
-## 墙缝只通过近距主动交互发现；不给未发现暗室添加普通门或地图标记。
+## 已进入暗室后的返回入口；外部发现统一由真假WallMark处理。
 var player: Player
 var can_enter: Callable
 var enter: Callable
-var is_return: bool = false
 var label: Label
-var inspected: bool = false
+const INTERACTION_DISTANCE: float = 30.0
 
 func _ready() -> void:
 	label = Label.new()
@@ -20,19 +19,17 @@ func _ready() -> void:
 	add_child(label)
 
 func in_range() -> bool:
-	return player.controls_enabled and not player.health.is_dead and can_enter.call() and player.global_position.distance_to(global_position) <= 64
+	return player.controls_enabled and not player.health.is_dead and can_enter.call() and player.global_position.distance_to(global_position) <= INTERACTION_DISTANCE
 
 func _process(_delta: float) -> void:
-	label.text = ("[E] 返回墓道" if is_return else ("发现暗门 · [E] 进入" if inspected else "[E] 检查墙缝")) if in_range() else ""
+	label.text = "[E] 返回墓道" if in_range() else ""
 
 func _unhandled_input(input: InputEvent) -> void:
 	if not input.is_action_pressed("interact") or input.is_echo() or not in_range(): return
-	if not inspected and not is_return:
-		inspected = true
-	else:
-		enter.call()
+	enter.call()
 	get_viewport().set_input_as_handled()
 
 func _draw() -> void:
-	draw_line(Vector2(-14, -6), Vector2(0, 0), Color("807669"), 3)
-	draw_line(Vector2(0, 0), Vector2(-5, 13), Color("807669"), 3)
+	# 墙边小裂纹，尺寸约旧版60%，近似墙色；不发光、不标记位置。
+	draw_line(Vector2(-8, -4), Vector2.ZERO, Color("5b5750"), 1.5)
+	draw_line(Vector2.ZERO, Vector2(-3, 8), Color("5b5750"), 1.5)

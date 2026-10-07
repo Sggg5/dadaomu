@@ -8,9 +8,9 @@ var selected_seed: int
 func _init(context: SceneTree) -> void: test = context
 
 func choose_seed() -> int:
-	for candidate in range(256):
+	for candidate in range(1000):
 		var plan := TombExplorationPlan.build(DungeonGenerator.generate(candidate, DungeonSession.DEFAULT_CONFIG), candidate, 1)
-		if plan.secret_id == &"" or plan.fork.is_empty(): continue
+		if plan.secret_id == &"" or plan.fork.is_empty() or not plan.events.has(&"RISK_PATH"): continue
 		var service := TombRiskService.new(candidate, 1)
 		if service.preview(&"RISK_PATH", TombExplorationPlan.COFFIN).outcome == TombRiskResult.Outcome.ANTIQUE and service.preview(plan.secret_id, TombExplorationPlan.COFFIN).outcome == TombRiskResult.Outcome.ANTIQUE: return candidate
 	assert(false, "Bounded scan requires a reproducible full exploration fixture")
@@ -64,15 +64,15 @@ func secret() -> void:
 	var world := test.session.world as RoomController
 	var plan := world.exploration
 	await driver.driver.visit(plan.secret_parent)
-	var entrance: HiddenRoomEntrance
+	var true_mark: WallMark
 	for child in world.current_room.get_children():
-		if child is HiddenRoomEntrance: entrance = child
-	test.check(entrance != null and not plan.secret_discovered and not world.hud.get_node("Root/Minimap")._layout.rooms.has(plan.secret_id), "Hidden room is absent from minimap before investigation")
-	world.player.position = entrance.position + (Room.ROOM_RECT.get_center() - entrance.position).normalized() * 24
+		if child is WallMark and child.definition.is_secret: true_mark = child
+	test.check(true_mark != null and not plan.secret_discovered and not world.hud.get_node("Root/Minimap")._layout.rooms.has(plan.secret_id), "Hidden room is absent from minimap before investigation")
+	world.player.position = true_mark.position + (Room.ROOM_RECT.get_center() - true_mark.position).normalized() * 24
 	world.player.velocity = Vector2.ZERO
 	test.key(KEY_E)
 	await test.frames(1)
-	test.check(entrance.inspected and world.current_id == plan.secret_parent, "First E inspects wall without entering")
+	test.check(plan.secret_inspected and world.current_id == plan.secret_parent and not world.hud.minimap._layout.rooms.has(plan.secret_id), "First E hears hollow wall without entering/revealing map")
 	test.capture("wall_crack")
 	test.key(KEY_E)
 	await test.frames(5)
@@ -81,6 +81,7 @@ func secret() -> void:
 	await interact(content, TombExplorationPlan.HIDDEN_REWARD)
 	await interact(content, TombExplorationPlan.COFFIN)
 	test.capture("secret_offerings")
+	var entrance: HiddenRoomEntrance
 	for child in world.current_room.get_children():
 		if child is HiddenRoomEntrance: entrance = child
 	world.player.position = entrance.position + (Room.ROOM_RECT.get_center() - entrance.position).normalized() * 24
@@ -91,8 +92,11 @@ func secret() -> void:
 func run() -> void:
 	selected_seed = choose_seed()
 	flow = preload("res://scenes/main/game_flow.tscn").instantiate() as GameFlow
+	# 旧功能固定Run夹具；正式派生Seed由9A专项另外覆盖。
+	flow.forced_night_seed = 192034
+	flow.campaign_seed_override = 52
 	flow.profile_store = MuseumProfileStore.in_memory()
-	flow.night_seed = selected_seed
+	flow.forced_night_seed = selected_seed
 	test.root.add_child(flow)
 	test.current_scene = flow
 	await test.frames(3)
@@ -111,7 +115,7 @@ func run() -> void:
 	await driver.driver.visit(&"RISK_REWARD")
 	var hp := world.player.health.current_hp
 	await interact(world.current_room.risk_content, TombExplorationPlan.ALTAR)
-	test.check(is_equal_approx(world.player.health.current_hp, hp - 15), "Risk detour offering really charges15HP for its high-value reward")
+	test.check(is_equal_approx(world.player.health.current_hp, hp - 25), "Risk detour offering really charges25HP for its high-value reward")
 	test.check(world.player.antiques.used_slots() >= 6 and discarded > 0, "Real risk/secret/altar cause near-full bag and actual value-versus-space discards")
 	var ids_before := world.player.antiques.items()
 	var event_results := world.risk_service.results.size()

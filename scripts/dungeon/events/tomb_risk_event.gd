@@ -5,8 +5,8 @@ enum Kind { COFFIN, ALTAR, HIDDEN_REWARD }
 @export var id: StringName
 @export var display_name: String
 @export var kind: Kind = Kind.COFFIN
-@export var weights: PackedInt32Array = [50, 25, 15, 10]
-@export var hp_cost: float = 15.0
-@export var ambush_reward: bool = true
+@export var weights: PackedInt32Array = [35, 25, 20, 20]
+@export var hp_cost: float = 20.0
+@export var ambush_reward: bool = false
 @export var high_value_reward: bool = false
 @export var wave: RoomDefinition

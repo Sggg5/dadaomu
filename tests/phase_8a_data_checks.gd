@@ -12,6 +12,7 @@ func run() -> void:
 		test.check(pool.find_by_id(id).exhibit_appeal == appeal_values[id],"Explicit appeal correct: "+str(id))
 	test.check(pool.find_by_id(&"unknown") == null and pool.find_by_id(&"tang_sancai_horse").exhibit_appeal > pool.find_by_id(&"gold_thread_jade").exhibit_appeal,"ID lookup and appeal independent of market price")
 	var state := MuseumState.new()
+	state.campaign_seed = 52 # 明确的有效v4存档夹具。
 	var first := state.collection.add(&"gold_thread_jade",1,100,true)
 	var second := state.collection.add(&"gold_thread_jade",1,100,true)
 	test.check(first.instance_id != second.instance_id and first.acquired_day == 1 and state.collection.contains(first.instance_id),"Duplicate definitions have different owned IDs/acquired day")
@@ -33,6 +34,7 @@ func run() -> void:
 	test.check(business.visitor_target(3,1) == 6 and business.visitor_target(50,1) == 30 and business.visitor_target(75,2) == 30 and business.visitor_target(117,3) == 30,"Displayed exhibits use5+floor(appeal*.5), Level0 capacity30")
 	test.check(business.visitor_target(0,1) == 5,"Opening does not require a minimum appeal")
 	var single_state := MuseumState.new()
+	single_state.campaign_seed = 52 # 明确的有效v4存档夹具。
 	var only_coin := single_state.collection.add(&"republic_silver_coin",1,100,true)
 	test.check(single_state.assign(&"CASE_3",only_coin.instance_id),"One legitimate antique can occupy any one of three cases")
 	business.state = single_state

@@ -5,6 +5,7 @@ var completed: bool = false
 var picked: Array[StringName] = []
 var pool: RelicPool = RelicRewardService.DEFAULT_POOL
 var shot_attempts: int = 32
+var avoid_optional_rooms: bool = false
 
 
 func _init(context: SceneTree) -> void:
@@ -94,6 +95,7 @@ func visit(target: StringName) -> void:
 	while not queue.is_empty() and not parent.has(target):
 		var id: StringName = queue.pop_front()
 		for next_id in world.layout.rooms[id].neighbors.values():
+			if avoid_optional_rooms and world.layout.rooms[next_id].room_type in [RoomDefinition.Type.TRAP, RoomDefinition.Type.SECRET]: continue
 			if not parent.has(next_id):
 				parent[next_id] = id
 				queue.append(next_id)

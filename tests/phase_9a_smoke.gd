@@ -7,7 +7,7 @@ func capture(name: String) -> void:
 
 func run() -> void:
 	DirAccess.make_dir_recursive_absolute("res://logs")
-	for suite in [preload("res://tests/phase_9a_data_checks.gd"), preload("res://tests/phase_9a_interaction_checks.gd"), preload("res://tests/phase_9a_lifecycle_checks.gd"), preload("res://tests/phase_9a_flow_checks.gd")]:
+	for suite in [preload("res://tests/phase_9a_data_checks.gd"), preload("res://tests/phase_9a_interaction_checks.gd"), preload("res://tests/phase_9a_wall_checks.gd"), preload("res://tests/phase_9a_lifecycle_checks.gd"), preload("res://tests/phase_9a_flow_checks.gd"), preload("res://tests/phase_9a_complete_flow_checks.gd"), preload("res://tests/phase_9a_seed_checks.gd")]:
 		await suite.new(self).run()
 	print("[Phase 9A] %d checks, %d failures" % [checks, failures])
 	quit(0 if failures == 0 else 1)

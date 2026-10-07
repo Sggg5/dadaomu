@@ -1,16 +1,36 @@
 # 技术架构
 
-## Phase 9A：墓室风险选择与隐藏探索（当前实现）
+Phase9A/9A.1最终人工验收已通过（2026-10-07）；当前授权一次性封版commit/push到codex/phase-9a-tomb-risk-exploration，不合并main、不进入9B。风险数值本阶段冻结，后续平衡待多层结构完成再评估。旧等待反馈/未提交说明为历史，以此及docs/PHASE_9A_VERIFICATION.md最终结论为准。
+
+## 当前正式下墓Seed生命周期（9A.1，未提交）
+
+MuseumState.campaign_seed为正31位持久化身份，0仅为新档/旧档待初始化。ProfileStore VERSION=4编码该字段；v1～v3纯迁移保留原地面数据且暂为0，GameFlow启动时以独立RNG或明确测试override初始化一次并安全保存。非法v4 Seed修复为待初始化，保留合法馆藏/展柜/现金/待拍；拒绝将0写成正式v4档。已有有效Campaign不会被启动override改写。
+
+流程为campaign_seed→day_number→DEFAULT_TOMB site_id→ExpeditionSeedService.derive→DungeonSession.seed_value。纯函数使用稳定混合规范到1～2147483647；无下墓次数计数器。完成/撤离/死亡或拍卖回馆推进日期，下一次下墓派生新Seed；同日地面操作/夜间退出不换图。R同Run，N仅临时开发换图、不写Campaign；退出重载回当日正式图。
+
+GameFlow的--seed=N仅初始化测试Campaign；强制旧Run只用测试夹具forced_night_seed（默认0、不持久化）。hub_mode=true的DungeonSession不再读取全局--seed。独立dungeon_test的--seed仍直接指定Run。HUD显示实际Run Seed，当前层Seed置于tooltip；RunResult保持实际Run Seed。生成器、风险/WallMark/敌人/Boss与奖励算法均不因生命周期修正修改。
+
+## 当前墙面发现机制（9A.1，未提交）
+
+WallMarkDefinition只保存稳定ID、墙段锚点、视觉variant、真假与固定检查结果；WallMarkGenerator在探索图装配之后使用独立wall_mark随机流生成，不修改图/敌人/棺椁/掉落。普通COMBAT以55%概率有假线索，成功后15%概率增加第二个；隐藏父房保证一个真实线索，并以35%概率附加一个假线索。真假共用三种视觉，位置避开普通/风险门、障碍与现有底座交互区；锚点位于墙内20px，图形绘在墙体中线。
+
+WallMark只呈现环境与30px交互，未检查时统一“[E] 检查墙面”。假线索一次固定反馈，无再E提示；真线索第一次提示声音发空，第二次通过Controller延迟切换进入暗室。HiddenRoomEntrance只负责已发现暗室的返回，不再生成独有入口裂纹。
+
+TombExplorationPlan持wall_marks、checked_wall_marks、secret_inspected/secret_discovered；仅本层，重访恢复，新Run/换层重建，不写Profile。第一次检查真线索不显示小地图，实际打开进入才discovered。过滤视图保留真实Seed与主图元数据。当前仅等待多Seed隐藏发现人工反馈，不自动提交。
+
+## Phase 9A.1：墓室风险与完整回馆修正（当前实现，同9A分支）
 
 基于已合并main b74bb35d4e7d4059f8272681f7fb8652629e7e18，开发分支codex/phase-9a-tomb-risk-exploration。仅墓内可选探索；完成后提交并push本分支，不合并main、不进入9B。下方旧阶段为历史记录，以本节为准。
 
-每层1～2口危险棺椁、0～1间隐藏墓室、0～1座祭台、0～1处汇合分岔。棺椁在64px内E查看风险，再E确认，Tab取消；正式权重古董/伏击/机关/空棺=50/25/15/10。伏击为现有两只尸蟞，0.35秒观察期，安全出生点，清掉后开门并留下古董；不重复统计普通COMBAT或发遗物。祭台明确支付15HP，可致死，换取RARE/TREASURE池中的一件机会，不保证传奇。空棺无奖励。
+每层普通棺椁0～1口（独立65%抽签，不补数量），暗室中的棺椁不占此配额；暗室0～1间、祭台0～1座、汇合分岔0～1处。正式棺椁权重古董/伏击/机关/空棺=35/25/20/20；机关20HP，伏击两只现有尸蟞且不送安慰古董。伏击保留0.35秒观察期和安全出生点，不重复普通清场/遗物。祭台支付25HP、可致死，仍用RARE/TREASURE池；确认显示当前生命→支付后生命和致死警告。频率fork/secret/standalone_altar/coffin=0.45/0.35/0.25/0.65。
 
-墙边细小裂缝E检查，再E进入；未发现的隐藏房不出现在小地图和已清房总数中，发现后本层可重访。危险墓道用血迹与偏殿暗色表达，原安全连边保留，另加两房绕路后汇合；不强制走风险路线，Boss最短距离不变。隐藏房有高价值供物和一次风险交互。基础8～12房主图保持，最多额外增加2个绕路房和1个隐藏房，仍复用room.tscn。
+真假墙面异常共用3种外观，普通COMBAT也会有0～2处假线索；只有30px内显示“[E] 检查墙面”，真线索检查两次才进入，假线索只反馈一次；未发现的隐藏房不出现在小地图和已清房总数中，发现后本层可重访。危险墓道用血迹与偏殿暗色表达，原安全连边保留，另加两房绕路后汇合；不强制走风险路线，Boss最短距离不变。隐藏房有高价值供物和一次风险交互。基础8～12房主图保持，最多额外增加2个绕路房和1个隐藏房，仍复用room.tscn。
 
 TombRiskEvent只读资源与TombRiskResult纯结果分离；TombExplorationPlan在原生成器之后装配可选图，TombRiskService持本层一次性账本，TombRiskContent只装配局部交互/波次/现有拾取物。普通古董源先从原主图选择；事件RNG独立派生run_seed/floor/room/event/version，不消费地图、遗物、Boss、普通敌人或普通古董流。频率与事件配置位于data/dungeon/events/。
 
 事件奖励只进入AntiqueInventory，容量仍8格；满包不消耗Pickup，整理后可捡，未捡离房重访恢复。已领取/已丢弃不重生。伤害使用Health正式入口与红闪；主动代价不能被受伤无敌免单。确认锁与数据账本双重防重复；死亡/结束不能再触发。R同Seed重置事件/发现/库存，N新Run，跨层新账本；仅已捡古董随既有Carry保留。不保存墓穴中途状态。
+
+探索装配版本2，事件抽样版本1（新配置内同Seed复现）。正式完整试玩从GameFlow启动，Museum→两层真实战斗→RunExit E→结算E→次日回馆。独立dungeon_test只作墓穴手感测试，结算明确显示“独立地宫测试模式”与R/N，绝不自行创建Museum。5晚人工选择记录与自动驾驶分开，未取得记录不宣称手感目标完成。
 
 玩家仍80HP，两敌人/两Boss/武器/遗物2-4-7/八格背包数值未改。市场、现金、等级、待拍、拍卖结果不参与探索或战斗计算。历史回归显式关闭探索使用原主图夹具，保留全部断言；9A正式入口、完整流程、开启探索的Museum隔离与新功能另外覆盖。验收命令、真实结果及人工手感状态见docs/PHASE_9A_VERIFICATION.md。禁止新Museum功能、永久战斗成长、背包扩容、新敌人/Boss或9B。
 

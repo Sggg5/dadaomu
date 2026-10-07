@@ -33,9 +33,11 @@ var _seed_rng := RandomNumberGenerator.new()
 
 
 func _ready() -> void:
-	for argument in OS.get_cmdline_user_args():
-		if argument.begins_with("--seed=") and argument.trim_prefix("--seed=").is_valid_int():
-			seed_value = argument.trim_prefix("--seed=").to_int()
+	# 正式GameFlow已注入当日派生Seed；子Session不能再次用Campaign CLI覆盖它。
+	if not hub_mode:
+		for argument in OS.get_cmdline_user_args():
+			if argument.begins_with("--seed=") and argument.trim_prefix("--seed=").is_valid_int():
+				seed_value = argument.trim_prefix("--seed=").to_int()
 	_seed_rng.randomize()
 	_start_new_run(DungeonGenerator.generate(seed_value, config))
 
