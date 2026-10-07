@@ -1,23 +1,32 @@
-[gd_resource type="Resource" script_class="TombDefinition" load_steps=8 format=3]
+[gd_resource type="Resource" script_class="TombDefinition" load_steps=11 format=3]
+[ext_resource type="Script" path="res://scripts/bosses/boss_pool_definition.gd" id="boss_pool_script"]
 [ext_resource type="Script" path="res://scripts/dungeon/tomb_definition.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/dungeon/tomb_floor_definition.gd" id="2"]
 [ext_resource type="Resource" path="res://data/tombs/default_dungeon_config.tres" id="3"]
 [ext_resource type="Resource" path="res://data/enemies/jinbei_warlord_corpse.tres" id="4"]
 [ext_resource type="Resource" path="res://data/enemies/tomb_guardian_beast.tres" id="5"]
+[sub_resource type="Resource" id="HistoricBossPool0"]
+script = ExtResource("boss_pool_script")
+id = &"legacy_two_floor_tomb_0"
+bosses = Array[Resource]([ExtResource("4")])
+[sub_resource type="Resource" id="HistoricBossPool1"]
+script = ExtResource("boss_pool_script")
+id = &"legacy_two_floor_tomb_1"
+bosses = Array[Resource]([ExtResource("5")])
 [sub_resource type="Resource" id="F1"]
 script = ExtResource("2")
 display_name = "旧第一层"
 dungeon_config = ExtResource("3")
 terminal_mode = 1
 combat_cache_count = 3
-boss_definition = ExtResource("4")
+boss_pool = SubResource("HistoricBossPool0")
 [sub_resource type="Resource" id="F2"]
 script = ExtResource("2")
 display_name = "旧第二层"
 dungeon_config = ExtResource("3")
 terminal_mode = 1
 combat_cache_count = 3
-boss_definition = ExtResource("5")
+boss_pool = SubResource("HistoricBossPool1")
 [resource]
 script = ExtResource("1")
 id = &"LEGACY_TWO_FLOOR"

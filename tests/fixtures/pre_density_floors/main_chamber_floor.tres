@@ -1,8 +1,13 @@
-[gd_resource type="Resource" script_class="TombFloorDefinition" load_steps=5 format=3]
+[gd_resource type="Resource" script_class="TombFloorDefinition" load_steps=7 format=3]
+[ext_resource type="Script" path="res://scripts/bosses/boss_pool_definition.gd" id="boss_pool_script"]
 [ext_resource type="Script" path="res://scripts/dungeon/tomb_floor_definition.gd" id="1"]
 [ext_resource type="Resource" path="res://tests/fixtures/pre_density_floors/main_chamber_floor_config.tres" id="2"]
 [ext_resource type="Resource" path="res://tests/fixtures/pre_density_floors/main_chamber_floor_reward.tres" id="3"]
 [ext_resource type="Resource" path="res://data/enemies/tomb_guardian_beast.tres" id="4"]
+[sub_resource type="Resource" id="HistoricBossPool0"]
+script = ExtResource("boss_pool_script")
+id = &"main_chamber_floor_0"
+bosses = Array[Resource]([ExtResource("4")])
 [resource]
 script = ExtResource("1")
 display_name = "主墓室"
@@ -10,5 +15,5 @@ dungeon_config = ExtResource("2")
 antique_reward_profile = ExtResource("3")
 rest_amount = 0
 terminal_mode = 1
-boss_definition = ExtResource("4")
+boss_pool = SubResource("HistoricBossPool0")
 combat_cache_count = 1

@@ -10,6 +10,7 @@ signal died
 @onready var weapon: RangedWeapon = $Weapon
 @onready var relics: RelicRuntime = $Relics
 
+var encounter_movement_modifiers:Dictionary[int,float]={}
 var environment_speed_multiplier: float = 1.0
 var aim_direction: Vector2 = Vector2.RIGHT
 var invulnerability_remaining: float = 0.0
@@ -36,8 +37,10 @@ func _physics_process(delta: float) -> void:
 	if health.is_dead or not controls_enabled:
 		return
 	var input_direction := Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var encounter_factor:=1.0
+	for value in encounter_movement_modifiers.values():encounter_factor=minf(encounter_factor,value)
 	var change_rate := stats.deceleration if input_direction.is_zero_approx() else stats.acceleration
-	velocity = velocity.move_toward(input_direction * stats.move_speed * environment_speed_multiplier * relics.movement_multiplier(), change_rate * delta)
+	velocity = velocity.move_toward(input_direction * stats.move_speed * encounter_factor * environment_speed_multiplier * relics.movement_multiplier(), change_rate * delta)
 	move_and_slide()
 	# 输入采样与物理步分离；每帧转为世界坐标，移动中仍瞄准同一鼠标位置。
 	var mouse_world_position := get_canvas_transform().affine_inverse() * mouse_viewport_position

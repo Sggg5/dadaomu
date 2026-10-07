@@ -6,6 +6,7 @@ static func fire(actor: Enemy, direction: Vector2, count: int, spread: float, da
 	if not actor.can_act() or not is_instance_valid(actor.projectile_parent): return
 	if actor.projectile_parent.get_child_count() >= 256: return
 	for index in range(mini(count,12)):
+		if actor.projectile_parent.get_child_count()>=256:break
 		var request := AttackRequest.new()
 		request.origin = actor.global_position
 		request.direction = direction.rotated((index-(count-1)*0.5)*spread)

@@ -1,6 +1,18 @@
 # 大盗墓时代
 
-## Phase 9B.3：敌人威胁、组合战斗与Build波动（当前实现，人工验收待完成）
+## Phase 9B.3.2：Boss Pool与机制重构（当前实现，人工待验收）
+
+基于 `0a5cb37a6f6314c8f232131da07d5ddd15777245`，继续 `codex/phase-9b-multifloor-endurance`。9B.3三局人工已出现完整通关、F4撤离和死亡丢货，普通怪/Build方向保留。本次只新增随机Boss遭遇与机制，不合并main、不进入下一阶段。
+
+五层各二Boss：母巢/棺中老尸，大帅尸/铁索僵，纸扎将军/百足尸母，铜甲尸王/双生尸煞，镇墓兽/墓主人。生产 `data/bosses` 十Definition、五BossPool；TombFloorDefinition只保存boss_pool。历史fixture显式单Boss池，旧data/enemies Boss与旧场景仅用于历史回归；没有boss_definition回退生产路径。RoomController/Room里的boss_definition代表本层已选结果，职责保持。
+
+BossRunPlan VERSION1在DungeonSession开Run时一次build全部楼层，用Run/Floor/PoolID/version独立稳定RNG和ID排序选择；R复现、N通常变化，Boss未知时小地图仅B，进入后HUD揭示名字。选择不读取Build、HP、古董或Museum，不消耗地图/RelicRewardPlan/古董流。每层奖励仍F#:BOSS，一局五Boss、五层、最多十三遗物。
+
+新生产Boss使用独立子类决策与有限MechanismBoss执行器，Actor只按自身阶段/距离/上次技能决策。BossTelegraph独立高z预警，所有者弱引用、LOS、有限持续、取消；虫卵可打、3秒孵化、最多4，召唤活上限4～6、总上限12～18。双生两个独立Health、共享总HUD与轮流节奏，双方死亡只完成一次；独存者继承简化技能。铜甲诱导破甲2.5秒，镇兽锁落点飞扑与上下文组合，墓主人危险线/弱兵/落石和本体配合。原五BossDefinition HP380/650/500/600/800保持，原Room难度倍率仍存在，不按Build缩放。高Build仍可加快击杀。
+
+冻结RelicRewardPlan VERSION3/36遗物/13来源、12普通敌人/3精英/30模板/4普通环境、80HP、8格、F2+15/F4+20、古董经济/Profile v4/跨日Seed/潜地可达性修复。敌弹逐发检查256容器上限；钩锁只施加有限0.6秒×0.75减速，Player基础参数不变。详见 `docs/PHASE_9B_3_2_VERIFICATION.md`：三十组3/8/12实战、十组站桩探针、1000Seed32路线与完整回馆。自动驾驶不是人工难度结论，等待三局Boss路线反馈。
+
+## Phase 9B.3：敌人威胁、组合战斗与Build波动（历史基线）
 
 基于 `a10ceb39517321cabad2d6a509a9eeb9f1b129e3`，继续 `codex/phase-9b-multifloor-endurance`。9B.2 的 Build 乐趣已获得反馈，普通敌人威胁不足，本轮用功能性敌人、组合和空间压力调整。完成代码验证后只 commit/push 本分支，不合并 main、不进入后续阶段。
 

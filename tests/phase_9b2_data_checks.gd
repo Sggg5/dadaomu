@@ -28,7 +28,7 @@ func run() -> void:
 		for seed_value in range(100):
 			var layout := TombFloorGenerator.generate(seed_value,number,TOMB)
 			map_sums[number-1]+=layout.rooms.size()
-			test.check(layout.rooms.size()>=data.dungeon_config.min_rooms and layout.rooms.size()<=data.dungeon_config.max_rooms and layout.boss_id==layout.terminal_id and data.boss_definition!=null,"Expanded five floors each have real Boss")
+			test.check(layout.rooms.size()>=data.dungeon_config.min_rooms and layout.rooms.size()<=data.dungeon_config.max_rooms and layout.boss_id==layout.terminal_id and data.boss_pool!=null,"Expanded five floors each have real Boss")
 			test.check(layout.relic_id not in [layout.start_id,layout.antique_id,layout.boss_id,&""] and layout.rooms[layout.relic_id].room_type==RoomDefinition.Type.RELIC,"One distinct safe relic-room node")
 			var loot := AntiqueLootService.new()
 			loot.configure(seed_value,number,layout,data.combat_cache_count)
@@ -48,4 +48,4 @@ func run() -> void:
 		test.check(ids.size()==13 and plan.assigned.size()==13,"Thirteen sources without replacement")
 	for number in range(1,6):
 		var layout := TombFloorGenerator.generate(33,number,TOMB)
-		print("[9B.2 map] Run33 F%d seed=%d rooms=%d boss=%s relic=%s" % [number,layout.seed_value,layout.rooms.size(),TOMB.floor_at(number).boss_definition.display_name,layout.relic_id])
+		print("[9B.2 map] Run33 F%d seed=%d rooms=%d boss=%s relic=%s" % [number,layout.seed_value,layout.rooms.size(),TOMB.floor_at(number).boss_pool.bosses[0].display_name,layout.relic_id])

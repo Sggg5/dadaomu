@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BossDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/bosses/boss_definition.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/bosses/tomb_master.tscn" id="2"]
+[resource]
+script = ExtResource("1")
+boss_scene = ExtResource("2")
+id = &"tomb_master"
+display_name = "墓主人"
+max_hp = 850.0
+move_speed = 90.0
+body_color = Color(0.55,0.48,0.65,1)
+parameters = {"summon_cap":4,"summon_total":12,"weak_summons":true}

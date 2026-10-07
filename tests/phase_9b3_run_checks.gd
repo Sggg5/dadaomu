@@ -30,6 +30,8 @@ func run()->void:
 			var source:StringName=&"antique_room" if id==world.layout.antique_id else &"combat_cache"
 			await cargo.take_current({"room":id,"source":source,"definition":world._pick_antique(id,source)})
 		await driver.visit(world.layout.boss_id)
+		test.check(world.current_room.boss_encounter.boss.definition==session.boss_for_floor(number),"Actual floor Boss equals precomputed Run plan")
+		print("[Actual Boss route] F%d %s"%[number,world.current_room.boss_encounter.boss.definition.id])
 		var before:=world.player.relics.inventory.ids().size()
 		await driver.boss_fight()
 		boss_rewards+=1

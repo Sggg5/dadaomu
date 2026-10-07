@@ -16,6 +16,7 @@ var _returning: bool = false
 @export var tomb: TombDefinition = preload("res://data/tombs/default_tomb.tres")
 var config: DungeonConfig = DEFAULT_CONFIG # 历史测试只读兼容；生产配置来自tomb.floors。
 @export var seed_value: int = 192034
+var boss_plan:BossRunPlan
 var run_seed: int
 var floor_number: int = 1
 var current_floor_seed: int
@@ -94,6 +95,7 @@ func _start_new_run(layout: DungeonLayout) -> void:
 		rewards.queue_free()
 	run_seed = layout.seed_value
 	seed_value = run_seed
+	boss_plan=BossRunPlan.build(run_seed,tomb)
 	floor_number = 1
 	current_floor_seed = run_seed
 	rewards = RelicRewardService.new()
@@ -172,8 +174,7 @@ func _enter_next_floor(layout: DungeonLayout, carry: RunCarryState) -> void:
 
 
 func boss_for_floor(floor: int) -> BossDefinition:
-	var data := tomb.floor_at(floor)
-	return data.boss_definition if data != null else null
+	return boss_plan.boss_for_floor(floor) if boss_plan!=null else null
 
 
 func _on_terminal_cleared() -> void:

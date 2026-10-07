@@ -2,7 +2,7 @@
 [ext_resource type="Script" path="res://scripts/dungeon/tomb_floor_definition.gd" id="1"]
 [ext_resource type="Resource" path="res://data/tombs/floors/middle_floor_config.tres" id="2"]
 [ext_resource type="Resource" path="res://data/tombs/floors/middle_floor_reward.tres" id="3"]
-[ext_resource type="Resource" path="res://data/enemies/paper_general.tres" id="4"]
+[ext_resource type="Resource" path="res://data/bosses/pools/floor_3.tres" id="4"]
 [resource]
 script = ExtResource("1")
 display_name = "中层墓室"
@@ -11,4 +11,4 @@ antique_reward_profile = ExtResource("3")
 rest_amount = 0
 terminal_mode = 1
 combat_cache_count = 1
-boss_definition = ExtResource("4")
+boss_pool = ExtResource("4")

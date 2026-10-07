@@ -11,7 +11,10 @@ var definition: BossDefinition
 var boss: Enemy
 var started: bool = false
 var finished: bool = false
+var stopped:bool=false
 var summons: Array[Enemy] = []
+var total_summons:int=0
+var eggs:Array[BossEgg]=[]
 
 
 func safe_point(preferred: Vector2, radius: float, reserved: Array[Vector2], distance: float) -> Vector2:
@@ -45,22 +48,29 @@ func start() -> void:
 
 
 func _summon(count: int) -> void:
-	if finished or not is_instance_valid(boss) or boss.health.is_dead: return
+	if stopped or finished or not is_instance_valid(boss) or boss.health.is_dead: return
 	var alive: Array[Enemy] = []
 	for actor in summons:
 		if is_instance_valid(actor) and not actor.health.is_dead: alive.append(actor)
 	summons = alive
-	if alive.size() >= 6: return
+	var cap:int=definition.parameters.get("summon_cap",6)
+	if alive.size() >= cap or total_summons>=definition.parameters.get("summon_total",18): return
 	var reserved: Array[Vector2] = [boss.position]
 	for actor in alive: reserved.append(actor.position)
-	for index in range(mini(count,6-alive.size())):
+	for index in range(mini(count,mini(cap-alive.size(),int(definition.parameters.get("summon_total",18))-total_summons))):
 		var preferred := boss.position + Vector2.RIGHT.rotated(index * TAU / count) * 110
 		var point := safe_point(preferred, 16, reserved, 100)
 		if not point.is_finite(): continue
 		reserved.append(point)
 		var actor := SCARAB.instantiate() as Enemy
 		actor.position = point
-		actor.configure_spawn(room.combat_target, room.projectiles, SCARAB_DATA, room.difficulty)
+		var data:EnemyDefinition=SCARAB_DATA
+		if definition.parameters.get("weak_summons",false):
+			data=SCARAB_DATA.duplicate() as EnemyDefinition
+			data.max_hp=22
+			data.contact_damage=6
+		actor.configure_spawn(room.combat_target, room.projectiles, data, room.difficulty)
+		total_summons+=1
 		actor.activation_remaining = 0.35
 		actor.killed.connect(func() -> void:
 			enemy_killed.emit(actor)
@@ -73,11 +83,14 @@ func _summon(count: int) -> void:
 func targets() -> Array[Node2D]:
 	var result: Array[Node2D] = []
 	for actor in get_children():
-		if actor is Enemy and not actor.health.is_dead and not actor.is_queued_for_deletion(): result.append(actor)
+		if actor is Enemy and not actor.health.is_dead and not actor.is_queued_for_deletion():
+			if actor.has_method("combat_targets"):result.append_array(actor.combat_targets())
+			else:result.append(actor)
 	return result
 
 
 func stop() -> void:
+	stopped=true
 	for actor in get_children():
 		if actor is Enemy: actor.stop_ai()
 
@@ -86,9 +99,33 @@ func _on_defeated() -> void:
 	if finished: return
 	finished = true
 	stop()
-	for actor in summons:
+	for actor in summons+eggs:
 		if is_instance_valid(actor): actor.queue_free()
 	room.discard_projectiles()
 	remaining_changed.emit(0)
 	enemy_killed.emit(boss)
 	defeated.emit()
+
+func create_eggs(count:int)->void:
+	if stopped or finished or not is_instance_valid(boss) or boss.health.is_dead:return
+	var alive_eggs:Array[BossEgg]=[]
+	for egg in eggs:
+		if is_instance_valid(egg) and not egg.health.is_dead:alive_eggs.append(egg)
+	eggs=alive_eggs
+	var reserved:Array[Vector2]=[boss.position]
+	for egg in eggs:reserved.append(egg.position)
+	for i in range(mini(count,4-eggs.size())):
+		var point:=safe_point(boss.position+Vector2.RIGHT.rotated(i*TAU/maxi(1,count))*130,18,reserved,80)
+		if not point.is_finite():continue
+		reserved.append(point)
+		var egg:=preload("res://scenes/bosses/boss_egg.tscn").instantiate() as BossEgg
+		egg.encounter=self
+		egg.encounter_room=room
+		egg.position=point
+		egg.configure_spawn(room.combat_target,room.projectiles,preload("res://data/bosses/egg.tres"),room.difficulty)
+		egg.killed.connect(func()->void:
+			if not egg.hatched:enemy_killed.emit(egg)
+			remaining_changed.emit(targets().size()))
+		add_child(egg)
+		eggs.append(egg)
+	remaining_changed.emit(targets().size())
