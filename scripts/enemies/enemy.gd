@@ -157,3 +157,5 @@ func _draw_body(color: Color) -> void:
 
 func death_spawns() -> Array[EnemySpawnDefinition]:
 	return []
+## 空间占位用于出土/出生合法性，不参与攻击或难度决策。
+func reserved_world_position()->Vector2:return global_position

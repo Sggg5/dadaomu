@@ -41,9 +41,9 @@ func safe_position(index: int) -> Vector2:
 		for x in range(200, 1100, 160): candidates.append(Vector2(x, y))
 	var accepted: Array[Vector2] = []
 	for point in candidates:
-		if room.definition.obstacles.any(func(rect: Rect2) -> bool: return rect.grow(48).has_point(point)): continue
+		if room.obstacles().any(func(rect: Rect2) -> bool: return rect.grow(48).has_point(point)): continue
 		if not Room.ROOM_RECT.grow(-40).has_point(point + Vector2(100, 0)): continue
-		if room.definition.obstacles.any(func(rect: Rect2) -> bool: return rect.grow(32).has_point(point + Vector2(100, 0))): continue
+		if room.obstacles().any(func(rect: Rect2) -> bool: return rect.grow(32).has_point(point + Vector2(100, 0))): continue
 		if point.distance_to(RelicPedestal.safe_position(room)) < 150 or point.distance_to(AntiqueCache.safe_position(room)) < 130: continue
 		if accepted.any(func(other: Vector2) -> bool: return other.distance_to(point) < 200): continue
 		accepted.append(point)
@@ -88,6 +88,8 @@ func _reward(event: TombRiskEvent, point: Vector2) -> void:
 func _start_ambush(event: TombRiskEvent) -> void:
 	active_event = event
 	ambush = EnemySpawner.new()
+	ambush.encounter_room=room
+	ambush.spawn_player_clearance=180
 	ambush.target = room.combat_target
 	ambush.difficulty = room.difficulty
 	ambush.projectile_parent = room.projectiles
@@ -105,7 +107,7 @@ func _start_ambush(event: TombRiskEvent) -> void:
 			for x in range(240, 1080, 100):
 				var point := Vector2(x, y)
 				if point.distance_to(room.combat_target.position) < 180: continue
-				if room.definition.obstacles.any(func(rect: Rect2) -> bool: return rect.grow(28).has_point(point)): continue
+				if room.obstacles().any(func(rect: Rect2) -> bool: return rect.grow(28).has_point(point)): continue
 				if used.any(func(other: Vector2) -> bool: return other.distance_to(point) < 80): continue
 				var near_door := false
 				for side in range(4):

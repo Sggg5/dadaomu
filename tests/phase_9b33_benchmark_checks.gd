@@ -24,6 +24,9 @@ func run()->void:
 				world.boss_definition=definition
 				# Stationary pressure probe uses open geometry, so a wall cannot explain missed shots.
 				if mode=="stationary":
+					world.boss_arena_override=BossArenaDefinition.new()
+					world.boss_arena_override.id=&"UNIT_OPEN"
+					world.boss_arena_override.tags=definition.compatible_arena_tags.duplicate()
 					world.layout.rooms[world.layout.boss_id].definition=world.layout.rooms[world.layout.boss_id].definition.duplicate()
 					world.layout.rooms[world.layout.boss_id].definition.obstacles=[]
 				var plan:=RelicRewardPlan.build(77,5,RelicRewardService.PRODUCTION_POOL)

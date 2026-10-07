@@ -142,6 +142,10 @@ func _next_action()->void:
 		var node:=zone(BossTelegraph.Shape.SECTOR,global_position,180,timer,0)
 		node.direction=locked
 func zone(shape:BossTelegraph.Shape,point:Vector2,radius:float,warning:float,damage:float,duration:float=0.25)->BossTelegraph:
+	if shape in [BossTelegraph.Shape.CIRCLE,BossTelegraph.Shape.RECT]:
+		var legal:=EncounterGeometry.safe_point(encounter_room,encounter_room.to_local(point),24)
+		assert(legal.is_finite(),"Boss danger zone requires legal Arena space")
+		point=encounter_room.to_global(legal)
 	owned=owned.filter(func(ref:WeakRef)->bool:return is_instance_valid(ref.get_ref()))
 	if owned.size()>=32:
 		var oldest:=owned.pop_front().get_ref() as Node

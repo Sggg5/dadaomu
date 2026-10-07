@@ -27,6 +27,7 @@ func run()->void:
 		var environments:=0
 		for seed_value in range(1000):
 			var layout:=TombFloorGenerator.generate(seed_value,number,TOMB)
+			var geometry:=RoomGeometryPlan.build(seed_value,number,layout,TOMB.floor_at(number).geometry_pool)
 			test.check(layout.signature()==TombFloorGenerator.generate(seed_value,number,TOMB).signature(),"Encounter topology and template determinism")
 			var loot:=AntiqueLootService.new()
 			loot.configure(seed_value,number,layout,1)
@@ -36,7 +37,8 @@ func run()->void:
 				combat_total+=1
 				threats[room.definition.threat_rating]=threats.get(room.definition.threat_rating,0)+1
 				count_total+=room.definition.spawns.size()
-				environments+=int(not room.definition.environments.is_empty() or room.definition.coffin_style)
+				var space:=geometry.assigned[room.room_id]
+				environments+=int(not space.environments.is_empty() or &"COFFIN" in space.tags)
 				for entry in room.definition.spawns:
 					families[str(entry.enemy_definition.family_id)]=true
 					elites+=int(entry.enemy_definition.elite)

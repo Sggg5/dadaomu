@@ -9,6 +9,7 @@ enum Type { COMBAT, ANTIQUE, MERCHANT, TRAP, SECRET, BOSS, START, RELIC }
 @export_range(1,5) var threat_rating: int = 2
 @export_range(1,100) var selection_weight: int = 1
 @export var coffin_style: bool = false
+## 仅旧测试/历史模板保留空间字段。正式variety Encounter的空间由Geometry独立注入。
 @export var environments: Array[EncounterHazardDefinition] = []
 @export var room_id: StringName
 @export var title: String

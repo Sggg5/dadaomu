@@ -24,8 +24,8 @@ func safe_point(preferred: Vector2, radius: float, reserved: Array[Vector2], dis
 	candidates.sort_custom(func(a: Vector2,b: Vector2) -> bool: return a.distance_squared_to(preferred) < b.distance_squared_to(preferred))
 	for point in candidates:
 		if not Room.ROOM_RECT.grow(-radius).has_point(point): continue
-		if point.distance_to(room.combat_target.position) < distance: continue
-		if room.definition.obstacles.any(func(rect: Rect2) -> bool: return rect.grow(radius + 2).has_point(point)): continue
+		if point.distance_to(room.to_local(room.combat_target.global_position)) < distance: continue
+		if room.obstacles().any(func(rect: Rect2) -> bool: return rect.grow(radius + 2).has_point(point)): continue
 		if reserved.any(func(other: Vector2) -> bool: return point.distance_to(other) < radius * 2 + 20): continue
 		return point
 	return Vector2.INF

@@ -30,7 +30,7 @@ func shoot_safe(enemy:Enemy) -> void:
 			var enemy_local:=world.current_room.to_local(enemy.global_position)
 			var distance:=point.distance_to(enemy_local)
 			if distance<230 or distance>800:continue
-			if world.current_room.definition.obstacles.any(func(rect:Rect2)->bool:return rect.grow(24).has_point(point)):continue
+			if world.current_room.obstacles().any(func(rect:Rect2)->bool:return rect.grow(24).has_point(point)):continue
 			var ray:=PhysicsRayQueryParameters2D.create(enemy.global_position,world.current_room.to_global(point),1,[enemy.get_rid()])
 			if not enemy.get_world_2d().direct_space_state.intersect_ray(ray).is_empty():continue
 			var score:float=500-absf(distance-300)

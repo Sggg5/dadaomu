@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BossArenaDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/bosses/boss_arena_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"BOSS_WIDE_HALL"
+selection_weight = 8
+tags = Array[StringName]([&"WIDE_HALL"])
+obstacles = Array[Rect2]([Rect2(272,184,160,24), Rect2(848,528,160,24)])

@@ -7,7 +7,7 @@ var room:Room
 var stopped:bool=false
 func _ready()->void:
 	if room.room_type!=RoomDefinition.Type.COMBAT:return
-	for data in room.definition.environments:create(data)
+	for data in room.environments():create(data)
 func create(definition:EncounterHazardDefinition,guard:WeakRef=null)->EncounterHazard:
 	if stopped:return null
 	var live:=get_children().filter(func(node:Node)->bool:return not node.is_queued_for_deletion())

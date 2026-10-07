@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BossArenaPool" load_steps=8 format=3]
+[ext_resource type="Script" path="res://scripts/bosses/boss_arena_pool.gd" id="1"]
+[ext_resource type="Resource" path="res://data/geometries/arenas/boss_open.tres" id="2"]
+[ext_resource type="Resource" path="res://data/geometries/arenas/boss_side_walls.tres" id="3"]
+[ext_resource type="Resource" path="res://data/geometries/arenas/boss_corner_cover.tres" id="4"]
+[ext_resource type="Resource" path="res://data/geometries/arenas/boss_dual_open.tres" id="5"]
+[ext_resource type="Resource" path="res://data/geometries/arenas/boss_edge_cover.tres" id="6"]
+[ext_resource type="Resource" path="res://data/geometries/arenas/boss_wide_hall.tres" id="7"]
+[resource]
+script = ExtResource("1")
+id = &"BOSS_ARENAS"
+geometries = Array[Resource]([ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5"), ExtResource("6"), ExtResource("7")])

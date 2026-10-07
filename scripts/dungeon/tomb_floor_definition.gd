@@ -9,8 +9,13 @@ enum TerminalMode { COMBAT, BOSS }
 @export_range(0, 80) var rest_amount: int = 0
 @export_range(0, 3) var combat_cache_count: int = 1
 @export var antique_reward_profile: AntiqueRewardProfile
+@export var geometry_pool:RoomGeometryPool
+@export var boss_arena_pool:BossArenaPool
 
 func validation_error() -> String:
+	if geometry_pool!=null and not geometry_pool.validation_error().is_empty():return "Invalid geometry pool"
+	if boss_arena_pool!=null and not boss_arena_pool.validation_error().is_empty():return "Invalid arena pool"
+	if geometry_pool!=null and terminal_mode==TerminalMode.BOSS and boss_arena_pool==null:return "Production Boss floor requires separate Arena pool"
 	if display_name.is_empty(): return "Floor name required"
 	if dungeon_config == null or not dungeon_config.validation_error().is_empty(): return "Invalid floor config"
 	if terminal_mode not in [TerminalMode.COMBAT, TerminalMode.BOSS]: return "Invalid terminal mode"

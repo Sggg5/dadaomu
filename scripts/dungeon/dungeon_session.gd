@@ -121,6 +121,8 @@ func _assemble_world(layout: DungeonLayout) -> void:
 	world.boss_definition = boss_for_floor(floor_number)
 	world.final_floor = floor_number == tomb.floors.size()
 	var floor_data := tomb.floor_at(floor_number)
+	world.geometry_pool=floor_data.geometry_pool
+	world.boss_arena_pool=floor_data.boss_arena_pool
 	world.floor_count = tomb.floors.size()
 	world.floor_name = floor_data.display_name
 	world.combat_cache_count = floor_data.combat_cache_count

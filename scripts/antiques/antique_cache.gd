@@ -16,7 +16,7 @@ static func safe_position(room: Room) -> Vector2:
 	var relic := room.get_node_or_null("RelicPedestal") as Node2D
 	for point in candidates:
 		if not Room.ROOM_RECT.grow(-40).has_point(point): continue
-		if room.definition.obstacles.any(func(rect: Rect2) -> bool: return rect.grow(40).has_point(point)): continue
+		if room.obstacles().any(func(rect: Rect2) -> bool: return rect.grow(40).has_point(point)): continue
 		if relic != null and point.distance_to(relic.position) < 160: continue
 		return point
 	return room.get_entry_position(room.doors.keys()[0])

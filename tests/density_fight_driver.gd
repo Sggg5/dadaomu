@@ -35,7 +35,7 @@ func shoot_safe(enemy:Enemy) -> void:
 			var point:=Vector2(x,y)
 			var distance:=point.distance_to(enemy.position)
 			if distance<230 or distance>420:continue
-			if world.current_room.definition.obstacles.any(func(rect:Rect2)->bool:return rect.grow(24).has_point(point)):continue
+			if world.current_room.obstacles().any(func(rect:Rect2)->bool:return rect.grow(24).has_point(point)):continue
 			var ray:=PhysicsRayQueryParameters2D.create(enemy.position,point,1,[enemy.get_rid()])
 			if not enemy.get_world_2d().direct_space_state.intersect_ray(ray).is_empty():continue
 			var score:float=500-absf(distance-300)

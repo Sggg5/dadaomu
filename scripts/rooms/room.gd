@@ -18,6 +18,11 @@ const ROOM_RECT := Rect2(64, 144, 1152, 448)
 const WALL_THICKNESS: float = 16.0
 
 @export var definition: RoomDefinition
+var geometry:RoomGeometryDefinition
+## 新生产读取Geometry；旧独立夹具保留其显式RoomDefinition布局。
+func obstacles()->Array[Rect2]:return geometry.obstacles if geometry!=null else definition.obstacles
+func environments()->Array[EncounterHazardDefinition]:return geometry.environments if geometry!=null else definition.environments
+func coffin_style()->bool:return &"COFFIN" in geometry.tags if geometry!=null else definition.coffin_style
 @onready var enemy_spawner: EnemySpawner = $EnemySpawner
 @onready var projectiles: Node2D = $Projectiles
 
@@ -47,6 +52,12 @@ func configure(data: RoomDefinition, state: RoomState, connected_sides: Array[in
 	definition = data
 	room_state = state
 	room_type = type
+	# 即使是历史/独立BOSS夹具，没有Arena注入也只能使用空Arena。
+	# Boss绝不能从普通Encounter回退继承障碍。
+	if room_type==RoomDefinition.Type.BOSS and geometry==null:
+		geometry=BossArenaDefinition.new()
+		geometry.id=&"BOSS_OPEN"
+		geometry.tags=[&"OPEN"]
 	combat_target = player
 	if encounter != null:
 		difficulty = encounter
@@ -60,6 +71,7 @@ func _ready() -> void:
 	hazards.room=self
 	add_child(hazards)
 	enemy_spawner.target = combat_target
+	enemy_spawner.encounter_room=self
 	enemy_spawner.difficulty = difficulty
 	enemy_spawner.projectile_parent = projectiles
 	room_state.changed.connect(_on_state_changed)
@@ -105,7 +117,7 @@ func get_entry_position(side: int = -1) -> Vector2:
 		var center := ROOM_RECT.get_center()
 		for offset in [Vector2.ZERO,Vector2(0,-112),Vector2(256,0),Vector2(-256,0),Vector2(0,112)]:
 			var point: Vector2 = center+offset
-			if definition.obstacles.all(func(rect: Rect2) -> bool: return not rect.grow(20).has_point(point)): return point
+			if obstacles().all(func(rect: Rect2) -> bool: return not rect.grow(20).has_point(point)): return point
 		return center
 	return _door_position(side) - Vector2.UP.rotated(side * PI * 0.5) * 64.0
 
@@ -238,7 +250,7 @@ func _build_geometry() -> void:
 			door.traversal_requested.connect(func(value: Door.Direction) -> void: traversal_requested.emit(value))
 			$Doors.add_child(door)
 			doors[side] = door
-	for rect in definition.obstacles:
+	for rect in obstacles():
 		_add_block(walls, rect)
 	queue_redraw()
 
@@ -281,8 +293,8 @@ func _draw() -> void:
 	for rect in _wall_rects:
 		draw_rect(rect, Color("4f4b43"))
 		draw_rect(rect, Color("9b8c68"), false, 2.0)
-	if definition.coffin_style:
-		for rect in definition.obstacles:
+	if coffin_style():
+		for rect in obstacles():
 			draw_rect(rect,Color("574433"))
 			draw_rect(rect,Color("bb9371"),false,2)
 			draw_line(rect.position+Vector2(5,8),rect.end-Vector2(5,8),Color("30261f"),3)

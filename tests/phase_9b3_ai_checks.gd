@@ -19,6 +19,9 @@ func fresh(obstacles:Array[Rect2]=[])->void:
 	player.position=Vector2(1000,320)
 	room.definition=room.definition.duplicate()
 	room.definition.obstacles=obstacles
+	room.geometry=RoomGeometryDefinition.new()
+	room.geometry.id=&"UNIT_GEOMETRY"
+	room.geometry.obstacles=obstacles
 	for rect in obstacles:room._add_block(room.get_node("Walls"),rect)
 func spawn(id:String,point:Vector2=Vector2(400,320))->Enemy:
 	var entry:=EnemySpawnDefinition.new()

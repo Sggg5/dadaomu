@@ -12,3 +12,4 @@ recovery_time = 0.6
 decision_cooldown = 1.0
 boss_recovery_time = 0.55
 combo_recovery_time = 1.1
+compatible_arena_tags = Array[StringName]([&"OPEN", &"WIDE_HALL"])

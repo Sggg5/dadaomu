@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="RoomGeometryPool" load_steps=14 format=3]
+[ext_resource type="Script" path="res://scripts/rooms/room_geometry_pool.gd" id="1"]
+[ext_resource type="Resource" path="res://data/geometries/open.tres" id="2"]
+[ext_resource type="Resource" path="res://data/geometries/offset_coffin.tres" id="3"]
+[ext_resource type="Resource" path="res://data/geometries/side_coffins.tres" id="4"]
+[ext_resource type="Resource" path="res://data/geometries/diagonal_pillars.tres" id="5"]
+[ext_resource type="Resource" path="res://data/geometries/broken_horizontal_wall.tres" id="6"]
+[ext_resource type="Resource" path="res://data/geometries/broken_vertical_wall.tres" id="7"]
+[ext_resource type="Resource" path="res://data/geometries/four_corner_coffins.tres" id="8"]
+[ext_resource type="Resource" path="res://data/geometries/double_lane.tres" id="9"]
+[ext_resource type="Resource" path="res://data/geometries/side_crypts.tres" id="10"]
+[ext_resource type="Resource" path="res://data/geometries/scattered_small_cover.tres" id="11"]
+[ext_resource type="Resource" path="res://data/geometries/water_channel.tres" id="12"]
+[ext_resource type="Resource" path="res://data/geometries/central_coffin.tres" id="13"]
+[resource]
+script = ExtResource("1")
+id = &"ORDINARY_GEOMETRY"
+geometries = Array[Resource]([ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5"), ExtResource("6"), ExtResource("7"), ExtResource("8"), ExtResource("9"), ExtResource("10"), ExtResource("11"), ExtResource("12"), ExtResource("13")])

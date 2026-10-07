@@ -11,3 +11,4 @@ move_speed = 0.0
 body_color = Color(0.52,0.62,0.28,1)
 boss_recovery_time = 0.9
 combo_recovery_time = 1.05
+compatible_arena_tags = Array[StringName]([&"OPEN", &"EDGE_COVER"])

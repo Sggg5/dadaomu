@@ -1,7 +1,6 @@
-[gd_resource type="Resource" script_class="RoomDefinition" load_steps=19 format=3]
+[gd_resource type="Resource" script_class="RoomDefinition" load_steps=18 format=3]
 [ext_resource type="Script" path="res://scripts/rooms/room_definition.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/rooms/enemy_spawn_definition.gd" id="2"]
-[ext_resource type="Script" path="res://scripts/rooms/encounter_hazard_definition.gd" id="3"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/brood_mother.tscn" id="S0"]
 [ext_resource type="Resource" path="res://data/enemies/brood_mother.tres" id="D0"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/scarab_enemy.tscn" id="S1"]
@@ -51,8 +50,5 @@ room_id = &"variety_20"
 title = "深墓守望室"
 threat_rating = 3
 selection_weight = 4
-coffin_style = true
 entry_grace_time = 0.35
 spawns = Array[Resource]([SubResource("Spawn0"), SubResource("Spawn1"), SubResource("Spawn2"), SubResource("Spawn3"), SubResource("Spawn4"), SubResource("Spawn5"), SubResource("Spawn6")])
-obstacles = Array[Rect2]([Rect2(604,312,72,112)])
-environments = Array[Resource]([])

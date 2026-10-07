@@ -13,7 +13,7 @@ static func safe_position(room: Room) -> Vector2:
 	var center := Room.ROOM_RECT.get_center()
 	for offset in [Vector2.ZERO, Vector2(0,-112), Vector2(160,0), Vector2(0,112), Vector2(-160,0)]:
 		var point: Vector2 = center + offset
-		if Room.ROOM_RECT.grow(-40).has_point(point) and room.definition.obstacles.all(func(rect: Rect2) -> bool: return not rect.grow(40).has_point(point)):
+		if Room.ROOM_RECT.grow(-40).has_point(point) and room.obstacles().all(func(rect: Rect2) -> bool: return not rect.grow(40).has_point(point)):
 			return point
 	return room.get_entry_position(room.doors.keys()[0])
 

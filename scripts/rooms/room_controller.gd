@@ -33,6 +33,11 @@ var rest_amount: int = 0
 var next_floor_number: int = 2
 var next_floor_name: String = ""
 var antique_reward_profile: AntiqueRewardProfile
+var geometry_pool:RoomGeometryPool
+var geometry_plan:RoomGeometryPlan
+var boss_arena_pool:BossArenaPool
+## 专项夹具可显式注入Arena；正式Session不设置此字段。
+var boss_arena_override:BossArenaDefinition
 var run_finished: bool = false
 var antique_panel: AntiqueInventoryPanel
 
@@ -55,6 +60,7 @@ func _ready() -> void:
 		layout = exploration.layout
 		risk_service = TombRiskService.new(run_seed, floor_number)
 		risk_service.reward_profile = antique_reward_profile
+	if geometry_pool!=null:geometry_plan=RoomGeometryPlan.build(run_seed,floor_number,layout,geometry_pool)
 	for room_id in layout.rooms:
 		assert(layout.rooms[room_id].definition != null)
 		states[room_id] = RoomState.new()
@@ -141,6 +147,10 @@ func _switch_room(target_id: StringName, entry_side: int) -> void:
 	current_room = ROOM_SCENE.instantiate() as Room
 	var sides: Array[int] = []
 	var node := layout.rooms[target_id]
+	if geometry_pool!=null:
+		current_room.geometry=geometry_plan.assigned.get(target_id,preload("res://data/geometries/open.tres"))
+	if node.room_type==RoomDefinition.Type.BOSS and boss_arena_pool!=null:
+		current_room.geometry=boss_arena_override if boss_arena_override!=null else BossArenaPlan.pick(run_seed,floor_number,target_id,boss_arena_pool,boss_definition)
 	for side in node.neighbors:
 		sides.append(side)
 		if layout.rooms[node.neighbors[side]].room_type == RoomDefinition.Type.TRAP: current_room.route_warning_sides.append(side)
@@ -308,5 +318,5 @@ func _restore_planned_rewards() -> void:
 	pedestal.room_state = current_room.room_state
 	pedestal.source_id = source
 	pedestal.position = Vector2(960,240) if current_id == layout.boss_id else RelicPedestal.safe_position(current_room)
-	if current_room.definition.obstacles.any(func(rect: Rect2) -> bool: return rect.grow(45).has_point(pedestal.position)): pedestal.position = AntiqueCache.safe_position(current_room)
+	if current_room.obstacles().any(func(rect: Rect2) -> bool: return rect.grow(45).has_point(pedestal.position)): pedestal.position = AntiqueCache.safe_position(current_room)
 	current_room.add_child(pedestal)

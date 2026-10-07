@@ -29,7 +29,7 @@ func run()->void:
 		await bury(actor)
 		test.check(actor.state==BurrowingCorpse.State.WARNING and actor.landing.is_finite() and actor.landing!=preferred,"Blocked preferred point searches a legal alternate, not cancellation")
 		test.check(unobstructed(origin,actor.landing,actor),"Accepted central-obstacle landing has clear layer1 ray in world space")
-		test.check(not room.definition.obstacles[0].grow(72).has_point(actor.landing),"Alternate landing retains original clearance")
+		test.check(not room.obstacles()[0].grow(72).has_point(actor.landing),"Alternate landing retains original clearance")
 		var landing:=actor.landing
 		var hp:=player.health.current_hp
 		test.capture("burrow_central_transformed" if translated else "burrow_central_obstacle")
@@ -63,8 +63,12 @@ func run()->void:
 	player.position=Vector2(1000,496)
 	await test.frames(51)
 	test.check(actor.state==BurrowingCorpse.State.SURFACE and actor.eruptions==1 and not actor.get_node("CollisionShape2D").disabled,"Open-space emergence restores surface collision")
-	await fresh([Room.ROOM_RECT])
+	await fresh()
 	actor=spawn("burrowing_corpse") as BurrowingCorpse
+	# Born legally first; then obstruct the query space to exercise burrow fallback.
+	# New spawn planning correctly refuses an enemy born into a fully blocked room.
+	room.geometry.obstacles=[Room.ROOM_RECT]
+	room._add_block(room.get_node("Walls"),Room.ROOM_RECT)
 	player.set_physics_process(false)
 	await test.frames(2)
 	await bury(actor)

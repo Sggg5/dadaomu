@@ -46,6 +46,6 @@ static func safe_position(room: Room) -> Vector2:
 		for x in range(240, 1080, 80):
 			var point := Vector2(x, y)
 			if point.distance_to(exit_point) < 170: continue
-			if room.definition.obstacles.any(func(rect: Rect2) -> bool: return rect.grow(40).has_point(point)): continue
+			if room.obstacles().any(func(rect: Rect2) -> bool: return rect.grow(40).has_point(point)): continue
 			return point
 	return room.get_entry_position()

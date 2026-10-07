@@ -22,3 +22,4 @@ decision_cooldown = 1.0
 parameters = {"summon_cap":4,"summon_total":12}
 boss_recovery_time = 0.8
 combo_recovery_time = 1.05
+compatible_arena_tags = Array[StringName]([&"OPEN", &"LIGHT_SIDE_COVER"])

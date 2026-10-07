@@ -1,7 +1,6 @@
-[gd_resource type="Resource" script_class="RoomDefinition" load_steps=15 format=3]
+[gd_resource type="Resource" script_class="RoomDefinition" load_steps=14 format=3]
 [ext_resource type="Script" path="res://scripts/rooms/room_definition.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/rooms/enemy_spawn_definition.gd" id="2"]
-[ext_resource type="Script" path="res://scripts/rooms/encounter_hazard_definition.gd" id="3"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/exploding_corpse.tscn" id="S0"]
 [ext_resource type="Resource" path="res://data/enemies/exploding_corpse.tres" id="D0"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/corpse_dog.tscn" id="S1"]
@@ -39,8 +38,5 @@ room_id = &"variety_10"
 title = "前墓封路室"
 threat_rating = 3
 selection_weight = 3
-coffin_style = false
 entry_grace_time = 0.35
 spawns = Array[Resource]([SubResource("Spawn0"), SubResource("Spawn1"), SubResource("Spawn2"), SubResource("Spawn3"), SubResource("Spawn4")])
-obstacles = Array[Rect2]([])
-environments = Array[Resource]([])

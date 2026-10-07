@@ -69,6 +69,9 @@ func run()->void:
 			# rather than a measurement of standing still against the new combo rhythm.
 			world.layout.rooms[world.layout.boss_id].definition=world.layout.rooms[world.layout.boss_id].definition.duplicate()
 			world.layout.rooms[world.layout.boss_id].definition.obstacles=[]
+			world.boss_arena_override=BossArenaDefinition.new()
+			world.boss_arena_override.id=&"UNIT_OPEN"
+			world.boss_arena_override.tags=definition.compatible_arena_tags.duplicate()
 			var plan:=RelicRewardPlan.build(77,5,RelicRewardService.PRODUCTION_POOL)
 			var index:=0
 			for source in plan.assigned:

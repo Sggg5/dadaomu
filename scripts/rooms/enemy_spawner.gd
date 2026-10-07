@@ -22,6 +22,10 @@ var _spawning: bool = false
 var _failed: bool = false
 var _finished: bool = false
 var _living: Dictionary[int, Node2D] = {}
+var placement_error:String=""
+var encounter_room:Room
+var spawn_player_clearance:float=0
+func _room()->Room:return encounter_room if encounter_room!=null else get_parent() as Room
 
 
 func spawn(definition: RoomDefinition) -> void:
@@ -29,6 +33,18 @@ func spawn(definition: RoomDefinition) -> void:
 		return
 	started = true
 	_spawning = true
+	var encounter:=_room()
+	var positions:Array[Vector2]=[]
+	if encounter!=null and encounter.geometry!=null:
+		var placement:=EnemySpawnPlacement.build(definition,encounter.geometry,encounter.to_local(target.global_position),spawn_player_clearance)
+		placement_error=placement.error
+		if not placement_error.is_empty():
+			_failed=true
+			_spawning=false
+			push_error(placement_error)
+			return
+		positions=placement.positions
+	var spawn_index:=0
 	for entry in definition.spawns:
 		if entry == null or entry.enemy_scene == null:
 			_failed = true
@@ -45,11 +61,13 @@ func spawn(definition: RoomDefinition) -> void:
 		var enemy_id := enemy.get_instance_id()
 		_living[enemy_id] = enemy
 		health.died.connect(_on_enemy_died.bind(enemy_id), CONNECT_ONE_SHOT)
-		enemy.position = entry.position
+		enemy.position = positions[spawn_index] if not positions.is_empty() else entry.position
+		if not positions.is_empty():enemy.position=to_local(encounter.to_global(positions[spawn_index]))
+		spawn_index+=1
 		if enemy is Enemy:
 			enemy.configure_spawn(target, projectile_parent, entry.enemy_definition, difficulty)
 			enemy.activation_remaining = definition.entry_grace_time
-			enemy.encounter_room = get_parent() as Room
+			enemy.encounter_room = _room()
 		if enemy.has_signal("summon_requested"): enemy.connect("summon_requested",_request_summon.bind(enemy))
 		add_child(enemy)
 	_spawning = false
@@ -111,8 +129,8 @@ func _spawn_summons(count: int, reference: WeakRef) -> void:
 			for x in range(280,1080,80):
 				var candidate := Vector2(x,y)
 				if candidate.distance_to(target.position)<180: continue
-				var room := get_parent() as Room
-				if room.definition.obstacles.any(func(rect: Rect2) -> bool: return rect.grow(18).has_point(candidate)): continue
+				var room := _room()
+				if room.obstacles().any(func(rect: Rect2) -> bool: return rect.grow(18).has_point(candidate)): continue
 				var near_entry := false
 				for side in range(4):
 					if room.get_entry_position(side).distance_to(candidate)<180: near_entry=true
@@ -128,7 +146,7 @@ func _spawn_summons(count: int, reference: WeakRef) -> void:
 		actor.position=point
 		actor.configure_spawn(target,projectile_parent,preload("res://data/enemies/scarab.tres"),difficulty)
 		actor.activation_remaining=0.35
-		actor.encounter_room=get_parent() as Room
+		actor.encounter_room=_room()
 		var id := actor.get_instance_id()
 		_living[id]=actor
 		_summon_owners[id]=owner_id
@@ -142,7 +160,7 @@ func _spawn_death_records(records:Array[EnemySpawnDefinition])->void:
 	if stopped or not is_inside_tree() or target.health.is_dead:
 		pending_births=maxi(0,pending_births-records.size())
 		return
-	var room:=get_parent() as Room
+	var room:=_room()
 	for record in records:
 		pending_births-=1
 		if death_births>=24:continue

@@ -6,6 +6,11 @@ var remaining: float = 3
 var timer: float = 0.7
 func _physics_process(delta: float) -> void:
 	if not is_instance_valid(owner_boss) or not owner_boss.can_act(): queue_free(); return
+	var room:=owner_boss.encounter_room
+	if room!=null:
+		var legal:=EncounterGeometry.safe_point(room,room.to_local(global_position),24)
+		if not legal.is_finite():queue_free();return
+		global_position=room.to_global(legal)
 	remaining-=delta
 	timer-=delta
 	if remaining<=0: queue_free(); return

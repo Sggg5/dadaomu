@@ -18,6 +18,9 @@ func setup(definition:BossDefinition,empty_geometry:bool=false)->void:
 	world=session.world
 	world.boss_definition=definition
 	if empty_geometry:
+		world.boss_arena_override=BossArenaDefinition.new()
+		world.boss_arena_override.id=&"UNIT_OPEN"
+		world.boss_arena_override.tags=definition.compatible_arena_tags.duplicate()
 		world.layout.rooms[world.layout.boss_id].definition=world.layout.rooms[world.layout.boss_id].definition.duplicate()
 		world.layout.rooms[world.layout.boss_id].definition.obstacles=[]
 	world._switch_room(world.layout.boss_id,-1)

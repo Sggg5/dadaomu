@@ -8,8 +8,8 @@ static func safe_point(room:Room,preferred:Vector2,clearance:float=24,min_player
 	points.sort_custom(func(a:Vector2,b:Vector2)->bool:return a.distance_squared_to(preferred)<b.distance_squared_to(preferred))
 	for point in points:
 		if not Room.ROOM_RECT.grow(-clearance).has_point(point):continue
-		if point.distance_to(room.combat_target.position)<min_player_distance:continue
-		if room.definition.obstacles.any(func(rect:Rect2)->bool:return rect.grow(clearance).has_point(point)):continue
+		if point.distance_to(room.to_local(room.combat_target.global_position))<min_player_distance:continue
+		if room.obstacles().any(func(rect:Rect2)->bool:return rect.grow(clearance).has_point(point)):continue
 		return point
 	return Vector2.INF
 
@@ -26,8 +26,14 @@ static func safe_reachable_point(room:Room,preferred:Vector2,origin:Vector2,clea
 	var player_local:=room.to_local(room.combat_target.global_position)
 	for point in points:
 		if not Room.ROOM_RECT.grow(-clearance).has_point(point):continue
-		if point.distance_to(player_local)<min_player_distance:continue
-		if room.definition.obstacles.any(func(rect:Rect2)->bool:return rect.grow(clearance).has_point(point)):continue
+		if point.distance_to(player_local)<maxf(40,min_player_distance):continue
+		if room.obstacles().any(func(rect:Rect2)->bool:return rect.grow(clearance).has_point(point)):continue
+		var occupied:=false
+		for actor in room.damage_targets():
+			if not (actor is Enemy) or actor.health.is_dead or actor.get_rid()==exclude_rid:continue
+			var reserved:=room.to_local(actor.reserved_world_position())
+			if reserved.distance_to(point)<48:occupied=true;break
+		if occupied:continue
 		var ray:=PhysicsRayQueryParameters2D.create(from_global,room.to_global(point),1,excluded)
 		if not room.get_world_2d().direct_space_state.intersect_ray(ray).is_empty():continue
 		return point

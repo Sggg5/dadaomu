@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="RoomGeometryDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/rooms/room_geometry_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"DIAGONAL_PILLARS"
+selection_weight = 8
+tags = Array[StringName]([])
+obstacles = Array[Rect2]([Rect2(376,240,40,40), Rect2(864,448,40,40)])

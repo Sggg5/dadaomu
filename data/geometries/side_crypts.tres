@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="RoomGeometryDefinition" load_steps=4 format=3]
+[ext_resource type="Script" path="res://scripts/rooms/room_geometry_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/rooms/encounter_hazard_definition.gd" id="2"]
+[sub_resource type="Resource" id="hazard"]
+script = ExtResource("2")
+kind = 1
+position = Vector2(320,560)
+radius = 48.0
+warning_time = 0.9
+damage = 10.0
+direction = Vector2(1,0)
+[resource]
+script = ExtResource("1")
+id = &"SIDE_CRYPTS"
+selection_weight = 8
+tags = Array[StringName]([&"COFFIN"])
+obstacles = Array[Rect2]([Rect2(272,232,100,64), Rect2(272,440,100,64), Rect2(908,232,100,64), Rect2(908,440,100,64)])
+environments = Array[Resource]([SubResource("hazard")])

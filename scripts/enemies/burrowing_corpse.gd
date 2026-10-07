@@ -7,6 +7,8 @@ var timer:float=2.0
 var landing:Vector2
 var marker:EncounterHazard
 var eruptions:int=0
+func reserved_world_position()->Vector2:
+	return encounter_room.to_global(landing) if state==State.WARNING else global_position
 func take_damage(amount:float)->bool:
 	return super.take_damage(amount) if state==State.SURFACE else false
 func _tick_ai(delta:float)->void:
@@ -32,6 +34,10 @@ func _tick_ai(delta:float)->void:
 		State.WARNING:
 			velocity=Vector2.ZERO
 			if timer<=0:
+				# 预警期间其他实体可能占位；出土前再找同侧合法点，不能重叠启用碰撞。
+				var resolved:=EncounterGeometry.safe_reachable_point(encounter_room,landing,encounter_room.to_local(global_position),72,0,get_rid())
+				if not resolved.is_finite():state=State.SURFACE;timer=2;$CollisionShape2D.set_deferred("disabled",false);return
+				landing=resolved
 				global_position=encounter_room.to_global(landing)
 				state=State.SURFACE
 				timer=3.0

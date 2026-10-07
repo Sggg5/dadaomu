@@ -1,6 +1,18 @@
 # 项目开发计划
 
-## Phase 9B.3.3：Boss压力调优（当前实现，人工待验收）
+## Phase 9B.3.2b：Geometry / Boss Arena分离（当前实现，人工待验收）
+
+基于已存在9B.3.3的 `5435e96872f2ff8a2b76d24cfb438406df9df39d`，继续 `codex/phase-9b-multifloor-endurance`。本次只空间拆分/合法性，不回退或继续调Boss压力，不改Boss HP/伤害/时序、Build或经济。完成只commit/push，不合并main，等待空间人工验收。
+
+生产30个RoomDefinition只提供Encounter身份/敌人preferred spawns/threat/weight，空间迁到12个RoomGeometryDefinition与独立池。RoomGeometryPlan GEOMETRY_VERSION1按Run/Floor/RoomID/PoolID稳定RNG、距离/ID稳定装配，不修改Layout或其它随机流；邻接房ID去重、中央棺每层最多floor(COMBAT数/10)，实测1000Seed普通出现率0.5496%。安全房空空间使用稳定SAFE_RoomID，不消耗池RNG。
+
+BossArenaDefinition/Pool/Plan ARENA_VERSION1独立选择六Arena，各Boss声明兼容tags；BossRunPlan VERSION1冻结。所有Boss不再继承普通Encounter障碍，未注入Arena的历史BOSS也只有空Arena。普通旧夹具仍可显式保留旧布局字段。Room统一obstacles()/environments()/coffin_style()供生成、危险区、掉落、风险交互和AI读取当前空间。
+
+EnemySpawnPlacement先整波搜索preferred→边界/入口180px/障碍24px/间距48px，失败记录错误且不产生半波；Room/Spawner坐标转换显式。Boss/召唤/卵/危险区/假身读取当前Arena。潜地出土增加占位预留48px与Player身体40px，出土再校验，修复重叠实体被物理推出房外导致活怪不可见/卡门；HP/移速/技能预警时间不改。
+
+详见 `docs/PHASE_9B_3_2B_VERIFICATION.md`；截图/日志在ignored logs。结构约束和自动战斗不能证明不存在所有掩体绕行策略，连续5～10房空间打法与Boss反绕柱体验等待人工反馈，不继续压力调优。
+
+## Phase 9B.3.3：Boss压力调优（本次冻结的既有基线）
 
 基线 `9f3ced053ea8e0f6e3ce3115fb4dbaeb715f7288`，继续 `codex/phase-9b-multifloor-endurance`，只commit/push，不合并main、不进入下一阶段。十Boss通过静态连段和近期Cycle历史提高压力；不按Player Build/DPS/HP/携货/Museum缩放。BossRunPlan VERSION1、随机池与所有独立随机流保持。
 
