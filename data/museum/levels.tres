@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="MuseumLevels" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/museum/museum_levels.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/museum/museum_level_definition.gd" id="2"]
+
+[sub_resource type="Resource" id="Level0"]
+script = ExtResource("2")
+display_name = "私人古物陈列室"
+case_count = 3
+visitor_capacity = 30
+upgrade_cost = 1000
+
+[sub_resource type="Resource" id="Level1"]
+script = ExtResource("2")
+display_name = "古物陈列馆"
+case_count = 5
+visitor_capacity = 45
+upgrade_cost = 3000
+
+[sub_resource type="Resource" id="Level2"]
+script = ExtResource("2")
+display_name = "地方古物馆"
+case_count = 8
+visitor_capacity = 60
+upgrade_cost = 0
+
+[resource]
+script = ExtResource("1")
+levels = Array[ExtResource("2")]([SubResource("Level0"), SubResource("Level1"), SubResource("Level2")])

@@ -1,6 +1,28 @@
 # 技术架构
 
-## Phase 8A：博物馆昼夜循环（当前授权）
+## Phase 8B：经营成长与持久化边界（当前实现）
+
+GameFlow加载/持有MuseumProfileStore与MuseumState，装配Museum；接收安全RunResult后入藏并保存。MuseumState不依赖Dungeon，DungeonSession完全不读取等级/现金。扩建的唯一影响为地面展柜数和游客总容量，没有战斗成长。
+
+| 模块 | 职责 |
+|---|---|
+| MuseumLevelDefinition / MuseumLevels | 只读名称、3/5/8展柜、30/45/60容量、1000/3000费用，统一配置资源 |
+| MuseumState | 等级、现金、动态稳定case_ids、原子upgrade(expected_level)、归属约束 |
+| MuseumLayout | 几何占位展位坐标；坐标不作为存档身份 |
+| MuseumConstructionPanel | 单次确认绑定旧等级；显示资金不足/满级；成功后阻止连按 |
+| Museum / DisplayCase | 追加解锁柜与碰撞，旧节点/OwnedAntique身份/展品不重建；显示未开放展厅 |
+| MuseumBusiness | 空馆拒绝开馆；已有原始游客公式受当前Level容量限制，活客上限仍8 |
+| MuseumProfileStore | 安全地面JSON v1编解码/校验/原子替换；可注入路径或in_memory |
+| MuseumCollection.restore | 恢复已有实例并将next ID至少提升到所有已知ID之后 |
+
+保存边界是MORNING/EVENING，阶段也存入JSON，防闭馆重启重复营业。State.changed只有安全地面才保存；OPEN逐笔票款不保存中间态，闭馆统一保存。GameFlow夜间前显式保存，回馆先转移成功古董/推进日期，再保存；DEAD不转移。初始化也保存新档/恢复后的校验结果。
+
+Store只存字符串/数字/数组/字典，不保存Resource、Visitor或Dungeon。根schema非法回默认；馆藏未知定义/重复ID跳过，非法展柜/越级/重复归属忽略。文件flush后rename，保留失败提示；离开地面前保存失败拒绝出发。测试均隔离正式档。
+
+夜间中途退出恢复最近地面，不续HP/房间/敌人/遗物。没有自动备份、复杂迁移、云存档、多档槽位或退款。旧阶段章节仅历史；详见docs/PHASE_8B_VERIFICATION.md。
+
+
+## Phase 8A：博物馆昼夜循环（历史验收）
 
 基准 main 0a8784d193b6c96471538027fe0d00dfba2c1c46；工作分支 codex/phase-8a-museum-day-night-loop。仅实现可玩昼夜闭环，验证后提交并push，不合并main、不进入8B。旧阶段章节为历史，以本节授权为准。没有磁盘存档；门票现金仅本进程记录，无消费、出售、拍卖、鉴定、真假、修复、员工、成本、扩建或新墓穴。
 

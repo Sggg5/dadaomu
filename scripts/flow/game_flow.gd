@@ -8,6 +8,8 @@ const DUNGEON_SCENE: PackedScene = preload("res://scenes/main/dungeon_test.tscn"
 @export var night_seed: int = 192034
 # 仅自动测试显式启用；正式新游戏没有赠送馆藏。
 @export var initial_test_collection: bool = false
+@export var profile_path: String = "user://museum_profile_v1.json"
+var profile_store: MuseumProfileStore
 var museum_state := MuseumState.new()
 var current_dungeon_result: RunResult
 var museum: Museum
@@ -20,14 +22,22 @@ var current_phase: MuseumState.Phase:
 
 
 func _ready() -> void:
+	if profile_store == null:
+		profile_store = MuseumProfileStore.new()
+		profile_store.save_path = profile_path
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--seed=") and argument.trim_prefix("--seed=").is_valid_int(): night_seed = argument.trim_prefix("--seed=").to_int()
+		if argument.begins_with("--profile-path="): profile_store.save_path = argument.trim_prefix("--profile-path=")
+	museum_state = profile_store.load_profile()
+	museum_state.changed.connect(_save_profile)
 	if initial_test_collection: museum_state.collection.add(&"tang_sancai_horse",0)
-	_show_museum("原型馆藏：唐三彩马 · 可布展/开馆，也可到情报板直接下墓" if initial_test_collection else "早晨 · 可开馆，也可到情报板直接下墓")
+	_show_museum("原型馆藏：唐三彩马 · 可布展/开馆，也可到情报板直接下墓" if initial_test_collection else "地面状态已恢复 · 可整理展品，也可到情报板下墓",museum_state.phase)
+	if not profile_store.last_error.is_empty(): museum.message.text = profile_store.last_error
+	_save_profile()
 
 
-func _show_museum(notice: String) -> void:
-	museum_state.phase = MuseumState.Phase.MORNING
+func _show_museum(notice: String, phase: MuseumState.Phase = MuseumState.Phase.MORNING) -> void:
+	museum_state.phase = phase
 	museum = MUSEUM_SCENE.instantiate() as Museum
 	museum.state = museum_state
 	museum.config = museum_config
@@ -43,6 +53,7 @@ func start_night() -> bool:
 	if current_phase == MuseumState.Phase.MORNING:
 		museum_state.last_day_visitors = 0
 		museum_state.last_day_ticket_income = 0
+	if not _save_profile(): return false
 	_changing = true
 	museum.player.controls_enabled = false
 	museum_state.phase = MuseumState.Phase.NIGHT
@@ -88,3 +99,11 @@ func _return_morning(result: RunResult) -> void:
 	dungeon = null
 	museum_state.day_number += 1
 	_show_museum(notice)
+	_save_profile()
+
+
+func _save_profile() -> bool:
+	if not museum_state.can_edit(): return false
+	if profile_store.save_profile(museum_state): return true
+	if is_instance_valid(museum): museum.message.text = "保存失败："+profile_store.last_error
+	return false

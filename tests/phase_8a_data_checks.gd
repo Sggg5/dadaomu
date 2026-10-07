@@ -30,7 +30,7 @@ func run() -> void:
 	business.config = config
 	test.check(config.open_duration == 60 and config.ticket_price == 5 and config.max_active_visitors == 8,"Default business duration/price/active limit")
 	test.check(business.visitor_target(0,0) == 0 and business.visitor_target(50,0) == 0,"Empty exhibit count means zero target regardless of appeal")
-	test.check(business.visitor_target(3,1) == 6 and business.visitor_target(50,1) == 30 and business.visitor_target(75,2) == 42 and business.visitor_target(117,3) == 60,"Displayed exhibits use5+floor(appeal*.5), bound1..60")
+	test.check(business.visitor_target(3,1) == 6 and business.visitor_target(50,1) == 30 and business.visitor_target(75,2) == 30 and business.visitor_target(117,3) == 30,"Displayed exhibits use5+floor(appeal*.5), Level0 capacity30")
 	test.check(business.visitor_target(0,1) == 5,"Opening does not require a minimum appeal")
 	var single_state := MuseumState.new()
 	var only_coin := single_state.collection.add(&"republic_silver_coin",1)
@@ -41,7 +41,7 @@ func run() -> void:
 	var cases: Array[DisplayCase] = []
 	for index in range(2):
 		var exhibit := DisplayCase.new()
-		exhibit.case_id = MuseumState.CASE_IDS[index]
+		exhibit.case_id = state.case_ids()[index]
 		exhibit.state = state
 		cases.append(exhibit)
 	var silver := state.collection.add(&"republic_silver_coin",1)

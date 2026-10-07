@@ -26,7 +26,8 @@ func can_open() -> bool:
 
 func visitor_target(appeal: int, displayed_count: int) -> int:
 	if displayed_count == 0: return 0
-	return clampi(config.base_visitors+floori(appeal*.5),1,60)
+	var capacity := state.level_definition().visitor_capacity if state != null else MuseumState.LEVELS.at(0).visitor_capacity
+	return clampi(config.base_visitors+floori(appeal*.5),1,capacity)
 
 
 func start() -> bool:

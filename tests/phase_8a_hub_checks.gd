@@ -8,6 +8,7 @@ func _init(context: SceneTree) -> void: test = context
 
 func run() -> void:
 	var flow := preload("res://scenes/main/game_flow.tscn").instantiate() as GameFlow
+	flow.profile_store = MuseumProfileStore.in_memory()
 	test.check(not flow.initial_test_collection,"Official entry defaults to no test collection")
 	var config := MuseumConfig.new()
 	config.open_duration = 2

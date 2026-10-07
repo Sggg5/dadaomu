@@ -1,6 +1,19 @@
 # 项目协作规则
 
-## Phase 8A：博物馆昼夜循环（当前授权）
+## Phase 8B：持久化博物馆成长（当前授权）
+
+基准 main b3c6dbc5308d47f96c2fdd52ed4f6384ff916783，分支 codex/phase-8b-museum-progression。用户授权验证后commit/push，禁止合并main、不进入8C。旧阶段章节为历史，以本节为准。只新增馆舍等级、展柜/游客经营上限、建设牌消费和地面存档；禁止任何永久战斗属性、背包扩容、开局Buff、商店/拍卖/修复/员工等扩展。
+
+等级数据唯一来源data/museum/levels.tres，Definition只读。MuseumState按等级生成稳定CASE_1…CASE_8，upgrade(expected_level)校验阶段/旧等级/余额并原子扣款；建设牌单次确认成功后必须关闭再打开，防连按重复扣费/跳级。Museum只追加新柜，不重建收藏和旧柜。升级不允许降级、退款。
+
+MuseumProfileStore仅编码地面纯值JSON v1，默认user://museum_profile_v1.json；保存日期、现金、等级、OwnedAntique/next ID、展柜归属及安全MORNING/EVENING阶段。保存触发：初始化、布展/撤展、升级、闭馆、夜间前、夜间成功/死亡回馆。OPEN与NIGHT不能直接保存。恢复闭馆阶段防同日重启再次开馆；夜间退出只回最近地面快照，不恢复Run。
+
+无文件/坏JSON/不支持版本/全局非法字段安全默认；未知古董、重复/非法实例、非法/未解锁/重复展柜归属跳过并warning。next ID不得重用。写临时文件flush后rename替换，失败显示提示并拒绝从未保存地面进入夜间。测试必须显式注入in_memory或user://tests/phase_8b下隔离路径，严禁读写正式档。
+
+GameFlow只装配夜间原接口，DungeonSession不得读取museum_level/cash；Player、Enemy、Boss、Relic、背包、掉落/Floor Seed与规则完全不改。必跑Phase1～8B及8B图形/导入/隔离路径启动；人工体验与程序驱动分开报告。验收见docs/PHASE_8B_VERIFICATION.md，完成后停止。
+
+
+## Phase 8A：博物馆昼夜循环（历史验收）
 
 基准 main 0a8784d193b6c96471538027fe0d00dfba2c1c46；工作分支 codex/phase-8a-museum-day-night-loop。仅实现可玩昼夜闭环，验证后提交并push，不合并main、不进入8B。旧阶段章节为历史，以本节授权为准。没有磁盘存档；门票现金仅本进程记录，无消费、出售、拍卖、鉴定、真假、修复、员工、成本、扩建或新墓穴。
 
@@ -34,7 +47,7 @@ Phase 1～7B 共 10 套回归均通过；专项 722 项、0 失败。用户人�
 
 ## 范围与阶段
 
-本项目是 Godot 4.x / GDScript / Windows 的原创 2D 俯视角 Roguelite《大盗墓时代》。阅读 README、PROJECT_PLAN、ARCHITECTURE、GAME_DESIGN 后再修改。用户指令优先；每次只执行明确授权的 Phase。当前授权 Phase 8A；范围和 Git 规则见本文顶部当前实现章节。
+本项目是 Godot 4.x / GDScript / Windows 的原创 2D 俯视角 Roguelite《大盗墓时代》。阅读 README、PROJECT_PLAN、ARCHITECTURE、GAME_DESIGN 后再修改。用户指令优先；每次只执行明确授权的 Phase。当前授权 Phase 8B；范围和 Git 规则见本文顶部当前实现章节。
 
 每阶段保持可运行入口，结束前检查导入解析、启动和阶段相关行为。报告修改文件、架构变化、验证命令与真实结果、已知限制及下一阶段范围。未执行的检查必须明确标注，不能把规划写成已实现。
 

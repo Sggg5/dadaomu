@@ -34,3 +34,14 @@ func remove(instance_id: StringName) -> bool:
 
 
 func all_items() -> Array[OwnedAntique]: return _items.duplicate()
+
+
+func next_id() -> int: return _next_id
+
+
+func restore(items: Array[OwnedAntique], next_owned_id: int) -> void:
+	_items = items.duplicate()
+	_next_id = next_owned_id
+	for item in _items:
+		_next_id = maxi(_next_id,str(item.instance_id).trim_prefix("A").to_int()+1)
+	changed.emit()

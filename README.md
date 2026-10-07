@@ -1,6 +1,30 @@
 # 大盗墓时代
 
-## Phase 8A：博物馆昼夜循环（当前授权）
+## Phase 8B：馆舍成长与存档（当前实现）
+
+当前开发分支codex/phase-8b-museum-progression，基于main b3c6dbc。首次没有存档时Day1/空馆藏/现金0；早晨可直接下墓。成功返回后亲手布展，至少1件展品才能营业，门票现金唯一消费是馆舍建设。
+
+| 等级 | 馆舍 | 展柜 | 游客总容量 | 下一次扩建费用 |
+|---|---|---:|---:|---:|
+| 0 | 私人古物陈列室 | 3 | 30 | ¥1,000 |
+| 1 | 古物陈列馆 | 5 | 45 | ¥3,000 |
+| 2 | 地方古物馆 | 8 | 60 | 已满级 |
+
+靠近馆舍建设牌E查看，再E确认，Tab关闭；资金不足不扣款，成功后须关闭并重新打开才能继续扩建。营业中不能扩建/换展。Level1开放东侧展厅，Level2开放西侧展厅，旧展品保留。游客目标为有展品时min(5+floor(吸引力×0.5),馆舍容量)，空馆仍0，同时在馆最多8人，票价¥5。
+
+存档为user://museum_profile_v1.json，自动保存布展、撤展、闭馆、扩建、夜间前和回馆后的安全地面状态。重启自动恢复日期/现金/等级/藏品实例/展柜；闭馆后重启仍是傍晚。夜间退出不续Run，回最近地面状态。坏档安全新档/异常条目跳过并提示；没有多档管理或迁移。馆舍成长不影响夜间HP/攻击/敌人/遗物/掉落/八格背包。
+
+```powershell
+godot --headless --fixed-fps 60 --quit-after 150000 --path . --script tests/phase_8b_smoke.gd
+godot --path . --disable-vsync --fixed-fps 60 --quit-after 150000 --script tests/phase_8b_smoke.gd -- --capture
+# 验证启动使用隔离存档，不碰正式档：
+godot --headless --path . --quit-after 10 -- --profile-path=user://tests/phase_8b/startup_validation.json
+```
+
+配置data/museum/levels.tres。完整真实门票升级、重启和死亡恢复见docs/PHASE_8B_VERIFICATION.md。旧阶段章节为历史，最新规则以本节为准；本阶段禁止合并main或继续8C。
+
+
+## Phase 8A：博物馆昼夜循环（历史验收）
 
 基准 main 0a8784d193b6c96471538027fe0d00dfba2c1c46；工作分支 codex/phase-8a-museum-day-night-loop。仅实现可玩昼夜闭环，验证后提交并push，不合并main、不进入8B。旧阶段章节为历史，以本节授权为准。没有磁盘存档；门票现金仅本进程记录，无消费、出售、拍卖、鉴定、真假、修复、员工、成本、扩建或新墓穴。
 

@@ -8,6 +8,7 @@ func _init(context: SceneTree) -> void: test = context
 
 func run() -> void:
 	var flow := preload("res://scenes/main/game_flow.tscn").instantiate() as GameFlow
+	flow.profile_store = MuseumProfileStore.in_memory()
 	var config := MuseumConfig.new()
 	config.open_duration = 5
 	config.visitor_speed = 1200
