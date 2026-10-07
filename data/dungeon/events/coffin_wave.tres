@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="RoomDefinition" load_steps=7 format=3]
+[ext_resource type="Script" path="res://scripts/rooms/room_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/rooms/enemy_spawn_definition.gd" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/scarab_enemy.tscn" id="3"]
+[ext_resource type="Resource" path="res://data/enemies/scarab.tres" id="4"]
+[sub_resource type="Resource" id="a"]
+script = ExtResource("2")
+enemy_scene = ExtResource("3")
+enemy_definition = ExtResource("4")
+position = Vector2(360, 368)
+[sub_resource type="Resource" id="b"]
+script = ExtResource("2")
+enemy_scene = ExtResource("3")
+enemy_definition = ExtResource("4")
+position = Vector2(900, 368)
+[resource]
+script = ExtResource("1")
+room_id = &"coffin_wave"
+entry_grace_time = 0.35
+spawns = Array[Resource]([SubResource("a"), SubResource("b")])

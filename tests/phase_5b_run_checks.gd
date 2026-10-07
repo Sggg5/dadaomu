@@ -4,6 +4,7 @@ var test: SceneTree
 var completed: bool = false
 var picked: Array[StringName] = []
 var pool: RelicPool = RelicRewardService.DEFAULT_POOL
+var shot_attempts: int = 32
 
 
 func _init(context: SceneTree) -> void:
@@ -48,7 +49,7 @@ func fight() -> void:
 	var original := world.current_room.enemy_spawner.get_children()
 	test.check(original.all(func(enemy: Enemy) -> bool: return is_equal_approx(enemy.health.max_hp, enemy.definition.max_hp * world.current_room.difficulty.hp_multiplier)) and world.current_room.difficulty.depth == world.layout.rooms[world.current_id].distance_from_start + world.floor_offset, "Controller injects actual layout depth into live enemy HP")
 	for enemy in original:
-		for attempt in range(32):
+		for attempt in range(shot_attempts):
 			if not is_instance_valid(enemy) or enemy.health.is_dead or world.player.health.is_dead:
 				break
 			# 测试驾驶主动选更安全的射击点，不靠加血/停AI通过更高致死性。
@@ -58,6 +59,14 @@ func fight() -> void:
 				var origin: Vector2 = enemy.global_position + direction * 180.0
 				var ray := PhysicsRayQueryParameters2D.create(enemy.global_position, origin, 5, [enemy.get_rid()])
 				if Room.ROOM_RECT.grow(-20).has_point(origin) and enemy.get_world_2d().direct_space_state.intersect_ray(ray).is_empty():
+					# 探索流程跨更多种地图，给测试驾驶的弹丸半径预留墙边余量。
+					if shot_attempts > 32:
+						var blocked := false
+						for sign_value in [-1, 1]:
+							var margin: Vector2 = direction.rotated(PI / 2) * sign_value * 12
+							var edge_ray := PhysicsRayQueryParameters2D.create(enemy.global_position + margin, origin + margin, 1, [enemy.get_rid()])
+							if not enemy.get_world_2d().direct_space_state.intersect_ray(edge_ray).is_empty(): blocked = true
+						if blocked: continue
 					var score: float = 500.0
 					for other in CombatGeometry.targets(world.current_room):
 						if other != enemy:

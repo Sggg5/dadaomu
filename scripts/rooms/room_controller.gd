@@ -15,6 +15,9 @@ const ROOM_SCENE: PackedScene = preload("res://scenes/rooms/room.tscn")
 const PROJECTILE_SCENE: PackedScene = preload("res://scenes/player/projectile.tscn")
 const ANTIQUE_POOL: AntiquePool = preload("res://data/antiques/formal_pool.tres")
 var run_seed: int
+var exploration_enabled: bool = false
+var exploration: TombExplorationPlan
+var risk_service: TombRiskService
 var antique_loot: AntiqueLootService = AntiqueLootService.new()
 var layout: DungeonLayout
 var rewards: RelicRewardService
@@ -38,6 +41,11 @@ var _restarting: bool = false
 func _ready() -> void:
 	assert(layout != null and layout.rooms.has(layout.start_id), "Inject a DungeonLayout before adding RoomController")
 	antique_loot.configure(run_seed,floor_number,layout)
+	# 普通古董先使用原主图选源；探索层不会改变旧奖励/敌人/地图RNG。
+	if exploration_enabled:
+		exploration = TombExplorationPlan.build(layout, run_seed, floor_number)
+		layout = exploration.layout
+		risk_service = TombRiskService.new(run_seed, floor_number)
 	for room_id in layout.rooms:
 		assert(layout.rooms[room_id].definition != null)
 		states[room_id] = RoomState.new()
@@ -102,6 +110,7 @@ func request_traversal(side: int) -> bool:
 		return false
 	if current_room.room_state.status != RoomState.Status.CLEARED:
 		return false
+	if current_room.remaining_count() > 0 or (is_instance_valid(current_room.risk_content) and current_room.risk_content.confirming): return false
 	var neighbors: Dictionary[int, StringName] = layout.rooms[current_id].neighbors
 	if not neighbors.has(side) or not current_room.doors[side].is_open:
 		return false
@@ -125,6 +134,7 @@ func _switch_room(target_id: StringName, entry_side: int) -> void:
 	var node := layout.rooms[target_id]
 	for side in node.neighbors:
 		sides.append(side)
+		if layout.rooms[node.neighbors[side]].room_type == RoomDefinition.Type.TRAP: current_room.route_warning_sides.append(side)
 	current_room.boss_definition = boss_definition
 	current_room.can_exit = func() -> bool: return not run_finished and not transitioning and not _restarting
 	if node.room_type == RoomDefinition.Type.ANTIQUE: current_room.antique_definition = ANTIQUE_POOL.pick(run_seed,floor_number,target_id)
@@ -147,10 +157,44 @@ func _switch_room(target_id: StringName, entry_side: int) -> void:
 	player.global_position = current_room.to_global(current_room.get_entry_position(entry_side))
 	player.velocity = Vector2.ZERO
 	current_room.enter()
+	_attach_exploration()
 	transitioning = false
 	player.set_controls_enabled(true)
 	_refresh_hud()
 	room_changed.emit(current_id)
+
+
+func _attach_exploration() -> void:
+	if exploration == null: return
+	if exploration.events.has(current_id):
+		var content := TombRiskContent.new()
+		content.room = current_room
+		content.room_id = current_id
+		content.service = risk_service
+		content.events = exploration.events[current_id]
+		current_room.risk_content = content
+		current_room.add_child(content)
+	if current_id not in [exploration.secret_parent, exploration.secret_id] or exploration.secret_id == &"": return
+	var entrance := HiddenRoomEntrance.new()
+	entrance.player = player
+	entrance.is_return = current_id == exploration.secret_id
+	entrance.inspected = exploration.secret_discovered
+	var side := exploration.secret_side if not entrance.is_return else Door.opposite(exploration.secret_side)
+	entrance.position = current_room.get_entry_position(side) + Vector2.UP.rotated(side * PI / 2) * 40
+	entrance.can_enter = func() -> bool: return not run_finished and not transitioning and current_room.room_state.status == RoomState.Status.CLEARED and current_room.remaining_count() == 0 and not (is_instance_valid(current_room.risk_content) and current_room.risk_content.confirming)
+	entrance.enter = _request_secret_traversal
+	current_room.add_child(entrance)
+
+
+func _request_secret_traversal() -> bool:
+	if exploration == null or run_finished or transitioning or player.health.is_dead or not player.controls_enabled or current_room.remaining_count() > 0 or current_room.room_state.status != RoomState.Status.CLEARED: return false
+	var returning := current_id == exploration.secret_id
+	if not returning and current_id != exploration.secret_parent: return false
+	exploration.secret_discovered = true
+	transitioning = true
+	player.set_controls_enabled(false)
+	_switch_room.call_deferred(exploration.secret_parent if returning else exploration.secret_id, exploration.secret_side if returning else Door.opposite(exploration.secret_side))
+	return true
 
 
 func _spawn_projectile(request: AttackRequest) -> void:
@@ -165,7 +209,12 @@ func _spawn_projectile(request: AttackRequest) -> void:
 
 func _refresh_hud() -> void:
 	hud.show_room(layout.rooms[current_id], current_room.room_state, current_room.remaining_count())
-	hud.show_map(layout, states, current_id)
+	if exploration != null and not exploration.secret_discovered and exploration.secret_id != &"":
+		var visible_layout := DungeonLayout.new()
+		for id in layout.ordered_ids():
+			if id != exploration.secret_id: visible_layout.add_room(layout.rooms[id])
+		hud.show_map(visible_layout, states, current_id)
+	else: hud.show_map(layout, states, current_id)
 	hud.show_floor(floor_number, current_room.difficulty.depth, current_room.difficulty.tier)
 
 

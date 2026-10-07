@@ -5,6 +5,8 @@ var auction_seed_value: int = 192034
 
 func create_flow() -> void:
 	flow = preload("res://scenes/main/game_flow.tscn").instantiate() as GameFlow
+	# 历史回归使用原主图夹具；Phase9A单独覆盖正式探索入口。
+	flow.tomb_exploration_enabled = false
 	flow.profile_store = MuseumProfileStore.new()
 	flow.profile_store.save_path = path
 	flow.museum_config = config

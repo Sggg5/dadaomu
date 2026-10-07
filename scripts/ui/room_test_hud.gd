@@ -45,7 +45,8 @@ func show_antiques(inventory: AntiqueInventory) -> void:
 func show_room(room: DungeonRoom, state: RoomState, remaining: int) -> void:
 	$Root/EncounterDepth.text = "深度：%d · 威胁：Tier %d" % [room.distance_from_start, EncounterDifficulty.from_depth(room.distance_from_start).tier]
 	var type_label: String = ["战斗", "古董房", "商人", "机关", "秘密", "Boss房", "出生房"][room.room_type]
-	$Root/RoomInfo.text = "%s · %s  |  %s" % [room.definition.title, type_label, state.get_label()]
+	var status_label := "伏击中 · 门已关闭" if state.status == RoomState.Status.CLEARED and remaining > 0 else state.get_label()
+	$Root/RoomInfo.text = "%s · %s  |  %s" % [room.definition.title, type_label, status_label]
 	$Root/RoomInfo.tooltip_text = str(room.room_id)
 	$Root/Enemies.text = "存活敌人 %d" % remaining
 
@@ -54,11 +55,11 @@ func show_map(layout: DungeonLayout, states: Dictionary[StringName, RoomState], 
 	minimap.update_map(layout, states, current_id)
 	$Root/Seed.text = "Seed: %d" % layout.seed_value
 	var cleared_count: int = 0
-	for state in states.values():
-		if state.status == RoomState.Status.CLEARED:
+	for id in layout.rooms:
+		if states[id].status == RoomState.Status.CLEARED:
 			cleared_count += 1
-	$Root/Progress.text = "已清场 %d / %d  ·  绿色门过房" % [cleared_count, states.size()]
-	if cleared_count == states.size():
+	$Root/Progress.text = "已清场 %d / %d  ·  绿色门过房" % [cleared_count, layout.rooms.size()]
+	if cleared_count == layout.rooms.size():
 		$Root/Progress.text = "全图已清场  ·  可自由重访"
 
 

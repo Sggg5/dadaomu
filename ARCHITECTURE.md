@@ -1,6 +1,21 @@
 # 技术架构
 
-## Phase 8D：古董商与夜间拍卖（当前实现）
+## Phase 9A：墓室风险选择与隐藏探索（当前实现）
+
+基于已合并main b74bb35d4e7d4059f8272681f7fb8652629e7e18，开发分支codex/phase-9a-tomb-risk-exploration。仅墓内可选探索；完成后提交并push本分支，不合并main、不进入9B。下方旧阶段为历史记录，以本节为准。
+
+每层1～2口危险棺椁、0～1间隐藏墓室、0～1座祭台、0～1处汇合分岔。棺椁在64px内E查看风险，再E确认，Tab取消；正式权重古董/伏击/机关/空棺=50/25/15/10。伏击为现有两只尸蟞，0.35秒观察期，安全出生点，清掉后开门并留下古董；不重复统计普通COMBAT或发遗物。祭台明确支付15HP，可致死，换取RARE/TREASURE池中的一件机会，不保证传奇。空棺无奖励。
+
+墙边细小裂缝E检查，再E进入；未发现的隐藏房不出现在小地图和已清房总数中，发现后本层可重访。危险墓道用血迹与偏殿暗色表达，原安全连边保留，另加两房绕路后汇合；不强制走风险路线，Boss最短距离不变。隐藏房有高价值供物和一次风险交互。基础8～12房主图保持，最多额外增加2个绕路房和1个隐藏房，仍复用room.tscn。
+
+TombRiskEvent只读资源与TombRiskResult纯结果分离；TombExplorationPlan在原生成器之后装配可选图，TombRiskService持本层一次性账本，TombRiskContent只装配局部交互/波次/现有拾取物。普通古董源先从原主图选择；事件RNG独立派生run_seed/floor/room/event/version，不消费地图、遗物、Boss、普通敌人或普通古董流。频率与事件配置位于data/dungeon/events/。
+
+事件奖励只进入AntiqueInventory，容量仍8格；满包不消耗Pickup，整理后可捡，未捡离房重访恢复。已领取/已丢弃不重生。伤害使用Health正式入口与红闪；主动代价不能被受伤无敌免单。确认锁与数据账本双重防重复；死亡/结束不能再触发。R同Seed重置事件/发现/库存，N新Run，跨层新账本；仅已捡古董随既有Carry保留。不保存墓穴中途状态。
+
+玩家仍80HP，两敌人/两Boss/武器/遗物2-4-7/八格背包数值未改。市场、现金、等级、待拍、拍卖结果不参与探索或战斗计算。历史回归显式关闭探索使用原主图夹具，保留全部断言；9A正式入口、完整流程、开启探索的Museum隔离与新功能另外覆盖。验收命令、真实结果及人工手感状态见docs/PHASE_9A_VERIFICATION.md。禁止新Museum功能、永久战斗成长、背包扩容、新敌人/Boss或9B。
+
+
+## Phase 8D：古董商与夜间拍卖（历史验收，已合并main）
 
 基准main 30a34047016dbdc7d34c18370f233ce8412eac41（8C已合并），分支codex/phase-8d-antique-market-auction。仅卖方交易/单件委托/夜间拍卖，验收后commit/push，不合并main，不进入后续阶段。以下旧阶段为历史，以本节为准。
 
@@ -88,7 +103,7 @@ Phase 1～7B 共 10 套回归均通过；专项 722 项、0 失败。用户人�
 
 ## 当前实现
 
-Godot 4.6.2 / GDScript / 2D / Compatibility。`project.godot` 启动 `scenes/main/game_flow.tscn`；GameFlow按昼夜装配Museum/DungeonSession，后者独立入口仍为 `scenes/main/dungeon_test.tscn`。DungeonSession 调用纯数据生成器，向 RoomController 注入 DungeonLayout，再复用现有玩家、战斗、Door、Room 和 RoomState。无Autoload或第三方插件；Phase6.5已增加两只正式Boss与通关结算，Phase7A已增加独立古董背包与安全房拾取，经济未实现。旧阶段记录保留，当前古董规则以Phase7A章节为准。
+Godot 4.6.2 / GDScript / 2D / Compatibility。`project.godot` 启动 `scenes/main/game_flow.tscn`；GameFlow按昼夜装配Museum/DungeonSession，后者独立入口仍为 `scenes/main/dungeon_test.tscn`。DungeonSession 调用纯数据生成器，向 RoomController 注入 DungeonLayout，再复用现有玩家、战斗、Door、Room 和 RoomState。无Autoload或第三方插件；Phase6.5已增加两只正式Boss与通关结算，Phase7A已增加独立古董背包与安全房拾取，地面经济见8C～8D，墓内可选探索见9A。旧阶段记录保留，当前规则以顶部9A章节为准。
 
 ### Phase 3 数据与职责
 

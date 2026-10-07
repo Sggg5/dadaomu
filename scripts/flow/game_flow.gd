@@ -8,6 +8,7 @@ const AUCTION_SCENE: PackedScene = preload("res://scenes/auction/auction_session
 @export var museum_seed: int = 192034
 @export var night_seed: int = 192034
 @export var auction_seed: int = 192034
+@export var tomb_exploration_enabled: bool = true
 # 仅自动测试显式启用；正式新游戏没有赠送馆藏。
 @export var initial_test_collection: bool = false
 @export var profile_path: String = "user://museum_profile_v1.json"
@@ -123,6 +124,7 @@ func _enter_night() -> void:
 	current_auction_result = null
 	dungeon = DUNGEON_SCENE.instantiate() as DungeonSession
 	dungeon.hub_mode = true
+	dungeon.exploration_enabled = tomb_exploration_enabled
 	dungeon.collection_day = current_day
 	dungeon.seed_value = night_seed
 	dungeon.run_started.connect(func() -> void: current_dungeon_result = null)

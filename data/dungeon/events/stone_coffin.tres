@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TombRiskEvent" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/dungeon/events/tomb_risk_event.gd" id="1"]
+[ext_resource type="Resource" path="res://data/dungeon/events/coffin_wave.tres" id="2"]
+[resource]
+script = ExtResource("1")
+id = &"stone_coffin"
+display_name = "危险石棺"
+weights = PackedInt32Array(50, 25, 15, 10)
+hp_cost = 15.0
+wave = ExtResource("2")

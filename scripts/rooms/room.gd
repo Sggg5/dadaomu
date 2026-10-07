@@ -30,6 +30,8 @@ var boss_encounter: BossEncounter
 var final_floor: bool = false
 var antique_definition: AntiqueDefinition
 var cache_definition: AntiqueDefinition
+var risk_content: TombRiskContent
+var route_warning_sides: Array[int] = []
 var can_exit: Callable
 var doors: Dictionary[int, Door] = {}
 var _connected_sides: Array[int] = []
@@ -65,12 +67,12 @@ func enter() -> void:
 		_create_cache()
 		if room_type == RoomDefinition.Type.BOSS and boss_definition != null: _create_boss_exit()
 		return
-	if room_type not in [RoomDefinition.Type.COMBAT, RoomDefinition.Type.START, RoomDefinition.Type.BOSS, RoomDefinition.Type.ANTIQUE]:
+	if room_type not in [RoomDefinition.Type.COMBAT, RoomDefinition.Type.START, RoomDefinition.Type.BOSS, RoomDefinition.Type.ANTIQUE, RoomDefinition.Type.TRAP, RoomDefinition.Type.SECRET]:
 		push_error("This room type has no entry policy yet")
 		return
 	room_state.activate()
 	# START安全清场；ANTIQUE安全开门并放古董；正式BOSS由数据场景装配。
-	if room_type in [RoomDefinition.Type.START, RoomDefinition.Type.ANTIQUE]:
+	if room_type in [RoomDefinition.Type.START, RoomDefinition.Type.ANTIQUE, RoomDefinition.Type.TRAP, RoomDefinition.Type.SECRET]:
 		_on_all_defeated()
 		_create_antique()
 		return
@@ -124,6 +126,7 @@ func discard_projectiles() -> void:
 
 
 func stop_combat() -> void:
+	if is_instance_valid(risk_content): risk_content.stop()
 	if is_instance_valid(boss_encounter): boss_encounter.stop()
 	enemy_spawner.stop_all()
 	discard_projectiles()
@@ -160,11 +163,12 @@ func damage_targets() -> Array[Node2D]:
 	var result: Array[Node2D] = []
 	result.assign(enemy_spawner.get_children())
 	if is_instance_valid(boss_encounter): result.append_array(boss_encounter.targets())
+	if is_instance_valid(risk_content): result.append_array(risk_content.targets())
 	return result
 
 
 func remaining_count() -> int:
-	return boss_encounter.targets().size() if is_instance_valid(boss_encounter) else enemy_spawner.get_remaining()
+	return (boss_encounter.targets().size() if is_instance_valid(boss_encounter) else enemy_spawner.get_remaining()) + (risk_content.remaining() if is_instance_valid(risk_content) else 0)
 
 
 func _on_all_defeated() -> void:
@@ -251,3 +255,7 @@ func _draw() -> void:
 	for rect in _wall_rects:
 		draw_rect(rect, Color("4f4b43"))
 		draw_rect(rect, Color("9b8c68"), false, 2.0)
+	for side in route_warning_sides:
+		var point := get_entry_position(side)
+		draw_circle(point + Vector2(22, 0), 8, Color("78382f"))
+		draw_line(point + Vector2(-30, 10), point + Vector2(25, -8), Color("a35b4c"), 3)

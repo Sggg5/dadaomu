@@ -18,6 +18,8 @@ func run() -> void:
 	var first_exhibit = preload("res://tests/phase_8a_first_exhibit_checks.gd").new(self)
 	await first_exhibit.run()
 	flow = FLOW_SCENE.instantiate() as GameFlow
+	# 历史回归使用原主图夹具；Phase9A单独覆盖正式探索入口。
+	flow.tomb_exploration_enabled = false
 	flow.profile_store = MuseumProfileStore.in_memory()
 	# 真实布展流程的测试夹具，不能依赖正式入口赠送馆藏。
 	flow.initial_test_collection = true

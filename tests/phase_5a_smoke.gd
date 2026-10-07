@@ -57,6 +57,8 @@ func walk(side: int) -> void:
 
 func run() -> void:
 	session = SESSION.instantiate() as DungeonSession
+	# 历史回归使用原主图夹具；Phase9A单独覆盖正式探索入口。
+	session.exploration_enabled = false
 	session.seed_value = 1
 	root.add_child(session)
 	current_scene = session

@@ -185,6 +185,8 @@ func _run() -> void:
 		quit(1)
 		return
 	session = SESSION_SCENE.instantiate() as DungeonSession
+	# 历史回归使用原主图夹具；Phase9A单独覆盖正式探索入口。
+	session.exploration_enabled = false
 	root.add_child(session)
 	current_scene = session
 	await _frames(3)

@@ -9,6 +9,7 @@ signal result_ready(result: RunResult)
 signal run_started
 signal return_requested(result: RunResult)
 @export var hub_mode: bool = false
+@export var exploration_enabled: bool = true
 # 仅结算品相的确定性元数据，绝不参与地图/掉落/战斗计算。
 var collection_day: int = 1
 var _returning: bool = false
@@ -101,6 +102,7 @@ func _start_new_run(layout: DungeonLayout) -> void:
 func _assemble_world(layout: DungeonLayout) -> void:
 	world = WORLD_SCENE.instantiate() as RoomController
 	world.layout = layout
+	world.exploration_enabled = exploration_enabled
 	world.run_seed = run_seed
 	world.rewards = rewards
 	world.floor_number = floor_number

@@ -13,6 +13,8 @@ func capture(name: String) -> void:
 func run() -> void:
 	DirAccess.make_dir_recursive_absolute("res://logs")
 	session = SESSION.instantiate() as DungeonSession
+	# 历史回归使用原主图夹具；Phase9A单独覆盖正式探索入口。
+	session.exploration_enabled = false
 	session.seed_value = 192034
 	session.child_entered_tree.connect(watch)
 	root.add_child(session)
