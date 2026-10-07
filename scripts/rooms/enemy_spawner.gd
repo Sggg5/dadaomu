@@ -78,6 +78,26 @@ func spawn(definition: RoomDefinition) -> void:
 func get_remaining() -> int:
 	return _living.size()+pending_births
 
+## DEBUG/test观察账本，不删无效成员、不修正remaining、不写正式HUD。
+func debug_living_snapshot()->Array[Dictionary]:
+	var rows:Array[Dictionary]=[]
+	if not OS.is_debug_build():return rows
+	var room:=_room()
+	for id in _living:
+		var actor:=_living[id]
+		if not is_instance_valid(actor):rows.append({"instance_id":id,"valid":false});continue
+		var health:=actor.get_node("Health") as Health
+		var collider:=actor.get_node_or_null("CollisionShape2D") as CollisionShape2D
+		var point:=room.to_local(actor.global_position) if room!=null else actor.position
+		var row:Dictionary={"instance_id":id,"valid":true,"health":health.current_hp,"position":actor.position,"global_position":actor.global_position,"inside_room":Room.ROOM_RECT.has_point(point),"collision_enabled":collider!=null and not collider.disabled}
+		if actor is Enemy:
+			row["definition_id"]=str(actor.definition.id)
+			row["can_act"]=actor.can_act()
+			row["ai_state"]=actor.get("state")
+		if actor is BurrowingCorpse:row["submerged_elapsed"]=actor.submerged_elapsed;row["recovery_reason"]=str(actor.recovery_reason)
+		rows.append(row)
+	return rows
+
 
 func stop_all(cancel_encounter: bool = false) -> void:
 	stopped=cancel_encounter

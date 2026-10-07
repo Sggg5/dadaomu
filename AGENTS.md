@@ -1,3 +1,6 @@
+## 当前追加：Phase 9B.3.2a-c
+
+按用户授权顺序A生命周期→专项/全回归/commit→B地形补齐→专项/全回归/commit→C玩家成长/体型→专项/全回归/commit。保留当前HEAD全部有效Boss压力、独立Geometry和可达性保护；不reset、不合并main、不进入其它系统。地下硬上限2.4秒与统一恢复不能自动杀怪/扣账本，DEBUG诊断仅测试使用。各阶段验收记录见docs对应A/B/C文件。
 # 项目协作规则
 
 ## Phase 9B.3.2b：Geometry / Boss Arena分离（当前实现，人工待验收）
