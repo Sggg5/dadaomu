@@ -11,7 +11,7 @@ func run()->void:
  var state:=flow.museum_state
  state.museum_level=2
  var ids:Array[StringName]=[]
- for def in MuseumState.POOL.antiques:ids.append(state.collection.add(def.id,1,100,true).instance_id)
+ for def in preload("res://data/antiques/formal_pool.tres").antiques:ids.append(state.collection.add(def.id,1,100,true).instance_id)
  state.fill_unit(&"CASE_2",ids)
  flow.museum.message.text="隔离陈列夹具：8件原型藏品 / 三个展厅 · 不会赠送给正式新游戏或覆盖原存档"
  var driver=preload("res://tests/phase_8a_flow_checks.gd").new(self,flow)

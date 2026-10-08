@@ -3,7 +3,7 @@ extends RefCounted
 ## 纯地面状态；展柜按馆藏实例ID归属。存档编解码由ProfileStore承担。
 enum Phase { MORNING, OPEN, EVENING, NIGHT }
 const LEVELS: MuseumLevels = preload("res://data/museum/levels.tres")
-const POOL: AntiquePool = preload("res://data/antiques/formal_pool.tres")
+const POOL: AntiquePool = preload("res://data/antiques/playtest_catalog_50.tres")
 signal changed
 var day_number: int = 1
 var campaign_seed: int = 0 # 0仅为新档/迁移待初始化，正式v4存档必须是正31位整数。

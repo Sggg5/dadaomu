@@ -57,7 +57,7 @@ func run()->void:
  await capture("storage_500")
  museum.collection_panel.close()
  state.collection.restore([],1)
- for def in MuseumState.POOL.antiques:state.collection.add(def.id,1,100,true)
+ for def in preload("res://data/antiques/formal_pool.tres").antiques:state.collection.add(def.id,1,100,true)
  await driver.walk_to(Vector2(640,380))
  await driver.walk_to(Vector2(640,348))
  test.key(KEY_E);await test.frames(2)

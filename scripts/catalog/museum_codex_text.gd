@@ -13,6 +13,8 @@ static func owned(state: MuseumState, item: OwnedAntique) -> String:
 	var text := "%s\n玩家实际馆藏 · 实例 %s\n定义 %s · 第%d天入藏\n" % [definition.display_name,item.instance_id,item.definition_id,item.acquired_day]
 	text += "已鉴定 · 品相%d\n" % item.condition if item.identified else "待正式鉴定 · 品相及经济结果隐藏\n"
 	text += "位置：%s\n\n%s\n\n游戏原创藏品；不等于任何真实博物馆对象。" % ["库房" if state.case_for(item.instance_id) == &"" else str(state.case_for(item.instance_id)),definition.description]
+	if definition.content_review_status==&"PLAYTEST_PENDING_HISTORICAL_REVIEW":
+		text+="\n\n试玩待史学审核 · %s\n%s\n参考链接（仅类型/时期，不是本实物出处）：\n%s"%[definition.culture_period,definition.historical_reference_note,"\n".join(definition.reference_urls)]
 	return text
 
 static func research(catalog: MuseumResearchCatalog, row: Dictionary) -> String:

@@ -1,6 +1,6 @@
 class_name MuseumCollection
 extends RefCounted
-const DEFINITIONS: AntiquePool = preload("res://data/antiques/formal_pool.tres")
+const DEFINITIONS: AntiquePool = preload("res://data/antiques/playtest_catalog_50.tres")
 signal changed
 var _items: Array[OwnedAntique] = []
 var _by_id: Dictionary[StringName,OwnedAntique] = {}

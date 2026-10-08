@@ -92,7 +92,7 @@ func show_regions()->void:
 	selected_site=&""
 	_site_ids.clear()
 	sites_list.clear()
-	detail.text="请选择地图上的地区标记。\n\n晋北：五层路线已开放\n洛阳 / 关中：情报调查中\n\n关闭地图不会开始夜晚，也不会消耗当天远征。"
+	detail.text="请选择地图上的地区标记。\n\n晋北：五层路线已开放\n洛阳 / 关中：两层新墓已开放\n\n关闭地图不会开始夜晚，也不会消耗当天远征。"
 	confirm_button.disabled=true
 	for node in nodes:node.highlighted=false;node.queue_redraw()
 func select_region(id:StringName)->void:
@@ -111,7 +111,7 @@ func select_site(id:StringName)->void:
 	var site:=registry.site(id)
 	if _submitted or site==null or site.region_id!=selected_region:return
 	selected_site=id
-	var status:="可远征 · 完整五层" if registry.can_depart(site.site_id) else "情报调查中 · 尚未制作 / 无法远征"
+	var status:=("可远征 · %d层完整路线"%site.tomb_definition.floors.size()) if registry.can_depart(site.site_id) else "情报调查中 · 尚未制作 / 无法远征"
 	detail.text="%s · %s\n时期：%s\n危险：%s / 5　|　%s\n\n%s\n\n敌人与机关：%s\n\n可能器物：%s\n\n探索状态：%s"%[site.display_name,registry.region(site.region_id).display_name,site.historical_period,site.risk_tier,site.site_type,site.background,site.enemy_intel,site.artifact_intel,status]
 	confirm_button.disabled=not registry.can_depart(site.site_id)
 func confirm()->bool:

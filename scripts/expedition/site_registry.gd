@@ -16,7 +16,14 @@ static func load_default()->SiteRegistry:
 		profile.category_weights=row.category_weights.duplicate()
 		profile.cross_region_types.assign(row.circulation_types)
 		profile.rare_artifact_types.assign(row.rare_types)
-		if profile.id!=&"FORMAL_DEFAULT":profile.approved_pool=null
+		if profile.id!=&"FORMAL_DEFAULT":
+			profile.approved_pool=load(row.get("pool","")) if row.has("pool") else null
+			profile.region_id=StringName(row.get("region",""))
+			profile.max_manufacture_year=int(row.get("max_manufacture_year",1933))
+			profile.local_ids.assign(row.get("local_ids",[]))
+			profile.circulation_ids.assign(row.get("circulation_ids",[]))
+			profile.heirloom_ids.assign(row.get("heirloom_ids",[]))
+			profile.group_weights=PackedFloat32Array(row.get("group_weights",[70,20,10]))
 		registry.loot_profiles.append(profile)
 	for row:Dictionary in payload.regions:
 		var region:=RegionDefinition.new()

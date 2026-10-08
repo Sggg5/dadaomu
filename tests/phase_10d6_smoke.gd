@@ -7,7 +7,7 @@ func run()->void:
  state.day_number=9
  state.cash=1234
  var ids:Array[StringName]=[]
- for def in MuseumState.POOL.antiques:ids.append(state.collection.add(def.id,3,91,true).instance_id)
+ for def in preload("res://data/antiques/formal_pool.tres").antiques:ids.append(state.collection.add(def.id,3,91,true).instance_id)
  var slots:=state.display_catalog.units[&"CASE_2"].slots()
  for i in range(8):check(state.place(slots[i].id,ids[i]),"standard unit accepts unique instance "+str(i))
  check(state.unit_items(&"CASE_2").size()==8,"one unit has eight")
@@ -46,7 +46,7 @@ func run()->void:
  root.add_child(flow)
  await frames(3)
  var museum:=flow.museum
- for def in MuseumState.POOL.antiques:flow.museum_state.collection.add(def.id,1,100,true)
+ for def in preload("res://data/antiques/formal_pool.tres").antiques:flow.museum_state.collection.add(def.id,1,100,true)
  museum.collection_panel.open(&"CASE_2")
  check(museum.collection_panel.slot_list.item_count==8,"manager shows eight slots")
  check(flow.museum_state.fill_unit(&"CASE_2",museum.collection_panel.filtered_ids)==8,"filtered batch fills eight")

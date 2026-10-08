@@ -77,7 +77,7 @@ func _reward(event: TombRiskEvent, point: Vector2) -> void:
 	if room.room_state.is_loot_claimed(loot_source) or has_node(node_name): return
 	var pickup := AntiquePedestal.new()
 	pickup.name = node_name
-	pickup.definition = TombRiskService.POOL.find_by_id(result.antique_ids[0])
+	pickup.definition = service.definition(result.antique_ids[0])
 	pickup.player = room.combat_target
 	pickup.room_state = room.room_state
 	pickup.source_id = loot_source

@@ -161,6 +161,7 @@ func _enter_night() -> void:
 	dungeon.profiled_relic_rewards = profiled_relic_rewards
 	dungeon.tomb = active_expedition.tomb_definition
 	dungeon.loot_profile_id=active_expedition.loot_profile_id
+	dungeon.site_loot_profile=site_registry.loot_profile(active_expedition.loot_profile_id)
 	dungeon.exploration_enabled = tomb_exploration_enabled
 	dungeon.collection_day = current_day
 	dungeon.seed_value = active_expedition.seed_value

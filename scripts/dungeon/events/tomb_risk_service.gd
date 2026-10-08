@@ -5,6 +5,7 @@ const VERSION: int = 1
 const POOL: AntiquePool = preload("res://data/antiques/formal_pool.tres")
 var run_seed: int
 var floor_number: int
+var regional_profile:SiteLootProfile
 var reward_profile: AntiqueRewardProfile
 var results: Dictionary[StringName, TombRiskResult] = {}
 
@@ -45,6 +46,7 @@ func resolve(room_id: StringName, event: TombRiskEvent) -> TombRiskResult:
 	return result
 
 func reward(room_id: StringName, event: TombRiskEvent) -> AntiqueDefinition:
+	if regional_profile!=null:return regional_profile.pick(run_seed,floor_number,room_id,StringName("risk_reward:%s"%event.id),reward_profile,event.high_value_reward)
 	if not event.high_value_reward:
 		var source := StringName("risk_reward:%s" % event.id)
 		return POOL.pick_profiled(run_seed, floor_number, room_id, source, reward_profile) if reward_profile != null else POOL.pick(run_seed, floor_number, room_id, source)
@@ -56,3 +58,6 @@ func reward(room_id: StringName, event: TombRiskEvent) -> AntiqueDefinition:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = AntiquePool.stable_score(run_seed, floor_number, room_id, StringName("high_reward:%s" % event.id), VERSION)
 	return candidates[rng.randi_range(0, candidates.size() - 1)]
+
+func definition(id:StringName)->AntiqueDefinition:
+	return regional_profile.approved_pool.find_by_id(id) if regional_profile!=null else POOL.find_by_id(id)

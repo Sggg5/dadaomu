@@ -14,6 +14,7 @@ signal return_requested(result: RunResult)
 var collection_day: int = 1
 # Region interface metadata; 11A keeps all existing eight-item drop probabilities unchanged.
 var loot_profile_id:StringName=&"FORMAL_DEFAULT"
+var site_loot_profile:SiteLootProfile
 var _returning: bool = false
 @export var tomb: TombDefinition = preload("res://data/tombs/default_tomb.tres")
 var config: DungeonConfig = DEFAULT_CONFIG # 历史测试只读兼容；生产配置来自tomb.floors。
@@ -117,6 +118,7 @@ func _assemble_world(layout: DungeonLayout) -> void:
 	world.layout = layout
 	world.exploration_enabled = exploration_enabled
 	world.run_seed = run_seed
+	world.site_loot_profile=site_loot_profile
 	world.rewards = rewards
 	world.floor_number = floor_number
 	world.floor_offset = (floor_number - 1) * 3

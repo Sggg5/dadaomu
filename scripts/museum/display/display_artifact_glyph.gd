@@ -21,5 +21,21 @@ static func draw_icon(canvas: Node2D, id: StringName, at: Vector2, scale: float 
 	elif id == &"gilt_buddha":
 		canvas.draw_circle(at+Vector2(0,-6)*scale,4*scale,Color("d4b65c"))
 		canvas.draw_colored_polygon(PackedVector2Array([at+Vector2(0,-2)*scale,at+Vector2(9,9)*scale,at+Vector2(-9,9)*scale]),Color("d4b65c"))
+	elif MuseumState.POOL.find_by_id(id).category!=&"":
+		var item:=MuseumState.POOL.find_by_id(id)
+		if item.category in [&"COIN",&"JADE",&"BRONZE"]:
+			canvas.draw_circle(at,9*scale,color)
+			canvas.draw_arc(at,6*scale,0,TAU,20,Color("ddcc9a"),1)
+			canvas.draw_circle(at,2*scale,Color("28343a"))
+		elif item.category==&"CERAMIC":
+			canvas.draw_circle(at+Vector2(0,3)*scale,8*scale,Color("ba9673"))
+			canvas.draw_rect(Rect2(at+Vector2(-4,-9)*scale,Vector2(8,5)*scale),Color("d1ae87"))
+		elif item.category==&"CERAMIC_SCULPTURE":
+			canvas.draw_circle(at+Vector2(0,-7)*scale,4*scale,Color("c79e65"))
+			canvas.draw_colored_polygon(PackedVector2Array([at+Vector2(-7,9)*scale,at+Vector2(0,-3)*scale,at+Vector2(7,9)*scale]),Color("9c804b"))
+		elif item.category==&"JEWELRY":
+			canvas.draw_rect(Rect2(at-Vector2(8,6)*scale,Vector2(16,12)*scale),Color("d7bd70"))
+			canvas.draw_circle(at,3*scale,Color("f1dda2"))
+		else:canvas.draw_rect(Rect2(at-Vector2(8,5)*scale,Vector2(16,10)*scale),Color("9d8b70"))
 	else:
 		canvas.draw_colored_polygon(PackedVector2Array([at+Vector2(-8,-8)*scale,at+Vector2(8,-5)*scale,at+Vector2(5,8)*scale,at+Vector2(-4,10)*scale]),color)

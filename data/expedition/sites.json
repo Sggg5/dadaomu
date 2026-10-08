@@ -17,7 +17,7 @@
         428,
         226
       ],
-      "description": "洛阳盆地 · 遗址情报调查中"
+      "description": "洛阳盆地 · 北邙汉魏疑冢两层路线开放"
     },
     {
       "id": "GUANZHONG",
@@ -26,7 +26,7 @@
         310,
         220
       ],
-      "description": "关中平原 · 遗址情报调查中"
+      "description": "关中平原 · 唐陵隐墓两层路线开放"
     }
   ],
   "sites": [
@@ -74,22 +74,23 @@
     {
       "id": "LUOYANG_EAST",
       "region": "LUOYANG",
-      "name": "东原封土调查点",
-      "period": "汉代器物风格参考（待确认）",
+      "name": "北邙汉魏疑冢",
+      "period": "汉魏文化参考 / 原创疑冢",
       "tags": [
         "FICTIONAL_SITE"
       ],
       "type": "墓穴调查档案",
       "risk": 2,
-      "status": "INVESTIGATING",
-      "background": "【虚构地点】游戏架空调查记录，不对应已核实真实古墓。年代标签仅作策划参考，不构成考古结论。",
-      "enemies": "尚未核验，不提供确定敌人或机关情报。",
-      "artifacts": "器物类别尚待调查，现阶段没有可用的探墓路线。",
+      "status": "AVAILABLE",
+      "background": "【游戏原创 / 试玩待史学审核】以历史器物类型和墓室形制为参考，不对应已考证的具体墓葬。此处旧墓道再利用与前代旧器收藏为架空设定，不是考古事实。",
+      "enemies": "两层完整远征；砖砌耳室、分岔甬道与门闸扫击。尸怪与镇守者沿用既有战斗体系。",
+      "artifacts": "汉式陶明器、铜镜、玉饰和钱币；不掉落唐宋明清新制器。",
       "marker": [
         428,
         226
       ],
-      "loot_profile_id": "FORMAL_DEFAULT"
+      "loot_profile_id": "LUOYANG_HAN_WEI_LOOT",
+      "tomb": "res://data/regional/luoyang/tomb.tres"
     },
     {
       "id": "LUOYANG_RIVER",
@@ -114,22 +115,23 @@
     {
       "id": "GUANZHONG_MOUND",
       "region": "GUANZHONG",
-      "name": "渭北封土调查点",
-      "period": "秦汉形制参考（待确认）",
+      "name": "唐陵隐墓",
+      "period": "唐代文化参考 / 原创隐墓",
       "tags": [
         "FICTIONAL_SITE"
       ],
       "type": "墓穴调查档案",
       "risk": 3,
-      "status": "INVESTIGATING",
-      "background": "【虚构地点】游戏架空调查记录，不对应已核实真实古墓。年代标签仅作策划参考，不构成考古结论。",
-      "enemies": "尚未核验，不提供确定敌人或机关情报。",
-      "artifacts": "器物类别尚待调查，现阶段没有可用的探墓路线。",
+      "status": "AVAILABLE",
+      "background": "【游戏原创 / 试玩待史学审核】以历史器物类型和墓室形制为参考，不对应已考证的具体墓葬。此处旧墓道再利用与前代旧器收藏为架空设定，不是考古事实。",
+      "enemies": "两层完整远征；长墓道、壁画陪葬室与定向火口。尸怪与镇守者沿用既有战斗体系。",
+      "artifacts": "三彩明器、白釉器、金银饰件和唐式带饰；少量前代旧器按传世设定保留。",
       "marker": [
         310,
         220
       ],
-      "loot_profile_id": "FORMAL_DEFAULT"
+      "loot_profile_id": "GUANZHONG_TANG_LOOT",
+      "tomb": "res://data/regional/guanzhong/tomb.tres"
     },
     {
       "id": "GUANZHONG_PASS",
@@ -162,6 +164,110 @@
       "circulation_types": [],
       "rare_types": [],
       "note": "Only existing approved eight game definitions. Future profiles require explicit release review."
+    },
+    {
+      "id": "LUOYANG_HAN_WEI_LOOT",
+      "status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "region": "LUOYANG",
+      "max_manufacture_year": 280,
+      "pool": "res://data/antiques/playtest_catalog_50.tres",
+      "group_weights": [
+        70,
+        20,
+        10
+      ],
+      "local_ids": [
+        "ly_picture_brick",
+        "ly_attendant",
+        "ly_warrior",
+        "ly_granary",
+        "ly_well",
+        "ly_stove",
+        "ly_pig",
+        "ly_dog",
+        "ly_green_jar",
+        "ly_grey_tripod",
+        "ly_mirror",
+        "ly_lamp",
+        "ly_censer",
+        "ly_jade_pendant",
+        "ly_cicada",
+        "ly_belt_hook",
+        "ly_wuzhu",
+        "ly_gilt_mount"
+      ],
+      "circulation_ids": [
+        "shared_jade_ring",
+        "shared_jade_bead",
+        "shared_bronze_ring",
+        "shared_bronze_buckle",
+        "shared_pottery_cup",
+        "shared_pottery_jar"
+      ],
+      "heirloom_ids": [
+        "han_jade_disc",
+        "inlaid_bronze_mirror"
+      ],
+      "regional_types": [],
+      "period_ranges": [
+        "汉魏文化参考 / 原创疑冢"
+      ],
+      "category_weights": {},
+      "circulation_types": [],
+      "rare_types": [],
+      "note": "Pre-Tang objects in the Tang site follow explicitly fictional inherited/reused tomb context; no genuine provenance claim."
+    },
+    {
+      "id": "GUANZHONG_TANG_LOOT",
+      "status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "region": "GUANZHONG",
+      "max_manufacture_year": 907,
+      "pool": "res://data/antiques/playtest_catalog_50.tres",
+      "group_weights": [
+        70,
+        20,
+        10
+      ],
+      "local_ids": [
+        "gz_sancai_horse",
+        "gz_sancai_camel",
+        "gz_sancai_attendant",
+        "gz_sancai_warrior",
+        "gz_sancai_jug",
+        "gz_sancai_plate",
+        "gz_white_bowl",
+        "gz_white_ewer",
+        "gz_celadon_cup",
+        "gz_dancer",
+        "gz_silver_box",
+        "gz_gilt_cup",
+        "gz_gold_mount",
+        "gz_silver_belt",
+        "gz_jade_belt",
+        "gz_floral_mirror",
+        "gz_kaiyuan",
+        "gz_guardian"
+      ],
+      "circulation_ids": [
+        "shared_jade_ring",
+        "shared_jade_bead",
+        "shared_bronze_ring",
+        "shared_bronze_buckle",
+        "shared_pottery_cup",
+        "shared_pottery_jar"
+      ],
+      "heirloom_ids": [
+        "han_jade_disc",
+        "inlaid_bronze_mirror"
+      ],
+      "regional_types": [],
+      "period_ranges": [
+        "唐代文化参考 / 原创隐墓"
+      ],
+      "category_weights": {},
+      "circulation_types": [],
+      "rare_types": [],
+      "note": "Pre-Tang objects in the Tang site follow explicitly fictional inherited/reused tomb context; no genuine provenance claim."
     }
   ]
 }

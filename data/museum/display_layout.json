@@ -390,6 +390,426 @@
       ],
       "transport": "HAND_CARRY",
       "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "ly_picture_brick": {
+      "category": "FRAGMENT",
+      "size_cm": [
+        24,
+        15,
+        4
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "ly_attendant": {
+      "category": "CERAMIC_SCULPTURE",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "ly_warrior": {
+      "category": "CERAMIC_SCULPTURE",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "ly_granary": {
+      "category": "CERAMIC",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "ly_well": {
+      "category": "CERAMIC",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "ly_stove": {
+      "category": "CERAMIC",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "ly_pig": {
+      "category": "CERAMIC_SCULPTURE",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "ly_dog": {
+      "category": "CERAMIC_SCULPTURE",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "ly_green_jar": {
+      "category": "CERAMIC",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "ly_grey_tripod": {
+      "category": "CERAMIC",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "ly_mirror": {
+      "category": "BRONZE",
+      "size_cm": [
+        10,
+        8,
+        3
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "ly_lamp": {
+      "category": "BRONZE",
+      "size_cm": [
+        10,
+        8,
+        3
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "ly_censer": {
+      "category": "BRONZE",
+      "size_cm": [
+        10,
+        8,
+        3
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "ly_jade_pendant": {
+      "category": "JADE",
+      "size_cm": [
+        10,
+        8,
+        3
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "ly_cicada": {
+      "category": "JADE",
+      "size_cm": [
+        10,
+        8,
+        3
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "ly_belt_hook": {
+      "category": "BRONZE",
+      "size_cm": [
+        10,
+        8,
+        3
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "ly_wuzhu": {
+      "category": "COIN",
+      "size_cm": [
+        4,
+        4,
+        1
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "ly_gilt_mount": {
+      "category": "JEWELRY",
+      "size_cm": [
+        10,
+        8,
+        3
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "gz_sancai_horse": {
+      "category": "CERAMIC_SCULPTURE",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "gz_sancai_camel": {
+      "category": "CERAMIC_SCULPTURE",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "gz_sancai_attendant": {
+      "category": "CERAMIC_SCULPTURE",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "gz_sancai_warrior": {
+      "category": "CERAMIC_SCULPTURE",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "gz_sancai_jug": {
+      "category": "CERAMIC",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "gz_sancai_plate": {
+      "category": "CERAMIC",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "gz_white_bowl": {
+      "category": "CERAMIC",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "gz_white_ewer": {
+      "category": "CERAMIC",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "gz_celadon_cup": {
+      "category": "CERAMIC",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "gz_dancer": {
+      "category": "CERAMIC_SCULPTURE",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "gz_silver_box": {
+      "category": "JEWELRY",
+      "size_cm": [
+        10,
+        8,
+        3
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "gz_gilt_cup": {
+      "category": "JEWELRY",
+      "size_cm": [
+        10,
+        8,
+        3
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "gz_gold_mount": {
+      "category": "JEWELRY",
+      "size_cm": [
+        10,
+        8,
+        3
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "gz_silver_belt": {
+      "category": "JEWELRY",
+      "size_cm": [
+        10,
+        8,
+        3
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "gz_jade_belt": {
+      "category": "JADE",
+      "size_cm": [
+        10,
+        8,
+        3
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "gz_floral_mirror": {
+      "category": "BRONZE",
+      "size_cm": [
+        10,
+        8,
+        3
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "gz_kaiyuan": {
+      "category": "COIN",
+      "size_cm": [
+        4,
+        4,
+        1
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "gz_guardian": {
+      "category": "CERAMIC_SCULPTURE",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "shared_jade_ring": {
+      "category": "JADE",
+      "size_cm": [
+        10,
+        8,
+        3
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "shared_jade_bead": {
+      "category": "JADE",
+      "size_cm": [
+        10,
+        8,
+        3
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "shared_bronze_ring": {
+      "category": "BRONZE",
+      "size_cm": [
+        10,
+        8,
+        3
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "shared_bronze_buckle": {
+      "category": "BRONZE",
+      "size_cm": [
+        10,
+        8,
+        3
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "shared_pottery_cup": {
+      "category": "CERAMIC",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "shared_pottery_jar": {
+      "category": "CERAMIC",
+      "size_cm": [
+        24,
+        18,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
     }
   }
 }

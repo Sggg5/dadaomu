@@ -32,6 +32,7 @@ var final_floor: bool = false
 var rest_amount: int = 0
 var next_floor_number: int = 2
 var next_floor_name: String = ""
+var site_loot_profile:SiteLootProfile
 var antique_reward_profile: AntiqueRewardProfile
 var geometry_pool:RoomGeometryPool
 var geometry_plan:RoomGeometryPlan
@@ -60,6 +61,7 @@ func _ready() -> void:
 		layout = exploration.layout
 		risk_service = TombRiskService.new(run_seed, floor_number)
 		risk_service.reward_profile = antique_reward_profile
+		risk_service.regional_profile=site_loot_profile if site_loot_profile!=null and site_loot_profile.id!=&"FORMAL_DEFAULT" else null
 	if geometry_pool!=null:geometry_plan=RoomGeometryPlan.build(run_seed,floor_number,layout,geometry_pool)
 	for room_id in layout.rooms:
 		assert(layout.rooms[room_id].definition != null)
@@ -302,6 +304,7 @@ func scoped_room_id(id: StringName) -> StringName:
 
 
 func _pick_antique(id: StringName, source: StringName) -> AntiqueDefinition:
+	if site_loot_profile!=null and site_loot_profile.id!=&"FORMAL_DEFAULT":return site_loot_profile.pick(run_seed,floor_number,id,source,antique_reward_profile)
 	return ANTIQUE_POOL.pick_profiled(run_seed, floor_number, id, source, antique_reward_profile) if antique_reward_profile != null else ANTIQUE_POOL.pick(run_seed, floor_number, id, source)
 
 
