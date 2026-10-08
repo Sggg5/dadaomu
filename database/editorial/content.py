@@ -52,7 +52,7 @@ def load_articles(db, path=ROOT/'editorial/articles.json'):
     hashes = [validate_article(db, a) for a in articles]
     if len({a['article_id'] for a in articles}) != len(articles):
         raise ValueError('Duplicate editorial article ID')
-    db.execute('BEGIN IMMEDIATE')
+    db.execute('SAVEPOINT editorial_import')
     try:
         for a, sha in zip(articles, hashes):
             db.execute('''INSERT INTO editorial_articles(article_id,object_id,zh_name,original_name,object_type,civilization_or_geology,material,technique_or_preservation,body,claims_json,related_object_ids,confidence,review_status,ai_generated,reviewer,review_note,content_sha256) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
@@ -66,7 +66,7 @@ def load_articles(db, path=ROOT/'editorial/articles.json'):
             for index, claim in enumerate(a['claims']):
                 db.execute('INSERT OR IGNORE INTO editorial_article_sources VALUES(?,?,?,?,?)',
                            (a['article_id'], index, a['source_id'], a['record_id'], a['source_url']))
-        db.execute('COMMIT')
+        db.execute('RELEASE editorial_import')
     except Exception:
-        db.execute('ROLLBACK'); raise
+        db.execute('ROLLBACK TO editorial_import'); db.execute('RELEASE editorial_import'); raise
     return len(articles)
