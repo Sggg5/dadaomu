@@ -4,6 +4,7 @@ from pathlib import Path
 from database.schema.migrate import ROOT,init_db
 from database.editorial.terms import load_terms,build_tags
 from database.editorial.content import load_articles
+from database.editorial.versions import load_refinements,review_details
 from database.planning.candidates import load_candidates
 from database.rebuild_catalog import rebuild_catalog
 from database.exports.curation import load_reviewed_games
@@ -11,7 +12,7 @@ from database.exports.curation import load_reviewed_games
 def prepare_content(db):
     reports=rebuild_catalog(db)
     if any(r['errors'] for r in reports):raise ValueError('Import failed; stop preparation')
-    load_terms(db);build_tags(db);load_articles(db);load_candidates(db);load_reviewed_games(db)
+    load_terms(db);build_tags(db);load_articles(db);load_refinements(db);load_candidates(db);load_reviewed_games(db)
 
 def preview_payload(db):
     objects=[]
@@ -28,7 +29,7 @@ def preview_payload(db):
             r=db.execute('SELECT label FROM locations WHERE id=?',(id,)).fetchone() if id else None
             return r[0] if r else None
         media=[f"{r['media_kind']} {r['license_id']} / {r['verification_status']} ({r['n']})" for r in db.execute('SELECT media_kind,license_id,verification_status,count(*) n FROM media WHERE object_id=? GROUP BY media_kind,license_id,verification_status ORDER BY media_kind,license_id,verification_status',(oid,))]
-        objects.append(dict(object_id=oid,zh_name=article['zh_name'] if article else None,original_name=obj['primary_name'],category=obj['category_id'],cultures=cultures,geological_period=geo[0] if geo else None,era=cultural[0] if cultural else None,institution=institution[0] if institution else None,accession_number=obj['accession_number'],sources=sources,origin=location(obj['origin_location_id']),discovery=location(obj['discovery_location_id']),material='; '.join(technique) or None,body=article['body'] if article else None,confidence=article['confidence'] if article else obj['verification_status'],status='NORMALIZED',media_summary='; '.join(media) or '无已导入媒体',media_licenses=sorted({x.split(' ')[1] for x in media}),regions=[x for x in [location(obj['origin_location_id']),location(obj['discovery_location_id'])] if x],historical_period=cultural['period'] if cultural else None,images=[]))
+        objects.append(dict(object_id=oid,zh_name=article['zh_name'] if article else None,original_name=obj['primary_name'],category=obj['category_id'],cultures=cultures,geological_period=geo[0] if geo else None,era=cultural[0] if cultural else None,institution=institution[0] if institution else None,accession_number=obj['accession_number'],sources=sources,origin=location(obj['origin_location_id']),discovery=location(obj['discovery_location_id']),material='; '.join(technique) or None,body=article['body'] if article else None,confidence=article['confidence'] if article else obj['verification_status'],review_details=review_details(db,article['article_id']) if article else None,status='NORMALIZED',media_summary='; '.join(media) or '无已导入媒体',media_licenses=sorted({x.split(' ')[1] for x in media}),regions=[x for x in [location(obj['origin_location_id']),location(obj['discovery_location_id'])] if x],historical_period=cultural['period'] if cultural else None,images=[]))
     articles=[dict(object_id=r['object_id'],article_id=r['article_id'],zh_name=r['zh_name'],original_name=r['original_name'],body=r['body'],status='EDITORIAL_DRAFT / '+r['review_status']) for r in db.execute('SELECT * FROM editorial_articles ORDER BY article_id')]
     candidates=[json.loads(r[0]) for r in db.execute('SELECT payload_json FROM game_collection_candidates ORDER BY game_id')]
     return dict(exhibitions=[],schema_version=1,world_year=1933,objects=objects,articles=articles,candidates=candidates,released_count=db.execute('SELECT count(*) FROM game_collection_definitions WHERE approved=1 AND legacy_resource_path IS NOT NULL').fetchone()[0])

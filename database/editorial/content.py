@@ -55,10 +55,10 @@ def load_articles(db, path=ROOT/'editorial/articles.json'):
     db.execute('BEGIN IMMEDIATE')
     try:
         for a, sha in zip(articles, hashes):
-            db.execute('''INSERT INTO editorial_articles VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+            db.execute('''INSERT INTO editorial_articles(article_id,object_id,zh_name,original_name,object_type,civilization_or_geology,material,technique_or_preservation,body,claims_json,related_object_ids,confidence,review_status,ai_generated,reviewer,review_note,content_sha256) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
                           ON CONFLICT(article_id) DO UPDATE SET zh_name=excluded.zh_name, body=excluded.body,
                           claims_json=excluded.claims_json, content_sha256=excluded.content_sha256
-                          WHERE editorial_articles.review_status='DRAFT_PENDING_REVIEW' ''',
+                          WHERE editorial_articles.review_status='DRAFT_PENDING_REVIEW' AND editorial_articles.editor_locked=0 AND editorial_articles.editor_version=1 ''',
                        (a['article_id'], a['object_id'], a['zh_name'], a['original_name'], a['object_type'],
                         a['civilization_or_geology'], a['material'], a['technique_or_preservation'], a['body'],
                         json.dumps(a['claims'],ensure_ascii=False), json.dumps(a['related_object_ids']),

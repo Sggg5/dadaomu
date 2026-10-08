@@ -15,7 +15,7 @@ check(()=>assert.equal(vm.runInContext('filtered.length',context),1441));check((
 ids.culture.value='中国历史文化';ids.culture.listener();check(()=>assert.ok(vm.runInContext('filtered.length',context)>=300));
 buttons[1].onclick();check(()=>assert.equal(vm.runInContext('filtered.length',context),100));
 ids.search.value='科林斯';ids.search.listener();check(()=>assert.equal(vm.runInContext('filtered.length',context),1));
-ids.rows.children[0].onclick();check(()=>assert.match(ids.rows.children[0].afterNode.children[0].children[1].textContent,/真实性长期存在疑问/));
+ids.rows.children[0].onclick();check(()=>assert.match(ids.rows.children[0].afterNode.children[0].children[1].textContent,/真实性.*(?:疑问|争议)/));
 buttons[2].onclick();check(()=>assert.equal(vm.runInContext('filtered.length',context),500));
 ids.category.value='FOSSIL_SPECIMEN';ids.category.listener();check(()=>assert.equal(vm.runInContext('filtered.length',context),24));
 ids.category.value='';ids.geology.value='Cretaceous';ids.geology.listener();check(()=>assert.ok(vm.runInContext('filtered.length',context)>0));
