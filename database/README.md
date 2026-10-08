@@ -27,4 +27,14 @@ python -m database.cli import_source --source CMA --file database/work/new_cma.j
 
 fetch_source严格限于公开官方元数据端点，最大100条/20MB，无图片下载。其它机构使用已有Adapter接收带来源/许可的官方JSONL导出；不是任意URL爬虫。原始供应者格式始终经独立Adapter→CollectionRecord→事务存储，不能直接变成内部Schema。
 
-参见docs/ARCHITECTURE.md、docs/SOURCES_AND_LICENSES.md；最终导出和验收命令在10A.3补齐。语言缺失仍pending，原文不会被自动翻译成“官方中文”。
+参见docs/ARCHITECTURE.md、docs/SOURCES_AND_LICENSES.md；最终导出见下方及docs/PHASE_10A_VERIFICATION.md。语言缺失仍pending，原文不会被自动翻译成“官方中文”。
+
+审核策划与稳定导出（独立于原始资料导入）：
+
+```powershell
+python -m database.exports.curation --db database/work/catalog.sqlite
+python -m database.cli export_godot_catalog --db database/work/catalog.sqlite --output data/catalog/global_catalog.json --report database/work/export_report.json --world-year 1933
+godot --headless --path . --script tests/phase_10a_smoke.gd
+```
+
+Schema v3前向迁移不修改已应用SQL；NORMALIZER_VERSION2支持适配规则升级后重放源记录，不覆盖人工锁。编辑映射JSON不会重写数据库里已有游戏策划，策划修改应由明确审核流程更新该层。

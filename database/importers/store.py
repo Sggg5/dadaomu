@@ -5,6 +5,7 @@ from pathlib import Path
 from database.schema.migrate import ROOT, VOCABS, utc_now
 from database.normalizers.record import stable_id, text
 from database.importers.registry import ADAPTERS
+NORMALIZER_VERSION=2
 
 def canonical(value):
     return json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':'))
@@ -48,10 +49,13 @@ def occurrence(db,r):
 
 def save_record(db,r,fetched_at):
     r.validate()
+    notice=r.copyright_notice or ('Copyright notice not supplied by source; declared data licence: '+r.data_license+'. Media rights separately checked.')
     raw=canonical(r.raw);digest=hashlib.sha256(raw.encode()).hexdigest()
     old=db.execute('SELECT * FROM source_records WHERE source_id=? AND record_id=?',(r.source_id,r.record_id)).fetchone()
-    if old and old['payload_sha256']==digest:
-        db.execute('UPDATE source_records SET checked_at=? WHERE source_id=? AND record_id=?',(utc_now(),r.source_id,r.record_id))
+    if old and old['payload_sha256']==digest and old['normalizer_version']==NORMALIZER_VERSION:
+        commercial=db.execute('SELECT commercial_allowed FROM licenses WHERE license_id=?',(r.data_license,)).fetchone()[0]
+        db.execute('UPDATE source_records SET checked_at=?,copyright_notice=?,license_id=?,commercial_allowed=? WHERE source_id=? AND record_id=?',
+                   (utc_now(),notice,r.data_license,commercial,r.source_id,r.record_id))
         return 'duplicate'
     object_id=old['object_id'] if old else None
     if not object_id and not r.context_only:
@@ -65,10 +69,12 @@ def save_record(db,r,fetched_at):
         db.execute('''INSERT OR IGNORE INTO collection_objects(object_id,object_kind,category_id,primary_name,description,museum_id,accession_number,origin_location_id,discovery_location_id,license_status,verification_status)
                       VALUES(?,?,?,?,?,?,?,?,?,?,?)''',
                    (object_id,r.object_kind,r.category_id,r.primary_name,text(r.description),r.museum_id,r.accession_number,origin,discovery,r.data_license,r.verification_status))
-    db.execute('''INSERT INTO source_records VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(source_id,record_id) DO UPDATE SET
+    db.execute('''INSERT INTO source_records(source_id,record_id,object_id,record_url,dataset_url,license_id,copyright_notice,fetched_at,checked_at,commercial_allowed,payload_sha256,raw_json,normalizer_version)
+                  VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(source_id,record_id) DO UPDATE SET
                   payload_sha256=excluded.payload_sha256,raw_json=excluded.raw_json,fetched_at=excluded.fetched_at,
-                  checked_at=excluded.checked_at,license_id=excluded.license_id,commercial_allowed=excluded.commercial_allowed''',
-               (r.source_id,r.record_id,object_id,r.record_url,r.dataset_url,r.data_license,r.copyright_notice,fetched_at,utc_now(),lic,digest,raw))
+                  checked_at=excluded.checked_at,license_id=excluded.license_id,commercial_allowed=excluded.commercial_allowed,
+                  copyright_notice=excluded.copyright_notice,record_url=excluded.record_url,dataset_url=excluded.dataset_url,normalizer_version=excluded.normalizer_version''',
+               (r.source_id,r.record_id,object_id,r.record_url,r.dataset_url,r.data_license,notice,fetched_at,utc_now(),lic,digest,raw,NORMALIZER_VERSION))
     occ,taxon,formation,period=occurrence(db,r)
     if not object_id:return 'context'
     locked=db.execute('SELECT editor_locked FROM collection_objects WHERE object_id=?',(object_id,)).fetchone()[0]
@@ -76,6 +82,12 @@ def save_record(db,r,fetched_at):
         db.execute('UPDATE collection_objects SET primary_name=?,description=?,verification_status=?,license_status=? WHERE object_id=?',
                    (r.primary_name,text(r.description),r.verification_status,r.data_license,object_id))
         extension=dict(r.extension)
+        if r.extension_table=='cultural_heritage' and r.historical_period_label:
+            period_id='HAN' if 'han dynasty' in r.historical_period_label.lower() else None
+            period_id=term(db,'historical_periods',r.historical_period_label,period_id)
+            db.execute('INSERT OR IGNORE INTO human_chronology(period_id,calendar,uncertainty) VALUES(?,?,?)',
+                       (period_id,'source_period_unresolved_calendar','Regional source period; numerical bounds not inferred from object dates'))
+            extension['historical_period_id']=period_id
         if r.extension_table=='fossil_specimens':
             extension.update(occurrence_id=occ,taxon_id=taxon,formation_id=formation,geological_period_id=period,
                              discovery_location_id=location(db,r.discovery,r.region))
@@ -102,6 +114,7 @@ def save_record(db,r,fetched_at):
                    (object_id,lang,kind,value,'source_available',0,r.source_id,r.record_id))
     if has_chinese:db.execute("UPDATE collection_objects SET translation_status='source_available' WHERE object_id=? AND translation_status='pending'",(object_id,))
     evidence=dict(r.evidence)
+    if r.historical_period_label:evidence['cultural.historical_period']=('source_period_or_culture_label',r.historical_period_label)
     for field,value in dict(accession_number=('catalogue_number',r.accession_number),description=('source_description',r.description),
                            discovery_location=('source_locality',r.discovery),data_license=('source_data_license',r.data_license)).items():
         evidence.setdefault(field,value)
@@ -115,7 +128,11 @@ def save_record(db,r,fetched_at):
         media_lic=media['license_id'];requires_by=media_lic=='CC_BY'
         attribution=media.get('attribution')
         approved=media.get('approved') and media_lic in ('CC0','CC_BY') and (not requires_by or attribution)
-        db.execute('INSERT OR IGNORE INTO media VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)',
+        db.execute('''INSERT INTO media(media_id,object_id,media_kind,url,license_id,commercial_allowed,verification_status,copyright_notice,attribution,terms_url,checked_at,source_id,record_id)
+                      VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(media_id) DO UPDATE SET license_id=excluded.license_id,
+                      commercial_allowed=CASE WHEN media.verification_status='DENIED' THEN 0 ELSE excluded.commercial_allowed END,
+                      verification_status=CASE WHEN media.verification_status='DENIED' THEN 'DENIED' ELSE excluded.verification_status END,
+                      copyright_notice=excluded.copyright_notice,attribution=excluded.attribution,terms_url=excluded.terms_url,checked_at=excluded.checked_at''',
                    (mid,object_id,media.get('kind','IMAGE'),media['url'],media_lic,1 if approved else None,
                     'VERIFIED' if approved else 'UNVERIFIED',media.get('copyright',''),attribution,
                     db.execute('SELECT terms_url FROM sources WHERE source_id=?',(r.source_id,)).fetchone()[0],

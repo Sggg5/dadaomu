@@ -1,0 +1,35 @@
+{
+  "blocked_games": [],
+  "blocked_media": [
+    {
+      "media_id": "media:dc580f081615aff9e22f5610",
+      "reason": "not_locally_packaged"
+    },
+    {
+      "media_id": "media:7e0a49f933b79689dd64a892",
+      "reason": "not_locally_packaged"
+    }
+  ],
+  "missing_images": [
+    "blue_white_jar",
+    "gilt_buddha",
+    "gold_thread_jade",
+    "guardian_fragment",
+    "han_jade_disc",
+    "inlaid_bronze_mirror",
+    "republic_silver_coin",
+    "tang_sancai_horse"
+  ],
+  "missing_references": [
+    "gilt_buddha",
+    "gold_thread_jade",
+    "guardian_fragment",
+    "inlaid_bronze_mirror",
+    "republic_silver_coin",
+    "tang_sancai_horse"
+  ],
+  "missing_translations": [
+    "object:33858b3c60109c37df3218fc",
+    "object:a87b12f9621098807d7a016f"
+  ]
+}

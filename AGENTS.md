@@ -1,3 +1,11 @@
+## Phase 10A全球藏品数据库（当前授权）
+
+新分支codex/phase-10a-global-museum-database从1c3a614创建，保留全部本地9B有效提交。仅database/离线资料基础设施与审核本地JSON，不改战斗/Boss/遗物/随机规则/8古董数值/OwnedAntique身份/Profile VERSION4，无正式存档迁移，不合并main。10A.1/2/3顺序测试、三独立commit，完成尝试push，失败保留本地不force。
+
+CollectionObject文化/自然分扩展、Human/Geological时间独立、Taxon/Occurrence/Specimen不同；未知字段保持NULL、缺中文pending，原文非自动译名。SourceRecord/FieldEvidence/Media分别追溯数据/媒体许可，CC BY署名、CC BY-NC/UNKNOWN/未核验媒体拒绝发行。真实记录不自动变掉落；明确GameCollectionDefinition策划关系，1933制造/发现/命名/虚构获取分审，大型骨架不进8格。SQLite schema/checksum/normalizer版本支持重建且保留人工锁。只小型合法metadata快照可入Git，SQLite/cache/媒体/日志不提交；database/.gdignore保持运行解耦。
+
+161真实记录、5实际官方获取/9映射入口；15化石鉴定issues待review，不冒称真实物种已核验。原有442 gameplay文件冻结，导出8旧原型/2形制参考，参见database/docs/PHASE_10A_VERIFICATION.md。阶段完成停止，不扩图鉴UI、Museum经营、化石发掘或其它阶段。
+
 ## Phase 9B.3.2a-c最终实现（人工待验收）
 
 A 51909c6潜地2.4秒硬生命周期/统一异常恢复，不杀怪不改账本；B 5af5bb1 Geometry v2、13普通/6Arena、中央8.4436%、全独立流；C按明确用户授权改生产240/3.5/750×1，保留80HP/0.25无敌/1800/2200，正式池41件但RewardPlan v3/13来源不变，五件成长效果不写共享Stats。十Boss真实半径40/44/36/36/32/44/48/双32/52/42、范围205/98.8/棺盖128，HP/伤害/时序与已存在压力机制保留。8格/RestPoint/经济/Profile v4冻结。下方36件/280速度等规则属历史基线，当前以本段及用户指令为准。

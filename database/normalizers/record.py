@@ -44,6 +44,7 @@ class CollectionRecord:
     origin: str | None = None
     discovery: str | None = None
     region: str | None = None
+    historical_period_label: str | None = None
     extension_table: str = 'cultural_heritage'
     extension: dict = field(default_factory=dict)
     measurements: list = field(default_factory=list)

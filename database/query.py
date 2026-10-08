@@ -4,7 +4,7 @@ def build_index(db):
     try:
         db.execute('DELETE FROM catalogue_fts')
         db.execute('''INSERT INTO catalogue_fts(object_id,names,description)
-                      SELECT o.object_id,coalesce(group_concat(n.value,' '),o.primary_name),coalesce(o.description,'')
+                      SELECT o.object_id,o.primary_name||' '||coalesce(group_concat(n.value,' '),''),coalesce(o.description,'')
                       FROM collection_objects o LEFT JOIN object_names n ON n.object_id=o.object_id GROUP BY o.object_id''')
         db.execute('COMMIT')
     except Exception:
@@ -15,7 +15,7 @@ FILTERS={
  'confidence':('o.verification_status=?',None), 'license':('o.license_status=?',None),
  'culture':('o.object_id IN(SELECT c.object_id FROM object_cultures c JOIN cultures t ON t.id=c.term_id WHERE t.id=? OR t.label LIKE ?)', 'term'),
  'material':('o.object_id IN(SELECT c.object_id FROM object_materials c JOIN materials t ON t.id=c.term_id WHERE t.id=? OR t.label LIKE ?)', 'term'),
- 'historical_period':('o.object_id IN(SELECT object_id FROM cultural_heritage WHERE historical_period_id=?)',None),
+ 'historical_period':('o.object_id IN(SELECT c.object_id FROM cultural_heritage c JOIN historical_periods p ON p.id=c.historical_period_id WHERE p.id=? OR p.label LIKE ?)', 'term'),
  'geological_period':('o.object_id IN(SELECT object_id FROM fossil_specimens WHERE geological_period_id=?)',None),
  'taxon':('o.object_id IN(SELECT f.object_id FROM fossil_specimens f JOIN taxa t ON t.id=f.taxon_id WHERE t.id=? OR t.label LIKE ?)', 'term'),
  'findspot':('o.discovery_location_id IN(SELECT id FROM locations WHERE id=? OR label LIKE ?)', 'term'),
@@ -29,8 +29,8 @@ def search_catalog(db,keyword='',limit=50,**filters):
     if keyword:
         query='"'+keyword.replace('"','""')+'"'
         clauses.append('''(o.object_id IN(SELECT object_id FROM catalogue_fts WHERE catalogue_fts MATCH ?)
-                          OR o.object_id IN(SELECT object_id FROM object_names WHERE value LIKE ?))''')
-        params.extend((query,'%'+keyword+'%'))
+                          OR o.object_id IN(SELECT object_id FROM object_names WHERE value LIKE ?) OR o.primary_name LIKE ?)''')
+        params.extend((query,'%'+keyword+'%','%'+keyword+'%'))
     for key,value in filters.items():
         if value is None:continue
         if key not in FILTERS:raise ValueError('Unsupported search filter: '+key)

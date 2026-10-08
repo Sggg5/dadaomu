@@ -38,6 +38,21 @@ class ImportTests(unittest.TestCase):
         self.assertEqual(2,import_rows(self.db,'CMA',rows)['succeeded'])
         self.assertEqual(2,import_rows(self.db,'CMA',rows)['duplicates'])
         self.assertEqual(2,self.db.execute('SELECT count(*) FROM collection_objects').fetchone()[0])
+    def test_changed_media_rights_are_not_grandfathered(self):
+        raw=copy.deepcopy(seed_rows('CMA')[0]['record'])
+        raw['images']={'web':{'url':'https://example.test/cma-image'}};raw['share_license_status']='CC0'
+        import_rows(self.db,'CMA',[raw])
+        self.assertEqual('VERIFIED',self.db.execute('SELECT verification_status FROM media').fetchone()[0])
+        raw['share_license_status']='Copyrighted'
+        import_rows(self.db,'CMA',[raw])
+        self.assertEqual(('UNKNOWN','UNVERIFIED'),tuple(self.db.execute('SELECT license_id,verification_status FROM media').fetchone()))
+    def test_old_normalizer_replays_without_reset_or_losing_curator(self):
+        rows=seed_rows('CMA')[:1];import_rows(self.db,'CMA',rows)
+        self.db.execute('UPDATE source_records SET normalizer_version=0')
+        self.db.execute("UPDATE collection_objects SET editor_locked=1,description='Keep curator' ")
+        self.assertEqual(1,import_rows(self.db,'CMA',rows)['succeeded'])
+        self.assertEqual('Keep curator',self.db.execute('SELECT description FROM collection_objects').fetchone()[0])
+        self.assertEqual(2,self.db.execute('SELECT normalizer_version FROM source_records').fetchone()[0])
     def test_names_are_not_identity_and_exact_accession_links(self):
         raw=copy.deepcopy(seed_rows('CMA')[0]['record']);raw['title']='Same name';raw['id']=1000001;raw['accession_number']='unit.a'
         second=dict(raw,id=1000002,accession_number='unit.b')
@@ -55,6 +70,7 @@ class ImportTests(unittest.TestCase):
         import_rows(self.db,'CMA',[raw]);build_index(self.db)
         self.assertEqual(('审订名称','Curator text'),tuple(self.db.execute('SELECT primary_name,description FROM collection_objects').fetchone()))
         self.assertEqual(1,len(search_catalog(self.db,'玉璧')))
+        self.assertEqual(1,len(search_catalog(self.db,'审订')))
         self.assertEqual(1,self.db.execute("SELECT curator_locked FROM object_names WHERE language='zh-Hans'").fetchone()[0])
     def test_same_taxon_is_multiple_real_specimens(self):
         rows=seed_rows('GBIF')[:2]
@@ -80,7 +96,7 @@ class ImportTests(unittest.TestCase):
     def test_search_filters_and_safe_inputs(self):
         b=self.catalogue
         for filt in ({'kind':'NATURAL_HISTORY'},{'category':'METEORITE'},{'culture':'China'},{'material':'JADE'},
-                     {'geological_period':'JURASSIC'},{'institution':'MET'},{'license':'CC0'},{'region':'United States'},
+                     {'geological_period':'JURASSIC'},{'historical_period':'HAN'},{'institution':'MET'},{'license':'CC0'},{'region':'United States'},
                      {'media_license':'CC0'}):self.assertGreater(len(search_catalog(b,**filt)),0,filt)
         self.assertEqual([],search_catalog(b,"' OR 1=1 --"))
         with self.assertRaises(ValueError):search_catalog(b,invalid_column='x')

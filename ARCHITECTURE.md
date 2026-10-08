@@ -450,3 +450,5 @@ RunCarryState增加antique_definitions，旧World/Panel释放、新Player加入�
 `RoomGeometryPlan.GEOMETRY_VERSION=2`，中央有限配额ceil(COMBAT/10)，邻接去重；普通池13种。Boss四角Arena保持四入口及中心开放；风险事件独立流有专项比较。
 
 C：growth_properties_effect读取只读Definition参数，修改AttackRequest冷却/弹速/寿命及Runtime移动倍率，不写PlayerStats。Enemy.body_radius读取实例CircleShape；Boss出生/双生/召唤/卵的空间查询与视觉共享实际身体尺寸。
+
+Phase 10A：独立CollectionObject数据库分文化/自然专用扩展，Taxon/Occurrence/Specimen分离，历史/地质时间分离。GameCollectionDefinition是独立策划原型，OwnedAntique是原有实例身份。GlobalMuseumCatalog只读取本地审核JSON，不自动绑定掉落或修改存档。

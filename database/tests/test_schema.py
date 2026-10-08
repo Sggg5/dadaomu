@@ -37,17 +37,21 @@ class SchemaTests(unittest.TestCase):
         before = self.db.execute('SELECT count(*) FROM vocab_names').fetchone()[0]
         migrate(self.db); seed_vocab(self.db)
         self.assertEqual(before, self.db.execute('SELECT count(*) FROM vocab_names').fetchone()[0])
-        self.assertEqual(1, self.db.execute('SELECT count(*) FROM schema_migrations').fetchone()[0])
+        self.assertEqual(3, self.db.execute('SELECT count(*) FROM schema_migrations').fetchone()[0])
     def test_migration_tampering_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
             p = Path(tmp) / '001_global_schema.sql'
             p.write_text((ROOT / 'schema/001_global_schema.sql').read_text() + '\n-- changed\n')
+            (Path(tmp) / '002_game_catalog.sql').write_bytes((ROOT / 'schema/002_game_catalog.sql').read_bytes())
+            (Path(tmp) / '003_normalizer_version.sql').write_bytes((ROOT / 'schema/003_normalizer_version.sql').read_bytes())
             with self.assertRaisesRegex(ValueError, 'modified'): migrate(self.db, tmp)
     def test_failed_migration_rolls_back(self):
         with tempfile.TemporaryDirectory() as tmp:
             source = ROOT / 'schema/001_global_schema.sql'
             (Path(tmp) / source.name).write_bytes(source.read_bytes())
-            (Path(tmp) / '002_broken.sql').write_text('CREATE TABLE should_rollback(a);\nINVALID SQL;\n')
+            (Path(tmp) / '002_game_catalog.sql').write_bytes((ROOT / 'schema/002_game_catalog.sql').read_bytes())
+            (Path(tmp) / '003_normalizer_version.sql').write_bytes((ROOT / 'schema/003_normalizer_version.sql').read_bytes())
+            (Path(tmp) / '004_broken.sql').write_text('CREATE TABLE should_rollback(a);\nINVALID SQL;\n')
             with self.assertRaises(sqlite3.OperationalError): migrate(self.db, tmp)
         self.assertIsNone(self.db.execute("SELECT name FROM sqlite_master WHERE name='should_rollback'").fetchone())
     def test_all_specializations_and_fts_available(self):

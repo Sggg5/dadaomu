@@ -1,0 +1,461 @@
+{
+  "by_category": [
+    {
+      "category_id": "ARCHAEOLOGICAL_ARTIFACT",
+      "count": 119
+    },
+    {
+      "category_id": "ARTWORK",
+      "count": 3
+    },
+    {
+      "category_id": "FOSSIL_SPECIMEN",
+      "count": 15
+    },
+    {
+      "category_id": "METEORITE",
+      "count": 8
+    },
+    {
+      "category_id": "MINERAL_SPECIMEN",
+      "count": 8
+    },
+    {
+      "category_id": "ROCK_SPECIMEN",
+      "count": 8
+    }
+  ],
+  "by_culture": [
+    {
+      "count": 2,
+      "label": "Byzantine Empire (Egypt)"
+    },
+    {
+      "count": 1,
+      "label": "China, Eastern Zhou dynasty (770–256 BCE)"
+    },
+    {
+      "count": 1,
+      "label": "China, Erlitou culture (c. 1900–1500 BCE)"
+    },
+    {
+      "count": 1,
+      "label": "China, Fujian Province, Ming dynasty (1368-1644) - Qing dynasty (1644-1911)"
+    },
+    {
+      "count": 1,
+      "label": "China, Fujian province, Southern Song dynasty (1127-1279)"
+    },
+    {
+      "count": 1,
+      "label": "China, Henan Province, Baofeng, Qingliangsi, Northern Song dynasty (960-1127)"
+    },
+    {
+      "count": 3,
+      "label": "China, Henan province, Eastern Zhou dynasty (770–256 BCE), Warring States period (475–221 BCE)"
+    },
+    {
+      "count": 1,
+      "label": "China, Henan province, Jincun, Warring States period (475–221 BCE)"
+    },
+    {
+      "count": 1,
+      "label": "China, Henan province, Northern Dynasties period (386–581 CE)"
+    },
+    {
+      "count": 1,
+      "label": "China, Henan province, probably Anyang, Shang dynasty (c. 1600–c. 1046 BCE), Anyang phase (c. 1250–1046 BCE)"
+    },
+    {
+      "count": 1,
+      "label": "China, Inner Mongolia, lower stratum of the Xiajiadian culture (2200–1600 BCE)"
+    },
+    {
+      "count": 1,
+      "label": "China, Jiangxi Province, Jingdezhen, Qing dynasty (1644–1911), Yongzheng mark and period (1723–35)"
+    },
+    {
+      "count": 1,
+      "label": "China, Jiangxi Province, Jingdezhen, Qing dynasty, Shunzhi period (1644–61)"
+    },
+    {
+      "count": 1,
+      "label": "China, Jiangxi Province, Jingdezhen, Yuan dynasty (1271–1368)"
+    },
+    {
+      "count": 1,
+      "label": "China, Jiangxi Province, Northern Song dynasty (960–1127)"
+    },
+    {
+      "count": 1,
+      "label": "China, Jiangxi province, Jingdezhen kilns, Qing dynasty (1644–1911), Kangxi mark and reign (1662–1722)"
+    },
+    {
+      "count": 2,
+      "label": "China, Jiangxi province, Jingdezhen, Ming dynasty (1368-1644), Chenghua mark and period (1465-1487)"
+    },
+    {
+      "count": 1,
+      "label": "China, Jiangxi province, Jingdezhen, Ming dynasty (1368-1644), Xuande mark and period (1426-1435)"
+    },
+    {
+      "count": 1,
+      "label": "China, Jin dynasty (1115–1234)"
+    },
+    {
+      "count": 1,
+      "label": "China, Liao dynasty (916-1125)"
+    },
+    {
+      "count": 1,
+      "label": "China, Northern Song dynasty (960-1127) - Jin dynasty (1115-1234)"
+    },
+    {
+      "count": 1,
+      "label": "China, Northern Song dynasty (960–1127)"
+    },
+    {
+      "count": 1,
+      "label": "China, Northern Wei dynasty (386-534)"
+    },
+    {
+      "count": 1,
+      "label": "China, Possibly Qing dynasty (1644-1911), Qianlong period (1736-1795)"
+    },
+    {
+      "count": 1,
+      "label": "China, Qing Dynasty (1644-1911), Kangxi reign (1642-1722)"
+    },
+    {
+      "count": 3,
+      "label": "China, Qing dynasty (1644-1911)"
+    },
+    {
+      "count": 1,
+      "label": "China, Qing dynasty (1644-1911), Kangxi reign (1662-1722)"
+    },
+    {
+      "count": 2,
+      "label": "China, Qing dynasty (1644–1911)"
+    },
+    {
+      "count": 1,
+      "label": "China, Qing dynasty (1644–1911), Qianlong period (1736–95)"
+    },
+    {
+      "count": 1,
+      "label": "China, Qing dynasty (1644–1911), Qianlong reign (1736–95)"
+    },
+    {
+      "count": 1,
+      "label": "China, Shaanxi province, Meixian, Western Zhou dynasty (c. 1046–771 BCE)"
+    },
+    {
+      "count": 4,
+      "label": "China, Shang dynasty (c. 1600–c. 1046 BCE)"
+    },
+    {
+      "count": 1,
+      "label": "China, Shang dynasty (c. 1600–c. 1046 BCE), Anyang phase (c. 1250–1046 BCE)"
+    },
+    {
+      "count": 3,
+      "label": "China, Tang dynasty (618-907)"
+    },
+    {
+      "count": 1,
+      "label": "China, Warring States period (475–221 BCE)"
+    },
+    {
+      "count": 4,
+      "label": "China, Western Zhou dynasty (c. 1046–771 BCE)"
+    },
+    {
+      "count": 1,
+      "label": "China, Xin dynasty (9–23 CE)"
+    },
+    {
+      "count": 2,
+      "label": "China, probably Shaanxi province, Xi'an, Tang dynasty (618-907)"
+    },
+    {
+      "count": 1,
+      "label": "China, probably Zhejiang province, Han dynasty (202 BCE–220 CE)"
+    },
+    {
+      "count": 2,
+      "label": "Egypt"
+    },
+    {
+      "count": 1,
+      "label": "Egypt and Spain"
+    },
+    {
+      "count": 2,
+      "label": "Egypt or Syria(?)"
+    },
+    {
+      "count": 1,
+      "label": "Egypt, Abbasid period"
+    },
+    {
+      "count": 2,
+      "label": "Egypt, Alexandria, Roman"
+    },
+    {
+      "count": 1,
+      "label": "Egypt, Antinoë, Byzantine period"
+    },
+    {
+      "count": 6,
+      "label": "Egypt, Byzantine period"
+    },
+    {
+      "count": 1,
+      "label": "Egypt, Coptic period"
+    },
+    {
+      "count": 1,
+      "label": "Egypt, Fatimid period"
+    },
+    {
+      "count": 1,
+      "label": "Egypt, Roman Empire, Antonine"
+    },
+    {
+      "count": 1,
+      "label": "Egypt, Roman Empire, late Tiberian"
+    },
+    {
+      "count": 15,
+      "label": "Greece"
+    },
+    {
+      "count": 1,
+      "label": "Greece or Italy, Rome (?)"
+    },
+    {
+      "count": 1,
+      "label": "Greece, Alexandria(?)"
+    },
+    {
+      "count": 1,
+      "label": "Greece, Archaic period"
+    },
+    {
+      "count": 1,
+      "label": "Greece, Attic"
+    },
+    {
+      "count": 1,
+      "label": "Greece, Crete"
+    },
+    {
+      "count": 1,
+      "label": "Greece, Macedonia(?)"
+    },
+    {
+      "count": 10,
+      "label": "Italy, Rome"
+    },
+    {
+      "count": 3,
+      "label": "Italy, Rome, Early Imperial period"
+    },
+    {
+      "count": 1,
+      "label": "Italy, Rome, Greco-Roman Period"
+    },
+    {
+      "count": 4,
+      "label": "Italy, Rome, Roman Empire"
+    },
+    {
+      "count": 1,
+      "label": "Italy, Rome, probably Augustan"
+    },
+    {
+      "count": 1,
+      "label": "North or Central China, Northern Song (960–1127) or Jin dynasty (1115–1234)"
+    },
+    {
+      "count": 2,
+      "label": "Northeast China, Liao dynasty (916-1125)"
+    },
+    {
+      "count": 1,
+      "label": "Northeast China, Neolithic period, probably Hongshan culture (4700–2920 BCE)"
+    },
+    {
+      "count": 1,
+      "label": "Northern China, Liao dynasty (907-1125)"
+    },
+    {
+      "count": 1,
+      "label": "Northwest China, Neolithic period to Bronze Age, Qijia culture (2000–1700 BCE)"
+    },
+    {
+      "count": 1,
+      "label": "Southeast China, Suzhou, Qing dynasty (1644–1911)"
+    }
+  ],
+  "by_institution": [
+    {
+      "count": 1,
+      "museum_id": "AIC"
+    },
+    {
+      "count": 120,
+      "museum_id": "CMA"
+    },
+    {
+      "count": 1,
+      "museum_id": "MET"
+    },
+    {
+      "count": 15,
+      "museum_id": "NHMUK"
+    },
+    {
+      "count": 24,
+      "museum_id": "SMITHSONIAN"
+    }
+  ],
+  "by_region": [
+    {
+      "count": 5,
+      "label": "Antarctica"
+    },
+    {
+      "count": 2,
+      "label": "Australia"
+    },
+    {
+      "count": 1,
+      "label": "Belgium"
+    },
+    {
+      "count": 1,
+      "label": "Greenland"
+    },
+    {
+      "count": 1,
+      "label": "Indonesia"
+    },
+    {
+      "count": 2,
+      "label": "Morocco"
+    },
+    {
+      "count": 1,
+      "label": "Namibia"
+    },
+    {
+      "count": 1,
+      "label": "Tanzania"
+    },
+    {
+      "count": 3,
+      "label": "Tanzania, United Republic of"
+    },
+    {
+      "count": 2,
+      "label": "United Kingdom of Great Britain and Northern Ireland"
+    },
+    {
+      "count": 11,
+      "label": "United States"
+    }
+  ],
+  "duplicate_candidates": 25,
+  "fossil_periods": [
+    {
+      "count": 2,
+      "label": "Cambrian"
+    },
+    {
+      "count": 1,
+      "label": "Cretaceous"
+    },
+    {
+      "count": 1,
+      "label": "Devonian"
+    },
+    {
+      "count": 3,
+      "label": "Jurassic"
+    },
+    {
+      "count": 7,
+      "label": "Ordovician"
+    },
+    {
+      "count": 1,
+      "label": "Quaternary"
+    }
+  ],
+  "licenses": {
+    "data": [
+      {
+        "license_id": "CC0",
+        "records": 161
+      }
+    ],
+    "media": [
+      {
+        "license_id": "CC0",
+        "records": 124,
+        "verification_status": "VERIFIED"
+      },
+      {
+        "license_id": "CC_BY",
+        "records": 5,
+        "verification_status": "VERIFIED"
+      }
+    ]
+  },
+  "missing": {
+    "accession_number": 0.0,
+    "description": 0.16770186335403728,
+    "discovery_location_id": 0.7763975155279503,
+    "museum_id": 0.0,
+    "origin_location_id": 0.9937888198757764
+  },
+  "objects": 161,
+  "query_ms": {
+    "count": 1000,
+    "dataset_objects": 161,
+    "median": 0.309599912725389,
+    "p95": 0.48390007577836514
+  },
+  "source_counts": [
+    {
+      "count": 1,
+      "source_id": "AIC"
+    },
+    {
+      "count": 120,
+      "source_id": "CMA"
+    },
+    {
+      "count": 15,
+      "source_id": "GBIF"
+    },
+    {
+      "count": 1,
+      "source_id": "MET"
+    },
+    {
+      "count": 24,
+      "source_id": "SMITHSONIAN"
+    }
+  ],
+  "table_count": 43,
+  "validation": {
+    "errors": [],
+    "needs_review": 15,
+    "objects": 161,
+    "unknown_data_license": 0,
+    "unverified_media": 0
+  }
+}

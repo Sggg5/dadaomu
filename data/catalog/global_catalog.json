@@ -1,0 +1,198 @@
+{
+  "game_definitions": [
+    {
+      "base_value": 350,
+      "category": "ARCHAEOLOGICAL_ARTIFACT",
+      "description": "绘着卷草纹的小罐，釉色尚存。",
+      "display_name": "青花小罐",
+      "exhibit_appeal": 12,
+      "game_asset_id": null,
+      "game_id": "blue_white_jar",
+      "images": [],
+      "inventory_slots": 2,
+      "obtain_region_ids": [],
+      "rarity": "COMMON",
+      "reference_object_ids": [
+        "object:33858b3c60109c37df3218fc"
+      ],
+      "unlock_conditions": []
+    },
+    {
+      "base_value": 600,
+      "category": "ARCHAEOLOGICAL_ARTIFACT",
+      "description": "鎏金斑驳，底座保留着铸造痕迹。",
+      "display_name": "铜鎏金佛像",
+      "exhibit_appeal": 22,
+      "game_asset_id": null,
+      "game_id": "gilt_buddha",
+      "images": [],
+      "inventory_slots": 2,
+      "obtain_region_ids": [],
+      "rarity": "UNCOMMON",
+      "reference_object_ids": [],
+      "unlock_conditions": []
+    },
+    {
+      "base_value": 2200,
+      "category": "ARCHAEOLOGICAL_ARTIFACT",
+      "description": "细金丝包缠玉饰边缘。",
+      "display_name": "金丝玉佩",
+      "exhibit_appeal": 32,
+      "game_asset_id": null,
+      "game_id": "gold_thread_jade",
+      "images": [],
+      "inventory_slots": 1,
+      "obtain_region_ids": [],
+      "rarity": "TREASURE",
+      "reference_object_ids": [],
+      "unlock_conditions": []
+    },
+    {
+      "base_value": 3000,
+      "category": "ARCHAEOLOGICAL_ARTIFACT",
+      "description": "一块石刻残片，仍可辨认兽纹。",
+      "display_name": "镇墓兽残片",
+      "exhibit_appeal": 60,
+      "game_asset_id": null,
+      "game_id": "guardian_fragment",
+      "images": [],
+      "inventory_slots": 3,
+      "obtain_region_ids": [],
+      "rarity": "TREASURE",
+      "reference_object_ids": [],
+      "unlock_conditions": []
+    },
+    {
+      "base_value": 900,
+      "category": "ARCHAEOLOGICAL_ARTIFACT",
+      "description": "玉质温润，沁色沿旧裂纹蔓延。",
+      "display_name": "汉代玉璧",
+      "exhibit_appeal": 25,
+      "game_asset_id": null,
+      "game_id": "han_jade_disc",
+      "images": [],
+      "inventory_slots": 1,
+      "obtain_region_ids": [],
+      "rarity": "UNCOMMON",
+      "reference_object_ids": [
+        "object:a87b12f9621098807d7a016f"
+      ],
+      "unlock_conditions": []
+    },
+    {
+      "base_value": 1200,
+      "category": "ARCHAEOLOGICAL_ARTIFACT",
+      "description": "镜背纹饰嵌有金银细线。",
+      "display_name": "战国错金银铜镜",
+      "exhibit_appeal": 35,
+      "game_asset_id": null,
+      "game_id": "inlaid_bronze_mirror",
+      "images": [],
+      "inventory_slots": 2,
+      "obtain_region_ids": [],
+      "rarity": "RARE",
+      "reference_object_ids": [],
+      "unlock_conditions": []
+    },
+    {
+      "base_value": 120,
+      "category": "NUMISMATIC_OBJECT",
+      "description": "刻有旧年号的银元，币面已有磨损。",
+      "display_name": "民国银元",
+      "exhibit_appeal": 3,
+      "game_asset_id": null,
+      "game_id": "republic_silver_coin",
+      "images": [],
+      "inventory_slots": 1,
+      "obtain_region_ids": [],
+      "rarity": "COMMON",
+      "reference_object_ids": [],
+      "unlock_conditions": []
+    },
+    {
+      "base_value": 1600,
+      "category": "ARCHAEOLOGICAL_ARTIFACT",
+      "description": "三色釉彩交错，马首昂起。",
+      "display_name": "唐三彩马",
+      "exhibit_appeal": 50,
+      "game_asset_id": null,
+      "game_id": "tang_sancai_horse",
+      "images": [],
+      "inventory_slots": 3,
+      "obtain_region_ids": [],
+      "rarity": "RARE",
+      "reference_object_ids": [],
+      "unlock_conditions": []
+    }
+  ],
+  "reference_objects": [
+    {
+      "museum_id": "CMA",
+      "names": [
+        {
+          "language": "en",
+          "name_type": "PRIMARY",
+          "translation_status": "source_available",
+          "value": "Jar with Lion-Head Handles"
+        },
+        {
+          "language": "und",
+          "name_type": "ORIGINAL",
+          "translation_status": "source_available",
+          "value": "青花雙獅頭罐"
+        }
+      ],
+      "object_id": "object:33858b3c60109c37df3218fc",
+      "object_kind": "CULTURAL_HERITAGE",
+      "primary_name": "Jar with Lion-Head Handles",
+      "sources": [
+        {
+          "copyright_notice": "Copyright notice not supplied by source; declared data licence: CC0. Media rights separately checked.",
+          "license_id": "CC0",
+          "record_id": "137198",
+          "record_url": "https://clevelandart.org/art/1962.154",
+          "source_id": "CMA"
+        }
+      ],
+      "translation_status": "pending"
+    },
+    {
+      "museum_id": "CMA",
+      "names": [
+        {
+          "language": "en",
+          "name_type": "ALIAS",
+          "translation_status": "source_available",
+          "value": "Jade Bi Disc"
+        },
+        {
+          "language": "en",
+          "name_type": "PRIMARY",
+          "translation_status": "source_available",
+          "value": "Ceremonial Disk with Grain Pattern (Bi)"
+        },
+        {
+          "language": "und",
+          "name_type": "ORIGINAL",
+          "translation_status": "source_available",
+          "value": "玉穀紋璧"
+        }
+      ],
+      "object_id": "object:a87b12f9621098807d7a016f",
+      "object_kind": "CULTURAL_HERITAGE",
+      "primary_name": "Ceremonial Disk with Grain Pattern (Bi)",
+      "sources": [
+        {
+          "copyright_notice": "Copyright notice not supplied by source; declared data licence: CC0. Media rights separately checked.",
+          "license_id": "CC0",
+          "record_id": "130197",
+          "record_url": "https://clevelandart.org/art/1952.567",
+          "source_id": "CMA"
+        }
+      ],
+      "translation_status": "pending"
+    }
+  ],
+  "schema_version": 1,
+  "world_year": 1933
+}

@@ -5,6 +5,7 @@ def cma(raw):
     r = CollectionRecord('CMA', str(raw['id']), raw['url'], raw, raw.get('title'), museum_id='CMA',
                          accession_number=raw.get('accession_number'), description=raw.get('description'), data_license='CC0')
     r.cultures = raw.get('culture') or []
+    r.historical_period_label=next((c for c in r.cultures if any(t in c.lower() for t in ('dynasty','period'))),None)
     r.materials = inferred_materials(raw.get('technique'))
     r.techniques = [raw['technique']] if raw.get('technique') else []
     r.extension = {'year_start': raw.get('creation_date_earliest'), 'year_end': raw.get('creation_date_latest'),
@@ -30,6 +31,7 @@ def met(raw):
     r = CollectionRecord('MET', str(raw['objectID']), raw['objectURL'], raw, raw.get('title'), museum_id='MET',
                          accession_number=raw.get('accessionNumber'), data_license='CC0')
     r.cultures = [raw['culture']] if raw.get('culture') else []
+    r.historical_period_label=(str(raw.get('culture') or '')+': '+raw['period']) if raw.get('period') else None
     r.origin = text(raw.get('country')); r.region = r.origin
     r.materials = inferred_materials(raw.get('medium'))
     r.techniques = [raw['medium']] if raw.get('medium') else []
