@@ -1,0 +1,346 @@
+{
+  "licenses": [
+    [
+      "CC0",
+      "CC0 1.0",
+      "https://creativecommons.org/publicdomain/zero/1.0/",
+      1,
+      0
+    ],
+    [
+      "CC_BY",
+      "CC BY 4.0",
+      "https://creativecommons.org/licenses/by/4.0/",
+      1,
+      1
+    ],
+    [
+      "CC_BY_NC",
+      "CC BY-NC 4.0",
+      "https://creativecommons.org/licenses/by-nc/4.0/",
+      0,
+      1
+    ],
+    [
+      "CONFIRM",
+      "Needs additional clearance",
+      null,
+      null,
+      0
+    ],
+    [
+      "UNKNOWN",
+      "Unknown rights",
+      null,
+      null,
+      0
+    ]
+  ],
+  "terms": {
+    "cultures": [
+      {
+        "id": "CHINESE",
+        "label": "Chinese"
+      },
+      {
+        "id": "EGYPTIAN",
+        "label": "Ancient Egyptian"
+      },
+      {
+        "id": "GREEK",
+        "label": "Ancient Greek"
+      },
+      {
+        "id": "ROMAN",
+        "label": "Roman"
+      }
+    ],
+    "historical_periods": [
+      {
+        "id": "HAN",
+        "label": "Han dynasty (China)"
+      },
+      {
+        "id": "ROMAN_IMPERIAL",
+        "label": "Roman Imperial period"
+      }
+    ],
+    "geological_periods": [
+      {
+        "id": "PHANEROZOIC",
+        "label": "Phanerozoic",
+        "parent_id": null,
+        "authority_url": "https://stratigraphy.org/ICSchart/ChronostratChart2024-12.pdf"
+      },
+      {
+        "id": "MESOZOIC",
+        "label": "Mesozoic",
+        "parent_id": "PHANEROZOIC",
+        "authority_url": "https://stratigraphy.org/ICSchart/ChronostratChart2024-12.pdf"
+      },
+      {
+        "id": "JURASSIC",
+        "label": "Jurassic",
+        "parent_id": "MESOZOIC",
+        "authority_url": "https://stratigraphy.org/ICSchart/ChronostratChart2024-12.pdf"
+      },
+      {
+        "id": "CRETACEOUS",
+        "label": "Cretaceous",
+        "parent_id": "MESOZOIC",
+        "authority_url": "https://stratigraphy.org/ICSchart/ChronostratChart2024-12.pdf"
+      },
+      {
+        "id": "TRIASSIC",
+        "label": "Triassic",
+        "parent_id": "MESOZOIC",
+        "authority_url": "https://stratigraphy.org/ICSchart/ChronostratChart2024-12.pdf"
+      }
+    ],
+    "regions": [
+      {
+        "id": "WORLD",
+        "label": "World",
+        "parent_id": null
+      },
+      {
+        "id": "ASIA",
+        "label": "Asia",
+        "parent_id": "WORLD"
+      },
+      {
+        "id": "EUROPE",
+        "label": "Europe",
+        "parent_id": "WORLD"
+      },
+      {
+        "id": "AFRICA",
+        "label": "Africa",
+        "parent_id": "WORLD"
+      },
+      {
+        "id": "NORTH_AMERICA",
+        "label": "North America",
+        "parent_id": "WORLD"
+      },
+      {
+        "id": "CN",
+        "label": "China",
+        "parent_id": "ASIA"
+      },
+      {
+        "id": "EG",
+        "label": "Egypt",
+        "parent_id": "AFRICA"
+      },
+      {
+        "id": "GR",
+        "label": "Greece",
+        "parent_id": "EUROPE"
+      },
+      {
+        "id": "IT",
+        "label": "Italy",
+        "parent_id": "EUROPE"
+      },
+      {
+        "id": "GB",
+        "label": "United Kingdom",
+        "parent_id": "EUROPE"
+      },
+      {
+        "id": "US",
+        "label": "United States",
+        "parent_id": "NORTH_AMERICA"
+      }
+    ],
+    "locations": [],
+    "object_categories": [
+      {
+        "id": "CULTURAL_HERITAGE",
+        "label": "Cultural heritage"
+      },
+      {
+        "id": "NATURAL_HISTORY",
+        "label": "Natural history"
+      },
+      {
+        "id": "ARCHAEOLOGICAL_ARTIFACT",
+        "label": "Archaeological artifact",
+        "parent_id": "CULTURAL_HERITAGE"
+      },
+      {
+        "id": "HISTORICAL_OBJECT",
+        "label": "Historical object",
+        "parent_id": "CULTURAL_HERITAGE"
+      },
+      {
+        "id": "ARTWORK",
+        "label": "Artwork",
+        "parent_id": "CULTURAL_HERITAGE"
+      },
+      {
+        "id": "NUMISMATIC_OBJECT",
+        "label": "Numismatic object",
+        "parent_id": "CULTURAL_HERITAGE"
+      },
+      {
+        "id": "RELIGIOUS_OBJECT",
+        "label": "Religious object",
+        "parent_id": "CULTURAL_HERITAGE"
+      },
+      {
+        "id": "ARCHITECTURAL_FRAGMENT",
+        "label": "Architectural fragment",
+        "parent_id": "CULTURAL_HERITAGE"
+      },
+      {
+        "id": "FOSSIL_SPECIMEN",
+        "label": "Fossil specimen",
+        "parent_id": "NATURAL_HISTORY"
+      },
+      {
+        "id": "MINERAL_SPECIMEN",
+        "label": "Mineral specimen",
+        "parent_id": "NATURAL_HISTORY"
+      },
+      {
+        "id": "ROCK_SPECIMEN",
+        "label": "Rock specimen",
+        "parent_id": "NATURAL_HISTORY"
+      },
+      {
+        "id": "METEORITE",
+        "label": "Meteorite specimen",
+        "parent_id": "NATURAL_HISTORY"
+      },
+      {
+        "id": "BIOLOGICAL_SPECIMEN",
+        "label": "Biological specimen",
+        "parent_id": "NATURAL_HISTORY"
+      },
+      {
+        "id": "GEOLOGICAL_SPECIMEN",
+        "label": "Geological specimen",
+        "parent_id": "NATURAL_HISTORY"
+      }
+    ],
+    "materials": [
+      {
+        "id": "BRONZE",
+        "label": "Bronze"
+      },
+      {
+        "id": "JADE",
+        "label": "Jade"
+      },
+      {
+        "id": "CERAMIC",
+        "label": "Ceramic"
+      },
+      {
+        "id": "GOLD",
+        "label": "Gold"
+      },
+      {
+        "id": "SILVER",
+        "label": "Silver"
+      }
+    ],
+    "techniques": [
+      {
+        "id": "CASTING",
+        "label": "Casting"
+      },
+      {
+        "id": "CARVING",
+        "label": "Carving"
+      },
+      {
+        "id": "GLAZING",
+        "label": "Glazing"
+      }
+    ],
+    "taxa": [],
+    "formations": [],
+    "institutions": [
+      {
+        "id": "CMA",
+        "label": "Cleveland Museum of Art"
+      },
+      {
+        "id": "MET",
+        "label": "The Metropolitan Museum of Art"
+      },
+      {
+        "id": "AIC",
+        "label": "Art Institute of Chicago"
+      },
+      {
+        "id": "SMITHSONIAN",
+        "label": "Smithsonian Institution"
+      },
+      {
+        "id": "NHMUK",
+        "label": "Natural History Museum, London"
+      },
+      {
+        "id": "NPM_TAIPEI",
+        "label": "National Palace Museum, Taipei"
+      }
+    ]
+  },
+  "human_chronology": [
+    {
+      "period_id": "HAN",
+      "year_start": -205,
+      "year_end": 220,
+      "calendar": "astronomical_proleptic_gregorian",
+      "uncertainty": "Local historical period; 206 BCE represented as astronomical year -205"
+    },
+    {
+      "period_id": "ROMAN_IMPERIAL",
+      "year_start": -26,
+      "year_end": 476,
+      "calendar": "astronomical_proleptic_gregorian",
+      "uncertainty": "Regional period boundaries vary; western endpoint"
+    }
+  ],
+  "geological_timescale": [
+    {
+      "period_id": "PHANEROZOIC",
+      "rank": "EON",
+      "age_min_ma": 0,
+      "age_max_ma": 538.8,
+      "scale_version": "ICS 2024-12"
+    },
+    {
+      "period_id": "MESOZOIC",
+      "rank": "ERA",
+      "age_min_ma": 66,
+      "age_max_ma": 251.902,
+      "scale_version": "ICS 2024-12"
+    },
+    {
+      "period_id": "JURASSIC",
+      "rank": "PERIOD",
+      "age_min_ma": 143.1,
+      "age_max_ma": 201.4,
+      "scale_version": "ICS 2024-12"
+    },
+    {
+      "period_id": "CRETACEOUS",
+      "rank": "PERIOD",
+      "age_min_ma": 66,
+      "age_max_ma": 143.1,
+      "scale_version": "ICS 2024-12"
+    },
+    {
+      "period_id": "TRIASSIC",
+      "rank": "PERIOD",
+      "age_min_ma": 201.4,
+      "age_max_ma": 251.902,
+      "scale_version": "ICS 2024-12"
+    }
+  ]
+}

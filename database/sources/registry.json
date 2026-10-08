@@ -1,0 +1,101 @@
+[
+  {
+    "source_id": "CMA",
+    "institution_id": "CMA",
+    "adapter": "cma",
+    "base_url": "https://openaccess-api.clevelandart.org/api/artworks",
+    "terms_url": "https://www.clevelandart.org/open-access",
+    "license_id": "CC0",
+    "status": "APPROVED",
+    "notes": "Metadata CC0; only share_license_status=CC0 images separately eligible.",
+    "last_checked": "2026-10-08"
+  },
+  {
+    "source_id": "MET",
+    "institution_id": "MET",
+    "adapter": "met",
+    "base_url": "https://collectionapi.metmuseum.org/public/collection/v1",
+    "terms_url": "https://www.metmuseum.org/about-the-met/policies-and-documents/open-access",
+    "license_id": "CC0",
+    "status": "APPROVED",
+    "notes": "Open-access metadata CC0; isPublicDomain gates image rights.",
+    "last_checked": "2026-10-08"
+  },
+  {
+    "source_id": "AIC",
+    "institution_id": "AIC",
+    "adapter": "aic",
+    "base_url": "https://api.artic.edu/api/v1",
+    "terms_url": "https://api.artic.edu/docs/",
+    "license_id": "CC0",
+    "status": "APPROVED",
+    "notes": "API metadata CC0; image public-domain status separately required.",
+    "last_checked": "2026-10-08"
+  },
+  {
+    "source_id": "SMITHSONIAN",
+    "institution_id": "SMITHSONIAN",
+    "adapter": "smithsonian",
+    "base_url": "https://smithsonian-open-access.s3-us-west-2.amazonaws.com/metadata/edan/",
+    "terms_url": "https://www.si.edu/openaccess/faq",
+    "license_id": "CC0",
+    "status": "PER_RECORD",
+    "notes": "Only metadata_usage CC0; media_usage separately checked. Bulk units include NMNHMINSCI/NMNHPALEO.",
+    "last_checked": "2026-10-08"
+  },
+  {
+    "source_id": "NHM",
+    "institution_id": "NHMUK",
+    "adapter": "nhm",
+    "base_url": "https://data.nhm.ac.uk/api/3",
+    "terms_url": "https://data.nhm.ac.uk/sr/terms-conditions",
+    "license_id": "UNKNOWN",
+    "status": "PER_RECORD",
+    "notes": "collection-specimens dataset metadata license_id CC0-1.0 verified; other datasets/media require individual rights.",
+    "last_checked": "2026-10-08"
+  },
+  {
+    "source_id": "GBIF",
+    "institution_id": null,
+    "adapter": "gbif",
+    "base_url": "https://api.gbif.org/v1",
+    "terms_url": "https://www.gbif.org/terms?preview=true",
+    "license_id": "UNKNOWN",
+    "status": "PER_RECORD",
+    "notes": "CC0/CC BY/CC BY-NC by occurrence/dataset. FOSSIL_SPECIMEN is not a species record; flags preserved.",
+    "last_checked": "2026-10-08"
+  },
+  {
+    "source_id": "PBDB",
+    "institution_id": null,
+    "adapter": "pbdb",
+    "base_url": "https://paleobiodb.org/data1.2",
+    "terms_url": "https://paleobiodb.org/classic/basicCollectionSearch?collection_no=123976",
+    "license_id": "UNKNOWN",
+    "status": "PER_RECORD",
+    "notes": "Example collection explicitly CC0. Do not infer all records license; occurrence/taxon imports never automatically become specimens.",
+    "last_checked": "2026-10-08"
+  },
+  {
+    "source_id": "NPM",
+    "institution_id": "NPM_TAIPEI",
+    "adapter": "npm",
+    "base_url": "https://digitalarchive.npm.gov.tw/opendata",
+    "terms_url": "https://digitalarchive.npm.gov.tw/opendata",
+    "license_id": "CC_BY",
+    "status": "PER_RECORD",
+    "notes": "Current open-data text/medium images CC BY4; earlier specific CC0 offerings separately scoped. Attribution mandatory, not blanket CC0.",
+    "last_checked": "2026-10-08"
+  },
+  {
+    "source_id": "WENWU",
+    "institution_id": null,
+    "adapter": "wenwu",
+    "base_url": "https://github.com/FlamingoCheers/wenwu-database",
+    "terms_url": "https://github.com/FlamingoCheers/wenwu-database",
+    "license_id": "UNKNOWN",
+    "status": "RESEARCH_ONLY",
+    "notes": "Aggregator mixes CC0 and copyrighted sources; code license not data/media rights. Prefer original institutional APIs; deny unsourced rights.",
+    "last_checked": "2026-10-08"
+  }
+]
