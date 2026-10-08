@@ -1,0 +1,15 @@
+{
+  "articles": 100,
+  "candidates_not_exported": 500,
+  "excluded_records": 0,
+  "media_policy": "Only tracked, verified samples promoted in 10D.3",
+  "missing_fields": {
+    "article_id": 1341,
+    "description": 378,
+    "geological_period": 1396,
+    "historical_period": 688,
+    "material": 983,
+    "recommended_zh_name": 1341
+  },
+  "records": 1441
+}
