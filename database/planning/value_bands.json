@@ -1,0 +1,8 @@
+{
+  "SMALL_OBJECT": {"value": [120, 600], "appeal": [3, 18], "slots": [1, 2], "note": "小型饰件、一般器物，策划建议，非市场价"},
+  "CRAFT_OBJECT": {"value": [600, 1800], "appeal": [18, 45], "slots": [2, 4], "note": "玉器、精工陶瓷与金属工艺"},
+  "ART_OBJECT": {"value": [800, 2400], "appeal": [20, 55], "slots": [2, 5], "note": "纸绢书画、纺织与中型雕塑"},
+  "MONUMENTAL": {"value": [1800, 4000], "appeal": [40, 75], "slots": [9, 16], "note": "大型家具雕塑；远征运输，禁止随身"},
+  "NATURAL_SMALL": {"value": [150, 900], "appeal": [5, 22], "slots": [1, 3], "note": "自然史小型标本，实际体量未审订时保留限制"},
+  "SCIENTIFIC_REFERENCE": {"value": [900, 2500], "appeal": [20, 50], "slots": [3, 10], "note": "科学身份/保存部位明确标本，不等于已专家审核"}
+}
