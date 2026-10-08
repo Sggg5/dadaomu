@@ -60,7 +60,7 @@ func _physics_process(_delta:float)->void:
 func danger_at(point:Vector2)->float:
 	var danger:=0.0
 	for node in get_children():
-		if node is EncounterHazard and not node.is_queued_for_deletion() and node.phase!=EncounterHazard.Phase.OFF and node.position.distance_to(point)<node.data.radius+28:danger+=1
+		if node is EncounterHazard and not node.is_queued_for_deletion() and node.phase!=EncounterHazard.Phase.OFF and node.contains_point(point,28):danger+=1
 	return danger
 func stop()->void:
 	stopped=true

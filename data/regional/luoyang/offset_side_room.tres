@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RoomGeometryDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/rooms/room_geometry_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"LUOYANG_OFFSET_SIDE_ROOM"
+selection_weight = 8
+tags = Array[StringName]([&"HAN_BRICK"])
+obstacles = Array[Rect2]([Rect2(288,336,144,40), Rect2(848,272,144,40)])
+floor_color = Color(0.13,0.18,0.21,1)
+wall_color = Color(0.33,0.38,0.41,1)
+accent_color = Color(0.56,0.61,0.57,1)
+visual_motif = &"HAN_BRICK"

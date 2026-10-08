@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="TombDefinition" load_steps=4 format=3]
+[ext_resource type="Script" path="res://scripts/dungeon/tomb_definition.gd" id="1"]
+[ext_resource type="Resource" path="res://data/regional/luoyang/floor_1.tres" id="2"]
+[ext_resource type="Resource" path="res://data/regional/luoyang/floor_2.tres" id="3"]
+[resource]
+script = ExtResource("1")
+id = &"LUOYANG_HAN_WEI"
+display_name = "北邙耳室疑冢"
+floors = Array[Resource]([ExtResource("2"), ExtResource("3")])

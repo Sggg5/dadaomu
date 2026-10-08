@@ -33,7 +33,7 @@ func _physics_process(delta:float)->void:
 		if age>=data.duration:queue_free()
 	else:
 		remaining-=delta
-		if phase==Phase.ACTIVE and data.kind in [EncounterHazardDefinition.Kind.BLAST,EncounterHazardDefinition.Kind.SPIKES] and not hit_player:hit_player=_hurt()
+		if phase==Phase.ACTIVE and data.kind in [EncounterHazardDefinition.Kind.BLAST,EncounterHazardDefinition.Kind.SPIKES,EncounterHazardDefinition.Kind.GATE_SWEEP,EncounterHazardDefinition.Kind.FIRE_FAN] and not hit_player:hit_player=_hurt()
 		if remaining<=0:
 			match phase:
 				Phase.OFF:phase=Phase.WARN;remaining=data.warning_time
@@ -48,9 +48,16 @@ func _physics_process(delta:float)->void:
 					if not data.periodic:queue_free()
 					else:phase=Phase.OFF;remaining=data.interval
 	queue_redraw()
+func contains_point(point:Vector2,margin:float=0)->bool:
+	var local:=point-position
+	if data.kind==EncounterHazardDefinition.Kind.GATE_SWEEP:
+		return Rect2(Vector2(-data.strip_length/2,-data.strip_width/2),Vector2(data.strip_length,data.strip_width)).grow(margin).has_point(local)
+	if data.kind==EncounterHazardDefinition.Kind.FIRE_FAN:
+		return local.length()<=data.radius+margin and (local.length()<margin+1 or local.normalized().dot(data.direction.normalized())>=0.65)
+	return local.length()<=data.radius+margin
 func _hurt()->bool:
 	var player:=room.combat_target
-	if not player.controls_enabled or player.health.is_dead or player.position.distance_to(position)>data.radius:return false
+	if not player.controls_enabled or player.health.is_dead or not contains_point(player.position):return false
 	var ray:=PhysicsRayQueryParameters2D.create(global_position,player.global_position,1)
 	if not get_world_2d().direct_space_state.intersect_ray(ray).is_empty():return false
 	return player.take_damage(data.damage)
@@ -68,6 +75,19 @@ func _bullet(direction:Vector2)->void:
 	bullet.setup(request)
 	bullet.track_player(room.combat_target)
 func _draw()->void:
+	if data.kind in [EncounterHazardDefinition.Kind.GATE_SWEEP,EncounterHazardDefinition.Kind.FIRE_FAN]:
+		var color:=Color("d6ba72") if data.kind==EncounterHazardDefinition.Kind.GATE_SWEEP else Color("e77c42")
+		color.a=0.1 if phase==Phase.OFF else (0.28 if phase==Phase.WARN else 0.8)
+		if data.kind==EncounterHazardDefinition.Kind.GATE_SWEEP:
+			var rect:=Rect2(Vector2(-data.strip_length/2,-data.strip_width/2),Vector2(data.strip_length,data.strip_width))
+			draw_rect(rect,color)
+			draw_rect(rect,Color("bf9a55"),false,2)
+		else:
+			var points:=PackedVector2Array([Vector2.ZERO])
+			for index in range(13):points.append(data.direction.rotated(-0.85+index*1.7/12)*data.radius)
+			draw_colored_polygon(points,color)
+			draw_polyline(points,Color("c98454"),2)
+		return
 	var poison:=data.kind==EncounterHazardDefinition.Kind.POISON
 	var water:=data.kind==EncounterHazardDefinition.Kind.WATER
 	var color:=Color("749b63") if poison or water else Color("ef964e")

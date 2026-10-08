@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="RoomGeometryDefinition" load_steps=4 format=3]
+[ext_resource type="Script" path="res://scripts/rooms/room_geometry_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/rooms/encounter_hazard_definition.gd" id="2"]
+
+[sub_resource type="Resource" id="Hazard"]
+script = ExtResource("2")
+kind = 6
+position = Vector2(620,352)
+radius = 128.0
+warning_time = 1.0
+initial_delay = 1.6
+interval = 4.0
+duration = 0.35
+damage = 8.0
+direction = Vector2(1,0)
+
+[resource]
+script = ExtResource("1")
+id = &"LUOYANG_BRANCHED_GATE"
+selection_weight = 8
+tags = Array[StringName]([&"HAN_BRICK"])
+obstacles = Array[Rect2]([Rect2(424,216,32,112), Rect2(808,408,32,112)])
+floor_color = Color(0.13,0.18,0.21,1)
+wall_color = Color(0.33,0.38,0.41,1)
+accent_color = Color(0.56,0.61,0.57,1)
+visual_motif = &"HAN_BRICK"
+environments = Array[Resource]([SubResource("Hazard")])
