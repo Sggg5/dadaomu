@@ -1,0 +1,4 @@
+[
+ {"knowledge_id":"calcite_formula","subject_name":"Calcite","field_name":"general_formula","value":"CaCO3","authority_url":"https://museum.wales/mineralogy-of-wales/database/?mineral=172&name=Calcite","scope":"TYPE_KNOWLEDGE_NOT_SPECIMEN_MEASUREMENT","checked_at":"2026-10-08","review_status":"DRAFT_PENDING_REVIEW"},
+ {"knowledge_id":"calcite_crystal_system","subject_name":"Calcite","field_name":"general_crystal_system","value":"Trigonal","authority_url":"https://museum.wales/mineralogy-of-wales/database/?mineral=172&name=Calcite","scope":"TYPE_KNOWLEDGE_NOT_SPECIMEN_MEASUREMENT","checked_at":"2026-10-08","review_status":"DRAFT_PENDING_REVIEW"}
+]
