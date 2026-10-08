@@ -1,0 +1,16 @@
+[
+  {
+    "source": "AIC",
+    "url": "https://api.artic.edu/api/v1/artworks/search?q=China&limit=30",
+    "fetched_at": "2026-10-08T02:13:23+00:00",
+    "file": "samples\\phase10b\\aic_additional.jsonl",
+    "records": 30,
+    "rejected": 0,
+    "rejection_reasons": [],
+    "media_downloaded": 0
+  },
+  {
+    "source": "MET",
+    "error": "HTTP Error 410: Gone"
+  }
+]

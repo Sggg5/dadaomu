@@ -6,11 +6,17 @@ from database.importers.store import import_rows
 from database.query import build_index
 
 SAMPLES={'CMA':'cma_seed.jsonl','GBIF':'gbif_nhm_fossil_seed.jsonl','SMITHSONIAN':'smithsonian_natural_seed.jsonl','MET':'met_seed.jsonl','AIC':'aic_seed.jsonl'}
-def rebuild_catalog(db):
+def rebuild_catalog(db, include_content=True):
     reports=[]
     for source,file in SAMPLES.items():
         rows=[json.loads(line) for line in (ROOT/'samples'/file).read_text(encoding='utf-8').splitlines() if line.strip()]
         reports.append(import_rows(db,source,rows))
+    if include_content:
+        folder = ROOT / 'samples/phase10b'
+        for file in sorted(folder.glob('*.jsonl')):
+            source = 'CMA' if file.name.startswith('cma_') else 'SMITHSONIAN' if file.name.startswith('smithsonian_') else 'AIC' if file.name.startswith('aic_') else 'MET' if file.name.startswith('met_') else 'GBIF'
+            rows = [json.loads(line) for line in file.read_text(encoding='utf-8').splitlines() if line.strip()]
+            reports.append(import_rows(db, source, rows))
     build_index(db)
     return reports
 

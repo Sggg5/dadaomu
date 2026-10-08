@@ -5,7 +5,7 @@ from pathlib import Path
 from database.schema.migrate import ROOT, VOCABS, utc_now
 from database.normalizers.record import stable_id, text
 from database.importers.registry import ADAPTERS
-NORMALIZER_VERSION=3
+NORMALIZER_VERSION=4
 
 def canonical(value):
     return json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':'))

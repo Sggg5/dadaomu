@@ -1,0 +1,194 @@
+[
+  {
+    "source": "AIC",
+    "file": "aic_additional.jsonl",
+    "url": "See additional_manifest.json; detail object URLs retained in each raw row",
+    "fetched_at": "2026-10-08T02:13:23+00:00",
+    "retained": 30,
+    "source_id_duplicates_removed": 0,
+    "rejections": {},
+    "media_downloaded": 0
+  },
+  {
+    "source": "CMA",
+    "file": "cma_00.jsonl",
+    "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=bronze+China&limit=100&skip=0&cc0=1",
+    "fetched_at": "2026-10-08T02:12:04+00:00",
+    "retained": 75,
+    "source_id_duplicates_removed": 25,
+    "rejections": {},
+    "media_downloaded": 0
+  },
+  {
+    "source": "CMA",
+    "file": "cma_01.jsonl",
+    "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=jade&limit=100&skip=0&cc0=1",
+    "fetched_at": "2026-10-08T02:12:07+00:00",
+    "retained": 80,
+    "source_id_duplicates_removed": 20,
+    "rejections": {},
+    "media_downloaded": 0
+  },
+  {
+    "source": "CMA",
+    "file": "cma_02.jsonl",
+    "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=ceramic+China&limit=100&skip=0&cc0=1",
+    "fetched_at": "2026-10-08T02:12:09+00:00",
+    "retained": 73,
+    "source_id_duplicates_removed": 27,
+    "rejections": {},
+    "media_downloaded": 0
+  },
+  {
+    "source": "CMA",
+    "file": "cma_03.jsonl",
+    "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=China&limit=100&skip=0&cc0=1",
+    "fetched_at": "2026-10-08T02:12:12+00:00",
+    "retained": 31,
+    "source_id_duplicates_removed": 69,
+    "rejections": {},
+    "media_downloaded": 0
+  },
+  {
+    "source": "CMA",
+    "file": "cma_04.jsonl",
+    "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=Egypt&limit=100&skip=0&cc0=1",
+    "fetched_at": "2026-10-08T02:12:14+00:00",
+    "retained": 93,
+    "source_id_duplicates_removed": 7,
+    "rejections": {},
+    "media_downloaded": 0
+  },
+  {
+    "source": "CMA",
+    "file": "cma_05.jsonl",
+    "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=Greece&limit=100&skip=0&cc0=1",
+    "fetched_at": "2026-10-08T02:12:16+00:00",
+    "retained": 78,
+    "source_id_duplicates_removed": 22,
+    "rejections": {},
+    "media_downloaded": 0
+  },
+  {
+    "source": "CMA",
+    "file": "cma_06.jsonl",
+    "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=Rome&limit=100&skip=0&cc0=1",
+    "fetched_at": "2026-10-08T02:12:18+00:00",
+    "retained": 79,
+    "source_id_duplicates_removed": 21,
+    "rejections": {},
+    "media_downloaded": 0
+  },
+  {
+    "source": "CMA",
+    "file": "cma_07.jsonl",
+    "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=Persia&limit=100&skip=0&cc0=1",
+    "fetched_at": "2026-10-08T02:12:20+00:00",
+    "retained": 33,
+    "source_id_duplicates_removed": 0,
+    "rejections": {},
+    "media_downloaded": 0
+  },
+  {
+    "source": "CMA",
+    "file": "cma_08.jsonl",
+    "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=India&limit=100&skip=0&cc0=1",
+    "fetched_at": "2026-10-08T02:12:24+00:00",
+    "retained": 100,
+    "source_id_duplicates_removed": 0,
+    "rejections": {},
+    "media_downloaded": 0
+  },
+  {
+    "source": "CMA",
+    "file": "cma_09.jsonl",
+    "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=Mexico&limit=100&skip=0&cc0=1",
+    "fetched_at": "2026-10-08T02:12:26+00:00",
+    "retained": 93,
+    "source_id_duplicates_removed": 7,
+    "rejections": {},
+    "media_downloaded": 0
+  },
+  {
+    "source": "CMA",
+    "file": "cma_10.jsonl",
+    "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=Mesopotamia&limit=100&skip=0&cc0=1",
+    "fetched_at": "2026-10-08T02:12:28+00:00",
+    "retained": 14,
+    "source_id_duplicates_removed": 0,
+    "rejections": {},
+    "media_downloaded": 0
+  },
+  {
+    "source": "CMA",
+    "file": "cma_11.jsonl",
+    "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=Tang&limit=100&skip=0&cc0=1",
+    "fetched_at": "2026-10-08T02:12:30+00:00",
+    "retained": 59,
+    "source_id_duplicates_removed": 41,
+    "rejections": {},
+    "media_downloaded": 0
+  },
+  {
+    "source": "CMA",
+    "file": "cma_12.jsonl",
+    "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=Song&limit=100&skip=0&cc0=1",
+    "fetched_at": "2026-10-08T02:12:33+00:00",
+    "retained": 64,
+    "source_id_duplicates_removed": 36,
+    "rejections": {},
+    "media_downloaded": 0
+  },
+  {
+    "source": "CMA",
+    "file": "cma_13.jsonl",
+    "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=Ming&limit=100&skip=0&cc0=1",
+    "fetched_at": "2026-10-08T02:12:38+00:00",
+    "retained": 77,
+    "source_id_duplicates_removed": 23,
+    "rejections": {},
+    "media_downloaded": 0
+  },
+  {
+    "source": "CMA",
+    "file": "cma_14.jsonl",
+    "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=Qing&limit=100&skip=0&cc0=1",
+    "fetched_at": "2026-10-08T02:12:41+00:00",
+    "retained": 71,
+    "source_id_duplicates_removed": 29,
+    "rejections": {},
+    "media_downloaded": 0
+  },
+  {
+    "source": "CMA",
+    "file": "cma_15.jsonl",
+    "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=Neolithic&limit=100&skip=0&cc0=1",
+    "fetched_at": "2026-10-08T02:12:43+00:00",
+    "retained": 20,
+    "source_id_duplicates_removed": 17,
+    "rejections": {},
+    "media_downloaded": 0
+  },
+  {
+    "source": "SMITHSONIAN",
+    "file": "smithsonian_nmnhminsci.jsonl",
+    "url": "https://smithsonian-open-access.s3-us-west-2.amazonaws.com/metadata/edan/nmnhminsci/00.txt",
+    "fetched_at": "2026-10-08T02:12:44+00:00",
+    "retained": 165,
+    "source_id_duplicates_removed": 24,
+    "rejections": {},
+    "media_downloaded": 0
+  },
+  {
+    "source": "SMITHSONIAN",
+    "file": "smithsonian_nmnhpaleo.jsonl",
+    "url": "https://smithsonian-open-access.s3-us-west-2.amazonaws.com/metadata/edan/nmnhpaleo/00.txt",
+    "fetched_at": "2026-10-08T02:12:45+00:00",
+    "retained": 51,
+    "source_id_duplicates_removed": 0,
+    "rejections": {
+      "Paleobiology collection membership alone does not establish a fossil": 140
+    },
+    "media_downloaded": 0
+  }
+]

@@ -3,7 +3,7 @@ import json
 import sqlite3
 import unittest
 from database.schema.migrate import ROOT, init_db
-from database.importers.store import import_rows, load_sources
+from database.importers.store import import_rows, load_sources, NORMALIZER_VERSION
 from database.importers.registry import ADAPTERS
 from database.query import build_index, search_catalog
 from database.validators.quality import validate_db
@@ -52,7 +52,7 @@ class ImportTests(unittest.TestCase):
         self.db.execute("UPDATE collection_objects SET editor_locked=1,description='Keep curator' ")
         self.assertEqual(1,import_rows(self.db,'CMA',rows)['succeeded'])
         self.assertEqual('Keep curator',self.db.execute('SELECT description FROM collection_objects').fetchone()[0])
-        self.assertEqual(3,self.db.execute('SELECT normalizer_version FROM source_records').fetchone()[0])
+        self.assertEqual(NORMALIZER_VERSION,self.db.execute('SELECT normalizer_version FROM source_records').fetchone()[0])
     def test_official_paintings_are_artwork_not_archaeological_artifacts(self):
         for source in ('MET','AIC'):
             self.assertEqual('ARTWORK',ADAPTERS[source](seed_rows(source)[0]['record']).category_id)
@@ -119,3 +119,4 @@ class ImportTests(unittest.TestCase):
         for table in ('collection_objects','cultural_heritage','fossil_specimens','mineral_specimens','meteorite_specimens','rock_specimens'):
             self.assertEqual([tuple(r) for r in self.catalogue.execute('SELECT * FROM '+table+' ORDER BY object_id')],
                              [tuple(r) for r in self.db.execute('SELECT * FROM '+table+' ORDER BY object_id')])
+

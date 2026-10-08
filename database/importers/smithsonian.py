@@ -34,7 +34,23 @@ def smithsonian(raw):
     elif unit=='NMNHPALEO':
         r.object_kind='NATURAL_HISTORY';r.category_id='FOSSIL_SPECIMEN';r.extension_table='fossil_specimens'
         names=content.get('indexedStructured',{}).get('scientific_name',[])
-        r.extension={'scientific_name':names[0] if names else None}
+        indexed = content.get('indexedStructured', {})
+        systems = indexed.get('geo_age-system', [])
+        age_notes = values(free, 'notes', 'Geologic Age')
+        if not systems and not age_notes:
+            raise ValueError('Paleobiology collection membership alone does not establish a fossil')
+        scientific = names[0] if names else None
+        r.extension = {'scientific_name': scientific,
+                       'preserved_element': '; '.join(values(free, 'notes', 'Skeletal Morphology')) or None}
+        r.occurrence = {'id': 'SMITHSONIAN:' + record_id, 'taxon_external_id': scientific,
+                        'scientific_name': scientific, 'rank': None, 'basis': 'FOSSIL_SPECIMEN',
+                        'formation': next(iter(indexed.get('strat_formation', [])), None),
+                        'geological_period': systems[0] if systems else None}
+        r.evidence['fossil.geological_period'] = ('content.indexedStructured.geo_age-system', systems[0] if systems else None)
+        r.evidence['fossil.geological_age_label'] = ('content.freetext.notes.Geologic Age', age_notes or None)
+        r.evidence['fossil.discovery_year'] = ('Collection Date is not discovery date', None)
+        r.verification_status = 'NEEDS_REVIEW' # source classification is not expert specimen identification
+
     for item in free.get('physicalDescription',[]):
         if item.get('content'):r.measurements.append((item.get('label','verbatim'),None,None,item['content']))
     online=descriptive.get('online_media',{}).get('media',[])
