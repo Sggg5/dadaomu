@@ -5,7 +5,7 @@ from pathlib import Path
 from database.schema.migrate import ROOT, VOCABS, utc_now
 from database.normalizers.record import stable_id, text
 from database.importers.registry import ADAPTERS
-NORMALIZER_VERSION=2
+NORMALIZER_VERSION=3
 
 def canonical(value):
     return json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':'))
@@ -79,8 +79,8 @@ def save_record(db,r,fetched_at):
     if not object_id:return 'context'
     locked=db.execute('SELECT editor_locked FROM collection_objects WHERE object_id=?',(object_id,)).fetchone()[0]
     if not locked:
-        db.execute('UPDATE collection_objects SET primary_name=?,description=?,verification_status=?,license_status=? WHERE object_id=?',
-                   (r.primary_name,text(r.description),r.verification_status,r.data_license,object_id))
+        db.execute('UPDATE collection_objects SET primary_name=?,description=?,verification_status=?,license_status=?,category_id=? WHERE object_id=?',
+                   (r.primary_name,text(r.description),r.verification_status,r.data_license,r.category_id,object_id))
         extension=dict(r.extension)
         if r.extension_table=='cultural_heritage' and r.historical_period_label:
             period_id='HAN' if 'han dynasty' in r.historical_period_label.lower() else None

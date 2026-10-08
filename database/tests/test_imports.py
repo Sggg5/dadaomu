@@ -52,7 +52,11 @@ class ImportTests(unittest.TestCase):
         self.db.execute("UPDATE collection_objects SET editor_locked=1,description='Keep curator' ")
         self.assertEqual(1,import_rows(self.db,'CMA',rows)['succeeded'])
         self.assertEqual('Keep curator',self.db.execute('SELECT description FROM collection_objects').fetchone()[0])
-        self.assertEqual(2,self.db.execute('SELECT normalizer_version FROM source_records').fetchone()[0])
+        self.assertEqual(3,self.db.execute('SELECT normalizer_version FROM source_records').fetchone()[0])
+    def test_official_paintings_are_artwork_not_archaeological_artifacts(self):
+        for source in ('MET','AIC'):
+            self.assertEqual('ARTWORK',ADAPTERS[source](seed_rows(source)[0]['record']).category_id)
+            self.assertEqual('ARTWORK',self.catalogue.execute('SELECT o.category_id FROM collection_objects o JOIN source_records s ON s.object_id=o.object_id WHERE s.source_id=?',(source,)).fetchone()[0])
     def test_names_are_not_identity_and_exact_accession_links(self):
         raw=copy.deepcopy(seed_rows('CMA')[0]['record']);raw['title']='Same name';raw['id']=1000001;raw['accession_number']='unit.a'
         second=dict(raw,id=1000002,accession_number='unit.b')

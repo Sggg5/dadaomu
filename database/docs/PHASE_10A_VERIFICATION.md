@@ -8,13 +8,13 @@
 |---|---|
 |10A.1 Global Schema|907d0c0f806ff2d18d9d45c71a496f082c670ab5|
 |10A.2 Data Importers|44a2255f20d19a18170f1e336c3f42b6fbb613a9|
-|10A.3 Godot Bridge|本验收文档所属最终提交；提交后通过git rev-parse HEAD定位，交付报告给出完整SHA（避免在提交内容中自引用其尚未生成的hash）|
+|10A.3 Godot Bridge|d138defee16154a3f41964d2896c9158abbe8c41|
 
 ## 数据表、关系及边界
 
 SQLite Schema v3，43个主体/FTS表（不计FTS内部辅助表）。CollectionObject→文化遗产/化石/矿物/陨石/岩石/生物/地质扩展；Object↔多语言Names/Materials/Techniques/Cultures；SourceRecord→机构、记录URL、数据权利、日期、原始payload hash/JSON→FieldEvidence；Media独立权利/本地路径；Taxon/Occurrence/Specimen/Formation/Locality明确分离；GameCollectionDefinition→明确审订的参考关系/地区，不能由实物导入自动填充。
 
-Schema001基础、002策划/媒体本地路径、003normalizer_version；迁移SHA锁和事务拒绝篡改/未知版本，Normalizing v2改变时可重放原始记录，保留editor_locked/curator_locked与游戏配置。已应用SQL没有修改。43表字典及FK详见DATA_DICTIONARY.md；设计解释见ARCHITECTURE.md。
+Schema001基础、002策划/媒体本地路径、003normalizer_version；迁移SHA锁和事务拒绝篡改/未知版本，Normalizing v3改变时可重放原始记录，保留editor_locked/curator_locked与游戏配置。已应用SQL没有修改。43表字典及FK详见DATA_DICTIONARY.md；设计解释见ARCHITECTURE.md。
 
 历史时间采用独立区域时期（包括中国、埃及、希腊罗马），有符号日期/原文/历法/不确定性；化石地质时间采用固定ICS 2024-12版本、Ma/rank，不宣称这是2026最新图表。源时期明确时建立历史时期关联（包括HAN）；源没有提供的发现年、科学命名年、精确化石年龄、化学组成和晶系保持NULL。
 
@@ -30,8 +30,8 @@ NHM直接datastore查询返回403，没有绕过，使用其公开GBIF CC0发布
 
 |类别|实物数|
 |---|---:|
-|ARCHAEOLOGICAL_ARTIFACT|119|
-|ARTWORK|3|
+|ARCHAEOLOGICAL_ARTIFACT|117|
+|ARTWORK|5|
 |FOSSIL_SPECIMEN|15|
 |METEORITE|8|
 |MINERAL_SPECIMEN|8|
@@ -143,7 +143,7 @@ NHM直接datastore查询返回403，没有绕过，使用其公开GBIF CC0发布
 
 缺少尺寸/测量记录24/161；不是用0补齐。相同来源重放161重复、0新增、0错误；同名不同实物保留，待审核同名候选25对，不自动合并。元数据授权不明0条，鉴定待复核15条；种子媒体未核验0，但无媒体记录不是媒体已获授权。
 
-查询基准：此机161条资料、jade+China条件1000次，median 0.3096ms、P95 0.4839ms。只代表小型种子库，不是已验证十万条性能；Schema索引/FTS及参数化查询为后续扩容基础。检索支持名称/中文子串、文化、地区及子区、时期、地质期、类别、化石分类、材质、机构、出土地、媒体许可和可信度。
+查询基准：此机161条资料、jade+China条件1000次，median 0.3067ms、P95 0.5678ms。只代表小型种子库，不是已验证十万条性能；Schema索引/FTS及参数化查询为后续扩容基础。检索支持名称/中文子串、文化、地区及子区、时期、地质期、类别、化石分类、材质、机构、出土地、媒体许可和可信度。
 
 ## 至少10条实际记录示例
 
@@ -161,8 +161,8 @@ NHM直接datastore查询返回403，没有绕过，使用其公开GBIF CC0发布
 |MINERAL_SPECIMEN|Chondrodite|NMNH 172885-00|[原始记录](http://n2t.net/ark:/65665/3e1d934a9-7f1c-4524-bb18-1042fa84827a)|
 |METEORITE|CMS 04013,3|USNM 7648|[原始记录](http://n2t.net/ark:/65665/3f5180027-7b33-4909-9193-fd13a321dfb0)|
 |ROCK_SPECIMEN|Zirconiferous sandstone|NMNH 87788-3|[原始记录](http://n2t.net/ark:/65665/3b2043ed0-373a-4bdb-a5df-62366d54a82a)|
-|ARCHAEOLOGICAL_ARTIFACT|Wheat Field with Cypresses|1993.132|[原始记录](https://www.metmuseum.org/art/collection/search/436535)|
-|ARCHAEOLOGICAL_ARTIFACT|A Sunday on La Grande Jatte — 1884|1926.224|[原始记录](https://www.artic.edu/artworks/27992)|
+|ARTWORK|Wheat Field with Cypresses|1993.132|[原始记录](https://www.metmuseum.org/art/collection/search/436535)|
+|ARTWORK|A Sunday on La Grande Jatte — 1884|1926.224|[原始记录](https://www.artic.edu/artworks/27992)|
 
 ## 游戏导出/1933/兼容
 
@@ -200,7 +200,7 @@ NHM直接datastore查询返回403，没有绕过，使用其公开GBIF CC0发布
 
 ## 自动测试与执行命令
 
-36项Python测试，0失败；迁移篡改/失败回滚、全球时间、同名不同馆藏、幂等、旧Normalizer重放与人工锁、来源/媒体撤权、合法/不合法发行、原有8件、442个冻结文件、1933规则、大型化石、确定性重建导出均有覆盖。Godot10A headless49项、graphical49项，0失败。
+37项Python测试，0失败；迁移篡改/失败回滚、全球时间、同名不同馆藏、幂等、旧Normalizer重放与人工锁、来源/媒体撤权、合法/不合法发行、原有8件、442个冻结文件、1933规则、大型化石、确定性重建导出均有覆盖。Godot10A headless49项、graphical49项，0失败。
 
 既有Phase1～9B.3.3+Geometry 291885项、Softlock1030项、Player/Boss baseline727项，加10A共293691项，0失败。导入/正式GameFlow隔离Profile启动正常，无SCRIPT ERROR/ERROR。8B/8C/8D/9A的故意损坏Profile夹具预期WARNING保留，未删除原断言。
 
@@ -243,3 +243,5 @@ godot --headless --path . --quit-after 10 -- --profile-path=user://tests/phase10
 ## 已知限制与停止边界
 
 首批161资料为底座样本，不声称已导入十万条。只有5来源实际获取，另外4适配入口是本地审订清单/上下文入口，不声称所有供应者原生批量API都已自动接通。缺失位置/描述/尺寸、词表别名和科学鉴定仍需长期策划；菊石多重分类匹配、生物实物种子等缺口明确保留。无图片/3D下载，无正式图鉴UI、经营改版或新玩法。完成三独立commit后只尝试push新分支，失败保留本地，不force、不合并main，停止等待下一阶段。
+
+最终示例抽查追加小修：MET/AIC油画由官方classification/artwork_type_title明确映射ARTWORK（不再用默认考古器物）；新增实际种子断言，Normalizer v3允许原库安全重放分类且保留人工锁。三个阶段提交不改写，追加一个分类修正提交；37项Python测试0失败，导出字节及冻结游戏代码不变。

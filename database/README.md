@@ -37,4 +37,4 @@ python -m database.cli export_godot_catalog --db database/work/catalog.sqlite --
 godot --headless --path . --script tests/phase_10a_smoke.gd
 ```
 
-Schema v3前向迁移不修改已应用SQL；NORMALIZER_VERSION2支持适配规则升级后重放源记录，不覆盖人工锁。编辑映射JSON不会重写数据库里已有游戏策划，策划修改应由明确审核流程更新该层。
+Schema v3前向迁移不修改已应用SQL；NORMALIZER_VERSION3支持适配规则升级后重放源记录，不覆盖人工锁。编辑映射JSON不会重写数据库里已有游戏策划，策划修改应由明确审核流程更新该层。

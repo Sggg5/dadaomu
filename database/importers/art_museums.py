@@ -30,6 +30,8 @@ def cma(raw):
 def met(raw):
     r = CollectionRecord('MET', str(raw['objectID']), raw['objectURL'], raw, raw.get('title'), museum_id='MET',
                          accession_number=raw.get('accessionNumber'), data_license='CC0')
+    if any(word in str(raw.get('classification','')).lower() for word in ('painting','print','drawing','photograph')):
+        r.category_id='ARTWORK'
     r.cultures = [raw['culture']] if raw.get('culture') else []
     r.historical_period_label=(str(raw.get('culture') or '')+': '+raw['period']) if raw.get('period') else None
     r.origin = text(raw.get('country')); r.region = r.origin
@@ -48,6 +50,8 @@ def met(raw):
 def aic(raw):
     r = CollectionRecord('AIC',str(raw['id']),f"https://www.artic.edu/artworks/{raw['id']}",raw,raw.get('title'),museum_id='AIC',
                          accession_number=raw.get('main_reference_number'),description=raw.get('description'),data_license='CC0')
+    if any(word in str(raw.get('artwork_type_title','')).lower() for word in ('painting','print','drawing','photograph')):
+        r.category_id='ARTWORK'
     r.extension = {'year_start':raw.get('date_start'),'year_end':raw.get('date_end'),'date_label':raw.get('date_display'), 'calendar':'source_signed_year_unspecified'}
     r.origin = text(raw.get('place_of_origin')); r.materials = inferred_materials(raw.get('medium_display'))
     r.evidence = {'primary_name':('title',raw.get('title'))}

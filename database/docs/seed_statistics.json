@@ -2,11 +2,11 @@
   "by_category": [
     {
       "category_id": "ARCHAEOLOGICAL_ARTIFACT",
-      "count": 119
+      "count": 117
     },
     {
       "category_id": "ARTWORK",
-      "count": 3
+      "count": 5
     },
     {
       "category_id": "FOSSIL_SPECIMEN",
@@ -425,8 +425,8 @@
   "query_ms": {
     "count": 1000,
     "dataset_objects": 161,
-    "median": 0.309599912725389,
-    "p95": 0.48390007577836514
+    "median": 0.30670000705868006,
+    "p95": 0.5677998997271061
   },
   "source_counts": [
     {
