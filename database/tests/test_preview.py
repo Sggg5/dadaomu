@@ -20,7 +20,7 @@ class PreviewTests(unittest.TestCase):
     def test_offline_csp_no_remote_assets(self):
         with tempfile.TemporaryDirectory() as tmp:
             p=Path(tmp)/'index.html';export_preview(self.db,p);s=p.read_text(encoding='utf-8')
-            self.assertIn("connect-src 'none'",s);self.assertNotRegex(s,r'<(?:img|iframe)\b|<script[^>]*\bsrc=')
+            self.assertIn("connect-src 'none'",s);self.assertNotRegex(s,r'<iframe\b|<script[^>]*\bsrc=|<img[^>]*src=[\"\']https?://')
             encoded=re.search(r'<script id="catalog-data" type="application/json">(.*?)</script>',s,re.S)[1]
             data=json.loads(encoded);self.assertEqual(1441,len(data['objects']));self.assertEqual(8,data['released_count'])
     def test_source_script_injection_remains_text(self):

@@ -24,3 +24,11 @@ Python标准库服务只绑定127.0.0.1:8765，使用现有Codex浏览器Playwri
 8中国青铜、7中国玉器/陶瓷、7世界文明、8自然史，30篇正文223～268字符；独立三段claims分别提供源字段、出处及需核验限制。推荐名、原文名、适用学名、命名依据与翻译可信度独立，全部DRAFT_PENDING_REVIEW。不是人工或专家审核通过。
 
 Schema8保存60条v1/v2不可变快照与hash，展示逐段证据、名称来源、待确认项及unified diff。原官方名称不覆盖；基础重导不回退v2，pending人工锁也不会被覆盖。C3提交时人工锁夹具遇到嵌套事务错误（17通过/1错误）；未改写提交，随后用SAVEPOINT兼容外层事务并追加修正，18项编辑/预览与17项DOM逻辑均通过。没有新增正式图鉴UI或古董。
+
+## 10C.4 开放图片管线
+
+20/20 CMA实物照片成功，全部重新按单件API share_license_status=CC0及匹配web图片URL核验，20源SHA无重复；生成20缩略图与20详情图，320/1024边界保留比例（源893px不放大），5MB/25秒/0.4秒限速/HTTPS官方host与重定向检查。HTML伪图片、坏签名、像素炸弹、越界路径拒绝。
+
+manifest.json与ATTRIBUTION.md逐张保留来源、许可、署名、源/输出SHA和尺寸。只提交2对象的4缩放样例约317KB，18件cache及原图ignored，可显式CLI重建。单元测试在新clone可离线使用2样例；实际20下载结果另有清单证明。Pillow12.3.0只用于策划。
+
+预览使用media_allowed及local_asset/hash双校验，DENIED/UNKNOWN/CC_BY_NC/文件失效剔除；显式refresh-rights发现撤权或无法确认会禁用清单，重导不复活。数据CC0不替代图片授权，当前只CMA下载器接通。图片未写入media.local_asset_path，不加入正式游戏资源；20项管线/原发行专项0失败。

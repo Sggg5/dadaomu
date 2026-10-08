@@ -1,0 +1,788 @@
+{
+  "images": [
+    {
+      "media_id": "media:6881361faab8d041f6646848",
+      "object_id": "object:97dd80e1a2b5e92d8049bd5e",
+      "original_name": "Mirror",
+      "accession_number": "1926.248",
+      "source_id": "CMA",
+      "record_id": "108542",
+      "record_url": "https://clevelandart.org/art/1926.248",
+      "source_url": "https://openaccess-cdn.clevelandart.org/1926.248/1926.248_web.jpg",
+      "license_id": "CC0",
+      "attribution": "Mirror, 1926.248, Cleveland Museum of Art. CC0; resized without cropping.",
+      "copyright_notice": "CC0 public-domain dedication",
+      "terms_url": "https://www.clevelandart.org/terms-and-conditions",
+      "checked_at": "2026-10-08T03:34:51+00:00",
+      "source_sha256": "3a4cf4c9d2957872a73f9ae1ce752f83ab190e63ccc15a56ec9d31443aa8a0ec",
+      "source_mime": "image/jpeg",
+      "source_size": [
+        900,
+        870
+      ],
+      "duplicate_of": null,
+      "rights_evidence": {
+        "share_license_status": "CC0",
+        "image_url": "https://openaccess-cdn.clevelandart.org/1926.248/1926.248_web.jpg",
+        "metadata_sha256": "f38b48d5883e56c2b59b4f29eb3fabc9e5a293303aa6c6f08e46ac48dded4f44"
+      },
+      "thumb_repo_path": "database/previews/media/samples/3a4cf4c9d2957872a73f9ae1_thumb.jpg",
+      "thumb_sha256": "a297c287d34f15b1d75674d696eaf8edf0e0bcd853395a490dc80c736e4b0dff",
+      "thumb_size": [
+        320,
+        309
+      ],
+      "detail_repo_path": "database/previews/media/samples/3a4cf4c9d2957872a73f9ae1_detail.jpg",
+      "detail_sha256": "a50d349facce9943b6d7eafd52d732764f1465097ac9146906c4daa25b04ae19",
+      "detail_size": [
+        900,
+        870
+      ]
+    },
+    {
+      "media_id": "media:03a6ba9a35ab805e9db7affb",
+      "object_id": "object:4306ad6fb72897ae9ce12dce",
+      "original_name": "Mirror with Paired Felines",
+      "accession_number": "1926.249",
+      "source_id": "CMA",
+      "record_id": "108543",
+      "record_url": "https://clevelandart.org/art/1926.249",
+      "source_url": "https://openaccess-cdn.clevelandart.org/1926.249/1926.249_web.jpg",
+      "license_id": "CC0",
+      "attribution": "Mirror with Paired Felines, 1926.249, Cleveland Museum of Art. CC0; resized without cropping.",
+      "copyright_notice": "CC0 public-domain dedication",
+      "terms_url": "https://www.clevelandart.org/terms-and-conditions",
+      "checked_at": "2026-10-08T03:34:54+00:00",
+      "source_sha256": "908ede90291de03602cb28aecfdc5382e6d7ffecd1232c60a7a3ad5b497ceae5",
+      "source_mime": "image/jpeg",
+      "source_size": [
+        900,
+        871
+      ],
+      "duplicate_of": null,
+      "rights_evidence": {
+        "share_license_status": "CC0",
+        "image_url": "https://openaccess-cdn.clevelandart.org/1926.249/1926.249_web.jpg",
+        "metadata_sha256": "472e2deebc9cce3ab62266e24e8f9b3a84619927fd9c6e7b4daadd13ba612169"
+      },
+      "thumb_repo_path": "database/previews/media/samples/908ede90291de03602cb28ae_thumb.jpg",
+      "thumb_sha256": "17ad055e0fe9b222d456d5d490b64d5ee8f1f062448c70cf537fc633bbf23ea8",
+      "thumb_size": [
+        320,
+        310
+      ],
+      "detail_repo_path": "database/previews/media/samples/908ede90291de03602cb28ae_detail.jpg",
+      "detail_sha256": "862328a9033fc0ec4c9a641f4155ab54a1f19e8e3a9e3c6c118502909fbddaf2",
+      "detail_size": [
+        900,
+        871
+      ]
+    },
+    {
+      "media_id": "media:51ff968a3716be320155c898",
+      "object_id": "object:a0e7f1235b0411b2a30d6717",
+      "original_name": "Wine Vessel (Hu)",
+      "accession_number": "1929.984",
+      "source_id": "CMA",
+      "record_id": "111506",
+      "record_url": "https://clevelandart.org/art/1929.984",
+      "source_url": "https://openaccess-cdn.clevelandart.org/1929.984/1929.984_web.jpg",
+      "license_id": "CC0",
+      "attribution": "Wine Vessel (Hu), 1929.984, Cleveland Museum of Art. CC0; resized without cropping.",
+      "copyright_notice": "CC0 public-domain dedication",
+      "terms_url": "https://www.clevelandart.org/terms-and-conditions",
+      "checked_at": "2026-10-08T03:34:56+00:00",
+      "source_sha256": "9b07799d8a15aeb0c9b1ae4d77278472f183eee63a5c2f3bec626d3a4cd2465b",
+      "source_mime": "image/jpeg",
+      "source_size": [
+        1017,
+        893
+      ],
+      "duplicate_of": null,
+      "rights_evidence": {
+        "share_license_status": "CC0",
+        "image_url": "https://openaccess-cdn.clevelandart.org/1929.984/1929.984_web.jpg",
+        "metadata_sha256": "f4c168de4e255559d21b528e4d6d361480af4e0462bcc1024b211093f45b9088"
+      },
+      "thumb_repo_path": "database/previews/media/cache/9b07799d8a15aeb0c9b1ae4d_thumb.jpg",
+      "thumb_sha256": "82cb95bc535b2592079f7658adbe4975cf6941ec6dacb588400613370e282149",
+      "thumb_size": [
+        320,
+        281
+      ],
+      "detail_repo_path": "database/previews/media/cache/9b07799d8a15aeb0c9b1ae4d_detail.jpg",
+      "detail_sha256": "d24e51a9635030ffb90ea75eb5c38da80098c11fe098c63640292ed11c7a5d8b",
+      "detail_size": [
+        1017,
+        893
+      ]
+    },
+    {
+      "media_id": "media:d79edb223a024b42fe51799a",
+      "object_id": "object:2b3e2445bf6369bda0b5c78b",
+      "original_name": "Finial",
+      "accession_number": "1930.730",
+      "source_id": "CMA",
+      "record_id": "112307",
+      "record_url": "https://clevelandart.org/art/1930.730",
+      "source_url": "https://openaccess-cdn.clevelandart.org/1930.730/1930.730_web.jpg",
+      "license_id": "CC0",
+      "attribution": "Finial, 1930.730, Cleveland Museum of Art. CC0; resized without cropping.",
+      "copyright_notice": "CC0 public-domain dedication",
+      "terms_url": "https://www.clevelandart.org/terms-and-conditions",
+      "checked_at": "2026-10-08T03:34:58+00:00",
+      "source_sha256": "4564bf639e2cdcee3145912d6abc17e1840d1407ef89f3e09f17024ef2fc066e",
+      "source_mime": "image/jpeg",
+      "source_size": [
+        537,
+        893
+      ],
+      "duplicate_of": null,
+      "rights_evidence": {
+        "share_license_status": "CC0",
+        "image_url": "https://openaccess-cdn.clevelandart.org/1930.730/1930.730_web.jpg",
+        "metadata_sha256": "07ba39ffad6192ef66cd3bf9db8f7bec8e723aed096f7fa65786345d52f592c4"
+      },
+      "thumb_repo_path": "database/previews/media/cache/4564bf639e2cdcee3145912d_thumb.jpg",
+      "thumb_sha256": "79be3eeb17a1dc9b8ef54eed0a55bcf8be975572e1ebce78638ca806c5beba3e",
+      "thumb_size": [
+        192,
+        320
+      ],
+      "detail_repo_path": "database/previews/media/cache/4564bf639e2cdcee3145912d_detail.jpg",
+      "detail_sha256": "dc010d6a56f88fbcb00363aa5bed0ba19e4722729db51c164e19a47b3d61c45f",
+      "detail_size": [
+        537,
+        893
+      ]
+    },
+    {
+      "media_id": "media:26222c6f74f949ff4c3823f1",
+      "object_id": "object:1d58356ab9164a9b9c5dbeee",
+      "original_name": "Monster Face: Door Ring Holder (Pushou)",
+      "accession_number": "1930.731",
+      "source_id": "CMA",
+      "record_id": "112308",
+      "record_url": "https://clevelandart.org/art/1930.731",
+      "source_url": "https://openaccess-cdn.clevelandart.org/1930.731/1930.731_web.jpg",
+      "license_id": "CC0",
+      "attribution": "Monster Face: Door Ring Holder (Pushou), 1930.731, Cleveland Museum of Art. CC0; resized without cropping.",
+      "copyright_notice": "CC0 public-domain dedication",
+      "terms_url": "https://www.clevelandart.org/terms-and-conditions",
+      "checked_at": "2026-10-08T03:35:00+00:00",
+      "source_sha256": "87e796a229a0360b619c38cd4fc830ef9ca6d9088fdb6d53759e8d4210f7c735",
+      "source_mime": "image/jpeg",
+      "source_size": [
+        750,
+        627
+      ],
+      "duplicate_of": null,
+      "rights_evidence": {
+        "share_license_status": "CC0",
+        "image_url": "https://openaccess-cdn.clevelandart.org/1930.731/1930.731_web.jpg",
+        "metadata_sha256": "a8383526d160f3bd8e7adfa75383ec4db623a12250b3541e9210b4affbebb06a"
+      },
+      "thumb_repo_path": "database/previews/media/cache/87e796a229a0360b619c38cd_thumb.jpg",
+      "thumb_sha256": "d2b6750d38ea68ea8ff9ddf8856831d0343a4b0a2a3aa870b1516b0fe19fc649",
+      "thumb_size": [
+        320,
+        268
+      ],
+      "detail_repo_path": "database/previews/media/cache/87e796a229a0360b619c38cd_detail.jpg",
+      "detail_sha256": "30a6a73664ab295992bd25584c675c627ae4ddc8f9a486fa62fff880e96c21fe",
+      "detail_size": [
+        750,
+        627
+      ]
+    },
+    {
+      "media_id": "media:29333f7b5744f7c42a3263f8",
+      "object_id": "object:25c346cbffb37d6505c0ca72",
+      "original_name": "Handle of a Jiangu Drum",
+      "accession_number": "1941.548",
+      "source_id": "CMA",
+      "record_id": "120822",
+      "record_url": "https://clevelandart.org/art/1941.548",
+      "source_url": "https://openaccess-cdn.clevelandart.org/1941.548/1941.548_web.jpg",
+      "license_id": "CC0",
+      "attribution": "Handle of a Jiangu Drum, 1941.548, Cleveland Museum of Art. CC0; resized without cropping.",
+      "copyright_notice": "CC0 public-domain dedication",
+      "terms_url": "https://www.clevelandart.org/terms-and-conditions",
+      "checked_at": "2026-10-08T03:35:02+00:00",
+      "source_sha256": "c55f3062a844395770871415c96ac14800c3529e62cbff159b9f1535159418e5",
+      "source_mime": "image/jpeg",
+      "source_size": [
+        900,
+        656
+      ],
+      "duplicate_of": null,
+      "rights_evidence": {
+        "share_license_status": "CC0",
+        "image_url": "https://openaccess-cdn.clevelandart.org/1941.548/1941.548_web.jpg",
+        "metadata_sha256": "d62c0674a97c0083485d100d6160f1adf4e30b4432eafcf96e78c1b3db43e479"
+      },
+      "thumb_repo_path": "database/previews/media/cache/c55f3062a844395770871415_thumb.jpg",
+      "thumb_sha256": "d1c979ffaca79c6bad1773bd1eebc14e19bc1b02b68aa67177af83d41b0890ae",
+      "thumb_size": [
+        320,
+        233
+      ],
+      "detail_repo_path": "database/previews/media/cache/c55f3062a844395770871415_detail.jpg",
+      "detail_sha256": "152058841d57b21d87eb0b60f49a1ee142f7f15e6f9bb077ca4ad5020fab1d88",
+      "detail_size": [
+        900,
+        656
+      ]
+    },
+    {
+      "media_id": "media:7bfe763fa88b6089e5759a87",
+      "object_id": "object:22f5b40e35caa8c33979d894",
+      "original_name": "Tripod Cauldron (Ding)",
+      "accession_number": "1960.288",
+      "source_id": "CMA",
+      "record_id": "136423",
+      "record_url": "https://clevelandart.org/art/1960.288",
+      "source_url": "https://openaccess-cdn.clevelandart.org/1960.288/1960.288_web.jpg",
+      "license_id": "CC0",
+      "attribution": "Tripod Cauldron (Ding), 1960.288, Cleveland Museum of Art. CC0; resized without cropping.",
+      "copyright_notice": "CC0 public-domain dedication",
+      "terms_url": "https://www.clevelandart.org/terms-and-conditions",
+      "checked_at": "2026-10-08T03:35:04+00:00",
+      "source_sha256": "babe1c74fe6377d2c52682239e997c9f62829adaa999501aad8176955169159c",
+      "source_mime": "image/jpeg",
+      "source_size": [
+        948,
+        893
+      ],
+      "duplicate_of": null,
+      "rights_evidence": {
+        "share_license_status": "CC0",
+        "image_url": "https://openaccess-cdn.clevelandart.org/1960.288/1960.288_web.jpg",
+        "metadata_sha256": "8ea0187c5869fde36a81320bbdea5368148961cdb64ea4875ae7ef2c189a25a5"
+      },
+      "thumb_repo_path": "database/previews/media/cache/babe1c74fe6377d2c5268223_thumb.jpg",
+      "thumb_sha256": "e46fe9a4be038667abd25388d1e840974ef71b70132af01abac820b472f17a2a",
+      "thumb_size": [
+        320,
+        301
+      ],
+      "detail_repo_path": "database/previews/media/cache/babe1c74fe6377d2c5268223_detail.jpg",
+      "detail_sha256": "a8e2755619301a2968883213816c1d933a8bf05a46f917db5a91d6cdcc3c0885",
+      "detail_size": [
+        948,
+        893
+      ]
+    },
+    {
+      "media_id": "media:49b292b13dc1d7cec99f94cf",
+      "object_id": "object:a4669cf58e2de48f7e396f75",
+      "original_name": "Wine vessel (Jue)",
+      "accession_number": "1960.42",
+      "source_id": "CMA",
+      "record_id": "136465",
+      "record_url": "https://clevelandart.org/art/1960.42",
+      "source_url": "https://openaccess-cdn.clevelandart.org/1960.42/1960.42_web.jpg",
+      "license_id": "CC0",
+      "attribution": "Wine vessel (Jue), 1960.42, Cleveland Museum of Art. CC0; resized without cropping.",
+      "copyright_notice": "CC0 public-domain dedication",
+      "terms_url": "https://www.clevelandart.org/terms-and-conditions",
+      "checked_at": "2026-10-08T03:35:07+00:00",
+      "source_sha256": "ea3316b23bdddacefe5a7f943ed951eb8f26f915d1b6056d9c0e0cade9109b8c",
+      "source_mime": "image/jpeg",
+      "source_size": [
+        886,
+        893
+      ],
+      "duplicate_of": null,
+      "rights_evidence": {
+        "share_license_status": "CC0",
+        "image_url": "https://openaccess-cdn.clevelandart.org/1960.42/1960.42_web.jpg",
+        "metadata_sha256": "f932579760f671d95205f7610364561fd1d8012d7cfa090262b73f575faa4a37"
+      },
+      "thumb_repo_path": "database/previews/media/cache/ea3316b23bdddacefe5a7f94_thumb.jpg",
+      "thumb_sha256": "afb2ea33023da5f80e5c0e7e0e21b2515046a51cce5d68d82f082aeb58f5bdd0",
+      "thumb_size": [
+        317,
+        320
+      ],
+      "detail_repo_path": "database/previews/media/cache/ea3316b23bdddacefe5a7f94_detail.jpg",
+      "detail_sha256": "36765820b57d37e9b29e37b45f9d62b12f135780cf399a2c4a335bb3098f9e78",
+      "detail_size": [
+        886,
+        893
+      ]
+    },
+    {
+      "media_id": "media:8e8f61920fdb9dff1b71d5b3",
+      "object_id": "object:632f075957f2cd23db23d9a9",
+      "original_name": "Cup with Dragon Handles",
+      "accession_number": "1920.424",
+      "source_id": "CMA",
+      "record_id": "101711",
+      "record_url": "https://clevelandart.org/art/1920.424",
+      "source_url": "https://openaccess-cdn.clevelandart.org/1920.424/1920.424_web.jpg",
+      "license_id": "CC0",
+      "attribution": "Cup with Dragon Handles, 1920.424, Cleveland Museum of Art. CC0; resized without cropping.",
+      "copyright_notice": "CC0 public-domain dedication",
+      "terms_url": "https://www.clevelandart.org/terms-and-conditions",
+      "checked_at": "2026-10-08T03:35:09+00:00",
+      "source_sha256": "48af2b9d2d5ad4af2cf0c3036ad01c1d090db1ea7d38da0360815537d8f9e77a",
+      "source_mime": "image/jpeg",
+      "source_size": [
+        900,
+        585
+      ],
+      "duplicate_of": null,
+      "rights_evidence": {
+        "share_license_status": "CC0",
+        "image_url": "https://openaccess-cdn.clevelandart.org/1920.424/1920.424_web.jpg",
+        "metadata_sha256": "027d4de2010f7893024145adab8363735f5ce76bb075f6910416bbf8371c5e2c"
+      },
+      "thumb_repo_path": "database/previews/media/cache/48af2b9d2d5ad4af2cf0c303_thumb.jpg",
+      "thumb_sha256": "cf7bde00f854a977a58ec14de40a67f37eca48d277e26f283a3e4e11cb80d617",
+      "thumb_size": [
+        320,
+        208
+      ],
+      "detail_repo_path": "database/previews/media/cache/48af2b9d2d5ad4af2cf0c303_detail.jpg",
+      "detail_sha256": "0ed1f3886863e1759c5dcee694d909b6d93706abf2de02f02de724b745abf505",
+      "detail_size": [
+        900,
+        585
+      ]
+    },
+    {
+      "media_id": "media:9227b3ac5ceeae9ae1d44f17",
+      "object_id": "object:b8796a74bf0e0a8c33f55534",
+      "original_name": "Amulet in the Form of a Seated Figure with Bovine Head",
+      "accession_number": "1953.628",
+      "source_id": "CMA",
+      "record_id": "130939",
+      "record_url": "https://clevelandart.org/art/1953.628",
+      "source_url": "https://openaccess-cdn.clevelandart.org/1953.628/1953.628_web.jpg",
+      "license_id": "CC0",
+      "attribution": "Amulet in the Form of a Seated Figure with Bovine Head, 1953.628, Cleveland Museum of Art. CC0; resized without cropping.",
+      "copyright_notice": "CC0 public-domain dedication",
+      "terms_url": "https://www.clevelandart.org/terms-and-conditions",
+      "checked_at": "2026-10-08T03:35:10+00:00",
+      "source_sha256": "6c7f35b902e8fdfd07019080aa241bb3101b38b531fab16ed065d4b44b13363c",
+      "source_mime": "image/jpeg",
+      "source_size": [
+        605,
+        893
+      ],
+      "duplicate_of": null,
+      "rights_evidence": {
+        "share_license_status": "CC0",
+        "image_url": "https://openaccess-cdn.clevelandart.org/1953.628/1953.628_web.jpg",
+        "metadata_sha256": "acdc0c8fe7697077f35c485e46f2511b64d7f23de8806b8ee934a316e9f16025"
+      },
+      "thumb_repo_path": "database/previews/media/cache/6c7f35b902e8fdfd07019080_thumb.jpg",
+      "thumb_sha256": "e8df462bf935331fe2e37b5b2ad8e639e301f37c46ef83b6d0e34c6e1770a9d1",
+      "thumb_size": [
+        217,
+        320
+      ],
+      "detail_repo_path": "database/previews/media/cache/6c7f35b902e8fdfd07019080_detail.jpg",
+      "detail_sha256": "791e422b9e21c5979576cf2e232aa71d0b591371e81a19730afe5ac8525a5a29",
+      "detail_size": [
+        605,
+        893
+      ]
+    },
+    {
+      "media_id": "media:a043ae3c6f93c93ea52d8532",
+      "object_id": "object:c23e08ee8203d1ab73732dfc",
+      "original_name": "Scepter (Gui) with Miscellaneous Poems by Tao Qian (365–427 CE)",
+      "accession_number": "1960.278",
+      "source_id": "CMA",
+      "record_id": "136411",
+      "record_url": "https://clevelandart.org/art/1960.278",
+      "source_url": "https://openaccess-cdn.clevelandart.org/1960.278/1960.278_web.jpg",
+      "license_id": "CC0",
+      "attribution": "Scepter (Gui) with Miscellaneous Poems by Tao Qian (365–427 CE), 1960.278, Cleveland Museum of Art. CC0; resized without cropping.",
+      "copyright_notice": "CC0 public-domain dedication",
+      "terms_url": "https://www.clevelandart.org/terms-and-conditions",
+      "checked_at": "2026-10-08T03:35:13+00:00",
+      "source_sha256": "5f7c96d074ff1f53490dd631b8cda72558eb8e66e0f2e2dead0c34b00f9e20fc",
+      "source_mime": "image/jpeg",
+      "source_size": [
+        1263,
+        491
+      ],
+      "duplicate_of": null,
+      "rights_evidence": {
+        "share_license_status": "CC0",
+        "image_url": "https://openaccess-cdn.clevelandart.org/1960.278/1960.278_web.jpg",
+        "metadata_sha256": "0321037e25323f569c27574a79fc5a3a08c4c072612607847852952deaf5fa39"
+      },
+      "thumb_repo_path": "database/previews/media/cache/5f7c96d074ff1f53490dd631_thumb.jpg",
+      "thumb_sha256": "a9bec65b482b3818fddf09fcf44f618ac197765f0cb837c8cad85d7e50f3ec2b",
+      "thumb_size": [
+        320,
+        124
+      ],
+      "detail_repo_path": "database/previews/media/cache/5f7c96d074ff1f53490dd631_detail.jpg",
+      "detail_sha256": "728b0ca704bb61f770f933799d9f6353b23e6a0a6b3e2f3533eb58eda1bb31e8",
+      "detail_size": [
+        1024,
+        398
+      ]
+    },
+    {
+      "media_id": "media:006fac9972f79ed07e81e7cb",
+      "object_id": "object:9adfa81f3f4a67694fe002f8",
+      "original_name": "Dish with Incised Scroll Design",
+      "accession_number": "1921.644",
+      "source_id": "CMA",
+      "record_id": "103701",
+      "record_url": "https://clevelandart.org/art/1921.644",
+      "source_url": "https://openaccess-cdn.clevelandart.org/1921.644/1921.644_web.jpg",
+      "license_id": "CC0",
+      "attribution": "Dish with Incised Scroll Design, 1921.644, Cleveland Museum of Art. CC0; resized without cropping.",
+      "copyright_notice": "CC0 public-domain dedication",
+      "terms_url": "https://www.clevelandart.org/terms-and-conditions",
+      "checked_at": "2026-10-08T03:35:15+00:00",
+      "source_sha256": "d87007ff5cdafba20ff0f3683081e2e31d9be20d2bc6e4e0dfd342f6fa0d502d",
+      "source_mime": "image/jpeg",
+      "source_size": [
+        750,
+        686
+      ],
+      "duplicate_of": null,
+      "rights_evidence": {
+        "share_license_status": "CC0",
+        "image_url": "https://openaccess-cdn.clevelandart.org/1921.644/1921.644_web.jpg",
+        "metadata_sha256": "8a82cb427956141589e1c47b0f39458c4706aa4bb8b57cfd8b823d612d38841b"
+      },
+      "thumb_repo_path": "database/previews/media/cache/d87007ff5cdafba20ff0f368_thumb.jpg",
+      "thumb_sha256": "193f755196ce0283f4968047a8aa11f5408b42ad8d91fe98974c5d4c889301f1",
+      "thumb_size": [
+        320,
+        293
+      ],
+      "detail_repo_path": "database/previews/media/cache/d87007ff5cdafba20ff0f368_detail.jpg",
+      "detail_sha256": "a4770238ecf9f40b65266590552c1b9b05bb688239d3ddcb99488c2bd3609fe9",
+      "detail_size": [
+        750,
+        686
+      ]
+    },
+    {
+      "media_id": "media:b1f486302f44b809c7abef9c",
+      "object_id": "object:14bdc2d966c1273b879737ba",
+      "original_name": "Bowl with Ducks among Waves and Reeds",
+      "accession_number": "1929.995",
+      "source_id": "CMA",
+      "record_id": "111515",
+      "record_url": "https://clevelandart.org/art/1929.995",
+      "source_url": "https://openaccess-cdn.clevelandart.org/1929.995/1929.995_web.jpg",
+      "license_id": "CC0",
+      "attribution": "Bowl with Ducks among Waves and Reeds, 1929.995, Cleveland Museum of Art. CC0; resized without cropping.",
+      "copyright_notice": "CC0 public-domain dedication",
+      "terms_url": "https://www.clevelandart.org/terms-and-conditions",
+      "checked_at": "2026-10-08T03:35:17+00:00",
+      "source_sha256": "00b6beb812e85cb5bedfb33c3c91d9dd448ea142a623a5a89e44f2285b657a2b",
+      "source_mime": "image/jpeg",
+      "source_size": [
+        1263,
+        751
+      ],
+      "duplicate_of": null,
+      "rights_evidence": {
+        "share_license_status": "CC0",
+        "image_url": "https://openaccess-cdn.clevelandart.org/1929.995/1929.995_web.jpg",
+        "metadata_sha256": "f9cbcb0b42ed12ee286e3e103f6e98c6939faf2bdb5656d0c958072716b7e362"
+      },
+      "thumb_repo_path": "database/previews/media/cache/00b6beb812e85cb5bedfb33c_thumb.jpg",
+      "thumb_sha256": "f03ac5d4093b4bec2394df6c500afdab9fadd37d6ffc83e0048cd06cb95f0e3e",
+      "thumb_size": [
+        320,
+        190
+      ],
+      "detail_repo_path": "database/previews/media/cache/00b6beb812e85cb5bedfb33c_detail.jpg",
+      "detail_sha256": "f3ece5a35af1d69bfde62da9184f8cb59ddd3c75877d35fde0a9fa3b90aeb091",
+      "detail_size": [
+        1024,
+        609
+      ]
+    },
+    {
+      "media_id": "media:8d6f5d1c4f5fd4b241193d5f",
+      "object_id": "object:bd7de8e829faa57cd7ba18d5",
+      "original_name": "Prunus Vase (Meiping) with Blossoming Lotus",
+      "accession_number": "1942.716",
+      "source_id": "CMA",
+      "record_id": "122443",
+      "record_url": "https://clevelandart.org/art/1942.716",
+      "source_url": "https://openaccess-cdn.clevelandart.org/1942.716/1942.716_web.jpg",
+      "license_id": "CC0",
+      "attribution": "Prunus Vase (Meiping) with Blossoming Lotus, 1942.716, Cleveland Museum of Art. CC0; resized without cropping.",
+      "copyright_notice": "CC0 public-domain dedication",
+      "terms_url": "https://www.clevelandart.org/terms-and-conditions",
+      "checked_at": "2026-10-08T03:35:21+00:00",
+      "source_sha256": "50982830a6cd32b9945747db3926f8fa5329cbd93a9db4d9b8c1d271c9d6eb68",
+      "source_mime": "image/jpeg",
+      "source_size": [
+        581,
+        893
+      ],
+      "duplicate_of": null,
+      "rights_evidence": {
+        "share_license_status": "CC0",
+        "image_url": "https://openaccess-cdn.clevelandart.org/1942.716/1942.716_web.jpg",
+        "metadata_sha256": "25af0e2221e2a12bffe08decddefb60652da01db0f9856f351f65e5639723e2d"
+      },
+      "thumb_repo_path": "database/previews/media/cache/50982830a6cd32b9945747db_thumb.jpg",
+      "thumb_sha256": "a33a54e3e17586e41931e82a21c4bb845bc32128fd395ef0f63baeba0f13cfd0",
+      "thumb_size": [
+        208,
+        320
+      ],
+      "detail_repo_path": "database/previews/media/cache/50982830a6cd32b9945747db_detail.jpg",
+      "detail_sha256": "7d889feff5c20e08533fdd37c7a788a23d1957291ceed079c8457ad6470feea5",
+      "detail_size": [
+        581,
+        893
+      ]
+    },
+    {
+      "media_id": "media:cb5b813fad5883e32e942009",
+      "object_id": "object:4f77205ebbe189f03e68129e",
+      "original_name": "Trial Piece Worked on Both Sides",
+      "accession_number": "1920.1975",
+      "source_id": "CMA",
+      "record_id": "101360",
+      "record_url": "https://clevelandart.org/art/1920.1975",
+      "source_url": "https://openaccess-cdn.clevelandart.org/1920.1975/1920.1975_web.jpg",
+      "license_id": "CC0",
+      "attribution": "Trial Piece Worked on Both Sides, 1920.1975, Cleveland Museum of Art. CC0; resized without cropping.",
+      "copyright_notice": "CC0 public-domain dedication",
+      "terms_url": "https://www.clevelandart.org/terms-and-conditions",
+      "checked_at": "2026-10-08T03:35:22+00:00",
+      "source_sha256": "bd08228c3a6b350d7079d4f7597723487f8c822dfc1ae7919eb992dcffe51aa6",
+      "source_mime": "image/jpeg",
+      "source_size": [
+        668,
+        893
+      ],
+      "duplicate_of": null,
+      "rights_evidence": {
+        "share_license_status": "CC0",
+        "image_url": "https://openaccess-cdn.clevelandart.org/1920.1975/1920.1975_web.jpg",
+        "metadata_sha256": "2e7c71656293f04eaaa56250d4a1b32cbc7c4c1f28d3c6c74a48f7e0e7734f89"
+      },
+      "thumb_repo_path": "database/previews/media/cache/bd08228c3a6b350d7079d4f7_thumb.jpg",
+      "thumb_sha256": "344471750a3aa9e45666629e186c15d3e336267c0ed4056dc4571931b8ba2eb1",
+      "thumb_size": [
+        239,
+        320
+      ],
+      "detail_repo_path": "database/previews/media/cache/bd08228c3a6b350d7079d4f7_detail.jpg",
+      "detail_sha256": "1d3251bd94ca7b49d180856e6640c79b5ede27334b8494c3985a9f20cbb45215",
+      "detail_size": [
+        668,
+        893
+      ]
+    },
+    {
+      "media_id": "media:1bb0d1c21a082e1ed9aad80d",
+      "object_id": "object:f69a267de67d1dea7b85c47b",
+      "original_name": "Fragment of an Inlay Headdress",
+      "accession_number": "1920.1976",
+      "source_id": "CMA",
+      "record_id": "101363",
+      "record_url": "https://clevelandart.org/art/1920.1976",
+      "source_url": "https://openaccess-cdn.clevelandart.org/1920.1976/1920.1976_web.jpg",
+      "license_id": "CC0",
+      "attribution": "Fragment of an Inlay Headdress, 1920.1976, Cleveland Museum of Art. CC0; resized without cropping.",
+      "copyright_notice": "CC0 public-domain dedication",
+      "terms_url": "https://www.clevelandart.org/terms-and-conditions",
+      "checked_at": "2026-10-08T03:35:25+00:00",
+      "source_sha256": "9eafaa1cf4ab05cb467a0bed8e2ced58332c78aea8ec0230ec793e8858dc18cf",
+      "source_mime": "image/jpeg",
+      "source_size": [
+        1228,
+        893
+      ],
+      "duplicate_of": null,
+      "rights_evidence": {
+        "share_license_status": "CC0",
+        "image_url": "https://openaccess-cdn.clevelandart.org/1920.1976/1920.1976_web.jpg",
+        "metadata_sha256": "50b6b194d1f3516ab384ad7ef68caa332783d6e4e2152ddacb9abbfd8e8eb8d2"
+      },
+      "thumb_repo_path": "database/previews/media/cache/9eafaa1cf4ab05cb467a0bed_thumb.jpg",
+      "thumb_sha256": "cd17bcaef1747055e8616effac8d2f25b0a50414f2751c12de9171fac2be98e7",
+      "thumb_size": [
+        320,
+        233
+      ],
+      "detail_repo_path": "database/previews/media/cache/9eafaa1cf4ab05cb467a0bed_detail.jpg",
+      "detail_sha256": "95566dd184d2cd83e72321b29b748bb637ffe031082418f34ad54528a8ddf9ba",
+      "detail_size": [
+        1024,
+        745
+      ]
+    },
+    {
+      "media_id": "media:16e0b41a99eac3bf68350623",
+      "object_id": "object:3cc45b8f848d8361b261a774",
+      "original_name": "Vulture Headdress Inlay",
+      "accession_number": "1920.1991",
+      "source_id": "CMA",
+      "record_id": "101378",
+      "record_url": "https://clevelandart.org/art/1920.1991",
+      "source_url": "https://openaccess-cdn.clevelandart.org/1920.1991/1920.1991_web.jpg",
+      "license_id": "CC0",
+      "attribution": "Vulture Headdress Inlay, 1920.1991, Cleveland Museum of Art. CC0; resized without cropping.",
+      "copyright_notice": "CC0 public-domain dedication",
+      "terms_url": "https://www.clevelandart.org/terms-and-conditions",
+      "checked_at": "2026-10-08T03:35:27+00:00",
+      "source_sha256": "6ea507110e040f7926c2e7207632fb8bac0d5d47f9790ffc6894ed7965bbbd83",
+      "source_mime": "image/jpeg",
+      "source_size": [
+        750,
+        716
+      ],
+      "duplicate_of": null,
+      "rights_evidence": {
+        "share_license_status": "CC0",
+        "image_url": "https://openaccess-cdn.clevelandart.org/1920.1991/1920.1991_web.jpg",
+        "metadata_sha256": "6d99c5b0a47e9bd7c5dc3d0c868438f7daccd04dc496e007c7f265ac57aa0467"
+      },
+      "thumb_repo_path": "database/previews/media/cache/6ea507110e040f7926c2e720_thumb.jpg",
+      "thumb_sha256": "7d92d34a6b63372e8aec6232d15df891d382ef715bf0a8a135a2ce999b781201",
+      "thumb_size": [
+        320,
+        305
+      ],
+      "detail_repo_path": "database/previews/media/cache/6ea507110e040f7926c2e720_detail.jpg",
+      "detail_sha256": "7aac2fa021221e4fd2430ec93c77a7c4beede2872b39783406e402129f1d1bc6",
+      "detail_size": [
+        750,
+        716
+      ]
+    },
+    {
+      "media_id": "media:ddbf62b71ba9fcaa8f46d055",
+      "object_id": "object:15b054298c760a815527a44b",
+      "original_name": "Grave Stele",
+      "accession_number": "1924.1018",
+      "source_id": "CMA",
+      "record_id": "105937",
+      "record_url": "https://clevelandart.org/art/1924.1018",
+      "source_url": "https://openaccess-cdn.clevelandart.org/1924.1018/1924.1018_web.jpg",
+      "license_id": "CC0",
+      "attribution": "Grave Stele, 1924.1018, Cleveland Museum of Art. CC0; resized without cropping.",
+      "copyright_notice": "CC0 public-domain dedication",
+      "terms_url": "https://www.clevelandart.org/terms-and-conditions",
+      "checked_at": "2026-10-08T03:35:29+00:00",
+      "source_sha256": "8d3ac0b09c07efbfe3e61ed2fd29cce668a49764a21ebc2c29516c12fb192363",
+      "source_mime": "image/jpeg",
+      "source_size": [
+        668,
+        893
+      ],
+      "duplicate_of": null,
+      "rights_evidence": {
+        "share_license_status": "CC0",
+        "image_url": "https://openaccess-cdn.clevelandart.org/1924.1018/1924.1018_web.jpg",
+        "metadata_sha256": "ab8603a81aa50afbf5c099cde4ac6d511f2252b5d2982f9814580e9d14846bcc"
+      },
+      "thumb_repo_path": "database/previews/media/cache/8d3ac0b09c07efbfe3e61ed2_thumb.jpg",
+      "thumb_sha256": "e6532d846d766612ab7e28e1f1cd2ee0a2404ab5336b30216dfa7f8a56e36507",
+      "thumb_size": [
+        239,
+        320
+      ],
+      "detail_repo_path": "database/previews/media/cache/8d3ac0b09c07efbfe3e61ed2_detail.jpg",
+      "detail_sha256": "f0ff3be7c53d5095c6f568676d998ac5107b00cb8557eb330e0ba1b2a16e2b47",
+      "detail_size": [
+        668,
+        893
+      ]
+    },
+    {
+      "media_id": "media:db3bbde4c9a5b815d2a17b5b",
+      "object_id": "object:6d4b119be63aaa8df73d2f8f",
+      "original_name": "Corinthian Helmet",
+      "accession_number": "1926.54",
+      "source_id": "CMA",
+      "record_id": "108870",
+      "record_url": "https://clevelandart.org/art/1926.54",
+      "source_url": "https://openaccess-cdn.clevelandart.org/1926.54/1926.54_web.jpg",
+      "license_id": "CC0",
+      "attribution": "Corinthian Helmet, 1926.54, Cleveland Museum of Art. CC0; resized without cropping.",
+      "copyright_notice": "CC0 public-domain dedication",
+      "terms_url": "https://www.clevelandart.org/terms-and-conditions",
+      "checked_at": "2026-10-08T03:35:31+00:00",
+      "source_sha256": "2461cd31f48ba281a88cb1426f500bc5fa52943878ed520fb6646143e183e43a",
+      "source_mime": "image/jpeg",
+      "source_size": [
+        737,
+        900
+      ],
+      "duplicate_of": null,
+      "rights_evidence": {
+        "share_license_status": "CC0",
+        "image_url": "https://openaccess-cdn.clevelandart.org/1926.54/1926.54_web.jpg",
+        "metadata_sha256": "7fe7bb815bb0f6ccd99a77361a5540f2e539dbc4d19cd94041dd33e09dd8aff6"
+      },
+      "thumb_repo_path": "database/previews/media/cache/2461cd31f48ba281a88cb142_thumb.jpg",
+      "thumb_sha256": "b70bd308c25814b1b5a94a1171ea96855fe23edf2fbebc80cc37837ac1a9c6f9",
+      "thumb_size": [
+        262,
+        320
+      ],
+      "detail_repo_path": "database/previews/media/cache/2461cd31f48ba281a88cb142_detail.jpg",
+      "detail_sha256": "813a62e524f17c1de1461433807b6602215bb43c398745bb7de62481df8344c7",
+      "detail_size": [
+        737,
+        900
+      ]
+    },
+    {
+      "media_id": "media:a458b794daebf1f9c74e89d2",
+      "object_id": "object:6389771df06eed8a84046287",
+      "original_name": "Statue of Gudea",
+      "accession_number": "1963.154",
+      "source_id": "CMA",
+      "record_id": "138765",
+      "record_url": "https://clevelandart.org/art/1963.154",
+      "source_url": "https://openaccess-cdn.clevelandart.org/1963.154/1963.154_web.jpg",
+      "license_id": "CC0",
+      "attribution": "Statue of Gudea, 1963.154, Cleveland Museum of Art. CC0; resized without cropping.",
+      "copyright_notice": "CC0 public-domain dedication",
+      "terms_url": "https://www.clevelandart.org/terms-and-conditions",
+      "checked_at": "2026-10-08T03:35:33+00:00",
+      "source_sha256": "59d73274a3819d0f381446ff93aa3db891ceb2610dbdb70d0570efe3a7dfe048",
+      "source_mime": "image/jpeg",
+      "source_size": [
+        613,
+        893
+      ],
+      "duplicate_of": null,
+      "rights_evidence": {
+        "share_license_status": "CC0",
+        "image_url": "https://openaccess-cdn.clevelandart.org/1963.154/1963.154_web.jpg",
+        "metadata_sha256": "9d611a7f8a5c54617fd3f33125aab807febf3f08d39615bd38ed0b23b040c338"
+      },
+      "thumb_repo_path": "database/previews/media/cache/59d73274a3819d0f381446ff_thumb.jpg",
+      "thumb_sha256": "1d29c439238239a014df33c27b33f05bba6c422b6c04624a67ceac9e2d843ff3",
+      "thumb_size": [
+        220,
+        320
+      ],
+      "detail_repo_path": "database/previews/media/cache/59d73274a3819d0f381446ff_detail.jpg",
+      "detail_sha256": "e0adeea71fa5d6449b36788baf4a0bc82fca779c171c681c4a651fd645544041",
+      "detail_size": [
+        613,
+        893
+      ]
+    }
+  ],
+  "failures": [],
+  "media_scope": "LOCAL_PLANNING_PREVIEW_ONLY",
+  "pipeline_version": 1,
+  "pillow_version": "12.3.0"
+}

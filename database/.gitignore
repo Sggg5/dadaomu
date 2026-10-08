@@ -4,3 +4,4 @@
 __pycache__/
 *.pyc
 work/
+/previews/media/cache/
