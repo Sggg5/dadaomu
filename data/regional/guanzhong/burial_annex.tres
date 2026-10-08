@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RoomGeometryDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/rooms/room_geometry_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"GUANZHONG_BURIAL_ANNEX"
+selection_weight = 8
+tags = Array[StringName]([&"TANG_MURAL"])
+obstacles = Array[Rect2]([Rect2(296,272,136,48), Rect2(848,416,136,48)])
+floor_color = Color(0.24,0.16,0.15,1)
+wall_color = Color(0.4,0.31,0.28,1)
+accent_color = Color(0.7,0.48,0.32,1)
+visual_motif = &"TANG_MURAL"

@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="RoomGeometryDefinition" load_steps=4 format=3]
+[ext_resource type="Script" path="res://scripts/rooms/room_geometry_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/rooms/encounter_hazard_definition.gd" id="2"]
+
+[sub_resource type="Resource" id="Hazard"]
+script = ExtResource("2")
+kind = 7
+position = Vector2(620,352)
+radius = 128.0
+warning_time = 1.0
+initial_delay = 1.6
+interval = 4.0
+duration = 0.35
+damage = 8.0
+direction = Vector2(1,0)
+
+[resource]
+script = ExtResource("1")
+id = &"GUANZHONG_LONG_PROCESSION"
+selection_weight = 8
+tags = Array[StringName]([&"TANG_MURAL"])
+obstacles = Array[Rect2]([Rect2(304,264,176,32), Rect2(800,440,176,32)])
+floor_color = Color(0.24,0.16,0.15,1)
+wall_color = Color(0.4,0.31,0.28,1)
+accent_color = Color(0.7,0.48,0.32,1)
+visual_motif = &"TANG_MURAL"
+environments = Array[Resource]([SubResource("Hazard")])

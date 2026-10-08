@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RoomGeometryPool" load_steps=6 format=3]
+[ext_resource type="Script" path="res://scripts/rooms/room_geometry_pool.gd" id="1"]
+[ext_resource type="Resource" path="res://data/regional/guanzhong/long_procession.tres" id="2"]
+[ext_resource type="Resource" path="res://data/regional/guanzhong/mural_chamber.tres" id="3"]
+[ext_resource type="Resource" path="res://data/regional/guanzhong/stone_door_way.tres" id="4"]
+[ext_resource type="Resource" path="res://data/regional/guanzhong/burial_annex.tres" id="5"]
+
+[resource]
+script = ExtResource("1")
+id = &"GUANZHONG_GEOMETRY"
+geometries = Array[Resource]([ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5")])

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="TombFloorDefinition" load_steps=7 format=3]
+[ext_resource type="Script" path="res://scripts/dungeon/tomb_floor_definition.gd" id="1"]
+[ext_resource type="Resource" path="res://data/regional/guanzhong/floor_1_config.tres" id="2"]
+[ext_resource type="Resource" path="res://data/tombs/floors/shallow_floor_reward.tres" id="3"]
+[ext_resource type="Resource" path="res://data/bosses/pools/floor_1.tres" id="4"]
+[ext_resource type="Resource" path="res://data/regional/guanzhong/geometry_pool.tres" id="geo"]
+[ext_resource type="Resource" path="res://data/geometries/arenas/boss_pool.tres" id="arena"]
+[resource]
+script = ExtResource("1")
+display_name = "唐陵长墓道"
+dungeon_config = ExtResource("2")
+antique_reward_profile = ExtResource("3")
+rest_amount = 0
+terminal_mode = 1
+combat_cache_count = 1
+boss_pool = ExtResource("4")
+geometry_pool = ExtResource("geo")
+boss_arena_pool = ExtResource("arena")
