@@ -1,3 +1,11 @@
+## Phase 11B 地区古墓与50种古董（实现完成，人工体验待验收）
+
+基线6dbfcfe，分支codex/phase-11b-regional-tombs-loot。晋北原五层/旧八件掉落精确保留；洛阳北邙汉魏疑冢与关中唐陵隐墓各两层，分别四种独立Geometry与门闸扫击/定向火口。地图开放三墓，其余调查中。旧Enemy/Boss/Player/Relic数据与数值不改。
+
+新42件=18洛阳+18关中+6早期通行原型，playtest_catalog_50供Museum身份查询；formal_pool.tres和八件本体不变。SiteLootProfile VERSION1按独立域70/20/10抽组，再按楼层rarity；普通房/Cache/9A风险全部受年代过滤。50件游戏原型不是1441馆藏身份；500 CANDIDATE保持待审，未修改数据库发布目录。新增资源PLAYTEST_PENDING_HISTORICAL_REVIEW，不冒称专家审核。
+
+Profile VERSION5不变，旧8件/展位/现金/实例保留；新42件显式HAND_CARRY设计尺寸可入组合柜，8格背包不扩。真实地图→地区战斗/拾取→通关或撤离→Day2鉴定/布展和新物品拍卖验证。测试/统计/八布局图形及限制见docs/PHASE_11B_VERIFICATION.md。五阶段独立commit/push，不合并main；按用户最新排队授权，11B完成提交后再在独立分支做11C数据接入，保留11B隔离试玩窗口。
+
 ## Phase 11A 情报地图与远征选择（实现完成，人工待验收）
 
 基线848740d，包含组合展柜ab31402与双生尸煞热修；分支codex/phase-11a-expedition-map。情报板E→本地中国调查示意图→地区标记→地点档案→确认/保存→所选TombDefinition。晋北DEFAULT_TOMB仍为原五层；其它五个虚构调查档案不可出发。鼠标地图、返回地区、Tab/Esc关闭；未确认不进入NIGHT。

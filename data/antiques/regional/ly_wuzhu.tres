@@ -18,4 +18,4 @@ loot_group = &"LOCAL"
 selection_weight = 1
 content_review_status = &"PLAYTEST_PENDING_HISTORICAL_REVIEW"
 historical_reference_note = "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。"
-reference_urls = Array[String](["https://www.metmuseum.org/fr/press/exhibitions/2016/age-of-empires"])
+reference_urls = Array[String](["https://www.americanhistory.si.edu/collections/object/nmah_1340623"])

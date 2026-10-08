@@ -36,3 +36,112 @@ AntiqueRoom、Combat Cache、石棺/暗室/祭台风险奖励均接入本Site pr
 40973项，0失败：每地区Seed33真实两层通关、Seed52首Boss撤离；情报板真实E/鼠标选择→武器/门/古董真实E→回Day2→真实鉴定/组合柜UI→原ID/陈列位置v5往返。新原型修复/出售/待拍锁覆盖为隔离事务测试（资金只在这部分夹具设置，前述拾取/撤离/鉴定/布展主流程没有库存/HP注入）。另一件真实携货经原Auction GameFlow与E逐轮竞价、结算回Day3。没有新的经济平衡结论。
 
 旧10D6夹具明确使用原八件小集合以保持原8槽/分类断言；11A不可用点击改指仍调查中的洛水线索，保留拒绝出发覆盖，并增加已开放地点集合说明。
+
+## 11B.5 最终回归与视觉验收
+
+33组Godot历史+新增+Twin专项共 **336947项，0失败**；原28历史组、11A、两个新墓、50定义、11B主流程及Twin逐个执行，所有退出码0且无SCRIPT ERROR/ERROR。原坏档夹具WARNING为预期。Python数据库92 tests，0失败。图形版完整11B主流程40973项，0失败；真实Room图形布局8项，0失败。导入通过。
+
+图形来自真实Godot Viewport：洛阳四布局`logs/11b_geometry_LUOYANG_*.png`、关中四布局`11b_geometry_GUANZHONG_*.png`；两地区实际地图/拾取/新展品/拍卖`11b_LUOYANG_EAST_*.png`与`11b_GUANZHONG_MOUND_*.png`。布局画廊是隔离的Geometry覆盖夹具，真正游戏流程另由完整GameFlow图形主流程完成；没有HTML游戏模拟。砖缝视觉在画廊验收后裁到Room边界，未改玩法。
+
+| suite | checks | failures |
+|---|---:|---:|
+| 1 | 27 | 0 |
+| 2 | 204 | 0 |
+| 3 | 94 | 0 |
+| 4 | 105 | 0 |
+| 5a | 61 | 0 |
+| 5b | 236 | 0 |
+| 6 | 164 | 0 |
+| 6_5 | 174 | 0 |
+| 7a | 306 | 0 |
+| 7b | 722 | 0 |
+| 8a | 486 | 0 |
+| 8b | 305 | 0 |
+| 8c | 297 | 0 |
+| 8d | 2153 | 0 |
+| 9a | 10513 | 0 |
+| 9b | 30758 | 0 |
+| 9b2 | 4843 | 0 |
+| 9b3 | 29133 | 0 |
+| 9b32 | 1734 | 0 |
+| 9b33 | 2702 | 0 |
+| geometry | 206885 | 0 |
+| softlock | 1030 | 0 |
+| baseline | 728 | 0 |
+| 10a | 49 | 0 |
+| 10d_bridge | 9 | 0 |
+| 10d_media | 11 | 0 |
+| 10d | 40 | 0 |
+| 10d6 | 91 | 0 |
+| 11a | 717 | 0 |
+| 11b_tombs | 1172 | 0 |
+| 11b_catalog | 178 | 0 |
+| 11b | 40973 | 0 |
+| twin_death_hotfix | 47 | 0 |
+
+## 50件试玩目录
+
+原八件价格/占格/稀有度/吸引力与ID冻结：民国银元、青花小罐、铜鎏金佛像、汉代玉璧、战国错金银铜镜、唐三彩马、金丝玉佩、镇墓兽残片。晋北仍只掉这八件。新42件如下，地域表示游戏出现地区，不等于已证实生产地/窑口。参考只支持类型或时代，特定细部/来源未核实者仍待审。
+
+| game_id | 中文名 | 地区 | 价值 | 格 | rarity | appeal | 类型参考 |
+|---|---|---|---:|---:|---|---:|---|
+| ly_picture_brick | 画像砖残片 | LUOYANG | 520 | 2 | UNCOMMON | 12 | [官方参考](https://www.metmuseum.org/fr/press/exhibitions/2016/age-of-empires) |
+| ly_attendant | 灰陶侍俑 | LUOYANG | 300 | 2 | COMMON | 8 | [官方参考](https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/) |
+| ly_warrior | 灰陶武士俑 | LUOYANG | 650 | 2 | UNCOMMON | 15 | [官方参考](https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/) |
+| ly_granary | 陶仓明器 | LUOYANG | 700 | 2 | UNCOMMON | 17 | [官方参考](https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/) |
+| ly_well | 陶井明器 | LUOYANG | 380 | 2 | COMMON | 9 | [官方参考](https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/) |
+| ly_stove | 陶灶明器 | LUOYANG | 330 | 2 | COMMON | 8 | [官方参考](https://www.metmuseum.org/art/collection/search/48435) |
+| ly_pig | 陶猪明器 | LUOYANG | 240 | 1 | COMMON | 6 | [官方参考](https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/) |
+| ly_dog | 陶犬明器 | LUOYANG | 280 | 1 | COMMON | 7 | [官方参考](https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/) |
+| ly_green_jar | 绿釉陶罐 | LUOYANG | 560 | 2 | UNCOMMON | 13 | [官方参考](https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/) |
+| ly_grey_tripod | 灰陶小鼎 | LUOYANG | 420 | 2 | COMMON | 10 | [官方参考](https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/) |
+| ly_mirror | 汉式铜镜 | LUOYANG | 1150 | 1 | RARE | 24 | [官方参考](https://www.metmuseum.org/fr/press/exhibitions/2016/age-of-empires) |
+| ly_lamp | 汉式铜灯 | LUOYANG | 1350 | 2 | RARE | 29 | [官方参考](https://www.metmuseum.org/fr/press/exhibitions/2016/age-of-empires) |
+| ly_censer | 汉式铜熏炉 | LUOYANG | 2150 | 2 | TREASURE | 43 | [官方参考](https://www.metmuseum.org/fr/press/exhibitions/2016/age-of-empires) |
+| ly_jade_pendant | 汉式玉佩 | LUOYANG | 1400 | 1 | RARE | 28 | [官方参考](https://www.britishmuseum.org/collection/object/A_1945-1017-87) |
+| ly_cicada | 玉蝉 | LUOYANG | 2400 | 1 | TREASURE | 48 | [官方参考](https://dia.org/collection/cicada-3430) |
+| ly_belt_hook | 铜带钩 | LUOYANG | 750 | 1 | UNCOMMON | 16 | [官方参考](https://www.britishmuseum.org/collection/object/A_1945-1017-87) |
+| ly_wuzhu | 汉式五铢钱 | LUOYANG | 180 | 1 | COMMON | 5 | [官方参考](https://www.americanhistory.si.edu/collections/object/nmah_1340623) |
+| ly_gilt_mount | 鎏金铜饰片 | LUOYANG | 1600 | 1 | RARE | 32 | [官方参考](https://www.metmuseum.org/fr/press/exhibitions/2016/age-of-empires) |
+| gz_sancai_horse | 三彩小马俑 | GUANZHONG | 1250 | 2 | RARE | 30 | [官方参考](https://www.clevelandart.org/art/1955.295) |
+| gz_sancai_camel | 三彩小驼俑 | GUANZHONG | 2250 | 3 | TREASURE | 46 | [官方参考](https://www.clevelandart.org/art/1955.295) |
+| gz_sancai_attendant | 三彩侍俑 | GUANZHONG | 800 | 2 | UNCOMMON | 19 | [官方参考](https://www.clevelandart.org/art/1955.295) |
+| gz_sancai_warrior | 三彩武士俑 | GUANZHONG | 1450 | 2 | RARE | 33 | [官方参考](https://www.clevelandart.org/art/1955.295) |
+| gz_sancai_jug | 三彩小壶 | GUANZHONG | 650 | 2 | UNCOMMON | 16 | [官方参考](https://www.clevelandart.org/art/1955.295) |
+| gz_sancai_plate | 三彩小盘 | GUANZHONG | 340 | 1 | COMMON | 9 | [官方参考](https://www.clevelandart.org/art/1955.295) |
+| gz_white_bowl | 唐式白瓷小碗 | GUANZHONG | 400 | 1 | COMMON | 10 | [官方参考](https://emuseum.cornell.edu/objects/6857/ewer) |
+| gz_white_ewer | 唐式白瓷执壶 | GUANZHONG | 1200 | 2 | RARE | 27 | [官方参考](https://emuseum.cornell.edu/objects/6857/ewer) |
+| gz_celadon_cup | 唐式青瓷盏 | GUANZHONG | 720 | 1 | UNCOMMON | 16 | [官方参考](https://emuseum.cornell.edu/objects/6857/ewer) |
+| gz_dancer | 彩绘舞俑 | GUANZHONG | 850 | 2 | UNCOMMON | 21 | [官方参考](https://www.clevelandart.org/art/1955.295) |
+| gz_silver_box | 银盖盒 | GUANZHONG | 1500 | 1 | RARE | 31 | [官方参考](https://www.metmuseum.org/art/collection/search/49566) |
+| gz_gilt_cup | 鎏金银杯 | GUANZHONG | 2450 | 1 | TREASURE | 47 | [官方参考](https://www.metmuseum.org/art/collection/search/49566) |
+| gz_gold_mount | 金饰片 | GUANZHONG | 2600 | 1 | TREASURE | 48 | [官方参考](https://www.metmuseum.org/art/collection/search/49566) |
+| gz_silver_belt | 银带饰 | GUANZHONG | 1700 | 1 | RARE | 34 | [官方参考](https://www.metmuseum.org/art/collection/search/42180) |
+| gz_jade_belt | 唐式玉带饰 | GUANZHONG | 1850 | 1 | RARE | 37 | [官方参考](https://www.metmuseum.org/art/collection/search/42180) |
+| gz_floral_mirror | 唐式花纹铜镜 | GUANZHONG | 1300 | 1 | RARE | 28 | [官方参考](https://www.metmuseum.org/art/collection/search/42180) |
+| gz_kaiyuan | 唐式开元通宝 | GUANZHONG | 220 | 1 | COMMON | 6 | [官方参考](https://www.britishmuseum.org/collection/object/C_1884-0511-909) |
+| gz_guardian | 镇墓小兽俑 | GUANZHONG | 2300 | 2 | TREASURE | 45 | [官方参考](https://www.clevelandart.org/art/1955.295) |
+| shared_jade_ring | 素面玉环 | LUOYANG/GUANZHONG | 680 | 1 | UNCOMMON | 14 | [官方参考](https://www.britishmuseum.org/collection/object/A_1945-1017-87) |
+| shared_jade_bead | 玉珠 | LUOYANG/GUANZHONG | 260 | 1 | COMMON | 7 | [官方参考](https://dia.org/collection/cicada-3430) |
+| shared_bronze_ring | 铜环 | LUOYANG/GUANZHONG | 160 | 1 | COMMON | 4 | [官方参考](https://www.metmuseum.org/fr/press/exhibitions/2016/age-of-empires) |
+| shared_bronze_buckle | 铜扣 | LUOYANG/GUANZHONG | 580 | 1 | UNCOMMON | 12 | [官方参考](https://www.britishmuseum.org/collection/object/A_1945-1017-87) |
+| shared_pottery_cup | 素面陶杯 | LUOYANG/GUANZHONG | 180 | 1 | COMMON | 5 | [官方参考](https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/) |
+| shared_pottery_jar | 素面小陶罐 | LUOYANG/GUANZHONG | 240 | 1 | COMMON | 6 | [官方参考](https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/) |
+
+## 争议、限制与人工验收
+
+两新增墓各两层，不等同晋北五层；已有敌人组合复用但空间和危险机制不同。地区/时期归属、金银构件具体形制、三彩小件尺寸、青瓷盏与个别铜灯/熏炉的直接类型出处需要人工史学审订，当前参考有些只提供类型家族/时代背景，不能冒充逐件考古定论。汉式五铢钱补用Smithsonian官方单枚实例作为类型参考；游戏定义仍独立，不复制其身份。全部新42为PLAYTEST_PENDING_HISTORICAL_REVIEW；500候选、1441真实研究与SQL数据不变，不自动APPROVED。
+
+70/20/10是游戏提案，不是实际墓葬出土比例。高价值风险源重归一化有候选组；唐墓前代器采用明确架空再利用/传世解释，不能当成现实考古结论。自动战斗/统计不能证明最终难度或经济平衡，等待真人验证空间、机关预警、背包取舍、收藏价值与交易价格。没有新增运输玩法或大化石。
+
+Godot JSON/资源为本地离线资料；发行二进制导出未作为本次交付，需包含本地JSON与纹理。日志/截图/存档不提交。测试中交易资金注入仅隔离事务夹具，正式新游戏仍空馆藏/零现金；完整拾取回馆布展主流程没有inventory.add替代。
+
+## 五个阶段提交与交付
+
+- 11B.1 洛阳：`9230f52808745934b6e5365f440aec92b61b0d82`
+- 11B.2 关中：`898b1283582f340f3202ecdbfbf08d9c3134c2d7`
+- 11B.3 42资源：`999ebd51d973fd4a272c09adbed7dfc2b216b438`
+- 11B.4 地区池/馆藏：`1599bdd71e3ca2e7fd58c156932055c11480ce4d`
+- 11B.5：包含最终验收文档的独立提交，实际SHA见交付消息或`git log -1 --format=%H`（自含文件无法写入自身最终hash）。
+
+最终push codex/phase-11b-regional-tombs-loot，不合并main。打开正式GameFlow隔离试玩窗口停在地图，无赠送/不写用户档，用户可选择洛阳或关中；人工体验待验收。按最新用户确认，11B完成提交后才从此HEAD建独立11C数据分支，保留游戏分支与试玩窗口。

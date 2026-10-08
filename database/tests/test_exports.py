@@ -105,11 +105,20 @@ class ExportTests(unittest.TestCase):
             if path in authorized_museum:
                 self.assertTrue(path.startswith(('scripts/museum/','scripts/ui/')))
                 continue
-            # Approved hotfix 848740d and Phase11A composition-only changes.
+            # Approved hotfix 848740d, Phase11A composition and Phase11B regional content hooks.
             # Exact replacement hashes retain protection; no broad combat/flow exemption.
             authorized_updates={
                 'scripts/bosses/encounters/twin_revenants.gd':'40b6f7aeb9719686db09bba60cd21e6c90b11d6767be657303737ebc299e3585',
-                'scripts/flow/game_flow.gd':'bcec27689a951c805b5ef04512a8c34ed3e3c50adbc5ce304c95b43507ca4b89',
-                'scripts/dungeon/dungeon_session.gd':'a499d45889c2839817546bed9aae11df434c92037b76867f77a87b2caf537b8c',
+                'scripts/flow/game_flow.gd':'237a50e749a0b87a6df8cd27c828b46ac3302a9e0a675b679440daa60fdb243f',
+                'scripts/dungeon/dungeon_session.gd':'cc1435fc9974ec9eae68c5398b776d9c59535d550a374a0cedf6ce8004eec155',
+                'scripts/rooms/room.gd':'6f6338a53e027d96f005f9f911d45f9ec2c80ee72acebb79b89ba321cf32e807',
+                'scripts/rooms/room_geometry_definition.gd':'3eda111fcfda93654e79fccd7389f6b12ee927dce86f7470155c442e351aa1eb',
+                'scripts/rooms/encounter_hazard.gd':'c6f1c56e49ed36757880c195bd337d55419c0001d2d42742bda7a56c15d6cc47',
+                'scripts/rooms/encounter_hazard_definition.gd':'245ce6169977bc7d6ae8bb993cfeabf97d046abda52b16d0d39b2375c1257f61',
+                'scripts/rooms/encounter_hazards.gd':'0e7c790965cb4682255a3177ae246cfde7fc95a45094ba74d13309dd1706ccce',
+                'scripts/antiques/antique_definition.gd':'1111b4e2d98ab92f695aaa0cf84e156cbc5ffc0ba9b7768324865324d7aafe51',
+                'scripts/rooms/room_controller.gd':'76a5dba387b98372765c9d3208c1a00e50c9c6c883684256b702bd20a1dd3253',
+                'scripts/dungeon/events/tomb_risk_service.gd':'cf7bfcd5c56bdcba7a2a55e6757f5149e57f2472833e021192dd1523e11f137e',
+                'scripts/dungeon/events/tomb_risk_content.gd':'a7529c17ca2f597f5313742c4f72e4611e3780724c05dd5ffb4119112a329037',
             }
             self.assertEqual(authorized_updates.get(path,expected),hashlib.sha256(text.encode()).hexdigest(),path)
