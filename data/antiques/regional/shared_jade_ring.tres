@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="AntiqueDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/antiques/antique_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"shared_jade_ring"
+display_name = "素面玉环"
+description = "早期玉环造型提案，唐墓中按前代旧物规则保留。 游戏原型，史学与细部形制待人工审核。"
+base_value = 680
+slots = 1
+rarity = 1
+exhibit_appeal = 14
+culture_period = "早期旧物原型（唐墓可传世）"
+region_ids = Array[StringName]([&"LUOYANG", &"GUANZHONG"])
+category = &"JADE"
+prototype_year_start = -206
+prototype_year_end = 220
+loot_group = &"CIRCULATION"
+selection_weight = 1
+content_review_status = &"PLAYTEST_PENDING_HISTORICAL_REVIEW"
+historical_reference_note = "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。"
+reference_urls = Array[String](["https://www.britishmuseum.org/collection/object/A_1945-1017-87"])

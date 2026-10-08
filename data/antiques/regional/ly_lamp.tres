@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="AntiqueDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/antiques/antique_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"ly_lamp"
+display_name = "汉式铜灯"
+description = "承托灯火的金属灯具游戏提案，具体形制待审。 游戏原型，史学与细部形制待人工审核。"
+base_value = 1350
+slots = 2
+rarity = 2
+exhibit_appeal = 29
+culture_period = "汉魏墓葬风格参考"
+region_ids = Array[StringName]([&"LUOYANG"])
+category = &"BRONZE"
+prototype_year_start = -206
+prototype_year_end = 220
+loot_group = &"LOCAL"
+selection_weight = 1
+content_review_status = &"PLAYTEST_PENDING_HISTORICAL_REVIEW"
+historical_reference_note = "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。"
+reference_urls = Array[String](["https://www.metmuseum.org/fr/press/exhibitions/2016/age-of-empires"])

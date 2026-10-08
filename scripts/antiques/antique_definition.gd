@@ -22,3 +22,15 @@ static func money(value: int) -> String:
 		if index > 0 and (digits.length()-index)%3 == 0: result += ","
 		result += digits[index]
 	return "¥"+result
+
+## Playtest prototype metadata. Not a museum accession/provenance claim or expert approval.
+@export var culture_period:String=""
+@export var region_ids:Array[StringName]=[]
+@export var category:StringName=&""
+@export var prototype_year_start:int=0
+@export var prototype_year_end:int=0
+@export var loot_group:StringName=&"LEGACY"
+@export_range(1,100) var selection_weight:int=1
+@export var content_review_status:StringName=&"LEGACY_GAME_PROTOTYPE"
+@export_multiline var historical_reference_note:String=""
+@export var reference_urls:Array[String]=[]

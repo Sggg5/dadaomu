@@ -1,0 +1,1440 @@
+{
+  "version": 1,
+  "status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+  "prototypes": [
+    {
+      "game_id": "ly_picture_brick",
+      "name": "画像砖残片",
+      "description": "以浮雕图案表现墓室装饰的砖片原型。 游戏原型，史学与细部形制待人工审核。",
+      "category": "FRAGMENT",
+      "culture_period": "汉魏墓葬风格参考",
+      "regions": [
+        "LUOYANG"
+      ],
+      "rarity": 1,
+      "slots": 2,
+      "value": 520,
+      "appeal": 12,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://www.metmuseum.org/fr/press/exhibitions/2016/age-of-empires"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "FRAGMENT",
+        "size_cm": [
+          24,
+          15,
+          4
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "ly_attendant",
+      "name": "灰陶侍俑",
+      "description": "以小型陶俑表现侍从的明器原型。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC_SCULPTURE",
+      "culture_period": "汉魏墓葬风格参考",
+      "regions": [
+        "LUOYANG"
+      ],
+      "rarity": 0,
+      "slots": 2,
+      "value": 300,
+      "appeal": 8,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC_SCULPTURE",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "ly_warrior",
+      "name": "灰陶武士俑",
+      "description": "表现守卫形象的陶俑游戏造型。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC_SCULPTURE",
+      "culture_period": "汉魏墓葬风格参考",
+      "regions": [
+        "LUOYANG"
+      ],
+      "rarity": 1,
+      "slots": 2,
+      "value": 650,
+      "appeal": 15,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC_SCULPTURE",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "ly_granary",
+      "name": "陶仓明器",
+      "description": "用贮粮设施模型表现日常生活的明器。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC",
+      "culture_period": "汉魏墓葬风格参考",
+      "regions": [
+        "LUOYANG"
+      ],
+      "rarity": 1,
+      "slots": 2,
+      "value": 700,
+      "appeal": 17,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "ly_well",
+      "name": "陶井明器",
+      "description": "将井架与井口缩成小型模型的明器原型。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC",
+      "culture_period": "汉魏墓葬风格参考",
+      "regions": [
+        "LUOYANG"
+      ],
+      "rarity": 0,
+      "slots": 2,
+      "value": 380,
+      "appeal": 9,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "ly_stove",
+      "name": "陶灶明器",
+      "description": "模仿炊煮设施的陶制墓葬模型。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC",
+      "culture_period": "汉魏墓葬风格参考",
+      "regions": [
+        "LUOYANG"
+      ],
+      "rarity": 0,
+      "slots": 2,
+      "value": 330,
+      "appeal": 8,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://www.metmuseum.org/art/collection/search/48435"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "ly_pig",
+      "name": "陶猪明器",
+      "description": "用陶质动物模型表现家畜的明器原型。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC_SCULPTURE",
+      "culture_period": "汉魏墓葬风格参考",
+      "regions": [
+        "LUOYANG"
+      ],
+      "rarity": 0,
+      "slots": 1,
+      "value": 240,
+      "appeal": 6,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC_SCULPTURE",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "ly_dog",
+      "name": "陶犬明器",
+      "description": "以小型陶犬表现家居动物的游戏明器。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC_SCULPTURE",
+      "culture_period": "汉魏墓葬风格参考",
+      "regions": [
+        "LUOYANG"
+      ],
+      "rarity": 0,
+      "slots": 1,
+      "value": 280,
+      "appeal": 7,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC_SCULPTURE",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "ly_green_jar",
+      "name": "绿釉陶罐",
+      "description": "带绿釉的陶质容器原型，不把它称作瓷器。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC",
+      "culture_period": "汉魏墓葬风格参考",
+      "regions": [
+        "LUOYANG"
+      ],
+      "rarity": 1,
+      "slots": 2,
+      "value": 560,
+      "appeal": 13,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "ly_grey_tripod",
+      "name": "灰陶小鼎",
+      "description": "三足小型陶器的器型提案，具体纹饰待复核。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC",
+      "culture_period": "汉魏墓葬风格参考",
+      "regions": [
+        "LUOYANG"
+      ],
+      "rarity": 0,
+      "slots": 2,
+      "value": 420,
+      "appeal": 10,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "ly_mirror",
+      "name": "汉式铜镜",
+      "description": "以磨光铜面与装饰镜背构成的镜类原型。 游戏原型，史学与细部形制待人工审核。",
+      "category": "BRONZE",
+      "culture_period": "汉魏墓葬风格参考",
+      "regions": [
+        "LUOYANG"
+      ],
+      "rarity": 2,
+      "slots": 1,
+      "value": 1150,
+      "appeal": 24,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://www.metmuseum.org/fr/press/exhibitions/2016/age-of-empires"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "BRONZE",
+        "size_cm": [
+          10,
+          8,
+          3
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "ly_lamp",
+      "name": "汉式铜灯",
+      "description": "承托灯火的金属灯具游戏提案，具体形制待审。 游戏原型，史学与细部形制待人工审核。",
+      "category": "BRONZE",
+      "culture_period": "汉魏墓葬风格参考",
+      "regions": [
+        "LUOYANG"
+      ],
+      "rarity": 2,
+      "slots": 2,
+      "value": 1350,
+      "appeal": 29,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://www.metmuseum.org/fr/press/exhibitions/2016/age-of-empires"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "BRONZE",
+        "size_cm": [
+          10,
+          8,
+          3
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "ly_censer",
+      "name": "汉式铜熏炉",
+      "description": "供焚香使用的铜炉原型，图案为游戏原创。 游戏原型，史学与细部形制待人工审核。",
+      "category": "BRONZE",
+      "culture_period": "汉魏墓葬风格参考",
+      "regions": [
+        "LUOYANG"
+      ],
+      "rarity": 3,
+      "slots": 2,
+      "value": 2150,
+      "appeal": 43,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://www.metmuseum.org/fr/press/exhibitions/2016/age-of-empires"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "BRONZE",
+        "size_cm": [
+          10,
+          8,
+          3
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "ly_jade_pendant",
+      "name": "汉式玉佩",
+      "description": "小型玉饰提案，造型与原参考带钩并不相同。 游戏原型，史学与细部形制待人工审核。",
+      "category": "JADE",
+      "culture_period": "汉魏墓葬风格参考",
+      "regions": [
+        "LUOYANG"
+      ],
+      "rarity": 2,
+      "slots": 1,
+      "value": 1400,
+      "appeal": 28,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://www.britishmuseum.org/collection/object/A_1945-1017-87"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "JADE",
+        "size_cm": [
+          10,
+          8,
+          3
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "ly_cicada",
+      "name": "玉蝉",
+      "description": "采用蝉形雕刻的小件玉器原型。 游戏原型，史学与细部形制待人工审核。",
+      "category": "JADE",
+      "culture_period": "汉魏墓葬风格参考",
+      "regions": [
+        "LUOYANG"
+      ],
+      "rarity": 3,
+      "slots": 1,
+      "value": 2400,
+      "appeal": 48,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://dia.org/collection/cicada-3430"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "JADE",
+        "size_cm": [
+          10,
+          8,
+          3
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "ly_belt_hook",
+      "name": "铜带钩",
+      "description": "勾连衣带的铜制小件提案，材质与参考玉钩不同。 游戏原型，史学与细部形制待人工审核。",
+      "category": "BRONZE",
+      "culture_period": "汉魏墓葬风格参考",
+      "regions": [
+        "LUOYANG"
+      ],
+      "rarity": 1,
+      "slots": 1,
+      "value": 750,
+      "appeal": 16,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://www.britishmuseum.org/collection/object/A_1945-1017-87"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "BRONZE",
+        "size_cm": [
+          10,
+          8,
+          3
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "ly_wuzhu",
+      "name": "汉式五铢钱",
+      "description": "五铢钱类型的游戏单枚实物，不代表一种钱币品种就是一件馆藏。 游戏原型，史学与细部形制待人工审核。",
+      "category": "COIN",
+      "culture_period": "汉魏墓葬风格参考",
+      "regions": [
+        "LUOYANG"
+      ],
+      "rarity": 0,
+      "slots": 1,
+      "value": 180,
+      "appeal": 5,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://www.metmuseum.org/fr/press/exhibitions/2016/age-of-empires"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "COIN",
+        "size_cm": [
+          4,
+          4,
+          1
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "ly_gilt_mount",
+      "name": "鎏金铜饰片",
+      "description": "小型鎏金装饰构件的原创器物提案，安装位置未知。 游戏原型，史学与细部形制待人工审核。",
+      "category": "JEWELRY",
+      "culture_period": "汉魏墓葬风格参考",
+      "regions": [
+        "LUOYANG"
+      ],
+      "rarity": 2,
+      "slots": 1,
+      "value": 1600,
+      "appeal": 32,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://www.metmuseum.org/fr/press/exhibitions/2016/age-of-empires"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "JEWELRY",
+        "size_cm": [
+          10,
+          8,
+          3
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "gz_sancai_horse",
+      "name": "三彩小马俑",
+      "description": "小型马形明器，与原八件的唐三彩马是不同游戏原型。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC_SCULPTURE",
+      "culture_period": "唐代器物风格参考",
+      "regions": [
+        "GUANZHONG"
+      ],
+      "rarity": 2,
+      "slots": 2,
+      "value": 1250,
+      "appeal": 30,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": 618,
+      "prototype_year_end": 907,
+      "reference_urls": [
+        "https://www.clevelandart.org/art/1955.295"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC_SCULPTURE",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "gz_sancai_camel",
+      "name": "三彩小驼俑",
+      "description": "驼形三彩游戏明器；尺寸为背包可运输的小型提案。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC_SCULPTURE",
+      "culture_period": "唐代器物风格参考",
+      "regions": [
+        "GUANZHONG"
+      ],
+      "rarity": 3,
+      "slots": 3,
+      "value": 2250,
+      "appeal": 46,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": 618,
+      "prototype_year_end": 907,
+      "reference_urls": [
+        "https://www.clevelandart.org/art/1955.295"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC_SCULPTURE",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "gz_sancai_attendant",
+      "name": "三彩侍俑",
+      "description": "多色低温釉陶侍从俑的游戏造型。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC_SCULPTURE",
+      "culture_period": "唐代器物风格参考",
+      "regions": [
+        "GUANZHONG"
+      ],
+      "rarity": 1,
+      "slots": 2,
+      "value": 800,
+      "appeal": 19,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": 618,
+      "prototype_year_end": 907,
+      "reference_urls": [
+        "https://www.clevelandart.org/art/1955.295"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC_SCULPTURE",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "gz_sancai_warrior",
+      "name": "三彩武士俑",
+      "description": "守卫形象的三彩陶俑器型提案。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC_SCULPTURE",
+      "culture_period": "唐代器物风格参考",
+      "regions": [
+        "GUANZHONG"
+      ],
+      "rarity": 2,
+      "slots": 2,
+      "value": 1450,
+      "appeal": 33,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": 618,
+      "prototype_year_end": 907,
+      "reference_urls": [
+        "https://www.clevelandart.org/art/1955.295"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC_SCULPTURE",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "gz_sancai_jug",
+      "name": "三彩小壶",
+      "description": "采用多色釉效果的小型陶壶游戏原型。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC",
+      "culture_period": "唐代器物风格参考",
+      "regions": [
+        "GUANZHONG"
+      ],
+      "rarity": 1,
+      "slots": 2,
+      "value": 650,
+      "appeal": 16,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": 618,
+      "prototype_year_end": 907,
+      "reference_urls": [
+        "https://www.clevelandart.org/art/1955.295"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "gz_sancai_plate",
+      "name": "三彩小盘",
+      "description": "小型釉陶盘提案；不声称来自参考马俑所属实物。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC",
+      "culture_period": "唐代器物风格参考",
+      "regions": [
+        "GUANZHONG"
+      ],
+      "rarity": 0,
+      "slots": 1,
+      "value": 340,
+      "appeal": 9,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": 618,
+      "prototype_year_end": 907,
+      "reference_urls": [
+        "https://www.clevelandart.org/art/1955.295"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "gz_white_bowl",
+      "name": "唐式白瓷小碗",
+      "description": "白色釉面的瓷质碗形提案；窑口未作确定归属。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC",
+      "culture_period": "唐代器物风格参考",
+      "regions": [
+        "GUANZHONG"
+      ],
+      "rarity": 0,
+      "slots": 1,
+      "value": 400,
+      "appeal": 10,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": 618,
+      "prototype_year_end": 907,
+      "reference_urls": [
+        "https://emuseum.cornell.edu/objects/6857/ewer"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "gz_white_ewer",
+      "name": "唐式白瓷执壶",
+      "description": "带流与把手的白釉执壶器型原型。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC",
+      "culture_period": "唐代器物风格参考",
+      "regions": [
+        "GUANZHONG"
+      ],
+      "rarity": 2,
+      "slots": 2,
+      "value": 1200,
+      "appeal": 27,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": 618,
+      "prototype_year_end": 907,
+      "reference_urls": [
+        "https://emuseum.cornell.edu/objects/6857/ewer"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "gz_celadon_cup",
+      "name": "唐式青瓷盏",
+      "description": "青釉小盏游戏提案，青瓷器型与产地仍待复核。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC",
+      "culture_period": "唐代器物风格参考",
+      "regions": [
+        "GUANZHONG"
+      ],
+      "rarity": 1,
+      "slots": 1,
+      "value": 720,
+      "appeal": 16,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": 618,
+      "prototype_year_end": 907,
+      "reference_urls": [
+        "https://emuseum.cornell.edu/objects/6857/ewer"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "gz_dancer",
+      "name": "彩绘舞俑",
+      "description": "以彩绘人物表现舞者的原创陶俑提案。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC_SCULPTURE",
+      "culture_period": "唐代器物风格参考",
+      "regions": [
+        "GUANZHONG"
+      ],
+      "rarity": 1,
+      "slots": 2,
+      "value": 850,
+      "appeal": 21,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": 618,
+      "prototype_year_end": 907,
+      "reference_urls": [
+        "https://www.clevelandart.org/art/1955.295"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC_SCULPTURE",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "gz_silver_box",
+      "name": "银盖盒",
+      "description": "具有盖与盒身的小型银质容器原型。 游戏原型，史学与细部形制待人工审核。",
+      "category": "JEWELRY",
+      "culture_period": "唐代器物风格参考",
+      "regions": [
+        "GUANZHONG"
+      ],
+      "rarity": 2,
+      "slots": 1,
+      "value": 1500,
+      "appeal": 31,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": 618,
+      "prototype_year_end": 907,
+      "reference_urls": [
+        "https://www.metmuseum.org/art/collection/search/49566"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "JEWELRY",
+        "size_cm": [
+          10,
+          8,
+          3
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "gz_gilt_cup",
+      "name": "鎏金银杯",
+      "description": "银质器表施金色装饰的杯形提案，具体工艺待审。 游戏原型，史学与细部形制待人工审核。",
+      "category": "JEWELRY",
+      "culture_period": "唐代器物风格参考",
+      "regions": [
+        "GUANZHONG"
+      ],
+      "rarity": 3,
+      "slots": 1,
+      "value": 2450,
+      "appeal": 47,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": 618,
+      "prototype_year_end": 907,
+      "reference_urls": [
+        "https://www.metmuseum.org/art/collection/search/49566"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "JEWELRY",
+        "size_cm": [
+          10,
+          8,
+          3
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "gz_gold_mount",
+      "name": "金饰片",
+      "description": "独立金饰构件提案，不虚构皇室所属或出土记录。 游戏原型，史学与细部形制待人工审核。",
+      "category": "JEWELRY",
+      "culture_period": "唐代器物风格参考",
+      "regions": [
+        "GUANZHONG"
+      ],
+      "rarity": 3,
+      "slots": 1,
+      "value": 2600,
+      "appeal": 48,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": 618,
+      "prototype_year_end": 907,
+      "reference_urls": [
+        "https://www.metmuseum.org/art/collection/search/49566"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "JEWELRY",
+        "size_cm": [
+          10,
+          8,
+          3
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "gz_silver_belt",
+      "name": "银带饰",
+      "description": "衣带装饰构件提案；银材质不是参考玉带板的实物材质。 游戏原型，史学与细部形制待人工审核。",
+      "category": "JEWELRY",
+      "culture_period": "唐代器物风格参考",
+      "regions": [
+        "GUANZHONG"
+      ],
+      "rarity": 2,
+      "slots": 1,
+      "value": 1700,
+      "appeal": 34,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": 618,
+      "prototype_year_end": 907,
+      "reference_urls": [
+        "https://www.metmuseum.org/art/collection/search/42180"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "JEWELRY",
+        "size_cm": [
+          10,
+          8,
+          3
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "gz_jade_belt",
+      "name": "唐式玉带饰",
+      "description": "可嵌在衣带上的小型玉饰原型。 游戏原型，史学与细部形制待人工审核。",
+      "category": "JADE",
+      "culture_period": "唐代器物风格参考",
+      "regions": [
+        "GUANZHONG"
+      ],
+      "rarity": 2,
+      "slots": 1,
+      "value": 1850,
+      "appeal": 37,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": 618,
+      "prototype_year_end": 907,
+      "reference_urls": [
+        "https://www.metmuseum.org/art/collection/search/42180"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "JADE",
+        "size_cm": [
+          10,
+          8,
+          3
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "gz_floral_mirror",
+      "name": "唐式花纹铜镜",
+      "description": "采用花纹镜背的铜镜提案；纹样为原创待审设计。 游戏原型，史学与细部形制待人工审核。",
+      "category": "BRONZE",
+      "culture_period": "唐代器物风格参考",
+      "regions": [
+        "GUANZHONG"
+      ],
+      "rarity": 2,
+      "slots": 1,
+      "value": 1300,
+      "appeal": 28,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": 618,
+      "prototype_year_end": 907,
+      "reference_urls": [
+        "https://www.metmuseum.org/art/collection/search/42180"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "BRONZE",
+        "size_cm": [
+          10,
+          8,
+          3
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "gz_kaiyuan",
+      "name": "唐式开元通宝",
+      "description": "开元通宝类型的游戏单枚钱币，不复制馆藏登记身份。 游戏原型，史学与细部形制待人工审核。",
+      "category": "COIN",
+      "culture_period": "唐代器物风格参考",
+      "regions": [
+        "GUANZHONG"
+      ],
+      "rarity": 0,
+      "slots": 1,
+      "value": 220,
+      "appeal": 6,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": 621,
+      "prototype_year_end": 907,
+      "reference_urls": [
+        "https://www.britishmuseum.org/collection/object/C_1884-0511-909"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "COIN",
+        "size_cm": [
+          4,
+          4,
+          1
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "gz_guardian",
+      "name": "镇墓小兽俑",
+      "description": "以兽形守护形象构成的游戏明器原型。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC_SCULPTURE",
+      "culture_period": "唐代器物风格参考",
+      "regions": [
+        "GUANZHONG"
+      ],
+      "rarity": 3,
+      "slots": 2,
+      "value": 2300,
+      "appeal": 45,
+      "weight": 1,
+      "group": "LOCAL",
+      "prototype_year_start": 618,
+      "prototype_year_end": 907,
+      "reference_urls": [
+        "https://www.clevelandart.org/art/1955.295"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC_SCULPTURE",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "shared_jade_ring",
+      "name": "素面玉环",
+      "description": "早期玉环造型提案，唐墓中按前代旧物规则保留。 游戏原型，史学与细部形制待人工审核。",
+      "category": "JADE",
+      "culture_period": "早期旧物原型（唐墓可传世）",
+      "regions": [
+        "LUOYANG",
+        "GUANZHONG"
+      ],
+      "rarity": 1,
+      "slots": 1,
+      "value": 680,
+      "appeal": 14,
+      "weight": 1,
+      "group": "CIRCULATION",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://www.britishmuseum.org/collection/object/A_1945-1017-87"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "JADE",
+        "size_cm": [
+          10,
+          8,
+          3
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "shared_jade_bead",
+      "name": "玉珠",
+      "description": "小型玉质饰件游戏提案，具体使用方式待审。 游戏原型，史学与细部形制待人工审核。",
+      "category": "JADE",
+      "culture_period": "早期旧物原型（唐墓可传世）",
+      "regions": [
+        "LUOYANG",
+        "GUANZHONG"
+      ],
+      "rarity": 0,
+      "slots": 1,
+      "value": 260,
+      "appeal": 7,
+      "weight": 1,
+      "group": "CIRCULATION",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://dia.org/collection/cicada-3430"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "JADE",
+        "size_cm": [
+          10,
+          8,
+          3
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "shared_bronze_ring",
+      "name": "铜环",
+      "description": "小型环形金属构件提案，功能保持未知。 游戏原型，史学与细部形制待人工审核。",
+      "category": "BRONZE",
+      "culture_period": "早期旧物原型（唐墓可传世）",
+      "regions": [
+        "LUOYANG",
+        "GUANZHONG"
+      ],
+      "rarity": 0,
+      "slots": 1,
+      "value": 160,
+      "appeal": 4,
+      "weight": 1,
+      "group": "CIRCULATION",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://www.metmuseum.org/fr/press/exhibitions/2016/age-of-empires"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "BRONZE",
+        "size_cm": [
+          10,
+          8,
+          3
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "shared_bronze_buckle",
+      "name": "铜扣",
+      "description": "衣饰连接构件原型，不杜撰刻字和身份。 游戏原型，史学与细部形制待人工审核。",
+      "category": "BRONZE",
+      "culture_period": "早期旧物原型（唐墓可传世）",
+      "regions": [
+        "LUOYANG",
+        "GUANZHONG"
+      ],
+      "rarity": 1,
+      "slots": 1,
+      "value": 580,
+      "appeal": 12,
+      "weight": 1,
+      "group": "CIRCULATION",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://www.britishmuseum.org/collection/object/A_1945-1017-87"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "BRONZE",
+        "size_cm": [
+          10,
+          8,
+          3
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "shared_pottery_cup",
+      "name": "素面陶杯",
+      "description": "早期素面饮器的游戏提案，唐代场景中作为旧器。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC",
+      "culture_period": "早期旧物原型（唐墓可传世）",
+      "regions": [
+        "LUOYANG",
+        "GUANZHONG"
+      ],
+      "rarity": 0,
+      "slots": 1,
+      "value": 180,
+      "appeal": 5,
+      "weight": 1,
+      "group": "CIRCULATION",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    },
+    {
+      "game_id": "shared_pottery_jar",
+      "name": "素面小陶罐",
+      "description": "小型陶质贮存器原型，制作地点未确定。 游戏原型，史学与细部形制待人工审核。",
+      "category": "CERAMIC",
+      "culture_period": "早期旧物原型（唐墓可传世）",
+      "regions": [
+        "LUOYANG",
+        "GUANZHONG"
+      ],
+      "rarity": 0,
+      "slots": 1,
+      "value": 240,
+      "appeal": 6,
+      "weight": 1,
+      "group": "CIRCULATION",
+      "prototype_year_start": -206,
+      "prototype_year_end": 220,
+      "reference_urls": [
+        "https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/"
+      ],
+      "reference_scope": "TYPE_OR_PERIOD_REFERENCE_ONLY_NOT_MUSEUM_IDENTITY",
+      "review_status": "PLAYTEST_PENDING_HISTORICAL_REVIEW",
+      "historical_reference_note": "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。",
+      "display_profile": {
+        "category": "CERAMIC",
+        "size_cm": [
+          24,
+          18,
+          30
+        ],
+        "transport": "HAND_CARRY",
+        "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+      }
+    }
+  ]
+}

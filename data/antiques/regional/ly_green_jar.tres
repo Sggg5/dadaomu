@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="AntiqueDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/antiques/antique_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"ly_green_jar"
+display_name = "绿釉陶罐"
+description = "带绿釉的陶质容器原型，不把它称作瓷器。 游戏原型，史学与细部形制待人工审核。"
+base_value = 560
+slots = 2
+rarity = 1
+exhibit_appeal = 13
+culture_period = "汉魏墓葬风格参考"
+region_ids = Array[StringName]([&"LUOYANG"])
+category = &"CERAMIC"
+prototype_year_start = -206
+prototype_year_end = 220
+loot_group = &"LOCAL"
+selection_weight = 1
+content_review_status = &"PLAYTEST_PENDING_HISTORICAL_REVIEW"
+historical_reference_note = "参考资料仅支持相关器物类型或文化时期。器型细部、游戏尺寸、地区关联和数值为待审游戏提案；没有实际馆藏号或出土身份。"
+reference_urls = Array[String](["https://umma.umich.edu/objects/model-of-a-granary-1993-1-76/"])
