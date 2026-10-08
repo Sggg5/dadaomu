@@ -1,0 +1,2 @@
+-- Preserve the exact institutional record used for each article claim.
+CREATE TABLE editorial_article_sources(article_id TEXT NOT NULL REFERENCES editorial_articles(article_id), claim_index INTEGER NOT NULL CHECK(claim_index>=0), source_id TEXT NOT NULL, record_id TEXT NOT NULL, record_url TEXT NOT NULL, PRIMARY KEY(article_id,claim_index), FOREIGN KEY(source_id,record_id) REFERENCES source_records(source_id,record_id));

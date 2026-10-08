@@ -1,0 +1,810 @@
+[
+  {
+    "term_id": "CULTURAL",
+    "zh_name": "文化遗产",
+    "en_name": "Cultural heritage",
+    "parent_id": null,
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "BRONZE_VESSEL",
+    "zh_name": "青铜器",
+    "en_name": "Bronze vessel",
+    "parent_id": "CULTURAL",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "JADE_OBJECT",
+    "zh_name": "玉器",
+    "en_name": "Jade object",
+    "parent_id": "CULTURAL",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "CERAMIC_OBJECT",
+    "zh_name": "陶瓷器",
+    "en_name": "Ceramic object",
+    "parent_id": "CULTURAL",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "ART",
+    "zh_name": "艺术品",
+    "en_name": "Artwork",
+    "parent_id": "CULTURAL",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "TEXTILE",
+    "zh_name": "纺织品",
+    "en_name": "Textile",
+    "parent_id": "CULTURAL",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "SCULPTURE",
+    "zh_name": "雕塑",
+    "en_name": "Sculpture",
+    "parent_id": "CULTURAL",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "FURNITURE",
+    "zh_name": "家具",
+    "en_name": "Furniture",
+    "parent_id": "CULTURAL",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "DING",
+    "zh_name": "鼎",
+    "en_name": "Ding",
+    "parent_id": "BRONZE_VESSEL",
+    "domain": "OBJECT",
+    "aliases": [
+      "Tripod Cauldron"
+    ],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "GUI_VESSEL",
+    "zh_name": "簋",
+    "en_name": "Gui vessel",
+    "parent_id": "BRONZE_VESSEL",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "JUE",
+    "zh_name": "爵",
+    "en_name": "Jue",
+    "parent_id": "BRONZE_VESSEL",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "GONG",
+    "zh_name": "觥",
+    "en_name": "Gong",
+    "parent_id": "BRONZE_VESSEL",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "ZUN",
+    "zh_name": "尊",
+    "en_name": "Zun",
+    "parent_id": "BRONZE_VESSEL",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "HU",
+    "zh_name": "壶",
+    "en_name": "Hu",
+    "parent_id": "BRONZE_VESSEL",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "MIRROR",
+    "zh_name": "铜镜",
+    "en_name": "Bronze mirror",
+    "parent_id": "BRONZE_VESSEL",
+    "domain": "OBJECT",
+    "aliases": [
+      "Mirror"
+    ],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "BI",
+    "zh_name": "璧",
+    "en_name": "Bi disk",
+    "parent_id": "JADE_OBJECT",
+    "domain": "OBJECT",
+    "aliases": [
+      "Ceremonial Disk"
+    ],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "CONG",
+    "zh_name": "琮",
+    "en_name": "Cong",
+    "parent_id": "JADE_OBJECT",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "GUI_JADE",
+    "zh_name": "圭",
+    "en_name": "Gui tablet",
+    "parent_id": "JADE_OBJECT",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "ZHANG",
+    "zh_name": "璋",
+    "en_name": "Zhang",
+    "parent_id": "JADE_OBJECT",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "FIGURINE",
+    "zh_name": "俑",
+    "en_name": "Tomb figurine",
+    "parent_id": "SCULPTURE",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "GUARDIAN",
+    "zh_name": "镇墓兽",
+    "en_name": "Tomb guardian",
+    "parent_id": "SCULPTURE",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "EPITAPH",
+    "zh_name": "墓志",
+    "en_name": "Epitaph",
+    "parent_id": "CULTURAL",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "DING_WARE",
+    "zh_name": "定窑",
+    "en_name": "Ding ware",
+    "parent_id": "CERAMIC_OBJECT",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "JIAN_WARE",
+    "zh_name": "建窑",
+    "en_name": "Jian ware",
+    "parent_id": "CERAMIC_OBJECT",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "JUN_WARE",
+    "zh_name": "钧窑",
+    "en_name": "Jun ware",
+    "parent_id": "CERAMIC_OBJECT",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "QINGBAI",
+    "zh_name": "青白瓷",
+    "en_name": "Qingbai ware",
+    "parent_id": "CERAMIC_OBJECT",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "FAHUA",
+    "zh_name": "法华",
+    "en_name": "Fahua ware",
+    "parent_id": "CERAMIC_OBJECT",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "SUSANCAI",
+    "zh_name": "素三彩",
+    "en_name": "Susancai ware",
+    "parent_id": "CERAMIC_OBJECT",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "BLUE_WHITE",
+    "zh_name": "青花瓷",
+    "en_name": "Blue-and-white porcelain",
+    "parent_id": "CERAMIC_OBJECT",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "HARES_FUR",
+    "zh_name": "兔毫釉",
+    "en_name": "Hare’s-fur glaze",
+    "parent_id": "CERAMIC_OBJECT",
+    "domain": "OBJECT",
+    "aliases": [
+      "hare's fur"
+    ],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "CELADON",
+    "zh_name": "青瓷",
+    "en_name": "Celadon",
+    "parent_id": "CERAMIC_OBJECT",
+    "domain": "OBJECT",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "NATURAL",
+    "zh_name": "自然历史",
+    "en_name": "Natural history",
+    "parent_id": null,
+    "domain": "NATURAL",
+    "aliases": [],
+    "authority_url": "https://naturalhistory.si.edu/research/idsc/data-access",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "FOSSIL",
+    "zh_name": "化石",
+    "en_name": "Fossil",
+    "parent_id": "NATURAL",
+    "domain": "NATURAL",
+    "aliases": [],
+    "authority_url": "https://naturalhistory.si.edu/research/idsc/data-access",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "TRILOBITE",
+    "zh_name": "三叶虫",
+    "en_name": "Trilobite",
+    "parent_id": "FOSSIL",
+    "domain": "NATURAL",
+    "aliases": [],
+    "authority_url": "https://naturalhistory.si.edu/research/idsc/data-access",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "AMMONITE",
+    "zh_name": "菊石",
+    "en_name": "Ammonite",
+    "parent_id": "FOSSIL",
+    "domain": "NATURAL",
+    "aliases": [],
+    "authority_url": "https://naturalhistory.si.edu/research/idsc/data-access",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "BRACHIOPOD",
+    "zh_name": "腕足动物",
+    "en_name": "Brachiopod",
+    "parent_id": "FOSSIL",
+    "domain": "NATURAL",
+    "aliases": [],
+    "authority_url": "https://naturalhistory.si.edu/research/idsc/data-access",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "VERTEBRATE",
+    "zh_name": "脊椎动物化石",
+    "en_name": "Vertebrate fossil",
+    "parent_id": "FOSSIL",
+    "domain": "NATURAL",
+    "aliases": [],
+    "authority_url": "https://naturalhistory.si.edu/research/idsc/data-access",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "PLANT_FOSSIL",
+    "zh_name": "古植物",
+    "en_name": "Paleobotany",
+    "parent_id": "FOSSIL",
+    "domain": "NATURAL",
+    "aliases": [],
+    "authority_url": "https://naturalhistory.si.edu/research/idsc/data-access",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "TRACE_FOSSIL",
+    "zh_name": "遗迹化石",
+    "en_name": "Trace fossil",
+    "parent_id": "FOSSIL",
+    "domain": "NATURAL",
+    "aliases": [],
+    "authority_url": "https://naturalhistory.si.edu/research/idsc/data-access",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "MINERAL",
+    "zh_name": "矿物",
+    "en_name": "Mineral",
+    "parent_id": "NATURAL",
+    "domain": "NATURAL",
+    "aliases": [],
+    "authority_url": "https://naturalhistory.si.edu/research/idsc/data-access",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "METEORITE",
+    "zh_name": "陨石",
+    "en_name": "Meteorite",
+    "parent_id": "NATURAL",
+    "domain": "NATURAL",
+    "aliases": [],
+    "authority_url": "https://naturalhistory.si.edu/research/idsc/data-access",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "ROCK",
+    "zh_name": "岩石",
+    "en_name": "Rock",
+    "parent_id": "NATURAL",
+    "domain": "NATURAL",
+    "aliases": [],
+    "authority_url": "https://naturalhistory.si.edu/research/idsc/data-access",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "GEO_TIME",
+    "zh_name": "地质时间",
+    "en_name": "Geological time",
+    "parent_id": null,
+    "domain": "GEOLOGY",
+    "aliases": [],
+    "authority_url": "https://stratigraphy.org/ICSchart/ChronostratChart2024-12.pdf",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "CAMBRIAN",
+    "zh_name": "寒武纪",
+    "en_name": "Cambrian",
+    "parent_id": "GEO_TIME",
+    "domain": "GEOLOGY",
+    "aliases": [],
+    "authority_url": "https://stratigraphy.org/ICSchart/ChronostratChart2024-12.pdf",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "ORDOVICIAN",
+    "zh_name": "奥陶纪",
+    "en_name": "Ordovician",
+    "parent_id": "GEO_TIME",
+    "domain": "GEOLOGY",
+    "aliases": [],
+    "authority_url": "https://stratigraphy.org/ICSchart/ChronostratChart2024-12.pdf",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "SILURIAN",
+    "zh_name": "志留纪",
+    "en_name": "Silurian",
+    "parent_id": "GEO_TIME",
+    "domain": "GEOLOGY",
+    "aliases": [],
+    "authority_url": "https://stratigraphy.org/ICSchart/ChronostratChart2024-12.pdf",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "DEVONIAN",
+    "zh_name": "泥盆纪",
+    "en_name": "Devonian",
+    "parent_id": "GEO_TIME",
+    "domain": "GEOLOGY",
+    "aliases": [],
+    "authority_url": "https://stratigraphy.org/ICSchart/ChronostratChart2024-12.pdf",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "CARBONIFEROUS",
+    "zh_name": "石炭纪",
+    "en_name": "Carboniferous",
+    "parent_id": "GEO_TIME",
+    "domain": "GEOLOGY",
+    "aliases": [],
+    "authority_url": "https://stratigraphy.org/ICSchart/ChronostratChart2024-12.pdf",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "PERMIAN",
+    "zh_name": "二叠纪",
+    "en_name": "Permian",
+    "parent_id": "GEO_TIME",
+    "domain": "GEOLOGY",
+    "aliases": [],
+    "authority_url": "https://stratigraphy.org/ICSchart/ChronostratChart2024-12.pdf",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "TRIASSIC",
+    "zh_name": "三叠纪",
+    "en_name": "Triassic",
+    "parent_id": "GEO_TIME",
+    "domain": "GEOLOGY",
+    "aliases": [],
+    "authority_url": "https://stratigraphy.org/ICSchart/ChronostratChart2024-12.pdf",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "JURASSIC",
+    "zh_name": "侏罗纪",
+    "en_name": "Jurassic",
+    "parent_id": "GEO_TIME",
+    "domain": "GEOLOGY",
+    "aliases": [],
+    "authority_url": "https://stratigraphy.org/ICSchart/ChronostratChart2024-12.pdf",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "CRETACEOUS",
+    "zh_name": "白垩纪",
+    "en_name": "Cretaceous",
+    "parent_id": "GEO_TIME",
+    "domain": "GEOLOGY",
+    "aliases": [],
+    "authority_url": "https://stratigraphy.org/ICSchart/ChronostratChart2024-12.pdf",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "PALEOGENE",
+    "zh_name": "古近纪",
+    "en_name": "Paleogene",
+    "parent_id": "GEO_TIME",
+    "domain": "GEOLOGY",
+    "aliases": [],
+    "authority_url": "https://stratigraphy.org/ICSchart/ChronostratChart2024-12.pdf",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "NEOGENE",
+    "zh_name": "新近纪",
+    "en_name": "Neogene",
+    "parent_id": "GEO_TIME",
+    "domain": "GEOLOGY",
+    "aliases": [],
+    "authority_url": "https://stratigraphy.org/ICSchart/ChronostratChart2024-12.pdf",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "QUATERNARY",
+    "zh_name": "第四纪",
+    "en_name": "Quaternary",
+    "parent_id": "GEO_TIME",
+    "domain": "GEOLOGY",
+    "aliases": [],
+    "authority_url": "https://stratigraphy.org/ICSchart/ChronostratChart2024-12.pdf",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "CIVILIZATIONS",
+    "zh_name": "文明与文化区域",
+    "en_name": "Civilizations and cultural regions",
+    "parent_id": null,
+    "domain": "CULTURE",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "CHINA",
+    "zh_name": "中国历史文化",
+    "en_name": "China",
+    "parent_id": "CIVILIZATIONS",
+    "domain": "CULTURE",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "EGYPT",
+    "zh_name": "埃及历史文化",
+    "en_name": "Egypt",
+    "parent_id": "CIVILIZATIONS",
+    "domain": "CULTURE",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "GREECE",
+    "zh_name": "希腊历史文化",
+    "en_name": "Greece",
+    "parent_id": "CIVILIZATIONS",
+    "domain": "CULTURE",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "ROME",
+    "zh_name": "罗马与意大利历史文化",
+    "en_name": "Rome",
+    "parent_id": "CIVILIZATIONS",
+    "domain": "CULTURE",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "PERSIA",
+    "zh_name": "波斯文化",
+    "en_name": "Persia",
+    "parent_id": "CIVILIZATIONS",
+    "domain": "CULTURE",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "MESOPOTAMIA",
+    "zh_name": "两河流域文化",
+    "en_name": "Mesopotamia",
+    "parent_id": "CIVILIZATIONS",
+    "domain": "CULTURE",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "SOUTH_ASIA",
+    "zh_name": "南亚文化",
+    "en_name": "India",
+    "parent_id": "CIVILIZATIONS",
+    "domain": "CULTURE",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "MESOAMERICA",
+    "zh_name": "中美洲文化",
+    "en_name": "Mesoamerica",
+    "parent_id": "CIVILIZATIONS",
+    "domain": "CULTURE",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "EUROPE",
+    "zh_name": "欧洲历史文化",
+    "en_name": "Europe",
+    "parent_id": "CIVILIZATIONS",
+    "domain": "CULTURE",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "CHINA_PERIODS",
+    "zh_name": "中国历史时期",
+    "en_name": "Chinese historical periods",
+    "parent_id": null,
+    "domain": "HISTORY",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "H_NEOLITHIC",
+    "zh_name": "新石器时代",
+    "en_name": "Neolithic",
+    "parent_id": "CHINA_PERIODS",
+    "domain": "HISTORY",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "H_XIA",
+    "zh_name": "夏（资料待补）",
+    "en_name": "Xia",
+    "parent_id": "CHINA_PERIODS",
+    "domain": "HISTORY",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "H_SHANG",
+    "zh_name": "商",
+    "en_name": "Shang",
+    "parent_id": "CHINA_PERIODS",
+    "domain": "HISTORY",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "H_ZHOU",
+    "zh_name": "周",
+    "en_name": "Zhou",
+    "parent_id": "CHINA_PERIODS",
+    "domain": "HISTORY",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "H_WARRING_STATES",
+    "zh_name": "战国",
+    "en_name": "Warring States",
+    "parent_id": "CHINA_PERIODS",
+    "domain": "HISTORY",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "H_QIN",
+    "zh_name": "秦（资料待补）",
+    "en_name": "Qin",
+    "parent_id": "CHINA_PERIODS",
+    "domain": "HISTORY",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "H_HAN",
+    "zh_name": "汉",
+    "en_name": "Han dynasty",
+    "parent_id": "CHINA_PERIODS",
+    "domain": "HISTORY",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "H_WEIJIN",
+    "zh_name": "魏晋南北朝",
+    "en_name": "Northern and Southern Dynasties",
+    "parent_id": "CHINA_PERIODS",
+    "domain": "HISTORY",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "H_SUI",
+    "zh_name": "隋",
+    "en_name": "Sui",
+    "parent_id": "CHINA_PERIODS",
+    "domain": "HISTORY",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "H_TANG",
+    "zh_name": "唐",
+    "en_name": "Tang",
+    "parent_id": "CHINA_PERIODS",
+    "domain": "HISTORY",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "H_SONG",
+    "zh_name": "宋",
+    "en_name": "Song",
+    "parent_id": "CHINA_PERIODS",
+    "domain": "HISTORY",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "H_YUAN",
+    "zh_name": "元",
+    "en_name": "Yuan",
+    "parent_id": "CHINA_PERIODS",
+    "domain": "HISTORY",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "H_MING",
+    "zh_name": "明",
+    "en_name": "Ming",
+    "parent_id": "CHINA_PERIODS",
+    "domain": "HISTORY",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  },
+  {
+    "term_id": "H_QING",
+    "zh_name": "清",
+    "en_name": "Qing",
+    "parent_id": "CHINA_PERIODS",
+    "domain": "HISTORY",
+    "aliases": [],
+    "authority_url": "https://openaccess-api.clevelandart.org/",
+    "review_status": "DRAFT_PENDING_REVIEW"
+  }
+]
