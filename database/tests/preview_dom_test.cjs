@@ -5,9 +5,9 @@ const data=html.match(/<script id="catalog-data" type="application\/json">([\s\S
 const code=[...html.matchAll(/<script(?: [^>]*)?>([\s\S]*?)<\/script>/g)].at(-1)[1];
 class Element{constructor(tag,id){this.tagName=tag;this.id=id;this.value='';this.children=[];this.dataset={};this.textContent='';this.classList={contains:()=>false,toggle:()=>{}};}
 append(...x){this.children.push(...x);}replaceChildren(...x){this.children=x;if(this.tagName==='select')this.value='';}addEventListener(name,fn){this.listener=fn;}after(e){this.afterNode=e;}remove(){this.removed=true;}}
-const ids={};for(const id of ['catalog-data','summary','search','culture','category','geology','status','count','rows','page','prev','next'])ids[id]=new Element(['culture','category','geology','status'].includes(id)?'select':'div',id);
+const ids={};for(const id of ['catalog-data','summary','search','culture','region','history','institution','media','category','geology','status','count','rows','page','prev','next'])ids[id]=new Element(['culture','region','history','institution','media','category','geology','status'].includes(id)?'select':'div',id);
 ids['catalog-data'].textContent=data;
-const buttons=['objects','articles','candidates'].map(view=>{const b=new Element('button');b.dataset.view=view;return b;});
+const buttons=['objects','articles','candidates','exhibitions'].map(view=>{const b=new Element('button');b.dataset.view=view;return b;});
 const context=vm.createContext({document:{getElementById:id=>ids[id],createElement:tag=>new Element(tag),querySelectorAll:()=>buttons},Option:class extends Element{constructor(text,value){super('option');this.textContent=text;this.value=value;}},console});
 vm.runInContext(code,context);let checks=0;const check=fn=>{fn();checks++;};
 check(()=>assert.match(ids.summary.textContent,/1441.*100.*500.*8/));
@@ -15,7 +15,7 @@ check(()=>assert.equal(vm.runInContext('filtered.length',context),1441));check((
 ids.culture.value='中国历史文化';ids.culture.listener();check(()=>assert.ok(vm.runInContext('filtered.length',context)>=300));
 buttons[1].onclick();check(()=>assert.equal(vm.runInContext('filtered.length',context),100));
 ids.search.value='科林斯';ids.search.listener();check(()=>assert.equal(vm.runInContext('filtered.length',context),1));
-ids.rows.children[0].onclick();check(()=>assert.match(ids.rows.children[0].afterNode.children[0].children[0].textContent,/真实性长期存在疑问/));
+ids.rows.children[0].onclick();check(()=>assert.match(ids.rows.children[0].afterNode.children[0].children[1].textContent,/真实性长期存在疑问/));
 buttons[2].onclick();check(()=>assert.equal(vm.runInContext('filtered.length',context),500));
 ids.category.value='FOSSIL_SPECIMEN';ids.category.listener();check(()=>assert.equal(vm.runInContext('filtered.length',context),24));
 ids.category.value='';ids.geology.value='Cretaceous';ids.geology.listener();check(()=>assert.ok(vm.runInContext('filtered.length',context)>0));
