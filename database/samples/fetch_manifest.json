@@ -1,0 +1,52 @@
+{
+  "fetched_at": "2026-10-08T00:55:22+00:00",
+  "requests": [
+    {
+      "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=bronze&culture=China&cc0=1&limit=100",
+      "selected": 20
+    },
+    {
+      "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=jade&culture=China&cc0=1&limit=100",
+      "selected": 20
+    },
+    {
+      "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=ceramic&culture=China&cc0=1&limit=100",
+      "selected": 20
+    },
+    {
+      "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=&culture=Egypt&cc0=1&limit=100",
+      "selected": 20
+    },
+    {
+      "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=&culture=Greece&cc0=1&limit=100",
+      "selected": 20
+    },
+    {
+      "url": "https://openaccess-api.clevelandart.org/api/artworks/?q=&culture=Rome&cc0=1&limit=100",
+      "selected": 20
+    },
+    {
+      "url": "https://api.gbif.org/v1/occurrence/search?basisOfRecord=FOSSIL_SPECIMEN&institutionCode=NHMUK&limit=60",
+      "selected": 24
+    },
+    {
+      "url": "https://smithsonian-open-access.s3-us-west-2.amazonaws.com/metadata/edan/nmnhminsci/00.txt",
+      "scanned": 141
+    },
+    {
+      "url": "https://api.gbif.org/v1/occurrence/search?basisOfRecord=FOSSIL_SPECIMEN&institutionCode=NHMUK&taxonKey=9273948&limit=40",
+      "selected": 10,
+      "taxon_match_url": "https://api.gbif.org/v1/species/match?name=Trilobita"
+    },
+    {
+      "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/436535",
+      "selected": 1
+    },
+    {
+      "url": "https://api.artic.edu/api/v1/artworks/27992",
+      "selected": 1
+    }
+  ],
+  "images_downloaded": 0,
+  "quality_selection": "GBIF records without scientificName omitted from curated seed snapshots; unknown fields never invented."
+}
