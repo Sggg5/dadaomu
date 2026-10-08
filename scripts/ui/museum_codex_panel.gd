@@ -5,6 +5,9 @@ const PAGE_SIZE := 40
 var state: MuseumState
 var player: MuseumPlayer
 var catalog := MuseumResearchCatalog.new()
+var exhibitions := MuseumExhibitionCatalog.new()
+var exhibition_choice: OptionButton
+var exhibition_id := ""
 var panel: PanelContainer
 var list: ItemList
 var detail: RichTextLabel
@@ -22,6 +25,7 @@ var _previous_controls := false
 func _ready() -> void:
 	layer = 45
 	catalog.load_file()
+	exhibitions.load_file(catalog)
 	panel = PanelContainer.new()
 	panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	panel.offset_left = 24
@@ -39,9 +43,15 @@ func _ready() -> void:
 	title.add_theme_font_size_override("font_size",24)
 	box.add_child(title)
 	section = OptionButton.new()
-	for label in ["我的馆藏（实际拥有）","全球研究资料（不代表拥有）","自然历史（化石 / 矿物 / 陨石 / 岩石）"]: section.add_item(label)
+	for label in ["我的馆藏（实际拥有）","全球研究资料（不代表拥有）","自然历史（化石 / 矿物 / 陨石 / 岩石）","专题展览（策划草稿）"]: section.add_item(label)
 	section.item_selected.connect(set_mode)
 	box.add_child(section)
+	exhibition_choice = OptionButton.new()
+	for id: String in exhibitions.ids(): exhibition_choice.add_item(exhibitions.plan(id).title_zh)
+	exhibition_choice.item_selected.connect(func(index: int) -> void: exhibition_id = exhibitions.ids()[index]; refresh())
+	box.add_child(exhibition_choice)
+	exhibition_choice.hide()
+	if not exhibitions.ids().is_empty(): exhibition_id = exhibitions.ids()[0]
 	search_box = LineEdit.new()
 	search_box.placeholder_text = "中文 / English 搜索 · 推荐中文名仍待审"
 	search_box.text_changed.connect(func(_text: String) -> void: refresh())
@@ -108,6 +118,7 @@ func close() -> void:
 func set_mode(value: int) -> void:
 	mode = value
 	section.select(value)
+	exhibition_choice.visible = mode == 3
 	refresh()
 
 func refresh() -> void:
@@ -117,6 +128,11 @@ func refresh() -> void:
 		for item in state.collection.all_items():
 			var definition := MuseumState.POOL.find_by_id(item.definition_id)
 			if search_box.text.is_empty() or (str(item.instance_id)+definition.display_name).to_lower().contains(search_box.text.to_lower()): result_ids.append(str(item.instance_id))
+	elif mode == 3:
+		var plan := exhibitions.plan(exhibition_id)
+		for id: String in plan.get("reading_order",[]):
+			var row := catalog.record(id)
+			if search_box.text.is_empty() or (str(row.recommended_zh_name)+row.original_name).to_lower().contains(search_box.text.to_lower()): result_ids.append(id)
 	else: result_ids = catalog.search(search_box.text,mode == 2)
 	render_page()
 
@@ -145,6 +161,13 @@ func select_entry(index: int) -> void:
 	if mode == 0: detail.text = MuseumCodexText.owned(state,state.collection.find(StringName(id)))
 	else:
 		detail.text = MuseumCodexText.research(catalog,catalog.record(id))
+		if mode == 3:
+			var plan := exhibitions.plan(exhibition_id)
+			var intro: String = "%s · %s\n%s\n主题：%s\n研究策划预览；不代表拥有或正式展厅开放\n来源：%s\n\n" % [plan.title_zh,plan.curation_status,plan.description,str(plan.theme_tags),str(plan.source_notes)]
+			detail.text = intro + detail.text
+			for article_id: String in plan.related_article_ids:
+				var article := catalog.article(article_id)
+				detail.text += "\n关联图鉴：%s · %s\n%s\n" % [article.zh_name,article.review_status,article.body]
 		image.texture = catalog.image_for(id)
 		if image.texture != null:
 			var media := catalog.media_for(id)

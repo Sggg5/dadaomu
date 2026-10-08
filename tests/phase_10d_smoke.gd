@@ -22,13 +22,20 @@ func run() -> void:
  check(not panel.detail.text.contains("品相41"),"unidentified condition hidden")
  panel.select_entry(1)
  check(panel.detail.text.contains("品相87"),"identified condition visible")
- var before:=JSON.stringify(flow.profile_store.encode(flow.museum_state)) if flow.profile_store.has_method("encode") else str(flow.museum_state.cash)
  panel.set_mode(1)
  check(panel.result_ids.size()==1441 and panel.list.item_count==40,"paginated research")
  panel.set_mode(2)
  panel.search_box.text="Trilobite"
  panel.refresh()
  check(not panel.result_ids.is_empty(),"English natural search")
+ panel.search_box.text=""
+ panel.set_mode(3)
+ check(panel.exhibitions.ids().size()==4,"four exhibition plans")
+ for exhibition:String in panel.exhibitions.ids():
+  panel.exhibition_id=exhibition
+  panel.refresh()
+  check(panel.result_ids==panel.exhibitions.plan(exhibition).reading_order and panel.result_ids.size()==8,"exhibition ordered eight objects")
+  check(panel.detail.text.contains("DRAFT_PENDING_REVIEW"),"exhibition remains draft")
  key(KEY_TAB)
  await frames(2)
  check(not panel.panel.visible and museum.player.controls_enabled,"Tab closes restores control")

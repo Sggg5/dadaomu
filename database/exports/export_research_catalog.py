@@ -35,6 +35,12 @@ def promote_media(db):
         shutil.copyfile(source,target/ source.name)
     (target/'ATTRIBUTION.json').write_text(json.dumps(research_media(db),ensure_ascii=False,sort_keys=True,indent=2)+'\n',encoding='utf-8')
 
+def export_exhibitions(db,output):
+    plans=[json.loads(r[0]) for r in db.execute('SELECT payload_json FROM museum_exhibitions ORDER BY exhibition_id')]
+    data=dict(schema_version=1,scope='PLANNING_ONLY_NOT_OWNED',exhibitions=plans)
+    Path(output).write_text(json.dumps(data,ensure_ascii=False,sort_keys=True,indent=2)+'\n',encoding='utf-8')
+    return data
+
 def export(db,output,report):
     payload,quality=build_catalog(db)
     mapping={m['object_id']:m['media_id'] for m in payload['media']}
@@ -48,5 +54,5 @@ def export(db,output,report):
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--db',default='database/work/catalog.sqlite');a=p.parse_args();db=init_db(a.db)
     try:
-        prepare_content(db);promote_media(db);r=export(db,'data/catalog/museum_research_catalog.json','database/docs/phase10d_export_report.json');print(len(r['records']),len(r['articles']))
+        prepare_content(db);promote_media(db);r=export(db,'data/catalog/museum_research_catalog.json','database/docs/phase10d_export_report.json');export_exhibitions(db,'data/catalog/museum_exhibitions.json');print(len(r['records']),len(r['articles']))
     finally:db.close()
