@@ -38,3 +38,9 @@ class ContentImportTests(unittest.TestCase):
         # Same text never licenses an identity merge across institutions.
         rows=self.db.execute('SELECT museum_id,accession_number FROM collection_objects WHERE primary_name=?',(names[0][0],)).fetchall()
         self.assertGreater(len(rows),1)
+
+    def test_source_categories_do_not_call_modern_books_archaeological(self):
+        raw=json.loads((ROOT/'samples/cma_seed.jsonl').read_text(encoding='utf-8').splitlines()[0])['record']
+        for kind,expected in [('Drawing','ARTWORK'),('Photograph','ARTWORK'),('Coins','NUMISMATIC_OBJECT'),('Bound Volume','HISTORICAL_OBJECT')]:
+            copy=dict(raw,type=kind,creation_date_earliest=1800)
+            self.assertEqual(expected,ADAPTERS['CMA'](copy).category_id)

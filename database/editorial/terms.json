@@ -12,7 +12,7 @@
   {
     "term_id": "BRONZE_VESSEL",
     "zh_name": "青铜器",
-    "en_name": "Bronze vessel",
+    "en_name": "Bronze object",
     "parent_id": "CULTURAL",
     "domain": "OBJECT",
     "aliases": [],
@@ -97,7 +97,9 @@
     "en_name": "Gui vessel",
     "parent_id": "BRONZE_VESSEL",
     "domain": "OBJECT",
-    "aliases": [],
+    "aliases": [
+      "gui"
+    ],
     "authority_url": "https://openaccess-api.clevelandart.org/",
     "review_status": "DRAFT_PENDING_REVIEW"
   },
@@ -181,7 +183,9 @@
     "en_name": "Gui tablet",
     "parent_id": "JADE_OBJECT",
     "domain": "OBJECT",
-    "aliases": [],
+    "aliases": [
+      "gui"
+    ],
     "authority_url": "https://openaccess-api.clevelandart.org/",
     "review_status": "DRAFT_PENDING_REVIEW"
   },

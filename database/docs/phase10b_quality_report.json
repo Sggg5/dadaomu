@@ -1,0 +1,2361 @@
+{
+  "errors": [],
+  "statistics": {
+    "objects": 1441,
+    "by_category": [
+      {
+        "category_id": "ARCHAEOLOGICAL_ARTIFACT",
+        "count": 673
+      },
+      {
+        "category_id": "ARTWORK",
+        "count": 271
+      },
+      {
+        "category_id": "FOSSIL_SPECIMEN",
+        "count": 66
+      },
+      {
+        "category_id": "HISTORICAL_OBJECT",
+        "count": 227
+      },
+      {
+        "category_id": "METEORITE",
+        "count": 13
+      },
+      {
+        "category_id": "MINERAL_SPECIMEN",
+        "count": 13
+      },
+      {
+        "category_id": "NUMISMATIC_OBJECT",
+        "count": 21
+      },
+      {
+        "category_id": "ROCK_SPECIMEN",
+        "count": 157
+      }
+    ],
+    "by_culture": [
+      {
+        "label": "Afghanistan, Bactria",
+        "count": 3
+      },
+      {
+        "label": "Afghanistan, Bactria, Eucratides I (171–145 BCE)",
+        "count": 3
+      },
+      {
+        "label": "Africa, Southern Africa, South Africa, Southern Nguni-style maker",
+        "count": 1
+      },
+      {
+        "label": "Anatolia, Myrina, Greece",
+        "count": 1
+      },
+      {
+        "label": "Antonine-era Roman Empire (Egypt), unknown painter",
+        "count": 1
+      },
+      {
+        "label": "Belgium, 17th century",
+        "count": 1
+      },
+      {
+        "label": "Byzantine Empire (Egypt)",
+        "count": 2
+      },
+      {
+        "label": "Byzantinium, Constantinople, Byzantine period, 6th century",
+        "count": 1
+      },
+      {
+        "label": "Byzantium",
+        "count": 1
+      },
+      {
+        "label": "Caucasus, Russia or Turkey, Koban culture",
+        "count": 1
+      },
+      {
+        "label": "Central Asia (Sogdiana) or Tibet",
+        "count": 1
+      },
+      {
+        "label": "Central Mexico, Aztec style, 13th-16th century",
+        "count": 1
+      },
+      {
+        "label": "Central Mexico, Aztec, 13th-16th century",
+        "count": 1
+      },
+      {
+        "label": "Central Mexico, Teotihuacán style, Classic period",
+        "count": 2
+      },
+      {
+        "label": "Central Mexico, Teotihuacán, Classic period",
+        "count": 5
+      },
+      {
+        "label": "Central Mexico, Tetzcoco?, Aztec, Post-Classic Period",
+        "count": 1
+      },
+      {
+        "label": "Central Mexico, Tlacuilapaxco apartment compound(?), Teotihuacán style, Classic Period",
+        "count": 1
+      },
+      {
+        "label": "China, Beijing palace workshops, Qing Dynasty (1644-1911), Qianlong reign (1736-1795)",
+        "count": 2
+      },
+      {
+        "label": "China, Beijing palace workshops, Qing dynasty (1644-1911), Qianlong reign (1736-1795)",
+        "count": 1
+      },
+      {
+        "label": "China, Eastern Han dynasty (25–220 CE)",
+        "count": 3
+      },
+      {
+        "label": "China, Eastern Zhou dynasty (770–256 BCE)",
+        "count": 2
+      },
+      {
+        "label": "China, Eastern Zhou dynasty (770–256 BCE), Spring and Autumn period (770–476 BCE)",
+        "count": 1
+      },
+      {
+        "label": "China, Eastern Zhou dynasty (770–256 BCE), Warring States period (475–221 BCE)",
+        "count": 2
+      },
+      {
+        "label": "China, Eastern Zhou dynasty (770–256 BCE), Warring States period (475–221 BCE) to Western Han dynasty (206 BCE–9 CE)",
+        "count": 1
+      },
+      {
+        "label": "China, Erlitou culture (c. 1900–1500 BCE)",
+        "count": 1
+      },
+      {
+        "label": "China, Five dynasties (907-960) - Song dynasty (960-1279)",
+        "count": 1
+      },
+      {
+        "label": "China, Fujian Province, Ming dynasty (1368-1644) - Qing dynasty (1644-1911)",
+        "count": 1
+      },
+      {
+        "label": "China, Fujian Province, Southern Song dynasty (1127-1279)",
+        "count": 1
+      },
+      {
+        "label": "China, Fujian province, Song dynasty (960-1279)",
+        "count": 2
+      },
+      {
+        "label": "China, Fujian province, Southern Song dynasty (1127-1279)",
+        "count": 2
+      },
+      {
+        "label": "China, Gansu province, Neolithic period",
+        "count": 1
+      },
+      {
+        "label": "China, Han dynasty (202 BCE–220 CE)",
+        "count": 5
+      },
+      {
+        "label": "China, Hebei province, Eastern Wei dynasty (534-550)",
+        "count": 1
+      },
+      {
+        "label": "China, Hebei province, Quyang, Northern Song dynasty (960-1127)",
+        "count": 1
+      },
+      {
+        "label": "China, Hebei province, Tang dynasty (618-907)",
+        "count": 1
+      },
+      {
+        "label": "China, Henan Province, Anyang, Xiudingsi pagoda, Tang dynasty (618–907)",
+        "count": 1
+      },
+      {
+        "label": "China, Henan Province, Baofeng, Qingliangsi, Northern Song dynasty (960-1127)",
+        "count": 1
+      },
+      {
+        "label": "China, Henan province, Eastern Zhou dynasty (770–256 BCE), Warring States period (475–221 BCE)",
+        "count": 3
+      },
+      {
+        "label": "China, Henan province, Gongxian kilns, Five dynasties (907–60)",
+        "count": 1
+      },
+      {
+        "label": "China, Henan province, Jincun, Warring States period (475–221 BCE)",
+        "count": 1
+      },
+      {
+        "label": "China, Henan province, Northern Dynasties period (386–581 CE)",
+        "count": 1
+      },
+      {
+        "label": "China, Henan province, Northern Song dynasty (960-1127)",
+        "count": 1
+      },
+      {
+        "label": "China, Henan province, Western Han dynasty (206 BCE–8 CE)",
+        "count": 3
+      },
+      {
+        "label": "China, Henan province, probably Anyang, Shang dynasty (c. 1600–c. 1046 BCE), Anyang phase (c. 1250–1046 BCE)",
+        "count": 1
+      },
+      {
+        "label": "China, Hunan province, Tang dynasty (618-907)",
+        "count": 1
+      },
+      {
+        "label": "China, Hunan province, Tongguan, Tang dynasty (618–907)",
+        "count": 1
+      },
+      {
+        "label": "China, Inner Mongolia, lower stratum of the Xiajiadian culture (2200–1600 BCE)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangsu province, Ming dynasty (1368–1644) or Qing dynasty (1644–1911)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangsu province, Wuxi",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangsu province, Yixing, Qing dynasty (1644–1911), Qianlong reign  (1736–95)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi Province, Jingdezhen kilns, Ming dynasty (1368–1644)",
+        "count": 2
+      },
+      {
+        "label": "China, Jiangxi Province, Jingdezhen kilns, Ming dynasty (1368–1644), Jiajing mark and reign (1522–66)",
+        "count": 2
+      },
+      {
+        "label": "China, Jiangxi Province, Jingdezhen kilns, Qing dynasty (1644–1911), Yongzheng mark and reign (1723–35)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi Province, Jingdezhen kilns, Yuan dynasty (1271–1368)",
+        "count": 2
+      },
+      {
+        "label": "China, Jiangxi Province, Jingdezhen, Ming dynasty (1368–1644), Xuande mark and period (1426–35)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi Province, Jingdezhen, Qing dynasty (1644–1911), Qianlong mark and reign (1736–95)",
+        "count": 3
+      },
+      {
+        "label": "China, Jiangxi Province, Jingdezhen, Qing dynasty (1644–1911), Yongzheng mark and period (1723–35)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi Province, Jingdezhen, Qing dynasty, Shunzhi period (1644–61)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi Province, Jingdezhen, Southern Song dynasty (1127–1279)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi Province, Jingdezhen, Yuan dynasty (1271–1368)",
+        "count": 2
+      },
+      {
+        "label": "China, Jiangxi Province, Northern Song dynasty (960–1127)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi Province, Southern Song dynasty (1127–1279)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi Province, Yonghezhen, Yuan dynasty (1271–1368)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen kilns, Ming dynasty (1368-1644)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen kilns, Ming dynasty (1368-1644), Chongzhen reign (1628-44) or Qing dynasty (1644-1911), Kangxi reign (1662-1722)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen kilns, Ming dynasty (1368-1644), Jiajing mark and reign (1522-66)",
+        "count": 2
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen kilns, Ming dynasty (1368-1644), Wanli reign (1573-1620)",
+        "count": 4
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen kilns, Ming dynasty (1368-1644), Yongle period (1403-1424)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen kilns, Ming dynasty (1368-1644), Zhengde mark and reign (1505-1521)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen kilns, Ming dynasty (1368-1644), Zhengde mark and reign (1506-21)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen kilns, Ming dynasty (1368–1644) or Qing dynasty (1644–1911)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen kilns, Ming dynasty (1368–1644), Zhengde mark and reign (1505–21)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen kilns, Qing dynasty (1644-1911), Qianlong mark and period (1736-95)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen kilns, Qing dynasty (1644-1911), Qianlong mark and reign (1736-95)",
+        "count": 4
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen kilns, Qing dynasty (1644-1911), Yongzheng mark and reign (1723-35)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen kilns, Qing dynasty (1644–1911), Kangxi mark and reign (1662–1722)",
+        "count": 3
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen, Ming dynasty (1368-1644), Chenghua mark and period (1465-1487)",
+        "count": 2
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen, Ming dynasty (1368-1644), Hongwu period (1368-98)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen, Ming dynasty (1368-1644), Jiajing mark and reign (1522-66)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen, Ming dynasty (1368-1644), Xuande mark and period (1426-1435)",
+        "count": 3
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen, Ming dynasty (1368-1644), Xuande mark and reign (1426-1435)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen, Ming dynasty (1368-1644), Xuande reign (1426-35)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen, Ming dynasty (1368–1644), Chenghua mark and period (1465–87)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen, Ming dynasty (1368–1644), Hongzhi mark and period (1488–1505)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen, Ming dynasty (1368–1644), Yongle period (1403–24)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen, Qing dynasty (1644-1911), Kangxi period (1662-1722)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen, Qing dynasty (1644-1911), Qianlong mark and period (1736-1795)",
+        "count": 2
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen, Qing dynasty (1644-1911), Yongzheng mark and reign (1723-1735)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen, Qing dynasty (1644-1911), Yongzheng reign (1723-1735)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen, Qing dynasty (1644–1911), Kangxi mark and period (1662–1722)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen, Qing dynasty (1644–1911), Yongzheng reign (1723–35)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jingdezhen, Southern Song dynasty (1127-1279)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiangxi province, Jizhou kilns, Southern Song Dynasty (1127–1279) - Yuan Dynasty (1271–1368)",
+        "count": 1
+      },
+      {
+        "label": "China, Jiaxing, Ming dynasty (1368–1644)",
+        "count": 18
+      },
+      {
+        "label": "China, Jin dynasty (1115-1234) or Korea, Goryeo dynasty (918-1392)",
+        "count": 1
+      },
+      {
+        "label": "China, Jin dynasty (1115–1234)",
+        "count": 1
+      },
+      {
+        "label": "China, Liao dynasty (916-1125)",
+        "count": 4
+      },
+      {
+        "label": "China, Ming dynasty (1368-1644) - Qing dynasty (1644-1911)",
+        "count": 1
+      },
+      {
+        "label": "China, Ming dynasty (1368-1644) or Qing dynasty (1644-1911)",
+        "count": 2
+      },
+      {
+        "label": "China, Ming dynasty (1368-1644), Wanli mark and reign (1573-1619)",
+        "count": 3
+      },
+      {
+        "label": "China, Ming dynasty (1368-1644), Wanli reign (1572-1620)",
+        "count": 1
+      },
+      {
+        "label": "China, Ming dynasty (1368-1644), Yongle reign (1403-1424)",
+        "count": 1
+      },
+      {
+        "label": "China, Ming dynasty (1368–1644)",
+        "count": 62
+      },
+      {
+        "label": "China, Ming dynasty (1368–1644) to Qing dynasty (1644–1911)",
+        "count": 2
+      },
+      {
+        "label": "China, Ming dynasty (1368–1644), Wanli reign (1573–1620)",
+        "count": 1
+      },
+      {
+        "label": "China, Neolithic period (3000s–2000s BCE)",
+        "count": 2
+      },
+      {
+        "label": "China, Neolithic period (3000s–2000s BCE) to Shang dynasty (c. 1766–1045 BCE)",
+        "count": 2
+      },
+      {
+        "label": "China, Northern Dynasties period (386-581)",
+        "count": 3
+      },
+      {
+        "label": "China, Northern Qi dynasty (550-577)",
+        "count": 3
+      },
+      {
+        "label": "China, Northern Qi dynasty (550–577)",
+        "count": 2
+      },
+      {
+        "label": "China, Northern Song dynasty (960-1127)",
+        "count": 3
+      },
+      {
+        "label": "China, Northern Song dynasty (960-1127) - Jin dynasty (1115-1234)",
+        "count": 1
+      },
+      {
+        "label": "China, Northern Song dynasty (960–1127)",
+        "count": 2
+      },
+      {
+        "label": "China, Northern Wei dynasty (386-534)",
+        "count": 3
+      },
+      {
+        "label": "China, Possibly Qing dynasty (1644-1911), Qianlong period (1736-1795)",
+        "count": 1
+      },
+      {
+        "label": "China, Qing Dynasty (1644-1911), Kangxi reign (1642-1722)",
+        "count": 1
+      },
+      {
+        "label": "China, Qing dynasty (1644-1911)",
+        "count": 39
+      },
+      {
+        "label": "China, Qing dynasty (1644-1911) or Republican period (1912-49)",
+        "count": 5
+      },
+      {
+        "label": "China, Qing dynasty (1644-1911), Daoguang reign (1821-50)",
+        "count": 1
+      },
+      {
+        "label": "China, Qing dynasty (1644-1911), Kangxi period (1662-1722)",
+        "count": 2
+      },
+      {
+        "label": "China, Qing dynasty (1644-1911), Kangxi reign (1661-1722)",
+        "count": 1
+      },
+      {
+        "label": "China, Qing dynasty (1644-1911), Kangxi reign (1662-1722)",
+        "count": 3
+      },
+      {
+        "label": "China, Qing dynasty (1644-1911), Qianlong inscription, mark, and reign (1736-95)",
+        "count": 1
+      },
+      {
+        "label": "China, Qing dynasty (1644-1911), Qianlong mark and reign (1736-95)",
+        "count": 6
+      },
+      {
+        "label": "China, Qing dynasty (1644-1911), Yongzheng mark and reign (1723-35)",
+        "count": 1
+      },
+      {
+        "label": "China, Qing dynasty (1644–1911)",
+        "count": 16
+      },
+      {
+        "label": "China, Qing dynasty (1644–1911), Jiaqing period (1796–1820)",
+        "count": 1
+      },
+      {
+        "label": "China, Qing dynasty (1644–1911), Jiaqing reign (1796–1820)",
+        "count": 1
+      },
+      {
+        "label": "China, Qing dynasty (1644–1911), Qianlong period (1736–95)",
+        "count": 2
+      },
+      {
+        "label": "China, Qing dynasty (1644–1911), Qianlong reign (1736–95)",
+        "count": 21
+      },
+      {
+        "label": "China, Qing dynasty (1644–1911), Qianlong reign (1736–95) or earlier",
+        "count": 1
+      },
+      {
+        "label": "China, Qing dynasty, Qianlong mark and period (1736–95)",
+        "count": 1
+      },
+      {
+        "label": "China, Shaanxi province, Meixian, Western Zhou dynasty (c. 1046–771 BCE)",
+        "count": 1
+      },
+      {
+        "label": "China, Shaanxi province, Tongchuan, Huangbaozhen, Five Dynasties period (907-960) or Northern Song dynasty (960-1126)",
+        "count": 1
+      },
+      {
+        "label": "China, Shaanxi province, Tongchuan, Huangbaozhen, Jin dynasty (1115-1234)",
+        "count": 1
+      },
+      {
+        "label": "China, Shaanxi province, Xi'an, Western Zhou dynasty (c. 1046–771 BCE)",
+        "count": 1
+      },
+      {
+        "label": "China, Shang dynasty (c. 1600–c. 1046 BCE)",
+        "count": 8
+      },
+      {
+        "label": "China, Shang dynasty (c. 1600–c. 1046 BCE) to Western Zhou dynasty (c. 1046–771 BCE)",
+        "count": 2
+      },
+      {
+        "label": "China, Shang dynasty (c. 1600–c. 1046 BCE), Anyang phase (c. 1250–1046 BCE)",
+        "count": 3
+      },
+      {
+        "label": "China, Shang dynasty (c. 1600–c. 1046 BCE), Erligang phase (c. 1600–1400 BCE)",
+        "count": 1
+      },
+      {
+        "label": "China, Shanxi province, Hezhong, Yuan dynasty (1271–1368)",
+        "count": 1
+      },
+      {
+        "label": "China, Six Dynasties period (220–589 CE)",
+        "count": 2
+      },
+      {
+        "label": "China, Song dynasty (960-1279)",
+        "count": 4
+      },
+      {
+        "label": "China, Song dynasty (960-1279) - Yuan dynasty (1271-1368)",
+        "count": 1
+      },
+      {
+        "label": "China, Song dynasty (960–1279)",
+        "count": 2
+      },
+      {
+        "label": "China, Southern Song (1127–1279) to Yuan dynasty (1279–1368)",
+        "count": 1
+      },
+      {
+        "label": "China, Southern Song dynasty (1127-1279)",
+        "count": 18
+      },
+      {
+        "label": "China, Southern Song dynasty (1127–1279)",
+        "count": 6
+      },
+      {
+        "label": "China, Southern and Northern Dynasties period (386-589)",
+        "count": 1
+      },
+      {
+        "label": "China, Southern and Northern Dynasties period (386–589 CE)",
+        "count": 1
+      },
+      {
+        "label": "China, Sui dynasty (581-618)",
+        "count": 1
+      },
+      {
+        "label": "China, Sui dynasty (581-618) - Tang dynasty (618-907)",
+        "count": 1
+      },
+      {
+        "label": "China, Sui dynasty (581-618) to early Tang dynasty (618-907)",
+        "count": 1
+      },
+      {
+        "label": "China, Tang dynasty",
+        "count": 2
+      },
+      {
+        "label": "China, Tang dynasty (618-906)",
+        "count": 1
+      },
+      {
+        "label": "China, Tang dynasty (618-907)",
+        "count": 39
+      },
+      {
+        "label": "China, Tang dynasty (618-907) - Five dynasties (907-960)",
+        "count": 1
+      },
+      {
+        "label": "China, Tang dynasty (618-907) - Song dynasty (960-1279)",
+        "count": 8
+      },
+      {
+        "label": "China, Tang dynasty (618–907)",
+        "count": 15
+      },
+      {
+        "label": "China, Warring States period (475–221 BCE)",
+        "count": 10
+      },
+      {
+        "label": "China, Warring States period (475–221 BCE) to Western Han dynasty (206 BCE–8 CE)",
+        "count": 5
+      },
+      {
+        "label": "China, Western Han dynasty (206 BCE–8 CE)",
+        "count": 6
+      },
+      {
+        "label": "China, Western Jin dynasty (265-316 CE)",
+        "count": 1
+      },
+      {
+        "label": "China, Western Jin dynasty (265–316 CE)",
+        "count": 1
+      },
+      {
+        "label": "China, Western Zhou dynasty (c. 1046–771 BCE)",
+        "count": 9
+      },
+      {
+        "label": "China, Xin dynasty (9–23 CE)",
+        "count": 1
+      },
+      {
+        "label": "China, Yuan (1271-1368) or early Ming dynasty (1368-1644)",
+        "count": 1
+      },
+      {
+        "label": "China, Yuan dynasty (1271-1368) - Ming dynasty (1368-1644)",
+        "count": 1
+      },
+      {
+        "label": "China, Yuan dynasty (1271–1368)",
+        "count": 4
+      },
+      {
+        "label": "China, Yunnan province, Dali kingdom (938–1253)",
+        "count": 1
+      },
+      {
+        "label": "China, Zhejiang Province, Longquan region, Southern Song dynasty (1127-1279)",
+        "count": 1
+      },
+      {
+        "label": "China, Zhejiang province, Eastern Han dynasty (25–220 CE)",
+        "count": 1
+      },
+      {
+        "label": "China, Zhejiang province, Hangzhou, Southern Song dynasty (1127-1279)",
+        "count": 2
+      },
+      {
+        "label": "China, Zhejiang province, Longquan kilns, Ming dynasty (1368-1644)",
+        "count": 1
+      },
+      {
+        "label": "China, Zhejiang province, Longquan region, Yuan dynasty (1271-1368)",
+        "count": 1
+      },
+      {
+        "label": "China, Zhejiang province, Southern Dynasties period (420-589)",
+        "count": 1
+      },
+      {
+        "label": "China, Zhejiang province, Yuan dynasty (1271-1368)",
+        "count": 1
+      },
+      {
+        "label": "China, Zhou dynasty (c. 1046–256 BCE),  Spring and Autumn period (770–475 BCE)",
+        "count": 1
+      },
+      {
+        "label": "China, along the southern borders, Eastern Zhou dynasty (770–256 BCE) to Han dynasty (202 BCE–220 CE)",
+        "count": 2
+      },
+      {
+        "label": "China, late Northern Song dynasty (960-1127) - Jin dynasty (1115-1234)",
+        "count": 3
+      },
+      {
+        "label": "China, late Southern Song (1127–1279) to early Yuan dynasty (1271–1368)",
+        "count": 3
+      },
+      {
+        "label": "China, late Tang dynasty (618–907) to Five dynasties (907–960)",
+        "count": 1
+      },
+      {
+        "label": "China, near Shui ch'i, Song dynasty (960-1279)",
+        "count": 2
+      },
+      {
+        "label": "China, possibly Guangdong Province, Xicun, Northern Song dynasty (960–1127)",
+        "count": 1
+      },
+      {
+        "label": "China, possibly Henan province, Xinwu, Dangyangyu, Northern Song dynasty (960-1127)",
+        "count": 1
+      },
+      {
+        "label": "China, probably Henan province, Erlitou culture (c. 1900–1500 BCE)",
+        "count": 1
+      },
+      {
+        "label": "China, probably Henan province, Tang dynasty (618-907)",
+        "count": 1
+      },
+      {
+        "label": "China, probably Henan province, Tang dynasty (618–907)",
+        "count": 1
+      },
+      {
+        "label": "China, probably Henan province, Western Han dynasty (206 BCE–8 CE)",
+        "count": 1
+      },
+      {
+        "label": "China, probably Shaanxi province, Xi'an, Tang dynasty (618-907)",
+        "count": 3
+      },
+      {
+        "label": "China, probably State of Chu, possibly Hunan province, Eastern Zhou dynasty (770–256 BCE), Warring States period (475–221 BCE)",
+        "count": 1
+      },
+      {
+        "label": "China, probably Zhejiang province, Han dynasty (202 BCE–220 CE)",
+        "count": 1
+      },
+      {
+        "label": "China, reportedly from Henan province, Northern Song (960-1127) to Jin dynasty (1115-1234)",
+        "count": 1
+      },
+      {
+        "label": "China, reportedly from Hunan province, Changsha, Warring States period (475–221 BCE), State of Chu (c. 1046–223 BCE)",
+        "count": 1
+      },
+      {
+        "label": "China, type-site at Qijiaping, Gansu province, Neolithic period, Qijia Culture",
+        "count": 1
+      },
+      {
+        "label": "Chinese, Ming dynasty (1368-1644)",
+        "count": 1
+      },
+      {
+        "label": "Costa Rica, Southern Nicoya region",
+        "count": 1
+      },
+      {
+        "label": "East China, Neolithic period, Liangzhu culture (3300–2200 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Eastern Anatolia or Northern Mesopotamia",
+        "count": 2
+      },
+      {
+        "label": "Eastern Greece, Rhodian",
+        "count": 2
+      },
+      {
+        "label": "Egypt",
+        "count": 2
+      },
+      {
+        "label": "Egypt and Spain",
+        "count": 1
+      },
+      {
+        "label": "Egypt or Syria",
+        "count": 1
+      },
+      {
+        "label": "Egypt or Syria(?)",
+        "count": 3
+      },
+      {
+        "label": "Egypt, Abbasid period",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Alexandria, Roman",
+        "count": 2
+      },
+      {
+        "label": "Egypt, Antinoë, Byzantine period",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Byzantine period",
+        "count": 6
+      },
+      {
+        "label": "Egypt, Coptic period",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Fatimid period",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Giza, Old Kingdom (2647–2124 BCE), Dynasty 5",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Greco-Roman period (332 BCE–395 CE), Ptolemaic dynasty (305–30 BCE)",
+        "count": 8
+      },
+      {
+        "label": "Egypt, Karnak, New Kingdom (1540–1069 BCE), Dynasty 18, reign of Akhenaten (1351–1334 BCE)",
+        "count": 3
+      },
+      {
+        "label": "Egypt, Late period (715–332 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Late period (715–332 BCE), Dynasties 25–26",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Late period (715–332 BCE), Dynasty 26",
+        "count": 7
+      },
+      {
+        "label": "Egypt, Late period (715–332 BCE), Dynasty 26 or later",
+        "count": 2
+      },
+      {
+        "label": "Egypt, Late period (715–332 BCE), Dynasty 27",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Late period (715–332 BCE), Dynasty 27, reign of Darius I (522–486 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Late period (715–332 BCE), Dynasty 30",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Late period (715–332 BCE), Dynasty 30, reign of Nectanebo II (358–340 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Middle Kingdom (2040–1648 BCE), Dynasty 12",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Middle Kingdom (2040–1648 BCE), Dynasty 12, reign of Amenemhat III (1860–1814 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Middle Kingdom (2040–1648 BCE), Dynasty 12, reign of Amenemhat III (1860–1814 BCE) or later",
+        "count": 1
+      },
+      {
+        "label": "Egypt, New Kingdom (1540–1069 BCE), Dynasties 18–19",
+        "count": 1
+      },
+      {
+        "label": "Egypt, New Kingdom (1540–1069 BCE), Dynasty 18",
+        "count": 5
+      },
+      {
+        "label": "Egypt, New Kingdom (1540–1069 BCE), Dynasty 18, reign of Akhenaten (1351–1334 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Egypt, New Kingdom (1540–1069 BCE), Dynasty 18, reign of Amenhotep II (1425–1400 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Egypt, New Kingdom (1540–1069 BCE), Dynasty 18, reign of Amenhotep III (1390–1352 BCE)",
+        "count": 8
+      },
+      {
+        "label": "Egypt, New Kingdom (1540–1069 BCE), Dynasty 18, reign of Tuthmosis III (1479–1425 BCE) or later",
+        "count": 1
+      },
+      {
+        "label": "Egypt, New Kingdom (1540–1069 BCE), Dynasty 19",
+        "count": 1
+      },
+      {
+        "label": "Egypt, New Kingdom (1540–1069 BCE), Dynasty 19, reign of Ramesses II (1279–1213 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Old Kingdom (2647–2124 BCE), Dynasty 5, reign of Nyuserre (2445–2422 BCE) or later",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Old Kingdom (2647–2124 BCE), Dynasty 5, reign of Userkaf (2496–2491 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Predynastic (5000–2950 BCE), Naqada III (3200–3000 BCE)–Egypt, Early Dynastic (2950–2647 BCE), Dynasty 1",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Predynastic (5000–2950 BCE), Naqada IIa–IIIa (3650–3000 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Predynastic (5000–2950 BCE), Naqada IIc–d (3650–3300 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Predynastic (5000–2950 BCE), Naqada II–III (3650–3000 BCE)",
+        "count": 3
+      },
+      {
+        "label": "Egypt, Predynastic (5000–2950 BCE), Naqada I–II (3900–3300 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Roman Empire, Antonine",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Roman Empire, late Tiberian",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Southern Upper Egypt, Middle Kingdom (2040–1648 BCE), Dynasty 11",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Thebes(?), New Kingdom (1540–1069 BCE), Dynasty 18, reign of Amenhotep III (1390–1352 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Thebes, Late period (715–332 BCE), Dynasty 26",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Thebes, Third Intermediate (1069–715 BCE), Dynasties 21–22",
+        "count": 5
+      },
+      {
+        "label": "Egypt, Third Intermediate (1069–715 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Third Intermediate (1069–715 BCE), Dynasties 21–22",
+        "count": 3
+      },
+      {
+        "label": "Egypt, Third Intermediate (1069–715 BCE), Dynasty 21",
+        "count": 1
+      },
+      {
+        "label": "Egypt, Third Intermediate (1069–715 BCE), Dynasty 22, reign of Shosheng I (943–922 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Egypt, probably Thebes, New Kingdom (1540–1069 BCE), Dynasty 18, reign of Amenhotep III (1390–1352 BCE)",
+        "count": 2
+      },
+      {
+        "label": "England",
+        "count": 5
+      },
+      {
+        "label": "England, 19th century",
+        "count": 7
+      },
+      {
+        "label": "England, Roman, Claudius I (41–54 CE)",
+        "count": 1
+      },
+      {
+        "label": "Etruscan, likely made at Vulci",
+        "count": 1
+      },
+      {
+        "label": "Flanders",
+        "count": 5
+      },
+      {
+        "label": "France",
+        "count": 13
+      },
+      {
+        "label": "France, 19th century",
+        "count": 12
+      },
+      {
+        "label": "France, 19th- 20th century",
+        "count": 1
+      },
+      {
+        "label": "France, Paris",
+        "count": 4
+      },
+      {
+        "label": "France, late 18th century",
+        "count": 1
+      },
+      {
+        "label": "France, made in Rome, 17th century",
+        "count": 1
+      },
+      {
+        "label": "France, worked in Rome, 16th century",
+        "count": 1
+      },
+      {
+        "label": "Germany",
+        "count": 3
+      },
+      {
+        "label": "Germany, 19th century",
+        "count": 3
+      },
+      {
+        "label": "Germany, Austria, Celt, Neolithic",
+        "count": 1
+      },
+      {
+        "label": "Germany, early 16th Century",
+        "count": 2
+      },
+      {
+        "label": "Greece",
+        "count": 21
+      },
+      {
+        "label": "Greece (?)",
+        "count": 3
+      },
+      {
+        "label": "Greece or Anatolia",
+        "count": 1
+      },
+      {
+        "label": "Greece or Italy, Rome (?)",
+        "count": 1
+      },
+      {
+        "label": "Greece, 19th century",
+        "count": 1
+      },
+      {
+        "label": "Greece, Alexandria or the Levant",
+        "count": 1
+      },
+      {
+        "label": "Greece, Alexandria(?)",
+        "count": 2
+      },
+      {
+        "label": "Greece, Alexandria, Hellenistic",
+        "count": 1
+      },
+      {
+        "label": "Greece, Amorgos",
+        "count": 1
+      },
+      {
+        "label": "Greece, Archaic period",
+        "count": 2
+      },
+      {
+        "label": "Greece, Athens",
+        "count": 10
+      },
+      {
+        "label": "Greece, Attic",
+        "count": 2
+      },
+      {
+        "label": "Greece, Boeotia",
+        "count": 5
+      },
+      {
+        "label": "Greece, Corinth",
+        "count": 2
+      },
+      {
+        "label": "Greece, Corinth, presumably of Corinthian or Argive origin",
+        "count": 1
+      },
+      {
+        "label": "Greece, Crete",
+        "count": 2
+      },
+      {
+        "label": "Greece, Cycladic",
+        "count": 1
+      },
+      {
+        "label": "Greece, Geometric period",
+        "count": 1
+      },
+      {
+        "label": "Greece, Greco-Roman Period, late Ptolemaic Dynasty",
+        "count": 3
+      },
+      {
+        "label": "Greece, Hellenistic period",
+        "count": 9
+      },
+      {
+        "label": "Greece, Ionian",
+        "count": 1
+      },
+      {
+        "label": "Greece, Laconia",
+        "count": 1
+      },
+      {
+        "label": "Greece, Macedonia(?)",
+        "count": 1
+      },
+      {
+        "label": "Greece, Ptolemaic Dynasty",
+        "count": 1
+      },
+      {
+        "label": "Greece, Rhodes",
+        "count": 1
+      },
+      {
+        "label": "Greece, Sicyon(?)",
+        "count": 1
+      },
+      {
+        "label": "Greece, Tanagra (Boeotia)",
+        "count": 1
+      },
+      {
+        "label": "Greece, late Hellenistic period",
+        "count": 4
+      },
+      {
+        "label": "Greece, perhaps from workshop of Tarentum",
+        "count": 1
+      },
+      {
+        "label": "Greece, probably from workshop of Locri or Tarentum, Classical Period",
+        "count": 1
+      },
+      {
+        "label": "Greek, Attic",
+        "count": 2
+      },
+      {
+        "label": "Greek, Boiotian",
+        "count": 1
+      },
+      {
+        "label": "Guatemala or Mexico, Usumacinta River region, Maya style",
+        "count": 1
+      },
+      {
+        "label": "Guatemala, Northern Peten or Mexico, Southern Campeche, Maya, late Classic",
+        "count": 1
+      },
+      {
+        "label": "Honduras, Copan, Maya, 7th-10th Century",
+        "count": 1
+      },
+      {
+        "label": "India",
+        "count": 36
+      },
+      {
+        "label": "India or Iran (Persia), 19th century",
+        "count": 1
+      },
+      {
+        "label": "India or Persia, 19th century ?",
+        "count": 1
+      },
+      {
+        "label": "India, 19th century",
+        "count": 1
+      },
+      {
+        "label": "India, Bronze Age",
+        "count": 1
+      },
+      {
+        "label": "India, Kashmir",
+        "count": 1
+      },
+      {
+        "label": "India, Madhya Pradesh, Bharhut, Shunga period",
+        "count": 2
+      },
+      {
+        "label": "India, Mathura, Kshatrapa period (c. 20 BCE–114 CE)",
+        "count": 1
+      },
+      {
+        "label": "India, Mathura, Kushan period",
+        "count": 13
+      },
+      {
+        "label": "India, Mughal",
+        "count": 2
+      },
+      {
+        "label": "India, Mughal Dynasty (1526-1756)",
+        "count": 1
+      },
+      {
+        "label": "India, Mughal, 17th-18th century",
+        "count": 1
+      },
+      {
+        "label": "India, Mughal, 18th century",
+        "count": 1
+      },
+      {
+        "label": "India, Rajasthan, Maurya period (322–185 BCE)",
+        "count": 3
+      },
+      {
+        "label": "India, Shunga period (185–78 BCE)",
+        "count": 16
+      },
+      {
+        "label": "India, Uttar Pradesh",
+        "count": 1
+      },
+      {
+        "label": "Indonesia, Sumba, early 20th century",
+        "count": 1
+      },
+      {
+        "label": "Iran or Central Asia, Timurid or Turkoman Period",
+        "count": 1
+      },
+      {
+        "label": "Iran, Achaemenid (550–330 BCE), Persepolis",
+        "count": 1
+      },
+      {
+        "label": "Iran, Median",
+        "count": 1
+      },
+      {
+        "label": "Iran, Qazvin, Safavid period (1501-1722)",
+        "count": 1
+      },
+      {
+        "label": "Iran, Rayy",
+        "count": 1
+      },
+      {
+        "label": "Iran, Seljuq period of Iran (1037–1194)",
+        "count": 1
+      },
+      {
+        "label": "Iran, Tabriz or Qazvin, Safavid period (1501-1722)",
+        "count": 1
+      },
+      {
+        "label": "Iran, probably Sultanabad, Ilkhanid period (1256–1353)",
+        "count": 1
+      },
+      {
+        "label": "Italy",
+        "count": 14
+      },
+      {
+        "label": "Italy, Naples",
+        "count": 1
+      },
+      {
+        "label": "Italy, Roman",
+        "count": 1
+      },
+      {
+        "label": "Italy, Roman (archaizing)",
+        "count": 1
+      },
+      {
+        "label": "Italy, Rome",
+        "count": 19
+      },
+      {
+        "label": "Italy, Rome, Early Imperial period",
+        "count": 3
+      },
+      {
+        "label": "Italy, Rome, Greco-Roman Period",
+        "count": 1
+      },
+      {
+        "label": "Italy, Rome, Imperial, later Julio-Claudian",
+        "count": 1
+      },
+      {
+        "label": "Italy, Rome, Roman Empire",
+        "count": 4
+      },
+      {
+        "label": "Italy, Rome, probably Augustan",
+        "count": 1
+      },
+      {
+        "label": "Italy, Venice",
+        "count": 1
+      },
+      {
+        "label": "Italy, Vicarello (ancient Aquae Apollinares), Roman, Augustan period",
+        "count": 1
+      },
+      {
+        "label": "Italy, late 15th Century",
+        "count": 1
+      },
+      {
+        "label": "Italy, probably Rome, late 17th-early 18th Century",
+        "count": 1
+      },
+      {
+        "label": "Japan, Edo period (1615–1868)",
+        "count": 1
+      },
+      {
+        "label": "Japan, Meiji period (1868–1912)",
+        "count": 3
+      },
+      {
+        "label": "Korea, Goryeo dynasty (918–1392)",
+        "count": 1
+      },
+      {
+        "label": "Korea, Joseon dynasty (1392–1910)",
+        "count": 3
+      },
+      {
+        "label": "Korea, Three Kingdoms period (57 BCE–668 CE)",
+        "count": 7
+      },
+      {
+        "label": "Korea, Unified Silla period (676-935)",
+        "count": 2
+      },
+      {
+        "label": "Lombardic, Italy, Rome, Migration period",
+        "count": 1
+      },
+      {
+        "label": "Lombardic, Italy, Rome, Migration period, 8th-9th Centuries",
+        "count": 1
+      },
+      {
+        "label": "Lombardic, Italy, Rome, Migration period, 8th-9th Century",
+        "count": 4
+      },
+      {
+        "label": "Mesoamerica, Central Mexico, Tlatilco",
+        "count": 4
+      },
+      {
+        "label": "Mesoamerica, Central Mexico, Tlatilco, type D1",
+        "count": 1
+      },
+      {
+        "label": "Mesoamerica, Central Mexico, Tlatilco, type D2",
+        "count": 1
+      },
+      {
+        "label": "Mesoamerica, Mexico, Guanajuato, Chupícuaro",
+        "count": 10
+      },
+      {
+        "label": "Mesoamerica, Mexico, Guerrero, Mezcala",
+        "count": 7
+      },
+      {
+        "label": "Mesoamerica, Mexico, Olmec",
+        "count": 6
+      },
+      {
+        "label": "Mesoamerica, West Mexico, Colima",
+        "count": 1
+      },
+      {
+        "label": "Mesoamerica, West Mexico, Colima or Jalisco state, possibly Tuxcacueso-Ortices municipality",
+        "count": 1
+      },
+      {
+        "label": "Mesoamerica, West Mexico, Michoacán",
+        "count": 1
+      },
+      {
+        "label": "Mesoamerica, West Mexico, Nayarit",
+        "count": 2
+      },
+      {
+        "label": "Mesopotamia, Early Dynastic period",
+        "count": 1
+      },
+      {
+        "label": "Mesopotamia, Iraq",
+        "count": 1
+      },
+      {
+        "label": "Mesopotamia, Iraq, Lagash (Tello)",
+        "count": 1
+      },
+      {
+        "label": "Mesopotamia, Neo-Sumerian, Iraq, Girsu",
+        "count": 1
+      },
+      {
+        "label": "Mesopotamia, Neo-Sumerian, Iraq, probably Lagash",
+        "count": 1
+      },
+      {
+        "label": "Mesopotamia, Sumerian, Iraq, Early Bronze Age I (c. 3300–3000 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Mesopotamia, Sumerian, Iraq, Tigris-Euphrates valley, Early Bronze Age I (c. 3300–c. 3000 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Mexico or Central America, Maya",
+        "count": 7
+      },
+      {
+        "label": "Mexico, 20th century",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Aztec",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Aztec, Valley of Mexico near Teotihuacan, Macuilxochitl (?), 14th-16th century",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Campeche, Jaina Island, Maya",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Campeche, Maya",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Campeche, Maya style (250-900)",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Campeche, Maya, Chocholá Style",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Central Highlands, Olmec",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Cholula(?), Mixteca-Puebla style",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Chupíuaro, Guanajuato",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Classic Maya, Jaina style",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Coahuila state, Saltillo Region",
+        "count": 3
+      },
+      {
+        "label": "Mexico, Guanajuato or Michoacán, Chupícuaro",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Guerrero(?), San Jerónimo de Juárez, Xochicalco style",
+        "count": 3
+      },
+      {
+        "label": "Mexico, Guerrero, Ichcatiopan, Mixtec or Aztec",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Guerrero, Olmec",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Guerrero, Xalitla, Xochipala style",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Gulf Coast",
+        "count": 3
+      },
+      {
+        "label": "Mexico, Gulf Coast, Classic Veracruz style (600-1100)",
+        "count": 3
+      },
+      {
+        "label": "Mexico, Gulf Coast, Huastec",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Gulf Coast, San Andrés Tuxtla(?)",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Jalisco, Zacatecas Style",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Maya, Jaina style",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Mixtec?, 8th-11th Century",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Nayarit",
+        "count": 3
+      },
+      {
+        "label": "Mexico, Oaxaca, Mixtec style",
+        "count": 2
+      },
+      {
+        "label": "Mexico, Oaxaca, Zapotec",
+        "count": 2
+      },
+      {
+        "label": "Mexico, Oaxaca, Zapotec style",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Oaxaca, Zapotec, 6th-8th Century",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Palenque region(?), Maya",
+        "count": 1
+      },
+      {
+        "label": "Mexico, South-central Veracruz",
+        "count": 1
+      },
+      {
+        "label": "Mexico, Veracruz?, 600-950 AD",
+        "count": 3
+      },
+      {
+        "label": "Mexico, Yucatán, Maya (Chocholá) style (250-900)",
+        "count": 1
+      },
+      {
+        "label": "Mughal India, court of Akbar (reigned 1556–1605)",
+        "count": 4
+      },
+      {
+        "label": "Netherlands",
+        "count": 2
+      },
+      {
+        "label": "North China, Tang dynasty (618-907)",
+        "count": 6
+      },
+      {
+        "label": "North or Central China, Northern Song (960–1127) or Jin dynasty (1115–1234)",
+        "count": 1
+      },
+      {
+        "label": "Northeast China, Liao dynasty (916-1125)",
+        "count": 4
+      },
+      {
+        "label": "Northeast China, Neolithic period, Hongshan culture (4700–2920 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Northeast China, Neolithic period, probably Hongshan culture (4700–2920 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Northeastern India, Bihar, Tetravan, Pala Period (750-1197)",
+        "count": 1
+      },
+      {
+        "label": "Northern China, Liao dynasty (907-1125)",
+        "count": 1
+      },
+      {
+        "label": "Northern China, Northern Song dynasty (960-1127)",
+        "count": 1
+      },
+      {
+        "label": "Northern China, Northern Song dynasty (960-1127) - Jin dynasty (1115-1234)",
+        "count": 1
+      },
+      {
+        "label": "Northern Greece",
+        "count": 1
+      },
+      {
+        "label": "Northern Greece, Macedonian, Geometric period  (900-700 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Northern India",
+        "count": 1
+      },
+      {
+        "label": "Northern India, Mathura, Kushan period",
+        "count": 1
+      },
+      {
+        "label": "Northern India, Pahari kingdoms",
+        "count": 2
+      },
+      {
+        "label": "Northern India, Uttar Pradesh",
+        "count": 1
+      },
+      {
+        "label": "Northern India, Uttar Pradesh, Ahichchatra, Gupta period (c. 320-550)",
+        "count": 1
+      },
+      {
+        "label": "Northern India, Uttar Pradesh, Mathura, Kushan period",
+        "count": 2
+      },
+      {
+        "label": "Northern India, Uttar Pradesh, probably Kaushambi",
+        "count": 1
+      },
+      {
+        "label": "Northwest China, Neolithic period to Bronze Age, Qijia culture (2000–1700 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Northwest China, Neolithic period, Majiayao culture",
+        "count": 1
+      },
+      {
+        "label": "Northwest China, Neolithic period, Majiayao culture, Banshan phase (2650–2350 BCE)",
+        "count": 2
+      },
+      {
+        "label": "Northwest China, Neolithic period, Majiayao culture, Majiayao phase (3300–2650 BCE)",
+        "count": 1
+      },
+      {
+        "label": "Northwestern India, possibly Tanesara Mahadeva, Gupta period (320-647)",
+        "count": 1
+      },
+      {
+        "label": "Pakistan, Gandhara, Kushan period",
+        "count": 1
+      },
+      {
+        "label": "Pakistan, Gandhara, probably Butkara in Swat, Kushan period",
+        "count": 1
+      },
+      {
+        "label": "Pakistan, Gandhara, probably Sirkap, early Kushan period",
+        "count": 2
+      },
+      {
+        "label": "Persia (Iran or Iraq)",
+        "count": 1
+      },
+      {
+        "label": "Probably Sogdia (present-day Uzbekistan)",
+        "count": 1
+      },
+      {
+        "label": "Republic of Venice, Kingdom of Candia, Candia (Heraklion, Crete, Greece) or Byzantine Empire, Constantinople (Istanbul, Turkey)",
+        "count": 1
+      },
+      {
+        "label": "Roman, said to be from Corfu, Greece",
+        "count": 1
+      },
+      {
+        "label": "Russia, St. Petersburg",
+        "count": 2
+      },
+      {
+        "label": "Serbia, Vinça culture, Neolithic Era",
+        "count": 2
+      },
+      {
+        "label": "South China, Southern Song dynasty (1127–1279)",
+        "count": 9
+      },
+      {
+        "label": "South China, Yuan dynasty (1279–1368)",
+        "count": 1
+      },
+      {
+        "label": "South East Asia, Thailand, Ban Chiang, Neolithic period",
+        "count": 3
+      },
+      {
+        "label": "South Italian, Daunian or Canosan",
+        "count": 1
+      },
+      {
+        "label": "Southeast China, Suzhou, Qing dynasty (1644–1911)",
+        "count": 1
+      },
+      {
+        "label": "Southeast China, Suzhou, Qing dynasty (1644–1911), Qianlong reign (1736–95)",
+        "count": 6
+      },
+      {
+        "label": "Southeast China, Zhejiang province, Southern Song dynasty (1127–1279)",
+        "count": 1
+      },
+      {
+        "label": "Southern India, Andhra Pradesh, Nagarjunakonda",
+        "count": 1
+      },
+      {
+        "label": "Syria or Turkey, Ottoman period (1299–1922)",
+        "count": 1
+      },
+      {
+        "label": "Syria, Damascus, Mamluk Period, 14th Century",
+        "count": 2
+      },
+      {
+        "label": "Thailand, Ban Chiang, Neolithic Period",
+        "count": 2
+      },
+      {
+        "label": "Turkey, Bursa",
+        "count": 4
+      },
+      {
+        "label": "United States",
+        "count": 2
+      },
+      {
+        "label": "Uzbekistan, Bukhara",
+        "count": 1
+      },
+      {
+        "label": "West Mexico, Colima, Comala style",
+        "count": 3
+      },
+      {
+        "label": "probably Turkey, Roman",
+        "count": 1
+      }
+    ],
+    "by_institution": [
+      {
+        "museum_id": "AIC",
+        "count": 31
+      },
+      {
+        "museum_id": "CMA",
+        "count": 1160
+      },
+      {
+        "museum_id": "MET",
+        "count": 1
+      },
+      {
+        "museum_id": "NHMUK",
+        "count": 15
+      },
+      {
+        "museum_id": "SMITHSONIAN",
+        "count": 234
+      }
+    ],
+    "by_region": [
+      {
+        "label": "Antarctica",
+        "count": 10
+      },
+      {
+        "label": "Australia",
+        "count": 6
+      },
+      {
+        "label": "Belgium",
+        "count": 1
+      },
+      {
+        "label": "Brazil",
+        "count": 1
+      },
+      {
+        "label": "Canada",
+        "count": 3
+      },
+      {
+        "label": "Chile",
+        "count": 2
+      },
+      {
+        "label": "China",
+        "count": 1
+      },
+      {
+        "label": "Colombia",
+        "count": 7
+      },
+      {
+        "label": "Costa Rica",
+        "count": 3
+      },
+      {
+        "label": "Dominican Republic",
+        "count": 1
+      },
+      {
+        "label": "Ecuador",
+        "count": 1
+      },
+      {
+        "label": "Egypt",
+        "count": 2
+      },
+      {
+        "label": "France",
+        "count": 1
+      },
+      {
+        "label": "Germany",
+        "count": 6
+      },
+      {
+        "label": "Greenland",
+        "count": 1
+      },
+      {
+        "label": "Indonesia",
+        "count": 3
+      },
+      {
+        "label": "Italy",
+        "count": 3
+      },
+      {
+        "label": "Japan",
+        "count": 3
+      },
+      {
+        "label": "Mexico",
+        "count": 7
+      },
+      {
+        "label": "Morocco",
+        "count": 3
+      },
+      {
+        "label": "Namibia",
+        "count": 1
+      },
+      {
+        "label": "Panama",
+        "count": 18
+      },
+      {
+        "label": "Russia",
+        "count": 2
+      },
+      {
+        "label": "South Africa",
+        "count": 4
+      },
+      {
+        "label": "Tajikistan",
+        "count": 1
+      },
+      {
+        "label": "Tanzania",
+        "count": 2
+      },
+      {
+        "label": "Tanzania, United Republic of",
+        "count": 3
+      },
+      {
+        "label": "Tonga",
+        "count": 1
+      },
+      {
+        "label": "United Kingdom",
+        "count": 2
+      },
+      {
+        "label": "United Kingdom of Great Britain and Northern Ireland",
+        "count": 2
+      },
+      {
+        "label": "United States",
+        "count": 99
+      },
+      {
+        "label": "Venezuela",
+        "count": 5
+      }
+    ],
+    "fossil_periods": [
+      {
+        "label": null,
+        "count": 21
+      },
+      {
+        "label": "Cambrian",
+        "count": 2
+      },
+      {
+        "label": "Cretaceous",
+        "count": 6
+      },
+      {
+        "label": "Devonian",
+        "count": 1
+      },
+      {
+        "label": "Jurassic",
+        "count": 3
+      },
+      {
+        "label": "Neogene",
+        "count": 12
+      },
+      {
+        "label": "Ordovician",
+        "count": 7
+      },
+      {
+        "label": "Paleogene",
+        "count": 5
+      },
+      {
+        "label": "Pennsylvanian",
+        "count": 1
+      },
+      {
+        "label": "Quaternary",
+        "count": 8
+      }
+    ],
+    "missing": {
+      "description": 0.2623178348369188,
+      "museum_id": 0.0,
+      "accession_number": 0.0,
+      "origin_location_id": 0.9791811242192922,
+      "discovery_location_id": 0.8299791811242193
+    },
+    "duplicate_candidates": 1027,
+    "licenses": {
+      "data": [
+        {
+          "license_id": "CC0",
+          "records": 1447
+        }
+      ],
+      "media": [
+        {
+          "license_id": "CC0",
+          "verification_status": "VERIFIED",
+          "records": 1218
+        },
+        {
+          "license_id": "CC_BY",
+          "verification_status": "VERIFIED",
+          "records": 5
+        },
+        {
+          "license_id": "UNKNOWN",
+          "verification_status": "UNVERIFIED",
+          "records": 9
+        }
+      ]
+    }
+  },
+  "source_counts": [
+    {
+      "source_id": "AIC",
+      "count": 31
+    },
+    {
+      "source_id": "CMA",
+      "count": 1160
+    },
+    {
+      "source_id": "GBIF",
+      "count": 15
+    },
+    {
+      "source_id": "MET",
+      "count": 1
+    },
+    {
+      "source_id": "SMITHSONIAN",
+      "count": 240
+    }
+  ],
+  "article_states": [
+    {
+      "review_status": "DRAFT_PENDING_REVIEW",
+      "count": 100
+    }
+  ],
+  "candidate_states": [
+    {
+      "status": "CANDIDATE",
+      "count": 500
+    }
+  ],
+  "candidate_cohorts": [
+    {
+      "cohort": "CHINA",
+      "count": 300
+    },
+    {
+      "cohort": "NATURAL",
+      "count": 60
+    },
+    {
+      "cohort": "WORLD",
+      "count": 140
+    }
+  ],
+  "drafts": 100,
+  "candidates": 500,
+  "terms": 80,
+  "unknown_fossil_fields": {
+    "scientific_name": 24,
+    "taxonomic_rank": 51,
+    "age_min_ma": 66,
+    "age_max_ma": 66,
+    "discovery_year": 66,
+    "preserved_element": 26
+  },
+  "missing_dedicated_articles": 400,
+  "blocked_specific_1933_identities": 20,
+  "media_downloaded": 0,
+  "profile_version": 4,
+  "release_catalog_sha256": "dad2b7d7ea3a5849750bf6a93837d1ebbe77f30d9d84510890754e8c957c3b0f",
+  "human_review": "NOT_PERFORMED",
+  "semantic_assertion_review": "Citations validated structurally; translation correctness and historical interpretation still require humans",
+  "new_examples": [
+    {
+      "object_id": "object:0d879ff894a8722db9dcbe5b",
+      "primary_name": "Sciaenops sp",
+      "accession_number": "PAL284144",
+      "category_id": "FOSSIL_SPECIMEN",
+      "source_id": "SMITHSONIAN",
+      "record_url": "http://n2t.net/ark:/65665/3fd10c263-1aa7-4fa5-aecb-9f7786521b53"
+    },
+    {
+      "object_id": "object:2835154f89be9a97145f5190",
+      "primary_name": "Priconodon crassus Marsh, 1888",
+      "accession_number": "PAL540735",
+      "category_id": "FOSSIL_SPECIMEN",
+      "source_id": "SMITHSONIAN",
+      "record_url": "http://n2t.net/ark:/65665/346fc51bc-cacb-4ba1-a999-9da8481f6ddd"
+    },
+    {
+      "object_id": "object:2e653f356cfafa8104cced91",
+      "primary_name": "Mammut americanum (Kerr)",
+      "accession_number": "V3045",
+      "category_id": "FOSSIL_SPECIMEN",
+      "source_id": "SMITHSONIAN",
+      "record_url": "http://n2t.net/ark:/65665/31afd82c3-c5e2-40ad-b982-b05d8a7ef178"
+    },
+    {
+      "object_id": "object:3f884bd815de0029ab18bf47",
+      "primary_name": "Sphoeroides hyperostosus Tyler et al., 1992",
+      "accession_number": "PAL283930",
+      "category_id": "FOSSIL_SPECIMEN",
+      "source_id": "SMITHSONIAN",
+      "record_url": "http://n2t.net/ark:/65665/31e37dda0-a0a5-49dc-a8bd-8e4d6ec56373"
+    },
+    {
+      "object_id": "object:045f67d2cdd5e3ab0fa25080",
+      "primary_name": "Quartz",
+      "accession_number": "NMNH G11370-00",
+      "category_id": "MINERAL_SPECIMEN",
+      "source_id": "SMITHSONIAN",
+      "record_url": "http://n2t.net/ark:/65665/3cd6867d7-543a-4e85-aa61-1ced0ff3c5e9"
+    },
+    {
+      "object_id": "object:84602472c5a74ea98cb45fc9",
+      "primary_name": "Rhodonite",
+      "accession_number": "NMNH 174734-00",
+      "category_id": "MINERAL_SPECIMEN",
+      "source_id": "SMITHSONIAN",
+      "record_url": "http://n2t.net/ark:/65665/376e4b233-5b16-4643-94c6-b1941cee34c1"
+    },
+    {
+      "object_id": "object:3edf0345d5f71e27c2a8291a",
+      "primary_name": "ALH 84233,1",
+      "accession_number": "USNM 6531",
+      "category_id": "METEORITE",
+      "source_id": "SMITHSONIAN",
+      "record_url": "http://n2t.net/ark:/65665/3cc7a9582-c1b1-4719-832e-4f5c516ae420"
+    },
+    {
+      "object_id": "object:565a175666eaa78261d618ac",
+      "primary_name": "QUE 97256,0",
+      "accession_number": "USNM 7308",
+      "category_id": "METEORITE",
+      "source_id": "SMITHSONIAN",
+      "record_url": "http://n2t.net/ark:/65665/3b3debf72-3ef7-4c30-b8c2-48f611a6297b"
+    },
+    {
+      "object_id": "object:02070c8e641fa6b382dfa5d3",
+      "primary_name": "Amphibolite",
+      "accession_number": "NMNH 117784-54",
+      "category_id": "ROCK_SPECIMEN",
+      "source_id": "SMITHSONIAN",
+      "record_url": "http://n2t.net/ark:/65665/381f02c97-ce33-4958-a058-b9c8de371aab"
+    },
+    {
+      "object_id": "object:0413a78db80ac783bc19c19b",
+      "primary_name": "Lead ore",
+      "accession_number": "NMNH 76779",
+      "category_id": "ROCK_SPECIMEN",
+      "source_id": "SMITHSONIAN",
+      "record_url": "http://n2t.net/ark:/65665/3d423100e-5284-4588-afb0-1c2974946311"
+    },
+    {
+      "object_id": "object:01e7eec397c0163c79a45104",
+      "primary_name": "The Repose in Egypt",
+      "accession_number": "1959.99.15",
+      "category_id": "ARTWORK",
+      "source_id": "CMA",
+      "record_url": "https://clevelandart.org/art/1959.99.15"
+    },
+    {
+      "object_id": "object:0222324102c566859588be8d",
+      "primary_name": "Zhi and Xu's Pure Conversation",
+      "accession_number": "1970.128",
+      "category_id": "ARTWORK",
+      "source_id": "CMA",
+      "record_url": "https://clevelandart.org/art/1970.128"
+    },
+    {
+      "object_id": "object:0257877eafff8ac70492a298",
+      "primary_name": "Birds Gather under the Spring Willow",
+      "accession_number": "1974.31",
+      "category_id": "ARTWORK",
+      "source_id": "CMA",
+      "record_url": "https://clevelandart.org/art/1974.31"
+    },
+    {
+      "object_id": "object:001188572ef2c92dc531552b",
+      "primary_name": "Wine Cup",
+      "accession_number": "1957.71",
+      "category_id": "ARCHAEOLOGICAL_ARTIFACT",
+      "source_id": "CMA",
+      "record_url": "https://clevelandart.org/art/1957.71"
+    },
+    {
+      "object_id": "object:00d77cd14741bedd51af2ee3",
+      "primary_name": "Water and Moon (Potala) Guanyin",
+      "accession_number": "1984.7",
+      "category_id": "ARCHAEOLOGICAL_ARTIFACT",
+      "source_id": "CMA",
+      "record_url": "https://clevelandart.org/art/1984.7"
+    },
+    {
+      "object_id": "object:01130094c6dc2087c998320b",
+      "primary_name": "Footed Plate with Floral Medallion",
+      "accession_number": "1989.268",
+      "category_id": "ARCHAEOLOGICAL_ARTIFACT",
+      "source_id": "CMA",
+      "record_url": "https://clevelandart.org/art/1989.268"
+    },
+    {
+      "object_id": "object:015fc6e92243df04c9f56a9e",
+      "primary_name": "Eleven-Headed Guanyin",
+      "accession_number": "1981.53",
+      "category_id": "ARCHAEOLOGICAL_ARTIFACT",
+      "source_id": "CMA",
+      "record_url": "https://clevelandart.org/art/1981.53"
+    },
+    {
+      "object_id": "object:01b7a1ccf24fa42da104e1a1",
+      "primary_name": "Textile Ornament(?): Phoenix",
+      "accession_number": "1942.1083.1",
+      "category_id": "ARCHAEOLOGICAL_ARTIFACT",
+      "source_id": "CMA",
+      "record_url": "https://clevelandart.org/art/1942.1083.1"
+    },
+    {
+      "object_id": "object:01f99d32094bc86d2b39a811",
+      "primary_name": "Necklace Bead in the Form of a Fish",
+      "accession_number": "1973.39.i",
+      "category_id": "ARCHAEOLOGICAL_ARTIFACT",
+      "source_id": "CMA",
+      "record_url": "https://clevelandart.org/art/1973.39.i"
+    },
+    {
+      "object_id": "object:02a42151a7ad0f555e5e017f",
+      "primary_name": "Eleven-Headed Guanyin",
+      "accession_number": "1959.129",
+      "category_id": "ARCHAEOLOGICAL_ARTIFACT",
+      "source_id": "CMA",
+      "record_url": "https://clevelandart.org/art/1959.129"
+    },
+    {
+      "object_id": "object:038cb813431f7ae28e06306f",
+      "primary_name": "Decorated Jar with Boat Scenes",
+      "accession_number": "1914.639",
+      "category_id": "ARCHAEOLOGICAL_ARTIFACT",
+      "source_id": "CMA",
+      "record_url": "https://clevelandart.org/art/1914.639"
+    },
+    {
+      "object_id": "object:0394b104ae641b452fcba1a4",
+      "primary_name": "Lobed Mirror with Paired Phoenixes and Floral Displays",
+      "accession_number": "1995.348",
+      "category_id": "ARCHAEOLOGICAL_ARTIFACT",
+      "source_id": "CMA",
+      "record_url": "https://clevelandart.org/art/1995.348"
+    }
+  ],
+  "normalizer_version": 5,
+  "released_export_equal": true,
+  "transport_counts": {
+    "PACKED_CRATE": 199,
+    "HAND_CARRY": 255,
+    "EXPEDITION_TRANSPORT": 46
+  },
+  "candidate_categories": {
+    "Jade": 45,
+    "Sculpture": 64,
+    "Bound Volume": 5,
+    "Print": 14,
+    "Metalwork": 58,
+    "Ceramic": 84,
+    "Wood": 11,
+    "Lacquer": 9,
+    "Painting": 38,
+    "Scarabs": 1,
+    "Ivory": 8,
+    "Jewelry": 17,
+    "Enamel": 5,
+    "Furniture and woodwork": 10,
+    "Amulets": 6,
+    "Photograph": 4,
+    "Embroidery": 4,
+    "Stone": 6,
+    "Cosmetic Objects": 2,
+    "Silver": 6,
+    "Calligraphy": 2,
+    "Coins": 7,
+    "Manuscript": 2,
+    "Miscellaneous": 9,
+    "Tapestry": 1,
+    "Drawing": 6,
+    "Garment": 4,
+    "Glyptic": 1,
+    "Funerary Equipment": 3,
+    "Arms and Armor": 2,
+    "Musical Instrument": 2,
+    "Seals": 1,
+    "Carpet": 1,
+    "Textile": 1,
+    "Glass": 1,
+    "FOSSIL_SPECIMEN": 24,
+    "ROCK_SPECIMEN": 16,
+    "MINERAL_SPECIMEN": 10,
+    "METEORITE": 10
+  }
+}

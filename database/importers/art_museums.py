@@ -11,9 +11,18 @@ def cma(raw):
     r.extension = {'year_start': raw.get('creation_date_earliest'), 'year_end': raw.get('creation_date_latest'),
                    'date_label': raw.get('creation_date'), 'calendar': 'source_signed_year_unspecified',
                    'inscriptions': raw.get('inscriptions')}
-    if raw.get('type') in ('Painting', 'Paintings', 'Print', 'Prints', 'Calligraphy'): r.category_id = 'ARTWORK'
+    kind = raw.get('type')
+    if kind in ('Painting', 'Paintings', 'Print', 'Prints', 'Calligraphy', 'Drawing', 'Photograph'):
+        r.category_id = 'ARTWORK'
+    elif kind == 'Coins':
+        r.category_id = 'NUMISMATIC_OBJECT'
+    elif kind in ('Bound Volume', 'Manuscript', 'Furniture and woodwork', 'Garment', 'Embroidery', 'Tapestry', 'Textile', 'Carpet') or isinstance(raw.get('creation_date_earliest'), int) and raw['creation_date_earliest'] >= 1500:
+        r.category_id = 'HISTORICAL_OBJECT'
+    # Broad source-based classification; religious meaning and exact artifact type stay editorial drafts.
+
     r.evidence = {'primary_name': ('title', raw.get('title')), 'cultural.year_start': ('creation_date_earliest', raw.get('creation_date_earliest')),
                   'cultural.year_end': ('creation_date_latest', raw.get('creation_date_latest')), 'materials': ('technique',raw.get('technique'))}
+    r.evidence['category_id'] = ('type and creation_date_earliest', {'type': kind, 'creation_date_earliest': raw.get('creation_date_earliest')})
     original = text(raw.get('title_in_original_language'))
     if original and '\ufffd' not in original:
         r.names.append(('und', 'ORIGINAL', original))

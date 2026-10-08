@@ -578,3 +578,16 @@ Schema v3. FK关系/类型/默认与非空约束由版本化SQL定义；NULL代�
 - game_object_references: FORM_REFERENCE等明确关系，仅资料参考，不能宣称玩家拿走现实馆藏或年代等同。
 - available_world_year/acquisition_mode/world_review_note: 策划时间审查，与制造/发现/命名分别处理；现代发现化石需明确虚构考察设计，不默认1933已知。
 - transport_mode: 当前仅HAND_CARRY且slots≤8；大骨架EXPEDITION_TRANSPORT排除，本阶段无运输玩法。
+
+## Phase10B 前向扩展（Schema6）
+
+|表|关键字段|职责|
+|---|---|---|
+|editorial_terms|term_id,parent_id,domain,zh_name,en_name,aliases_json,authority_url,review_status|双语受控草稿术语，父子FK|
+|editorial_object_tags|object_id,term_id,source_id,record_id,source_path,source_value_json,status|建议标签逐条保留源字面证据|
+|editorial_articles|article_id,object_id,zh_name,original_name,object_type,civilization_or_geology,material,technique_or_preservation,body,claims_json,related_object_ids,confidence,review_status,ai_generated,reviewer,review_note,content_sha256|独立中文稿；不修改官方ObjectNames|
+|editorial_article_sources|article_id,claim_index,source_id,record_id,record_url|每段引用对应真实SourceRecord复合FK|
+|game_collection_candidates|game_id,object_id,article_id,zh_name,cohort,category,basis_kind,payload_json,content_sha256,status,history_review,source_review,numeric_review,gameplay_review,reviewer,review_note|独立提案，未自动转换正式定义；APPROVED需四审通过|
+|content_review_log|review_id,entity_kind,entity_id,from_status,to_status,reviewer,note,content_sha256,reviewed_at|真人内容版本审核日志；本阶段无实际人工批准|
+
+payload_json保存时代、地区、稀有度/价值/槽位/吸引力建议、三种transport_mode、1933待审/阻断原因、图鉴关系与源引用。大于8格必须EXPEDITION_TRANSPORT。未知体量不是HAND_CARRY的发行批准，所有提案仍CANDIDATE。现有正式game_collection_definitions transport字段不被新策划分类改写。

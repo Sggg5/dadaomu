@@ -11,3 +11,8 @@ source_records保存机构来源、记录ID/URL、数据许可证/声明、抓�
 稳定ID与语言显示分开，object_names记录简体/繁体/英语/原文/学名/别名/旧称及翻译状态和人工锁；词表有父子关系和同义名。进口只操作自身来源，不自动覆盖人工锁定字段或游戏策划。
 
 迁移有SHA256锁、事务和未知版本检查，禁止改已应用迁移/重置用户数据库。SQL FK/CHECK/类型触发器保护边界；更多类别可以添加受控词表，不将外部JSON当内部Schema。检索索引/FTS与运行导出是独立职责。
+
+
+Phase10B追加Schema4图鉴/词表、5图鉴来源复合FK、6独立候选；1～3不修改。editorial/content验证段落引用与原始字段，terms仅给出字面来源支持的建议分类。planning/candidates保存四审未通过的提案与初步数值带，不写game_collection_definitions。1933时间检查从既有world_policy抽为reference_time_issues供发行/候选共享。
+
+preview使用Python标准库生成单HTML和候选JSON，无服务器依赖/远程媒体；HTML只通过textContent展示源文字并转义脚本结束标记。validators/content_quality分别报告硬错误和人工缺口。流程与状态变更见CONTENT_REVIEW_WORKFLOW，程序测试绝不自动批准内容。Normalizer5修正现代书籍/绘画/钱币宽分类，并要求古生物部门记录有真实地质证据才能导入为化石。

@@ -1,3 +1,9 @@
+## Phase 10B 全球藏品内容（当前完成，待内容人工审订）
+
+分支codex/phase-10b-museum-content，基于10A 2336dbd。累计1441真实对象（新增1280），100中文图鉴草稿、80双语术语、500独立CANDIDATE（300中国/140全球/60自然史）。Schema6前向迁移、Normalizer5；RAW/NORMALIZED/EDITORIAL_DRAFT/GAME_CANDIDATE/APPROVED/RELEASED分离，程序通过不等于真人审核。
+
+离线只读预览database/previews/index.html；重建运行python -m database.preview。图鉴全部DRAFT_PENDING_REVIEW，候选四审PENDING；大件远征运输只为提案，没有新运输玩法。正式八件古董/掉落概率/Profile4/战斗/Boss/遗物冻结，data/catalog/global_catalog.json保持原内容。无图片/3D下载、不合并main、不继续下一阶段。详见database/docs/PHASE_10B_VERIFICATION.md及CONTENT_REVIEW_WORKFLOW.md。
+
 ## Phase 10A全球藏品数据库（当前授权）
 
 新分支codex/phase-10a-global-museum-database从1c3a614创建，保留全部本地9B有效提交。仅database/离线资料基础设施与审核本地JSON，不改战斗/Boss/遗物/随机规则/8古董数值/OwnedAntique身份/Profile VERSION4，无正式存档迁移，不合并main。10A.1/2/3顺序测试、三独立commit，完成尝试push，失败保留本地不force。

@@ -1,6 +1,6 @@
 # Global Museum Collection Database
 
-独立离线SQLite资料库，Python标准库，无Godot插件。真实馆藏资料是游戏策划参考，不直接进入掉落池。无需网络即可重建已核验的161条种子记录。
+独立离线SQLite资料库，Python标准库，无Godot插件。真实馆藏资料是游戏策划参考，不直接进入掉落池。无需网络即可重建已核验的1441条真实馆藏记录。
 
 在仓库根目录运行：
 
@@ -37,4 +37,14 @@ python -m database.cli export_godot_catalog --db database/work/catalog.sqlite --
 godot --headless --path . --script tests/phase_10a_smoke.gd
 ```
 
-Schema v3前向迁移不修改已应用SQL；NORMALIZER_VERSION3支持适配规则升级后重放源记录，不覆盖人工锁。编辑映射JSON不会重写数据库里已有游戏策划，策划修改应由明确审核流程更新该层。
+Schema v6前向迁移不修改已应用SQL；NORMALIZER_VERSION5支持适配规则升级后重放源记录，不覆盖人工锁。编辑映射JSON不会重写数据库里已有游戏策划，策划修改应由明确审核流程更新该层。
+
+
+Phase10B 内容层与离线预览（无需联网，不会扩充正式掉落）：
+
+```powershell
+python -m database.preview --db database/work/catalog.sqlite
+node database/tests/preview_dom_test.cjs
+```
+
+打开previews/index.html可筛选文明、器物类别、地质年代、查看图鉴、来源和候选状态。previews/planning_preview.json是500提案，不能作为正式发行目录。100篇AI草稿与80词表都待人工审订。完整质量统计见docs/phase10b_quality_report.json；人工流程见docs/CONTENT_REVIEW_WORKFLOW.md。内置浏览器file协议验证受限，HTML文件可由用户本地浏览器打开；DOM逻辑测试不能替代外观验收。

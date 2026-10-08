@@ -14,7 +14,7 @@ def load_terms(db,path=ROOT/'editorial/terms.json'):
     try:
         for r in rows:
             if r['review_status']!='DRAFT_PENDING_REVIEW':raise ValueError('Term imports cannot claim human approval')
-            db.execute('''INSERT OR IGNORE INTO editorial_terms VALUES(?,?,?,?,?,?,?,?)''',
+            db.execute("""INSERT INTO editorial_terms VALUES(?,?,?,?,?,?,?,?) ON CONFLICT(term_id) DO UPDATE SET zh_name=excluded.zh_name,en_name=excluded.en_name,aliases_json=excluded.aliases_json WHERE editorial_terms.review_status='DRAFT_PENDING_REVIEW' """,
                        (r['term_id'],r['parent_id'],r['domain'],r['zh_name'],r['en_name'],json.dumps(r['aliases'],ensure_ascii=False),r['authority_url'],r['review_status']))
         db.execute('COMMIT')
     except Exception:db.execute('ROLLBACK');raise

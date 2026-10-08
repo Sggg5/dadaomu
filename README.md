@@ -1,5 +1,11 @@
 # 大盗墓时代
 
+## Phase 10B 全球藏品内容（当前完成，待内容人工审订）
+
+分支codex/phase-10b-museum-content，基于10A 2336dbd。累计1441真实对象（新增1280），100中文图鉴草稿、80双语术语、500独立CANDIDATE（300中国/140全球/60自然史）。Schema6前向迁移、Normalizer5；RAW/NORMALIZED/EDITORIAL_DRAFT/GAME_CANDIDATE/APPROVED/RELEASED分离，程序通过不等于真人审核。
+
+离线只读预览database/previews/index.html；重建运行python -m database.preview。图鉴全部DRAFT_PENDING_REVIEW，候选四审PENDING；大件远征运输只为提案，没有新运输玩法。正式八件古董/掉落概率/Profile4/战斗/Boss/遗物冻结，data/catalog/global_catalog.json保持原内容。无图片/3D下载、不合并main、不继续下一阶段。详见database/docs/PHASE_10B_VERIFICATION.md及CONTENT_REVIEW_WORKFLOW.md。
+
 ## Phase 9B.3.2b：Geometry / Boss Arena分离（当前实现，人工待验收）
 
 基于已存在9B.3.3的 `5435e96872f2ff8a2b76d24cfb438406df9df39d`，继续 `codex/phase-9b-multifloor-endurance`。本次只空间拆分/合法性，不回退或继续调Boss压力，不改Boss HP/伤害/时序、Build或经济。完成只commit/push，不合并main，等待空间人工验收。
