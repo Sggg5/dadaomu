@@ -1,0 +1,37 @@
+{
+  "objects": 1441,
+  "source_records": 1447,
+  "natural_audits": 122,
+  "refined_articles": 30,
+  "photos_downloaded": 20,
+  "photo_derivatives": 40,
+  "exhibitions": [
+    {
+      "title_zh": "古埃及文明",
+      "objects": 8
+    },
+    {
+      "title_zh": "生命的远古印记",
+      "objects": 8
+    },
+    {
+      "title_zh": "中国青铜文明",
+      "objects": 8
+    },
+    {
+      "title_zh": "地球与天外来客",
+      "objects": 8
+    }
+  ],
+  "profile_version": 4,
+  "released_export_equal": true,
+  "python_tests": 86,
+  "python_failures": 0,
+  "godot_checks": 293691,
+  "godot_failures": 0,
+  "graphical_checks": 49,
+  "graphical_failures": 0,
+  "browser_screenshots": 13,
+  "browser_external_images": 0,
+  "human_content_review": "NOT_PERFORMED"
+}

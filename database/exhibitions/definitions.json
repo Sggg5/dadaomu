@@ -1,0 +1,631 @@
+[
+  {
+    "exhibition_id": "china_bronze_civilization",
+    "title_zh": "中国青铜文明",
+    "title_en": "Chinese Bronze Civilizations",
+    "description": "从盛食器、酒器与乐器附件认识青铜器。器形、铸造与纹饰是阅读主题，礼仪用途以机构资料为依据，不给缺失铭文补故事。",
+    "theme_tags": [
+      "商周礼器",
+      "青铜铸造",
+      "器形与纹饰"
+    ],
+    "featured_object_ids": [
+      "object:22f5b40e35caa8c33979d894",
+      "object:a4669cf58e2de48f7e396f75",
+      "object:25c346cbffb37d6505c0ca72",
+      "object:5766900eafce349149069f1a",
+      "object:a0e7f1235b0411b2a30d6717",
+      "object:2b3e2445bf6369bda0b5c78b",
+      "object:0c82065959a04fb696707559",
+      "object:12263cef9d1c79e26d2e2639"
+    ],
+    "related_article_ids": [
+      "encyclopedia_003",
+      "encyclopedia_004",
+      "encyclopedia_006",
+      "encyclopedia_012",
+      "encyclopedia_014",
+      "encyclopedia_015"
+    ],
+    "historical_scope": "中国商周至战国；不把唐镜并入商周礼器",
+    "display_requirements": {
+      "mode": "PLANNING_ONLY",
+      "artifact_lighting_and_conservation": "PENDING_SPECIALIST",
+      "transport": "NO_GAMEPLAY_IMPLEMENTED",
+      "media": "VERIFIED_LOCAL_ONLY"
+    },
+    "curation_status": "DRAFT_PENDING_REVIEW",
+    "review_notes": [
+      "全部图鉴与专题为AI策划草稿，需真人核对",
+      "不产生门票、游客行为、奖励或正式掉落",
+      "自然史鉴定仍待专家；关联稿只介绍实际对应对象"
+    ],
+    "core_knowledge_topics": [
+      "商周礼器",
+      "青铜铸造",
+      "器形与纹饰"
+    ],
+    "reading_order": [
+      "object:22f5b40e35caa8c33979d894",
+      "object:a4669cf58e2de48f7e396f75",
+      "object:25c346cbffb37d6505c0ca72",
+      "object:5766900eafce349149069f1a",
+      "object:a0e7f1235b0411b2a30d6717",
+      "object:2b3e2445bf6369bda0b5c78b",
+      "object:0c82065959a04fb696707559",
+      "object:12263cef9d1c79e26d2e2639"
+    ],
+    "object_relationships": [
+      {
+        "from": "object:22f5b40e35caa8c33979d894",
+        "to": "object:a4669cf58e2de48f7e396f75",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:a4669cf58e2de48f7e396f75",
+        "to": "object:25c346cbffb37d6505c0ca72",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:25c346cbffb37d6505c0ca72",
+        "to": "object:5766900eafce349149069f1a",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:5766900eafce349149069f1a",
+        "to": "object:a0e7f1235b0411b2a30d6717",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:a0e7f1235b0411b2a30d6717",
+        "to": "object:2b3e2445bf6369bda0b5c78b",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:2b3e2445bf6369bda0b5c78b",
+        "to": "object:0c82065959a04fb696707559",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:0c82065959a04fb696707559",
+        "to": "object:12263cef9d1c79e26d2e2639",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      }
+    ],
+    "source_notes": [
+      {
+        "object_id": "object:0c82065959a04fb696707559",
+        "source_id": "CMA",
+        "record_id": "147977",
+        "record_url": "https://clevelandart.org/art/1974.73",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:12263cef9d1c79e26d2e2639",
+        "source_id": "CMA",
+        "record_id": "146941",
+        "record_url": "https://clevelandart.org/art/1972.34",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:22f5b40e35caa8c33979d894",
+        "source_id": "CMA",
+        "record_id": "136423",
+        "record_url": "https://clevelandart.org/art/1960.288",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:25c346cbffb37d6505c0ca72",
+        "source_id": "CMA",
+        "record_id": "120822",
+        "record_url": "https://clevelandart.org/art/1941.548",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:2b3e2445bf6369bda0b5c78b",
+        "source_id": "CMA",
+        "record_id": "112307",
+        "record_url": "https://clevelandart.org/art/1930.730",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:5766900eafce349149069f1a",
+        "source_id": "CMA",
+        "record_id": "128157",
+        "record_url": "https://clevelandart.org/art/1951.151",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:a0e7f1235b0411b2a30d6717",
+        "source_id": "CMA",
+        "record_id": "111506",
+        "record_url": "https://clevelandart.org/art/1929.984",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:a4669cf58e2de48f7e396f75",
+        "source_id": "CMA",
+        "record_id": "136465",
+        "record_url": "https://clevelandart.org/art/1960.42",
+        "license_id": "CC0"
+      }
+    ]
+  },
+  {
+    "exhibition_id": "ancient_egypt",
+    "title_zh": "古埃及文明",
+    "title_en": "Ancient Egypt",
+    "description": "从石雕、嵌饰与墓葬用品认识古埃及工艺及宗教视觉。制造文化、发现地点与现藏机构分别显示，可能的身份和出土归属继续保留限定。",
+    "theme_tags": [
+      "宗教图像",
+      "墓葬文化",
+      "拼嵌与雕刻"
+    ],
+    "featured_object_ids": [
+      "object:4f77205ebbe189f03e68129e",
+      "object:f69a267de67d1dea7b85c47b",
+      "object:f285f1bc79c90e9c4dcb314e",
+      "object:d9f9887e736dd39773e2d0c7",
+      "object:038cb813431f7ae28e06306f",
+      "object:08d82bd54faf77ab4eb9f0f0",
+      "object:09abb4919b0fa41aa402b34c",
+      "object:0c1157110d091aa47444b68f"
+    ],
+    "related_article_ids": [
+      "encyclopedia_066",
+      "encyclopedia_067",
+      "encyclopedia_084",
+      "encyclopedia_085"
+    ],
+    "historical_scope": "机构明确标记古埃及王国/晚期；排除仅在埃及发现的罗马/拜占庭器物",
+    "display_requirements": {
+      "mode": "PLANNING_ONLY",
+      "artifact_lighting_and_conservation": "PENDING_SPECIALIST",
+      "transport": "NO_GAMEPLAY_IMPLEMENTED",
+      "media": "VERIFIED_LOCAL_ONLY"
+    },
+    "curation_status": "DRAFT_PENDING_REVIEW",
+    "review_notes": [
+      "全部图鉴与专题为AI策划草稿，需真人核对",
+      "不产生门票、游客行为、奖励或正式掉落",
+      "自然史鉴定仍待专家；关联稿只介绍实际对应对象"
+    ],
+    "core_knowledge_topics": [
+      "宗教图像",
+      "墓葬文化",
+      "拼嵌与雕刻"
+    ],
+    "reading_order": [
+      "object:4f77205ebbe189f03e68129e",
+      "object:f69a267de67d1dea7b85c47b",
+      "object:f285f1bc79c90e9c4dcb314e",
+      "object:d9f9887e736dd39773e2d0c7",
+      "object:038cb813431f7ae28e06306f",
+      "object:08d82bd54faf77ab4eb9f0f0",
+      "object:09abb4919b0fa41aa402b34c",
+      "object:0c1157110d091aa47444b68f"
+    ],
+    "object_relationships": [
+      {
+        "from": "object:4f77205ebbe189f03e68129e",
+        "to": "object:f69a267de67d1dea7b85c47b",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:f69a267de67d1dea7b85c47b",
+        "to": "object:f285f1bc79c90e9c4dcb314e",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:f285f1bc79c90e9c4dcb314e",
+        "to": "object:d9f9887e736dd39773e2d0c7",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:d9f9887e736dd39773e2d0c7",
+        "to": "object:038cb813431f7ae28e06306f",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:038cb813431f7ae28e06306f",
+        "to": "object:08d82bd54faf77ab4eb9f0f0",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:08d82bd54faf77ab4eb9f0f0",
+        "to": "object:09abb4919b0fa41aa402b34c",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:09abb4919b0fa41aa402b34c",
+        "to": "object:0c1157110d091aa47444b68f",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      }
+    ],
+    "source_notes": [
+      {
+        "object_id": "object:038cb813431f7ae28e06306f",
+        "source_id": "CMA",
+        "record_id": "94084",
+        "record_url": "https://clevelandart.org/art/1914.639",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:08d82bd54faf77ab4eb9f0f0",
+        "source_id": "CMA",
+        "record_id": "157614",
+        "record_url": "https://clevelandart.org/art/1995.13",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:09abb4919b0fa41aa402b34c",
+        "source_id": "CMA",
+        "record_id": "136482",
+        "record_url": "https://clevelandart.org/art/1960.56",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:0c1157110d091aa47444b68f",
+        "source_id": "CMA",
+        "record_id": "152255",
+        "record_url": "https://clevelandart.org/art/1985.136",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:4f77205ebbe189f03e68129e",
+        "source_id": "CMA",
+        "record_id": "101360",
+        "record_url": "https://clevelandart.org/art/1920.1975",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:d9f9887e736dd39773e2d0c7",
+        "source_id": "CMA",
+        "record_id": "101366",
+        "record_url": "https://clevelandart.org/art/1920.1979",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:f285f1bc79c90e9c4dcb314e",
+        "source_id": "CMA",
+        "record_id": "101365",
+        "record_url": "https://clevelandart.org/art/1920.1978",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:f69a267de67d1dea7b85c47b",
+        "source_id": "CMA",
+        "record_id": "101363",
+        "record_url": "https://clevelandart.org/art/1920.1976",
+        "license_id": "CC0"
+      }
+    ]
+  },
+  {
+    "exhibition_id": "ancient_life_imprints",
+    "title_zh": "生命的远古印记",
+    "title_en": "Imprints of Ancient Life",
+    "description": "以真实编号的三叶虫、古鱼类及其它化石比较保存部位、地层与登记名称。分类存疑记录只显示来源给出的阶元，不宣称本项目已完成专家鉴定。",
+    "theme_tags": [
+      "身体与保存",
+      "地质时间",
+      "Taxon与Specimen"
+    ],
+    "featured_object_ids": [
+      "object:06e2853c3afa5df3bba62d99",
+      "object:10c736c035f70afb9ce1cdbd",
+      "object:19d1882687383f08d35bfbc8",
+      "object:1bbd394d1e31c3b45e0245d3",
+      "object:1cc016e8c9bd3c8d61998c01",
+      "object:50e590c2c4e7d4f51b7d074d",
+      "object:0d879ff894a8722db9dcbe5b",
+      "object:2835154f89be9a97145f5190"
+    ],
+    "related_article_ids": [
+      "encyclopedia_086"
+    ],
+    "historical_scope": "以源地质标签为准；不推精确Ma或确定物种",
+    "display_requirements": {
+      "mode": "PLANNING_ONLY",
+      "artifact_lighting_and_conservation": "PENDING_SPECIALIST",
+      "transport": "NO_GAMEPLAY_IMPLEMENTED",
+      "media": "VERIFIED_LOCAL_ONLY"
+    },
+    "curation_status": "DRAFT_PENDING_REVIEW",
+    "review_notes": [
+      "全部图鉴与专题为AI策划草稿，需真人核对",
+      "不产生门票、游客行为、奖励或正式掉落",
+      "自然史鉴定仍待专家；关联稿只介绍实际对应对象"
+    ],
+    "core_knowledge_topics": [
+      "身体与保存",
+      "地质时间",
+      "Taxon与Specimen"
+    ],
+    "reading_order": [
+      "object:06e2853c3afa5df3bba62d99",
+      "object:10c736c035f70afb9ce1cdbd",
+      "object:19d1882687383f08d35bfbc8",
+      "object:1bbd394d1e31c3b45e0245d3",
+      "object:1cc016e8c9bd3c8d61998c01",
+      "object:50e590c2c4e7d4f51b7d074d",
+      "object:0d879ff894a8722db9dcbe5b",
+      "object:2835154f89be9a97145f5190"
+    ],
+    "object_relationships": [
+      {
+        "from": "object:06e2853c3afa5df3bba62d99",
+        "to": "object:10c736c035f70afb9ce1cdbd",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:10c736c035f70afb9ce1cdbd",
+        "to": "object:19d1882687383f08d35bfbc8",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:19d1882687383f08d35bfbc8",
+        "to": "object:1bbd394d1e31c3b45e0245d3",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:1bbd394d1e31c3b45e0245d3",
+        "to": "object:1cc016e8c9bd3c8d61998c01",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:1cc016e8c9bd3c8d61998c01",
+        "to": "object:50e590c2c4e7d4f51b7d074d",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:50e590c2c4e7d4f51b7d074d",
+        "to": "object:0d879ff894a8722db9dcbe5b",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:0d879ff894a8722db9dcbe5b",
+        "to": "object:2835154f89be9a97145f5190",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      }
+    ],
+    "source_notes": [
+      {
+        "object_id": "object:06e2853c3afa5df3bba62d99",
+        "source_id": "GBIF",
+        "record_id": "6132187845",
+        "record_url": "https://www.gbif.org/occurrence/6132187845",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:0d879ff894a8722db9dcbe5b",
+        "source_id": "SMITHSONIAN",
+        "record_id": "nmnhpaleobiology_3574691",
+        "record_url": "http://n2t.net/ark:/65665/3fd10c263-1aa7-4fa5-aecb-9f7786521b53",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:10c736c035f70afb9ce1cdbd",
+        "source_id": "GBIF",
+        "record_id": "1056115563",
+        "record_url": "https://www.gbif.org/occurrence/1056115563",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:19d1882687383f08d35bfbc8",
+        "source_id": "GBIF",
+        "record_id": "1265651867",
+        "record_url": "https://www.gbif.org/occurrence/1265651867",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:1bbd394d1e31c3b45e0245d3",
+        "source_id": "GBIF",
+        "record_id": "1265651865",
+        "record_url": "https://www.gbif.org/occurrence/1265651865",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:1cc016e8c9bd3c8d61998c01",
+        "source_id": "GBIF",
+        "record_id": "1057044811",
+        "record_url": "https://www.gbif.org/occurrence/1057044811",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:2835154f89be9a97145f5190",
+        "source_id": "SMITHSONIAN",
+        "record_id": "nmnhpaleobiology_10039943",
+        "record_url": "http://n2t.net/ark:/65665/346fc51bc-cacb-4ba1-a999-9da8481f6ddd",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:50e590c2c4e7d4f51b7d074d",
+        "source_id": "GBIF",
+        "record_id": "1265651864",
+        "record_url": "https://www.gbif.org/occurrence/1265651864",
+        "license_id": "CC0"
+      }
+    ]
+  },
+  {
+    "exhibition_id": "earth_and_cosmos",
+    "title_zh": "地球与天外来客",
+    "title_en": "Earth and Cosmic Visitors",
+    "description": "比较矿物主次关系、岩石类型与陨石分样。通用形成机制与具体样本实测分开，未记录的成分、质量及坠落故事不代填。",
+    "theme_tags": [
+      "矿物与岩石",
+      "地球材料",
+      "陨石与分样"
+    ],
+    "featured_object_ids": [
+      "object:d5db49f3e95f422aa7662517",
+      "object:84602472c5a74ea98cb45fc9",
+      "object:f83e4f11e00e220b7f369e97",
+      "object:7d50412fd070b4ce60b76f50",
+      "object:c48e59369e5bff8abc86c5f5",
+      "object:2fe4abe7f26a082b8cc26d10",
+      "object:045f67d2cdd5e3ab0fa25080",
+      "object:1f8c90ed5f0209dcb4fc3f1b"
+    ],
+    "related_article_ids": [
+      "encyclopedia_095",
+      "encyclopedia_096",
+      "encyclopedia_097",
+      "encyclopedia_098",
+      "encyclopedia_099",
+      "encyclopedia_100"
+    ],
+    "historical_scope": "自然史标本；采集年代与形成时代分离，现代采集不等于1933可获取",
+    "display_requirements": {
+      "mode": "PLANNING_ONLY",
+      "artifact_lighting_and_conservation": "PENDING_SPECIALIST",
+      "transport": "NO_GAMEPLAY_IMPLEMENTED",
+      "media": "VERIFIED_LOCAL_ONLY"
+    },
+    "curation_status": "DRAFT_PENDING_REVIEW",
+    "review_notes": [
+      "全部图鉴与专题为AI策划草稿，需真人核对",
+      "不产生门票、游客行为、奖励或正式掉落",
+      "自然史鉴定仍待专家；关联稿只介绍实际对应对象"
+    ],
+    "core_knowledge_topics": [
+      "矿物与岩石",
+      "地球材料",
+      "陨石与分样"
+    ],
+    "reading_order": [
+      "object:d5db49f3e95f422aa7662517",
+      "object:84602472c5a74ea98cb45fc9",
+      "object:f83e4f11e00e220b7f369e97",
+      "object:7d50412fd070b4ce60b76f50",
+      "object:c48e59369e5bff8abc86c5f5",
+      "object:2fe4abe7f26a082b8cc26d10",
+      "object:045f67d2cdd5e3ab0fa25080",
+      "object:1f8c90ed5f0209dcb4fc3f1b"
+    ],
+    "object_relationships": [
+      {
+        "from": "object:d5db49f3e95f422aa7662517",
+        "to": "object:84602472c5a74ea98cb45fc9",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:84602472c5a74ea98cb45fc9",
+        "to": "object:f83e4f11e00e220b7f369e97",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:f83e4f11e00e220b7f369e97",
+        "to": "object:7d50412fd070b4ce60b76f50",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:7d50412fd070b4ce60b76f50",
+        "to": "object:c48e59369e5bff8abc86c5f5",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:c48e59369e5bff8abc86c5f5",
+        "to": "object:2fe4abe7f26a082b8cc26d10",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:2fe4abe7f26a082b8cc26d10",
+        "to": "object:045f67d2cdd5e3ab0fa25080",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      },
+      {
+        "from": "object:045f67d2cdd5e3ab0fa25080",
+        "to": "object:1f8c90ed5f0209dcb4fc3f1b",
+        "relation": "CURATORIAL_COMPARISON_NOT_SHARED_PROVENANCE",
+        "note": "按器形、材料/保存与来源差异比较，不推定共同出土"
+      }
+    ],
+    "source_notes": [
+      {
+        "object_id": "object:045f67d2cdd5e3ab0fa25080",
+        "source_id": "SMITHSONIAN",
+        "record_id": "nmnhmineralsciences_10265728",
+        "record_url": "http://n2t.net/ark:/65665/3cd6867d7-543a-4e85-aa61-1ced0ff3c5e9",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:1f8c90ed5f0209dcb4fc3f1b",
+        "source_id": "SMITHSONIAN",
+        "record_id": "nmnhmineralsciences_1374166",
+        "record_url": "http://n2t.net/ark:/65665/39d56e91b-9029-4efd-9db8-a71d8ea8e791",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:2fe4abe7f26a082b8cc26d10",
+        "source_id": "SMITHSONIAN",
+        "record_id": "nmnhmineralsciences_10375188",
+        "record_url": "http://n2t.net/ark:/65665/3a47f74ac-9450-4cde-bf13-a5dfcd655485",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:7d50412fd070b4ce60b76f50",
+        "source_id": "SMITHSONIAN",
+        "record_id": "nmnhmineralsciences_10608204",
+        "record_url": "http://n2t.net/ark:/65665/3b80cafdf-d9b2-41f5-9f13-a2685f4b48cd",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:84602472c5a74ea98cb45fc9",
+        "source_id": "SMITHSONIAN",
+        "record_id": "nmnhmineralsciences_10250802",
+        "record_url": "http://n2t.net/ark:/65665/376e4b233-5b16-4643-94c6-b1941cee34c1",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:c48e59369e5bff8abc86c5f5",
+        "source_id": "SMITHSONIAN",
+        "record_id": "nmnhmineralsciences_10268699",
+        "record_url": "http://n2t.net/ark:/65665/35564cc99-7c07-41cd-9cb5-c7f839e6737c",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:d5db49f3e95f422aa7662517",
+        "source_id": "SMITHSONIAN",
+        "record_id": "nmnhmineralsciences_10209929",
+        "record_url": "http://n2t.net/ark:/65665/3d76339b5-e23e-4899-a3e6-047761601ad9",
+        "license_id": "CC0"
+      },
+      {
+        "object_id": "object:f83e4f11e00e220b7f369e97",
+        "source_id": "SMITHSONIAN",
+        "record_id": "nmnhmineralsciences_10607797",
+        "record_url": "http://n2t.net/ark:/65665/3b5ebe856-1e37-4b67-8689-fac9824ee9c7",
+        "license_id": "CC0"
+      }
+    ]
+  }
+]

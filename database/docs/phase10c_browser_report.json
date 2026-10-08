@@ -1,0 +1,142 @@
+{
+  "engine": "Real Chromium via browser Playwright/CDP",
+  "checks": [
+    {
+      "name": "desktop_list",
+      "broken": 0,
+      "height": 720,
+      "remoteImages": 0,
+      "scrollWidth": 1265,
+      "width": 1280,
+      "screenshot": "logs/phase10c/final_desktop_list.png",
+      "png_sha256": "ea5f1592b7e773d68eeb2de9b7fe92308a703a8f64b082b68309fdcff2afd277"
+    },
+    {
+      "name": "desktop_placeholder",
+      "broken": 0,
+      "height": 720,
+      "remoteImages": 0,
+      "scrollWidth": 1265,
+      "width": 1280,
+      "screenshot": "logs/phase10c/final_desktop_placeholder.png",
+      "png_sha256": "a808dee6aa7d54de5e4b04fe8f598cc4c550f547f1ac87b4ed73d1b129f78168"
+    },
+    {
+      "name": "desktop_detail",
+      "broken": 0,
+      "height": 720,
+      "remoteImages": 0,
+      "scrollWidth": 1265,
+      "width": 1280,
+      "screenshot": "logs/phase10c/final_desktop_detail.png",
+      "png_sha256": "5940686f5473b84c999b10738b749cc6d4b20c8445863fe38232a0c975996017"
+    },
+    {
+      "name": "desktop_license",
+      "broken": 0,
+      "height": 720,
+      "remoteImages": 0,
+      "scrollWidth": 1265,
+      "width": 1280,
+      "screenshot": "logs/phase10c/final_desktop_license.png",
+      "png_sha256": "e655bf0891d7e3a099d471cc60cf03a90d7b3d1d4f094f7fffa46bbc776a3bd6"
+    },
+    {
+      "name": "desktop_article",
+      "broken": 0,
+      "height": 720,
+      "remoteImages": 0,
+      "scrollWidth": 1265,
+      "width": 1280,
+      "screenshot": "logs/phase10c/final_desktop_article.png",
+      "png_sha256": "406f4e125f223ba8c3dc0789996b7309163d9e9c6166b7f06fe563540b2fee15"
+    },
+    {
+      "name": "desktop_exhibition",
+      "broken": 0,
+      "height": 720,
+      "remoteImages": 0,
+      "scrollWidth": 1265,
+      "width": 1280,
+      "screenshot": "logs/phase10c/final_desktop_exhibition.png",
+      "png_sha256": "a457a3c8834d91b4736b1ad145c37f4b1190980fd3ca70a1870c5d371b06475e"
+    },
+    {
+      "name": "mobile_list",
+      "broken": 0,
+      "height": 844,
+      "remoteImages": 0,
+      "scrollWidth": 390,
+      "width": 390,
+      "screenshot": "logs/phase10c/final_mobile_list.png",
+      "png_sha256": "e61bf993637cdfad56c2304740fb6ed46811a0c7b289d52d68ebd7ed1f0cece4"
+    },
+    {
+      "name": "mobile_placeholder",
+      "broken": 0,
+      "height": 844,
+      "remoteImages": 0,
+      "scrollWidth": 390,
+      "width": 390,
+      "screenshot": "logs/phase10c/final_mobile_placeholder.png",
+      "png_sha256": "5e56bee8cfeb33c0e46b9648844f4bcbdb1a99948f621fae20690648815563ba"
+    },
+    {
+      "name": "mobile_detail",
+      "broken": 0,
+      "height": 844,
+      "remoteImages": 0,
+      "scrollWidth": 390,
+      "width": 390,
+      "screenshot": "logs/phase10c/final_mobile_detail.png",
+      "png_sha256": "96d958d741d1d6081d9a5766e303e609dbc8c27276906ad99b618f865aaafb64"
+    },
+    {
+      "name": "mobile_license",
+      "broken": 0,
+      "height": 844,
+      "remoteImages": 0,
+      "scrollWidth": 390,
+      "width": 390,
+      "screenshot": "logs/phase10c/final_mobile_license.png",
+      "png_sha256": "ad74026b0d87dca4806662d39677309370ae9a15b9449fc913c8253c7c2d4b6b"
+    },
+    {
+      "name": "mobile_article",
+      "broken": 0,
+      "height": 844,
+      "remoteImages": 0,
+      "scrollWidth": 390,
+      "width": 390,
+      "screenshot": "logs/phase10c/final_mobile_article.png",
+      "png_sha256": "b0ec963bdd78ee7125e096fcfce7bd389a9ff5f9771e34df8dc15fcf03b4a03d"
+    },
+    {
+      "name": "mobile_exhibition",
+      "broken": 0,
+      "height": 844,
+      "remoteImages": 0,
+      "scrollWidth": 390,
+      "width": 390,
+      "screenshot": "logs/phase10c/final_mobile_exhibition.png",
+      "png_sha256": "67d20dac93abb475552c7fc92206f94c629fdb741a858e8cd7d2e4667bb4606d"
+    }
+  ],
+  "console_errors": 0,
+  "filters": {
+    "Smithsonian": 234,
+    "Cretaceous": 6,
+    "China": 570,
+    "Antarctica": 10,
+    "Han": 28,
+    "UNKNOWN_media": 9
+  },
+  "human_content_review": "NOT_PERFORMED",
+  "injection_and_long_name": {
+    "literal_source_text": true,
+    "script_executed": false,
+    "untrusted_image_node": false,
+    "mobile_scroll_width": 390,
+    "screenshot": "logs/phase10c/final_mobile_long_name.png"
+  }
+}

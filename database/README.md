@@ -48,3 +48,13 @@ node database/tests/preview_dom_test.cjs
 ```
 
 打开previews/index.html可筛选文明、器物类别、地质年代、查看图鉴、来源和候选状态。previews/planning_preview.json是500提案，不能作为正式发行目录。100篇AI草稿与80词表都待人工审订。完整质量统计见docs/phase10b_quality_report.json；人工流程见docs/CONTENT_REVIEW_WORKFLOW.md。内置浏览器file协议验证受限，HTML文件可由用户本地浏览器打开；DOM逻辑测试不能替代外观验收。
+
+
+Phase10C 本地照片与专题预览：
+
+```powershell
+python -m database.preview --db database/work/catalog.sqlite
+python -m http.server 8765 --bind 127.0.0.1 --directory .
+```
+
+访问http://127.0.0.1:8765/database/previews/index.html。无需外网阅读已生成的本地图鉴；来源链接单独需要联网。新clone只有2对象图片样例，其他18照片需显式`python -m database.media_pipeline download`重建（详见media_pipeline/README.md）。Pillow==12.3.0只用于策划工具，无Godot依赖。专题全部DRAFT_PENDING_REVIEW，未接门票/游客/正式掉落。

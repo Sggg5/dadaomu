@@ -1,0 +1,4 @@
+-- Exhibition proposals reference database entities, not gameplay definitions.
+CREATE TABLE museum_exhibitions(exhibition_id TEXT PRIMARY KEY,title_zh TEXT NOT NULL,title_en TEXT NOT NULL,payload_json TEXT NOT NULL CHECK(json_valid(payload_json)),content_sha256 TEXT NOT NULL,curation_status TEXT NOT NULL CHECK(curation_status='DRAFT_PENDING_REVIEW'));
+CREATE TABLE exhibition_objects(exhibition_id TEXT NOT NULL REFERENCES museum_exhibitions(exhibition_id),object_id TEXT NOT NULL REFERENCES collection_objects(object_id),reading_order INTEGER NOT NULL,PRIMARY KEY(exhibition_id,object_id));
+CREATE TABLE exhibition_articles(exhibition_id TEXT NOT NULL REFERENCES museum_exhibitions(exhibition_id),article_id TEXT NOT NULL REFERENCES editorial_articles(article_id),PRIMARY KEY(exhibition_id,article_id));

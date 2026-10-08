@@ -591,3 +591,11 @@ Schema v3. FK关系/类型/默认与非空约束由版本化SQL定义；NULL代�
 |content_review_log|review_id,entity_kind,entity_id,from_status,to_status,reviewer,note,content_sha256,reviewed_at|真人内容版本审核日志；本阶段无实际人工批准|
 
 payload_json保存时代、地区、稀有度/价值/槽位/吸引力建议、三种transport_mode、1933待审/阻断原因、图鉴关系与源引用。大于8格必须EXPEDITION_TRANSPORT。未知体量不是HAND_CARRY的发行批准，所有提案仍CANDIDATE。现有正式game_collection_definitions transport字段不被新策划分类改写。
+
+
+## Phase10C Schema7～9
+
+- natural_history_audits：每对象raw source hash、逐字段证据、疑问；academic_review与字段校验独立。
+- natural_knowledge：通用类型知识、authority_url、字段值、来源日期与待审状态，禁止充作实物实测。
+- editorial_articles追加editor_locked/editor_version；editorial_versions保存article/version/payload/hash/author_type/status，不修改既有迁移。
+- museum_exhibitions保存独立提案及hash；exhibition_objects、exhibition_articles以FK绑定真实Object/Article，reading_order记录策展顺序。全部DRAFT_PENDING_REVIEW。

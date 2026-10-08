@@ -9,11 +9,13 @@ from database.planning.candidates import load_candidates
 from database.rebuild_catalog import rebuild_catalog
 from database.exports.curation import load_reviewed_games
 from database.media_pipeline.pipeline import active_media
+from database.natural_history.audit import build_audits
+from database.exhibitions.definitions import load_exhibitions
 
 def prepare_content(db):
     reports=rebuild_catalog(db)
     if any(r['errors'] for r in reports):raise ValueError('Import failed; stop preparation')
-    load_terms(db);build_tags(db);load_articles(db);load_refinements(db);load_candidates(db);load_reviewed_games(db)
+    load_terms(db);build_tags(db);load_articles(db);load_refinements(db);load_candidates(db);load_reviewed_games(db);build_audits(db,output=None);load_exhibitions(db)
 
 def preview_payload(db):
     objects=[]
@@ -34,7 +36,12 @@ def preview_payload(db):
         objects.append(dict(object_id=oid,zh_name=article['zh_name'] if article else None,original_name=obj['primary_name'],category=obj['category_id'],cultures=cultures,geological_period=geo[0] if geo else None,era=cultural[0] if cultural else None,institution=institution[0] if institution else None,accession_number=obj['accession_number'],sources=sources,origin=location(obj['origin_location_id']),discovery=location(obj['discovery_location_id']),material='; '.join(technique) or None,body=article['body'] if article else None,confidence=article['confidence'] if article else obj['verification_status'],review_details=review_details(db,article['article_id']) if article else None,status='NORMALIZED',media_summary='; '.join(media) or '无已导入媒体',media_licenses=sorted({x.split(' ')[1] for x in media}),regions=[x for x in [location(obj['origin_location_id']),location(obj['discovery_location_id'])] if x],historical_period=cultural['period'] if cultural else None,images=[r for r in media_assets if r['object_id']==oid]))
     articles=[dict(object_id=r['object_id'],article_id=r['article_id'],zh_name=r['zh_name'],original_name=r['original_name'],body=r['body'],status='EDITORIAL_DRAFT / '+r['review_status']) for r in db.execute('SELECT * FROM editorial_articles ORDER BY article_id')]
     candidates=[json.loads(r[0]) for r in db.execute('SELECT payload_json FROM game_collection_candidates ORDER BY game_id')]
-    return dict(exhibitions=[],schema_version=1,world_year=1933,objects=objects,articles=articles,candidates=candidates,released_count=db.execute('SELECT count(*) FROM game_collection_definitions WHERE approved=1 AND legacy_resource_path IS NOT NULL').fetchone()[0])
+    by_id={o['object_id']:o for o in objects};exhibitions=[]
+    for row in db.execute('SELECT payload_json FROM museum_exhibitions ORDER BY exhibition_id'):
+        plan=json.loads(row[0]);featured=[by_id[oid] for oid in plan['featured_object_ids']]
+        entry=dict(plan,zh_name=plan['title_zh'],original_name=plan['title_en'],body=plan['description'],category='EXHIBITION',cultures=sorted({v for o in featured for v in o['cultures']}),regions=sorted({v for o in featured for v in o['regions']}),historical_period=plan['historical_scope'],geological_period=None,institution='规划专题 / '+str(len(featured))+'件',accession_number='独立策划数据',sources=plan['source_notes'],status=plan['curation_status'],confidence='AI策划草稿，未人工审订',era=plan['historical_scope'],media_licenses=sorted({v for o in featured for v in o['media_licenses']}),images=[],media_summary='专题不自动取得任何媒体许可',featured_objects=[dict(object_id=o['object_id'],zh_name=o['zh_name'],original_name=o['original_name'],sources=o['sources']) for o in featured])
+        exhibitions.append(entry)
+    return dict(exhibitions=exhibitions,schema_version=1,world_year=1933,objects=objects,articles=articles,candidates=candidates,released_count=db.execute('SELECT count(*) FROM game_collection_definitions WHERE approved=1 AND legacy_resource_path IS NOT NULL').fetchone()[0])
 
 def export_preview(db,output,planning_output=None):
     payload=preview_payload(db);encoded=json.dumps(payload,ensure_ascii=False,sort_keys=True,separators=(',',':')).replace('</','<\\/').replace('\u2028','\\u2028').replace('\u2029','\\u2029')

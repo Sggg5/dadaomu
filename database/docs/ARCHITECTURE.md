@@ -16,3 +16,8 @@ source_records保存机构来源、记录ID/URL、数据许可证/声明、抓�
 Phase10B追加Schema4图鉴/词表、5图鉴来源复合FK、6独立候选；1～3不修改。editorial/content验证段落引用与原始字段，terms仅给出字面来源支持的建议分类。planning/candidates保存四审未通过的提案与初步数值带，不写game_collection_definitions。1933时间检查从既有world_policy抽为reference_time_issues供发行/候选共享。
 
 preview使用Python标准库生成单HTML和候选JSON，无服务器依赖/远程媒体；HTML只通过textContent展示源文字并转义脚本结束标记。validators/content_quality分别报告硬错误和人工缺口。流程与状态变更见CONTENT_REVIEW_WORKFLOW，程序测试绝不自动批准内容。Normalizer5修正现代书籍/绘画/钱币宽分类，并要求古生物部门记录有真实地质证据才能导入为化石。
+
+
+10C增加Schema7 natural_history_audits/natural_knowledge、8 editorial_versions及pending人工锁、9 museum_exhibitions与对象/图鉴FK。自然检查不提升学术状态；通用配方与样本实测不同。30篇v2不能由基础种子回退；版本快照hash不可变，后续编辑须新版本。
+
+media_pipeline按per-image CC0核验CMA HTTPS官方host，签名/像素/大小/SHA与local_asset复验后提供本地策划媒体。显式刷新发现撤权会DENIED并禁用清单，旧缓存不参与新导出。预览模板只用textContent，图片区只接受已核验本地路径；静态HTML+localhost HTTP无第三方自动媒体请求。专题引用真实对象与图鉴，不写正式GameCollectionDefinition。具体证据与限制见10C报告。

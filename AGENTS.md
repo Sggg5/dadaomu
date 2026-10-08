@@ -1,3 +1,9 @@
+## Phase 10C 全球馆藏质量（当前完成，内容待人工审核）
+
+分支codex/phase-10c-museum-quality，基线10B eb88e87。1441对象无变化；122自然史对象逐条/抽查、30图鉴v2、20逐图片核验CC0照片、4专题各8对象。Schema9前向扩展，未改已有迁移；人工锁/版本hash、学术审核和源字段验证分离。
+
+HTTP本地预览四视图/8筛选，1280×720及390×844真实浏览器截图与注入检查通过。图片只用于策划，2对象4缩放样例入Git，其余可重建cache；不写正式game assets。图鉴/候选/专题均待审，陨石同号分样冲突待人工解析。正式8古董/概率/Profile4/战斗/Boss/遗物冻结。仅commit/push、不合并main、不继续下一阶段。详见database/docs/PHASE_10C_VERIFICATION.md。
+
 ## Phase 10B 全球藏品内容（当前完成，待内容人工审订）
 
 分支codex/phase-10b-museum-content，基于10A 2336dbd。累计1441真实对象（新增1280），100中文图鉴草稿、80双语术语、500独立CANDIDATE（300中国/140全球/60自然史）。Schema6前向迁移、Normalizer5；RAW/NORMALIZED/EDITORIAL_DRAFT/GAME_CANDIDATE/APPROVED/RELEASED分离，程序通过不等于真人审核。
