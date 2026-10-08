@@ -64,3 +64,18 @@ python -m http.server 8765 --bind 127.0.0.1 --directory .
 运行 `python -m database.exports.export_research_catalog --db database/work/10d_rebuild.sqlite`，使用既有快照离线重建，不抓取新事实。输出data/catalog/museum_research_catalog.json与museum_exhibitions.json；不会写global_catalog.json或正式掉落。只提升两件Git样例到assets/catalog并保留ATTRIBUTION.json；其余18个cache不隐式加入发行。导出报告在database/docs/phase10d_export_report.json。
 
 Godot运行时不需要Python/SQLite/Pillow/网络。Museum研究台位于(900,190)，E打开。来源URL可在正文选择复制，不自动联网。500候选不导出到运行时，400同类型比较稿不冒充对象专属图鉴。
+
+## Phase 11C：Fork来源索引与增量同步
+
+`wenwu-database` 软件的 MIT 不等于馆藏或媒体授权。新适配器只接受已核实的开放元数据；受限/冲突条目保存最小事实、原始标识和官方链接作为研究索引。钱币汇总品种不生成独立实物。所有图片只存链接及原声明，均未批准下载。
+
+```powershell
+# 先在只包含JSON/许可的只读上游检出目录上运行首批验证
+python -m database.importers.wenwu_fork_sync --source-root logs/wenwu_11c_source --db database/work/phase11c_verified.sqlite --limit 1000 --report database/work/11c_batch1000.json
+# 去掉limit运行完整增量同步；重放不会覆盖人工审核字段
+python -m database.importers.wenwu_fork_sync --source-root logs/wenwu_11c_source --db database/work/phase11c_verified.sqlite --report database/work/11c_full.json
+python -m database.wenwu_catalog --db database/work/phase11c_verified.sqlite --museum MET --keyword jade --page 1
+python -m database.wenwu_catalog --db database/work/phase11c_verified.sqlite --export database/previews/wenwu
+```
+
+离线打开 `previews/wenwu/index.html` 搜索；完整目录按250条分页，搜索按50条分页。不运行网络服务、不载入Godot，不会批准候选。数据库、上游缓存、全量预览均为本地生成物；提交工具和统计报告，不提交受限原始长篇文本或图片。Schema v10追加迁移，旧迁移保持原样。详见 `docs/PHASE_11C_WENWU_IMPORT.md`。

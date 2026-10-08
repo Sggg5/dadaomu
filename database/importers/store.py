@@ -47,7 +47,7 @@ def occurrence(db,r):
                (id,r.source_id,r.record_id,taxon,locality,formation,data.get('basis') or 'UNKNOWN',r.record_url))
     return id,taxon,formation,period
 
-def save_record(db,r,fetched_at):
+def save_record(db,r,fetched_at,*,identity_object_id=None,preserve_existing=False,name_candidates=True):
     r.validate()
     notice=r.copyright_notice or ('Copyright notice not supplied by source; declared data licence: '+r.data_license+'. Media rights separately checked.')
     raw=canonical(r.raw);digest=hashlib.sha256(raw.encode()).hexdigest()
@@ -57,7 +57,7 @@ def save_record(db,r,fetched_at):
         db.execute('UPDATE source_records SET checked_at=?,copyright_notice=?,license_id=?,commercial_allowed=? WHERE source_id=? AND record_id=?',
                    (utc_now(),notice,r.data_license,commercial,r.source_id,r.record_id))
         return 'duplicate'
-    object_id=old['object_id'] if old else None
+    object_id=(old['object_id'] if old else None) or identity_object_id
     if not object_id and not r.context_only:
         # Exact institution + catalogue number is identity evidence; names only generate review candidates.
         matches=db.execute('SELECT object_id FROM collection_objects WHERE museum_id=? AND accession_number=?',
@@ -77,7 +77,7 @@ def save_record(db,r,fetched_at):
                (r.source_id,r.record_id,object_id,r.record_url,r.dataset_url,r.data_license,notice,fetched_at,utc_now(),lic,digest,raw,NORMALIZER_VERSION))
     occ,taxon,formation,period=occurrence(db,r)
     if not object_id:return 'context'
-    locked=db.execute('SELECT editor_locked FROM collection_objects WHERE object_id=?',(object_id,)).fetchone()[0]
+    locked=preserve_existing or db.execute('SELECT editor_locked FROM collection_objects WHERE object_id=?',(object_id,)).fetchone()[0]
     if not locked:
         db.execute('UPDATE collection_objects SET primary_name=?,description=?,verification_status=?,license_status=?,category_id=? WHERE object_id=?',
                    (r.primary_name,text(r.description),r.verification_status,r.data_license,r.category_id,object_id))
@@ -119,6 +119,7 @@ def save_record(db,r,fetched_at):
                            discovery_location=('source_locality',r.discovery),data_license=('source_data_license',r.data_license)).items():
         evidence.setdefault(field,value)
     for field,(path,value) in evidence.items():
+        if db.execute("SELECT 1 FROM field_evidence WHERE object_id=? AND field_path=? AND source_id=? AND record_id=? AND status='CURATED'",(object_id,field,r.source_id,r.record_id)).fetchone():continue
         db.execute('INSERT OR REPLACE INTO field_evidence VALUES(?,?,?,?,?,?)',
                    (object_id,field,r.source_id,r.record_id,canonical({'source_path':path,'value':value}), 'UNKNOWN' if value is None else 'MATCHED'))
     for dim,value,unit,verbatim in r.measurements:
@@ -137,7 +138,8 @@ def save_record(db,r,fetched_at):
                     'VERIFIED' if approved else 'UNVERIFIED',media.get('copyright',''),attribution,
                     db.execute('SELECT terms_url FROM sources WHERE source_id=?',(r.source_id,)).fetchone()[0],
                     utc_now() if approved else None,r.source_id,r.record_id))
-    for match in db.execute('SELECT object_id FROM collection_objects WHERE primary_name=? AND object_id!=?',(r.primary_name,object_id)):
+    # Bulk aggregator uses bounded name-group audit instead of quadratic candidate pairs.
+    for match in (db.execute('SELECT object_id FROM collection_objects WHERE primary_name=? AND object_id!=?',(r.primary_name,object_id)) if name_candidates else []):
         a,b=sorted((object_id,match[0]))
         db.execute("INSERT OR IGNORE INTO duplicate_candidates VALUES(?,?,?,'PENDING')",(a,b,'same_name_only'))
     return 'updated' if old else 'success'

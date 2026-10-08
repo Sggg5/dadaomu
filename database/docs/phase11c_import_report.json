@@ -1,0 +1,338 @@
+{
+  "first_1000": {
+    "upstream_sha": "1804cd81c3f9bdaed8ca325f37d37d8c0b244001",
+    "complete_scan": false,
+    "counts": {
+      "scanned": 1000,
+      "added": 1000,
+      "normalized_added": 356,
+      "linked_existing": 8,
+      "linked_original_source": 8
+    },
+    "museums": {
+      "AIC": 91,
+      "CLE": 91,
+      "GPM": 91,
+      "HAM": 91,
+      "HN": 91,
+      "MET": 91,
+      "NMC": 91,
+      "NPM": 91,
+      "SMI": 91,
+      "SXHM": 91,
+      "VA": 90
+    },
+    "categories": {
+      "瓷器": 203,
+      "雕塑": 21,
+      "青铜器": 45,
+      "金银器": 33,
+      "竹木牙角": 1,
+      "书画": 193,
+      "钱币": 236,
+      "杂器": 173,
+      "织绣": 20,
+      "陶器": 38,
+      "玻璃器": 2,
+      "玉器": 17,
+      "历史影像": 1,
+      "碑帖拓本": 8,
+      "宗教造像": 1,
+      "漆器": 6,
+      "建筑构件": 1,
+      "文房用具": 1
+    },
+    "rights": {
+      "OPEN_METADATA": 364,
+      "INDEX_ONLY": 454,
+      "RIGHTS_CONFLICT_INDEX_ONLY": 91,
+      "TYPE_INDEX_ONLY": 91
+    },
+    "record_kinds": {
+      "MUSEUM_RECORD": 909,
+      "COIN_TYPE": 91
+    },
+    "missing_fields": {
+      "material": 444,
+      "year_range": 313
+    },
+    "identical_payload_duplicates": 0,
+    "errors": [],
+    "normalized_total": 1797,
+    "source_index_total": 1000,
+    "same_name_groups": 50,
+    "stable_identity_groups": 0,
+    "pending_review": 1000
+  },
+  "final_state": {
+    "upstream_sha": "1804cd81c3f9bdaed8ca325f37d37d8c0b244001",
+    "complete_scan": true,
+    "counts": {
+      "scanned": 50794,
+      "duplicate": 50793,
+      "normalized_added": 0,
+      "linked_existing": 15825,
+      "linked_original_source": 568,
+      "added": 1
+    },
+    "museums": {
+      "AIC": 802,
+      "CLE": 2804,
+      "GPM": 624,
+      "HAM": 5392,
+      "HN": 96,
+      "MET": 10581,
+      "NMC": 1317,
+      "NPM": 11298,
+      "SMI": 1638,
+      "SXHM": 1515,
+      "VA": 14727
+    },
+    "categories": {
+      "瓷器": 13516,
+      "书画": 8573,
+      "陶器": 889,
+      "金银器": 587,
+      "青铜器": 2912,
+      "织绣": 1937,
+      "玉器": 3052,
+      "雕塑": 619,
+      "宗教造像": 122,
+      "漆器": 480,
+      "玻璃器": 595,
+      "竹木牙角": 828,
+      "杂器": 9039,
+      "钱币": 7290,
+      "碑帖拓本": 99,
+      "建筑构件": 5,
+      "历史影像": 151,
+      "文房用具": 89,
+      "甲骨": 11
+    },
+    "rights": {
+      "OPEN_METADATA": 15825,
+      "INDEX_ONLY": 22174,
+      "RIGHTS_CONFLICT_INDEX_ONLY": 11298,
+      "TYPE_INDEX_ONLY": 1497
+    },
+    "record_kinds": {
+      "MUSEUM_RECORD": 49297,
+      "COIN_TYPE": 1497
+    },
+    "missing_fields": {
+      "year_range": 6444,
+      "material": 14963
+    },
+    "identical_payload_duplicates": 0,
+    "errors": [],
+    "normalized_total": 16698,
+    "source_index_total": 50794,
+    "same_name_groups": 3024,
+    "stable_identity_groups": 144,
+    "pending_review": 50794
+  },
+  "full_replay": {
+    "upstream_sha": "1804cd81c3f9bdaed8ca325f37d37d8c0b244001",
+    "complete_scan": true,
+    "counts": {
+      "scanned": 50794,
+      "duplicate": 50794,
+      "normalized_added": 0,
+      "linked_existing": 15825,
+      "linked_original_source": 568
+    },
+    "museums": {
+      "AIC": 802,
+      "CLE": 2804,
+      "GPM": 624,
+      "HAM": 5392,
+      "HN": 96,
+      "MET": 10581,
+      "NMC": 1317,
+      "NPM": 11298,
+      "SMI": 1638,
+      "SXHM": 1515,
+      "VA": 14727
+    },
+    "categories": {
+      "瓷器": 13516,
+      "书画": 8573,
+      "陶器": 889,
+      "金银器": 587,
+      "青铜器": 2912,
+      "织绣": 1937,
+      "玉器": 3052,
+      "雕塑": 619,
+      "宗教造像": 122,
+      "漆器": 480,
+      "玻璃器": 595,
+      "竹木牙角": 828,
+      "杂器": 9039,
+      "钱币": 7290,
+      "碑帖拓本": 99,
+      "建筑构件": 5,
+      "历史影像": 151,
+      "文房用具": 89,
+      "甲骨": 11
+    },
+    "rights": {
+      "OPEN_METADATA": 15825,
+      "INDEX_ONLY": 22174,
+      "RIGHTS_CONFLICT_INDEX_ONLY": 11298,
+      "TYPE_INDEX_ONLY": 1497
+    },
+    "record_kinds": {
+      "MUSEUM_RECORD": 49297,
+      "COIN_TYPE": 1497
+    },
+    "missing_fields": {
+      "year_range": 6444,
+      "material": 14963
+    },
+    "identical_payload_duplicates": 0,
+    "errors": [],
+    "normalized_total": 16698,
+    "source_index_total": 50794,
+    "same_name_groups": 3024,
+    "stable_identity_groups": 144,
+    "pending_review": 50794
+  },
+  "audit": {
+    "integrity": "ok",
+    "foreign_key_errors": [],
+    "media_links": 76832,
+    "normalized_new": 15257,
+    "issues": {
+      "API_ID_NOT_ACCESSION": 898,
+      "PERIOD_CLASSIFICATION_PENDING_REVIEW": 42784,
+      "UNKNOWN_MATERIAL": 14963,
+      "CC0_CLAIM_VS_CURRENT_CC_BY4_SCOPE_UNRESOLVED": 11298,
+      "AGGREGATED_TYPE_NOT_INDIVIDUAL_SPECIMEN": 1497
+    },
+    "samples": [
+      {
+        "record_id": "AIC-101076",
+        "original_name": "Sugar Bowl with Cover",
+        "official_url": "https://www.artic.edu/artworks/101076",
+        "rights_verdict": "OPEN_METADATA"
+      },
+      {
+        "record_id": "AIC-103302",
+        "original_name": "Landscape: Beautiful Scenery Frozen in Mist",
+        "official_url": "https://www.artic.edu/artworks/103302",
+        "rights_verdict": "OPEN_METADATA"
+      },
+      {
+        "record_id": "AIC-103303",
+        "original_name": "Architectural Brick with Ogre Mask",
+        "official_url": "https://www.artic.edu/artworks/103303",
+        "rights_verdict": "OPEN_METADATA"
+      },
+      {
+        "record_id": "AIC-10393",
+        "original_name": "Deep Dish with Peony, Pine Branches, Plum Blossoms, Chrysanthemum, Cherry, and Lotus Flowers",
+        "official_url": "https://www.artic.edu/artworks/10393",
+        "rights_verdict": "OPEN_METADATA"
+      },
+      {
+        "record_id": "AIC-103961",
+        "original_name": "Ovoid Jar",
+        "official_url": "https://www.artic.edu/artworks/103961",
+        "rights_verdict": "OPEN_METADATA"
+      },
+      {
+        "record_id": "AIC-104483",
+        "original_name": "Cloud-Shaped Pillow",
+        "official_url": "https://www.artic.edu/artworks/104483",
+        "rights_verdict": "OPEN_METADATA"
+      },
+      {
+        "record_id": "AIC-10495",
+        "original_name": "Woman's Changfu (Informal Court Robe)",
+        "official_url": "https://www.artic.edu/artworks/10495",
+        "rights_verdict": "OPEN_METADATA"
+      },
+      {
+        "record_id": "AIC-10522",
+        "original_name": "Mirror with \"TLV\" Pattern",
+        "official_url": "https://www.artic.edu/artworks/10522",
+        "rights_verdict": "OPEN_METADATA"
+      },
+      {
+        "record_id": "AIC-105528",
+        "original_name": "Birds on a Tree with Fruit and Autumn Foliage",
+        "official_url": "https://www.artic.edu/artworks/105528",
+        "rights_verdict": "OPEN_METADATA"
+      },
+      {
+        "record_id": "AIC-105529",
+        "original_name": "Lobed Pillow with Deer",
+        "official_url": "https://www.artic.edu/artworks/105529",
+        "rights_verdict": "OPEN_METADATA"
+      },
+      {
+        "record_id": "AIC-105530",
+        "original_name": "Rectangular Pillow with Mandarin Ducks in a Lily Pond",
+        "official_url": "https://www.artic.edu/artworks/105530",
+        "rights_verdict": "OPEN_METADATA"
+      },
+      {
+        "record_id": "AIC-105549",
+        "original_name": "Beaker",
+        "official_url": "https://www.artic.edu/artworks/105549",
+        "rights_verdict": "OPEN_METADATA"
+      },
+      {
+        "record_id": "AIC-105591",
+        "original_name": "Jar with Eight Immortals and Peonies",
+        "official_url": "https://www.artic.edu/artworks/105591",
+        "rights_verdict": "OPEN_METADATA"
+      },
+      {
+        "record_id": "AIC-105595",
+        "original_name": "Vessel in Form of a Bird",
+        "official_url": "https://www.artic.edu/artworks/105595",
+        "rights_verdict": "OPEN_METADATA"
+      },
+      {
+        "record_id": "AIC-105786",
+        "original_name": "Water Pavilion by Twin Pines",
+        "official_url": "https://www.artic.edu/artworks/105786",
+        "rights_verdict": "OPEN_METADATA"
+      },
+      {
+        "record_id": "AIC-105937",
+        "original_name": "Immortals Riding Dragons: Sections of a Tomb Pediment",
+        "official_url": "https://www.artic.edu/artworks/105937",
+        "rights_verdict": "OPEN_METADATA"
+      },
+      {
+        "record_id": "AIC-107593",
+        "original_name": "Plate",
+        "official_url": "https://www.artic.edu/artworks/107593",
+        "rights_verdict": "OPEN_METADATA"
+      },
+      {
+        "record_id": "AIC-107912",
+        "original_name": "Musical Chime",
+        "official_url": "https://www.artic.edu/artworks/107912",
+        "rights_verdict": "OPEN_METADATA"
+      },
+      {
+        "record_id": "AIC-108586",
+        "original_name": "Sheath with Bird and Feline or Dragon",
+        "official_url": "https://www.artic.edu/artworks/108586",
+        "rights_verdict": "OPEN_METADATA"
+      },
+      {
+        "record_id": "AIC-109223",
+        "original_name": "Beaker",
+        "official_url": "https://www.artic.edu/artworks/109223",
+        "rights_verdict": "OPEN_METADATA"
+      }
+    ]
+  },
+  "cumulative_new_normalized": 15257,
+  "baseline_normalized": 1441,
+  "game_catalog_unchanged": true
+}
