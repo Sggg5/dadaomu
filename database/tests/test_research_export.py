@@ -17,6 +17,14 @@ class ResearchExportTests(unittest.TestCase):
   data,_=build_catalog(self.db);self.assertEqual(len(data['media']),2)
   for media in data['media']:
    self.assertEqual(media['license_id'],'CC0');self.assertTrue(media['asset_path'].startswith('res://assets/catalog/'));self.assertTrue(media['attribution']);self.assertEqual(len(media['sha256']),64)
+ def test_denied_media_cannot_be_promoted(self):
+  from database.exports.export_research_catalog import research_media
+  initial=research_media(self.db);self.assertEqual(len(initial),2)
+  self.db.execute('SAVEPOINT denied')
+  try:
+   self.db.execute("UPDATE media SET verification_status='DENIED',commercial_allowed=0 WHERE media_id=?",(initial[0]['media_id'],))
+   self.assertEqual(len(research_media(self.db)),1)
+  finally:self.db.execute('ROLLBACK TO denied');self.db.execute('RELEASE denied')
  def test_exhibitions_reuse_existing_definitions(self):
   with tempfile.TemporaryDirectory() as tmp:
    data=export_exhibitions(self.db,Path(tmp)/'plans.json');self.assertEqual(len(data['exhibitions']),4)

@@ -9,12 +9,14 @@ var exhibitions := MuseumExhibitionCatalog.new()
 var exhibition_choice: OptionButton
 var exhibition_id := ""
 var panel: PanelContainer
+var backdrop: ColorRect
 var list: ItemList
 var detail: RichTextLabel
 var search_box: LineEdit
 var section: OptionButton
 var page_label: Label
 var image: TextureRect
+var placeholder: Label
 var image_note: Label
 var mode := 0
 var page := 0
@@ -26,7 +28,17 @@ func _ready() -> void:
 	layer = 45
 	catalog.load_file()
 	exhibitions.load_file(catalog)
+	backdrop = ColorRect.new()
+	backdrop.color = Color("0d141b")
+	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(backdrop)
+	backdrop.hide()
 	panel = PanelContainer.new()
+	var background := StyleBoxFlat.new()
+	background.bg_color = Color("17232e")
+	background.border_color = Color("8fadae")
+	background.set_border_width_all(2)
+	panel.add_theme_stylebox_override("panel",background)
 	panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	panel.offset_left = 24
 	panel.offset_top = 20
@@ -74,6 +86,15 @@ func _ready() -> void:
 	image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	right.add_child(image)
+	placeholder = Label.new()
+	placeholder.text = "暂无已核验照片"
+	placeholder.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	placeholder.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	placeholder.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	placeholder.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	placeholder.modulate = Color("a5b6bc")
+	placeholder.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	image.add_child(placeholder)
 	image_note = Label.new()
 	image_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	image_note.add_theme_font_size_override("font_size",14)
@@ -105,13 +126,18 @@ func open() -> bool:
 	_previous_controls = player.controls_enabled
 	player.controls_enabled = false
 	player.velocity = Vector2.ZERO
+	backdrop.show()
 	panel.show()
 	refresh()
 	return true
 
 func close() -> void:
 	if not panel.visible: return
+	section.get_popup().hide()
+	exhibition_choice.get_popup().hide()
+	search_box.release_focus()
 	panel.hide()
+	backdrop.hide()
 	image.texture = null
 	if is_instance_valid(player): player.controls_enabled = _previous_controls and state.phase != MuseumState.Phase.NIGHT
 
@@ -148,6 +174,8 @@ func render_page() -> void:
 			list.add_item(str(row.recommended_zh_name) if row.recommended_zh_name != null else row.original_name)
 	page_label.text = "%d 条 · 第%d / %d页" % [result_ids.size(),page+1,maxi(1,ceili(result_ids.size()/float(PAGE_SIZE)))]
 	image.texture = null
+	placeholder.show()
+	placeholder.text = "暂无已核验照片"
 	image_note.text = "暂无已核验本地照片 · 统一占位"
 	detail.text = "馆藏为空" if mode == 0 else "选择资料查看详情"
 	if not catalog.errors.is_empty(): detail.text = "研究数据不可用："+str(catalog.errors)
@@ -156,6 +184,8 @@ func render_page() -> void:
 func select_entry(index: int) -> void:
 	if index < 0 or index >= visible_ids.size(): return
 	image.texture = null
+	placeholder.show()
+	placeholder.text = "暂无已核验照片"
 	image_note.text = "暂无已核验本地照片 · 统一占位"
 	var id: String = visible_ids[index]
 	if mode == 0: detail.text = MuseumCodexText.owned(state,state.collection.find(StringName(id)))
@@ -163,18 +193,24 @@ func select_entry(index: int) -> void:
 		detail.text = MuseumCodexText.research(catalog,catalog.record(id))
 		if mode == 3:
 			var plan := exhibitions.plan(exhibition_id)
-			var intro: String = "%s · %s\n%s\n主题：%s\n研究策划预览；不代表拥有或正式展厅开放\n来源：%s\n\n" % [plan.title_zh,plan.curation_status,plan.description,str(plan.theme_tags),str(plan.source_notes)]
+			placeholder.text = plan.title_zh + "\n专题策划封面（文字占位）"
+			var intro: String = "%s · %s\n%s\n主题：%s\n研究策划预览；不代表拥有或正式展厅开放\n按阅读顺序浏览 %d 件实物资料\n\n" % [plan.title_zh,plan.curation_status,plan.description,MuseumCodexText.known(plan.theme_tags),plan.reading_order.size()]
 			detail.text = intro + detail.text
 			for article_id: String in plan.related_article_ids:
 				var article := catalog.article(article_id)
 				detail.text += "\n关联图鉴：%s · %s\n%s\n" % [article.zh_name,article.review_status,article.body]
+			detail.text += "\n专题原始资料来源：\n"
+			for source: Dictionary in plan.source_notes:
+				detail.text += "%s · %s\n%s\n" % [source.get("source_id",""),source.get("license_id","未知"),source.get("record_url","")]
 		image.texture = catalog.image_for(id)
 		if image.texture != null:
+			placeholder.hide()
 			var media := catalog.media_for(id)
 			image_note.text = "%s · %s\n%s" % [media.license_id,media.copyright_notice,media.attribution]
 
 func _input(event: InputEvent) -> void:
 	if not panel.visible or event.is_echo(): return
-	if event.is_action_pressed("interact") or (event is InputEventKey and event.pressed and event.physical_keycode == KEY_TAB):
+	# E belongs to text entry while the search field has focus; Tab always closes.
+	if (event.is_action_pressed("interact") and not search_box.has_focus()) or (event is InputEventKey and event.pressed and event.physical_keycode == KEY_TAB):
 		close()
 		get_viewport().set_input_as_handled()

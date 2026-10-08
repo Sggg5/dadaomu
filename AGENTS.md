@@ -1,3 +1,11 @@
+## Phase 10D Godot图鉴接入（实现完成，人工体验待验收）
+
+基于10C 62ed174，分支codex/phase-10d-museum-codex。研究台复用MuseumPlayer E交互，独立本地Research/Exhibition目录：1441真实对象、100待审图鉴（30 v2）、4专题各8对象；正式八件定义与500候选隔离。研究资料不是玩家实物，也不是1933年已知发现。
+
+我的馆藏只读取OwnedAntique实例，重复定义不合并，未鉴定不显示品相/经济结果。只读面板不发state.changed、不保存、不改变营业；E/Tab关闭（搜索框内E用于英文输入），关闭恢复合法控制状态。两件CMA CC0缩放照片提升到assets/catalog，逐文件SHA/许可/路径检查，其余占位；不从database/.gdignore加载，不运行时联网。100篇与4专题仍DRAFT_PENDING_REVIEW。
+
+生产改动仅Museum研究台装配、新只读UI/加载器/本地数据和图片；战斗、Boss、遗物、掉落、原8件、Profile VERSION4冻结。五阶段顺序测试/commit/push，不合并main，不进入下一阶段。验收结果与限制见database/docs/PHASE_10D_VERIFICATION.md。
+
 ## Phase 10C 全球馆藏质量（当前完成，内容待人工审核）
 
 分支codex/phase-10c-museum-quality，基线10B eb88e87。1441对象无变化；122自然史对象逐条/抽查、30图鉴v2、20逐图片核验CC0照片、4专题各8对象。Schema9前向扩展，未改已有迁移；人工锁/版本hash、学术审核和源字段验证分离。

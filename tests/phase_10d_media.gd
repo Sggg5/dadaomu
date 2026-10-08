@@ -30,6 +30,12 @@ func _initialize()->void:
  data.media[0].asset_path=data.media[1].asset_path;data.media[0].sha256="bad"
  file=FileAccess.open(path,FileAccess.WRITE);file.store_string(JSON.stringify(data));file.close()
  check(catalog.load_file(path) and catalog.image_for(data.media[0].object_id)==null,"hash mismatch hidden")
+ data.media[0].asset_path="res://assets/catalog/not_present.jpg"
+ file=FileAccess.open(path,FileAccess.WRITE);file.store_string(JSON.stringify(data));file.close()
+ check(catalog.load_file(path) and catalog.image_for(data.media[0].object_id)==null,"missing local image degrades")
+ data.records[0].source_urls=null
+ file=FileAccess.open(path,FileAccess.WRITE);file.store_string(JSON.stringify(data));file.close()
+ check(not catalog.load_file(path) and catalog.ids().is_empty(),"invalid required data rejected")
  DirAccess.remove_absolute(path)
  print("Phase 10D media: %d checks, %d failures" %[checks,failures])
  quit(1 if failures else 0)

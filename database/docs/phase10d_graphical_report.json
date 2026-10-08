@@ -1,0 +1,475 @@
+{
+  "screenshots": [
+    {
+      "path": "logs/phase10d/1280x720/appraisal_result.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "276ebd3237e179d73ca45e3981d5a3289e26f0586c20f1031028851d345027d9",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/article_sources.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "695cb64e2d572df15b33a07e94fed57f17d63ae0e817dec653969b4c7d13748c",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/boss_charge.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "92147e8761e34a99b58e17d39c5bd8aeced3d5e655b4607819266953ee12e165",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/boss_phase_two.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "2d50c3100bfe37960df28ccb6f772dfd550a8af4de487587713ca78d77994f74",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/boss_shockwave.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "21a0fa091894d445228a739dab64e98e964ca604b109f83755cbb102e342a7f8",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/boss_victory.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "2874397f9075ad841b48032d34846200cfbba1ddbd8d950759b8ddcac7eea74b",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/day2_codex.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "98771dbb4ce17373c9158e15c7205968adc4a4ee832c6f603e7f3847a6075c7b",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/empty_owned.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "d2005d20037ca7e15920a1678f494d15d591fc87e0261bf25eba2113fb607eca",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/evening.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "357e01a6b96b580a29d67877483320c6b73beede48385087c1ce0e8f599f4eb9",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/exhibition_ancient_egypt.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "dcb5eb623a38c009ee5ea7420719aa1ada1a6ab5b621be8e983018de00658d6f",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/exhibition_ancient_life_imprints.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "ec86371bab636efcf9b4b5d2be9ace0cd353cc810df87c20121021a83687056d",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/exhibition_china_bronze_civilization.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "2ddd7499af15008a6100fd1456807eaa1d897f36a9f3c3e202eaadd38630fb31",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/exhibition_earth_and_cosmos.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "dc197d48c1400c0adcce53114b25e7fbd6e76000e45ebe6f2628929d10a96fea",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/first_empty_ticket.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "8c21dc3e00da2e0ead4571f1a0057df9e30b15fa1edd42e62a08327409aff519",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/first_exhibition_income.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "357e01a6b96b580a29d67877483320c6b73beede48385087c1ce0e8f599f4eb9",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/first_real_exhibit.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "fc675d90a4d8b97af486fd5f9001081e382e8cb0a173091b8cc9c539c2abf8d4",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/fossil_detail.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "f45d999bb3e9eeeb3522c33dd1ffe5c04d6445f45180824026bec2be41dce826",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/global_directory.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "d4a25b32a1bd1e0b8ecd923b82d2a96a0c90b593d02606ab4ff48a4eb6c415a1",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/open_reading.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "9edde6cf9b220589a70810931e5a63e2a0e600bff49de01d03690e10d8980134",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/owned_instances.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "c7b3dea20e64f7db506c62e1057be994563daa946d3329d2fc6bc634dcd1bd22",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/photo_0.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "ebfcfec66e43b7ebb4e22244ded870b5e5dc624d54db7b92361eeddcc90a7cf1",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/photo_1.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "64edcafc1ce5fe938822f03828e697e27e20e82c68c4d97a74f0042bd013e669",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/photo_detail.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "7f091e315def059771cb6e470a9a3a64b0ec630caf257f442e2b3affa66d19ef",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/placeholder.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "59fff984914cb6f4a00baf54004d57aa4f3b46b2513e6e813c96ff193b89e645",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/research_desk.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "36123c1fa88279c51dc5c5866d865d5fecada1564a706516f8c975f4ad4b7bb3",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/reward_1.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "4bc52d375fc30c2ff55eb0d6fc3cbc5d6a95f67ba0ad9e1450ac18f392e55cee",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/reward_2.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "4fd60bb5adfdee6b22d418f276d3233638b24f344bd8ec6ab07a6448d907f389",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1280x720/visitor_view.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "1afbf1c0d3327cc43b12a34104271c0dd71ccf2f7e28c3740a8283440a533912",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1600x900/article_sources.png",
+      "width": 1600,
+      "height": 900,
+      "sha256": "4ac933cae3548a09ed4caa463998088347cd0a0e153323235aed1ce51adfc5b7",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1600x900/empty_owned.png",
+      "width": 1600,
+      "height": 900,
+      "sha256": "4a42d55e99de2d3e2e449f14fbd6ec093450852842bfa53d5be8fc6eceb0611f",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1600x900/exhibition_ancient_egypt.png",
+      "width": 1600,
+      "height": 900,
+      "sha256": "9946c85e0bff1fdaf36170685be9ca5440be4bfe7b4c7de18a9abdca3a39f563",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1600x900/exhibition_ancient_life_imprints.png",
+      "width": 1600,
+      "height": 900,
+      "sha256": "8a376f63449fe554b533fb528efa5d942b5f9f88990b6362bd43a7131d9f9fd5",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1600x900/exhibition_china_bronze_civilization.png",
+      "width": 1600,
+      "height": 900,
+      "sha256": "1fddcdcb14f6bef2697d306eba7fe7266a03426902e1f273d14915da817f1ad1",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1600x900/exhibition_earth_and_cosmos.png",
+      "width": 1600,
+      "height": 900,
+      "sha256": "03e807a232a644313e6fbde228e8a4897a3466302dc03f6a55f38e0c0059ec26",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1600x900/fossil_detail.png",
+      "width": 1600,
+      "height": 900,
+      "sha256": "90c61cef4f0e1fd93b1481ad187664efc56457033ab803393f63517b31753f0e",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1600x900/global_directory.png",
+      "width": 1600,
+      "height": 900,
+      "sha256": "70db71a7f96953b275ff1a0bf20793cd0fb2520be1e7c54101619f70a78150fa",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1600x900/open_reading.png",
+      "width": 1600,
+      "height": 900,
+      "sha256": "7bce04827cddd8d6826bf4a1ae39d5690a880f7d0038e2376604d4c3ede8f659",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1600x900/owned_instances.png",
+      "width": 1600,
+      "height": 900,
+      "sha256": "7f43f917acd291e71b397799160f58d9186894909054ac4dd38ae030e1179c14",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1600x900/photo_0.png",
+      "width": 1600,
+      "height": 900,
+      "sha256": "e5f1ee66e06dce79f6d05788061827fa64d6c432684c16d982eef16e5ff46f38",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1600x900/photo_1.png",
+      "width": 1600,
+      "height": 900,
+      "sha256": "b8d0c5dbcda46a53f2929c6a27f11cde96415dba0de36bae0e7afc1e5ee4ce82",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1600x900/photo_detail.png",
+      "width": 1600,
+      "height": 900,
+      "sha256": "9f4051caf45646f848252991568175b44a5fed66441dee342d59bd4ad8adab9f",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1600x900/placeholder.png",
+      "width": 1600,
+      "height": 900,
+      "sha256": "ad9c4cd07c48b22095328281c758e931e8d7c842d6d3dbe8d315af556dc67fd1",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/1600x900/research_desk.png",
+      "width": 1600,
+      "height": 900,
+      "sha256": "e0a07656c9ad213188cf98e47883dd6273c8551bee89b14544cc0fa92e4ecc82",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/960x540/article_sources.png",
+      "width": 960,
+      "height": 540,
+      "sha256": "c04c72e496da20ab3ce0ad79c0827cb0f4cb83e0ebfbd5d484137fbd26d1a29c",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/960x540/empty_owned.png",
+      "width": 960,
+      "height": 540,
+      "sha256": "5708d7d2135b93d6ccc1f77d2590b9aab5e4fb7e936aa439846c8804db0c3658",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/960x540/exhibition_ancient_egypt.png",
+      "width": 960,
+      "height": 540,
+      "sha256": "1ca37cd98a6c2c254e182048d6796ea92603553c2659d66fd13514a2bbe48ba0",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/960x540/exhibition_ancient_life_imprints.png",
+      "width": 960,
+      "height": 540,
+      "sha256": "a7b8c30fb1222737a89f84cf2beb9e7bf7f2ecd5d7ed95547a22b879b63f3f5d",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/960x540/exhibition_china_bronze_civilization.png",
+      "width": 960,
+      "height": 540,
+      "sha256": "1f74a3732f0146522eb2c128b6ec4b6de1333e1b4fe0e64fff115e5b462745a2",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/960x540/exhibition_earth_and_cosmos.png",
+      "width": 960,
+      "height": 540,
+      "sha256": "b95d69dd72d115bbb96530d54cd27858ec31f1394bdf9e1b2ddc63287b43179d",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/960x540/fossil_detail.png",
+      "width": 960,
+      "height": 540,
+      "sha256": "7c4c47ef0214a70235769d0d49c235f9f2b7f7e29284a970591bfb9e06cccf8f",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/960x540/global_directory.png",
+      "width": 960,
+      "height": 540,
+      "sha256": "00fa86bc29741976441385523656afafda419a8a7769ae881205ce2a8ab45ccf",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/960x540/open_reading.png",
+      "width": 960,
+      "height": 540,
+      "sha256": "0a1a8bcca62ec91d282fb3ec54db782f65e02d92ac1b5119de124fac8f39907c",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/960x540/owned_instances.png",
+      "width": 960,
+      "height": 540,
+      "sha256": "3a644d8bfd6ad0bc83dca15c06b1e7ce211007c2af5419a48b499815b27b0c88",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/960x540/photo_0.png",
+      "width": 960,
+      "height": 540,
+      "sha256": "1742535d8d00a7214226158fb392e3955e7abf82b483ed11427129ff1dbd8a4e",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/960x540/photo_1.png",
+      "width": 960,
+      "height": 540,
+      "sha256": "547c23c8eec52e64ca708b3177a074dcdc0a621962c955fb7a7b547e2271521c",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/960x540/photo_detail.png",
+      "width": 960,
+      "height": 540,
+      "sha256": "a54d235f2845db614cff3d1885492aebc86ea9549765535324c777b281b7fc2c",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/960x540/placeholder.png",
+      "width": 960,
+      "height": 540,
+      "sha256": "ec5f4cbc02ac2dd2c911e98f674438f25a2a5c582db944a71e465851cc1b7bcc",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    },
+    {
+      "path": "logs/phase10d/960x540/research_desk.png",
+      "width": 960,
+      "height": 540,
+      "sha256": "8089fa7604184a5ff4a8967c352ec3e7e7c4c21def5e2335649e702399bbd4c4",
+      "renderer": "Godot 4.6.2 viewport capture",
+      "profile": "ISOLATED_IN_MEMORY"
+    }
+  ],
+  "resolutions": [
+    "1280x720",
+    "1600x900",
+    "960x540"
+  ],
+  "human_acceptance": "PENDING",
+  "html_screenshots_used": false
+}

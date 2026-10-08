@@ -13,6 +13,12 @@ func load_file(research: MuseumResearchCatalog, path: String = "res://data/catal
 	if not data is Dictionary or data.get("schema_version") != 1 or data.get("scope") != "PLANNING_ONLY_NOT_OWNED" or not data.get("exhibitions") is Array: return _fail("Invalid exhibition schema/scope")
 	for row: Variant in data.exhibitions:
 		if not row is Dictionary or not row.get("exhibition_id") is String or _plans.has(row.exhibition_id) or row.get("curation_status") != "DRAFT_PENDING_REVIEW": return _fail("Invalid exhibition identity/status")
+		for field in ["title_zh", "description"]:
+			if not row.get(field) is String: return _fail("Invalid exhibition text")
+		for field in ["theme_tags", "source_notes", "related_article_ids"]:
+			if not row.get(field) is Array: return _fail("Invalid exhibition references")
+		for source: Variant in row.source_notes:
+			if not source is Dictionary: return _fail("Invalid exhibition source")
 		if not row.get("reading_order") is Array or not row.get("featured_object_ids") is Array or row.reading_order.size() != row.featured_object_ids.size(): return _fail("Invalid exhibition order")
 		var seen: Array = []
 		for id: Variant in row.reading_order:

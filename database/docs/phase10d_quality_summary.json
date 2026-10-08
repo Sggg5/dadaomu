@@ -1,0 +1,61 @@
+{
+  "records": 1441,
+  "articles": 100,
+  "refined_articles_v2": 30,
+  "formal_game_definitions": 8,
+  "exhibitions": 4,
+  "objects_per_exhibition": 8,
+  "local_images": 2,
+  "missing_runtime_images": 1439,
+  "candidates_exported": 0,
+  "profile_version": 4,
+  "python_tests": 92,
+  "python_failures": 0,
+  "existing_godot_checks": 293691,
+  "phase10d": [
+    {
+      "test": "bridge",
+      "checks": 9,
+      "failures": 0,
+      "log": "logs/10d_bridge_verified.log"
+    },
+    {
+      "test": "media",
+      "checks": 11,
+      "failures": 0,
+      "log": "logs/10d_media_verified.log"
+    },
+    {
+      "test": "GameFlow",
+      "checks": 114,
+      "failures": 0,
+      "log": "logs/10d_flow_final.log"
+    },
+    {
+      "test": "graphical_GameFlow",
+      "checks": 114,
+      "failures": 0,
+      "log": "logs/10d_graphical1280_verified.log"
+    },
+    {
+      "test": "graphical_UI1280",
+      "checks": 40,
+      "failures": 0,
+      "log": "logs/10d_graphical1280_ui_final.log"
+    },
+    {
+      "test": "graphical_UI1600",
+      "checks": 40,
+      "failures": 0,
+      "log": "logs/10d_graphical1600_ui_final.log"
+    },
+    {
+      "test": "graphical_UI960",
+      "checks": 40,
+      "failures": 0,
+      "log": "logs/10d_graphical960_ui_final.log"
+    }
+  ],
+  "formal_catalog_sha256": "dad2b7d7ea3a5849750bf6a93837d1ebbe77f30d9d84510890754e8c957c3b0f",
+  "human_acceptance": "PENDING"
+}

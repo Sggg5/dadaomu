@@ -98,4 +98,15 @@ class ExportTests(unittest.TestCase):
     def test_all_preexisting_gameplay_files_byte_semantics_unchanged(self):
         manifest=json.loads((ROOT/'samples/protected_game_manifest.json').read_text())
         for path,expected in manifest['files'].items():
-            self.assertEqual(expected,hashlib.sha256((ROOT.parent/path).read_text(encoding='utf-8-sig').encode()).hexdigest(),path)
+            text=(ROOT.parent/path).read_text(encoding='utf-8-sig')
+            if path=='scripts/museum/museum.gd':
+                # 10D authorizes exactly this read-only assembly extension. Preserve
+                # the original hash check for every other byte and all other files.
+                additions=[
+                    'var codex_panel: MuseumCodexPanel\nvar research_desk: MuseumInteractable\n',
+                    '\tcodex_panel = MuseumCodexPanel.new()\n\tcodex_panel.state = state\n\tcodex_panel.player = player\n\tadd_child(codex_panel)\n\tresearch_desk = _point("馆藏研究台",Vector2(900,190),Color("7daac4"),func() -> String: return "[E] 全球图鉴 · 只读研究",func() -> void: codex_panel.open())\n'
+                ]
+                for addition in additions:
+                    self.assertEqual(text.count(addition),1,'Only the reviewed 10D assembly extension may differ')
+                    text=text.replace(addition,'',1)
+            self.assertEqual(expected,hashlib.sha256(text.encode()).hexdigest(),path)

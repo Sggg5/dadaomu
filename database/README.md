@@ -58,3 +58,9 @@ python -m http.server 8765 --bind 127.0.0.1 --directory .
 ```
 
 访问http://127.0.0.1:8765/database/previews/index.html。无需外网阅读已生成的本地图鉴；来源链接单独需要联网。新clone只有2对象图片样例，其他18照片需显式`python -m database.media_pipeline download`重建（详见media_pipeline/README.md）。Pillow==12.3.0只用于策划工具，无Godot依赖。专题全部DRAFT_PENDING_REVIEW，未接门票/游客/正式掉落。
+
+## Phase 10D本地研究桥接
+
+运行 `python -m database.exports.export_research_catalog --db database/work/10d_rebuild.sqlite`，使用既有快照离线重建，不抓取新事实。输出data/catalog/museum_research_catalog.json与museum_exhibitions.json；不会写global_catalog.json或正式掉落。只提升两件Git样例到assets/catalog并保留ATTRIBUTION.json；其余18个cache不隐式加入发行。导出报告在database/docs/phase10d_export_report.json。
+
+Godot运行时不需要Python/SQLite/Pillow/网络。Museum研究台位于(900,190)，E打开。来源URL可在正文选择复制，不自动联网。500候选不导出到运行时，400同类型比较稿不冒充对象专属图鉴。

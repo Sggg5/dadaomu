@@ -12,6 +12,8 @@ func _initialize() -> void:
  check(catalog.ids().size()==1441,"record count")
  check(catalog.article_count()==100,"article count")
  check(not catalog.search("化石",true).is_empty(),"Chinese natural search")
+ for keyword in ["矿物","陨石","岩石"]:
+  check(not catalog.search(keyword,true).is_empty(),"Chinese natural category "+keyword)
  var copy := catalog.record(catalog.ids()[0])
  copy.original_name="mutated"
  check(catalog.record(catalog.ids()[0]).original_name!="mutated","copy isolation")

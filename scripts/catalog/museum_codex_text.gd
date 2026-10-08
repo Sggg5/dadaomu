@@ -3,7 +3,9 @@ extends RefCounted
 ## Plain text only: no BBCode evaluation, economic queries, or state mutation.
 static func known(value: Variant) -> String:
 	if value == null or str(value).is_empty(): return "未知 / 来源未提供"
-	if value is Array: return "; ".join(value.map(func(v: Variant) -> String: return str(v)))
+	if value is Array:
+		if value.is_empty(): return "未知 / 来源未提供"
+		return "; ".join(value.map(func(v: Variant) -> String: return known(v)))
 	return str(value)
 
 static func owned(state: MuseumState, item: OwnedAntique) -> String:
@@ -14,7 +16,8 @@ static func owned(state: MuseumState, item: OwnedAntique) -> String:
 	return text
 
 static func research(catalog: MuseumResearchCatalog, row: Dictionary) -> String:
-	var text := "%s\n官方原文：%s\n\n研究参考 · 不代表玩家拥有或1933年已发现\n" % [known(row.get("recommended_zh_name")),row.original_name]
+	var title: String = row.original_name if row.get("recommended_zh_name") == null else row.recommended_zh_name
+	var text := "%s\n官方原文：%s\n研究记录：%s\n\n研究参考 · 不代表玩家拥有或1933年已发现\n" % [title,row.original_name,row.object_id]
 	for pair in [["类型","category"],["文明","culture"],["时期","historical_period"],["来源年代","date_label"],["地质年代","geological_period"],["材质","material"],["收藏机构","museum_name"],["馆藏编号","accession_number"],["资料状态","verification_status"]]:
 		text += "%s：%s\n" % [pair[0],known(row.get(pair[1]))]
 	var article := catalog.article(str(row.get("article_id", "")))
