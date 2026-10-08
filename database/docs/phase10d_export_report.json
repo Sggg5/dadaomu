@@ -2,6 +2,7 @@
   "articles": 100,
   "candidates_not_exported": 500,
   "excluded_records": 0,
+  "local_images": 2,
   "media_policy": "Only tracked, verified samples promoted in 10D.3",
   "missing_fields": {
     "article_id": 1341,
@@ -11,5 +12,6 @@
     "material": 983,
     "recommended_zh_name": 1341
   },
+  "missing_images": 1439,
   "records": 1441
 }

@@ -1,0 +1,26 @@
+[
+  {
+    "asset_path": "res://assets/catalog/908ede90291de03602cb28ae_detail.jpg",
+    "attribution": "Mirror with Paired Felines, 1926.249, Cleveland Museum of Art. CC0; resized without cropping.",
+    "copyright_notice": "CC0 public-domain dedication",
+    "license_id": "CC0",
+    "media_id": "media:03a6ba9a35ab805e9db7affb",
+    "object_id": "object:4306ad6fb72897ae9ce12dce",
+    "record_url": "https://clevelandart.org/art/1926.249",
+    "revoked": false,
+    "sha256": "862328a9033fc0ec4c9a641f4155ab54a1f19e8e3a9e3c6c118502909fbddaf2",
+    "verification_status": "SOURCE_VERIFIED"
+  },
+  {
+    "asset_path": "res://assets/catalog/3a4cf4c9d2957872a73f9ae1_detail.jpg",
+    "attribution": "Mirror, 1926.248, Cleveland Museum of Art. CC0; resized without cropping.",
+    "copyright_notice": "CC0 public-domain dedication",
+    "license_id": "CC0",
+    "media_id": "media:6881361faab8d041f6646848",
+    "object_id": "object:97dd80e1a2b5e92d8049bd5e",
+    "record_url": "https://clevelandart.org/art/1926.248",
+    "revoked": false,
+    "sha256": "a50d349facce9943b6d7eafd52d732764f1465097ac9146906c4daa25b04ae19",
+    "verification_status": "SOURCE_VERIFIED"
+  }
+]

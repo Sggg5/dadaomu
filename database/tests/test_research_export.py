@@ -13,6 +13,10 @@ class ResearchExportTests(unittest.TestCase):
   data,report=build_catalog(self.db);self.assertEqual(len(data['records']),1441);self.assertEqual(len(data['articles']),100);self.assertEqual(report['excluded_records'],0);self.assertNotIn('game_definitions',data);self.assertNotIn('candidates',data)
  def test_identity_and_unknowns(self):
   data,_=build_catalog(self.db);self.assertEqual(len(set(r['object_id'] for r in data['records'])),1441);self.assertTrue(any(r['material'] is None for r in data['records']));self.assertTrue(all(a['review_status']=='DRAFT_PENDING_REVIEW' for a in data['articles']))
+ def test_media_is_verified_portable_subset(self):
+  data,_=build_catalog(self.db);self.assertEqual(len(data['media']),2)
+  for media in data['media']:
+   self.assertEqual(media['license_id'],'CC0');self.assertTrue(media['asset_path'].startswith('res://assets/catalog/'));self.assertTrue(media['attribution']);self.assertEqual(len(media['sha256']),64)
  def test_determinism(self):
   with tempfile.TemporaryDirectory() as tmp:
    a=Path(tmp)/'a.json';b=Path(tmp)/'b.json';export(self.db,a,Path(tmp)/'report');export(self.db,b,Path(tmp)/'report');self.assertEqual(a.read_bytes(),b.read_bytes())

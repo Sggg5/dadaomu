@@ -1,5 +1,6 @@
 """Offline research bridge. Never changes released game definitions."""
-import argparse,json,hashlib
+import argparse,json,hashlib,shutil
+from database.media_pipeline.pipeline import active_media,checked_image
 from pathlib import Path
 from database.schema.migrate import init_db,ROOT
 from database.preview.__main__ import prepare_content,preview_payload
@@ -17,10 +18,29 @@ def build_catalog(db):
             if row[key] is None:missing[key]=missing.get(key,0)+1
         records.append(row)
     articles=[dict(r) for r in db.execute('SELECT article_id,object_id,zh_name,original_name,object_type,civilization_or_geology,material,technique_or_preservation,body,confidence,review_status,editor_version FROM editorial_articles ORDER BY article_id')]
-    return dict(schema_version=1,scope='RESEARCH_REFERENCE_NOT_1933_DISCOVERY',records=records,articles=articles,media=[]),dict(records=len(records),articles=len(articles),missing_fields=missing,excluded_records=0,candidates_not_exported=500,media_policy='Only tracked, verified samples promoted in 10D.3')
+    return dict(schema_version=1,scope='RESEARCH_REFERENCE_NOT_1933_DISCOVERY',records=records,articles=articles,media=research_media(db)),dict(records=len(records),articles=len(articles),missing_fields=missing,excluded_records=0,candidates_not_exported=500,media_policy='Only tracked, verified samples promoted in 10D.3')
+
+def research_media(db):
+    result=[]
+    for image in active_media(db):
+        if not image['detail_repo_path'].startswith('database/previews/media/samples/'):continue
+        path=ROOT.parent/image['detail_repo_path'];checked_image(path.read_bytes(),'image/jpeg')
+        result.append(dict(media_id=image['media_id'],object_id=image['object_id'],asset_path='res://assets/catalog/'+path.name,sha256=image['detail_sha256'],license_id=image['license_id'],attribution=image['attribution'],copyright_notice=image['copyright_notice'],record_url=image['record_url'],verification_status='SOURCE_VERIFIED',revoked=False))
+    return sorted(result,key=lambda r:r['media_id'])
+
+def promote_media(db):
+    target=ROOT.parent/'assets/catalog';target.mkdir(parents=True,exist_ok=True)
+    for image in research_media(db):
+        source=ROOT/'previews/media/samples'/Path(image['asset_path']).name
+        shutil.copyfile(source,target/ source.name)
+    (target/'ATTRIBUTION.json').write_text(json.dumps(research_media(db),ensure_ascii=False,sort_keys=True,indent=2)+'\n',encoding='utf-8')
 
 def export(db,output,report):
     payload,quality=build_catalog(db)
+    mapping={m['object_id']:m['media_id'] for m in payload['media']}
+    for row in payload['records']:row['media_asset_id']=mapping.get(row['object_id'])
+    quality['local_images']=len(payload['media'])
+    quality['missing_images']=len(payload['records'])-len(payload['media'])
     for path,data in [(output,payload),(report,quality)]:
         Path(path).parent.mkdir(parents=True,exist_ok=True);Path(path).write_text(json.dumps(data,ensure_ascii=False,sort_keys=True,indent=2)+'\n',encoding='utf-8')
     return payload
@@ -28,5 +48,5 @@ def export(db,output,report):
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--db',default='database/work/catalog.sqlite');a=p.parse_args();db=init_db(a.db)
     try:
-        prepare_content(db);r=export(db,'data/catalog/museum_research_catalog.json','database/docs/phase10d_export_report.json');print(len(r['records']),len(r['articles']))
+        prepare_content(db);promote_media(db);r=export(db,'data/catalog/museum_research_catalog.json','database/docs/phase10d_export_report.json');print(len(r['records']),len(r['articles']))
     finally:db.close()

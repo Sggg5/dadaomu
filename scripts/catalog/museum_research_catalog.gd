@@ -43,6 +43,26 @@ func _fail(message: String) -> bool:
 func record(id: String) -> Dictionary: return _records.get(id, {}).duplicate(true)
 func article(id: String) -> Dictionary: return _articles.get(id, {}).duplicate(true)
 func article_count() -> int: return _articles.size()
+func media_for(object_id: String) -> Dictionary:
+	var row := record(object_id)
+	return _media.get(str(row.get("media_asset_id", "")), {}).duplicate(true)
+
+func image_for(object_id: String) -> Texture2D:
+	# Validate bytes before decoding; revocation and absent assets degrade to placeholder.
+	var media := media_for(object_id)
+	if media.is_empty() or media.get("revoked",true) or media.get("verification_status") != "SOURCE_VERIFIED" or media.get("license_id") not in ["CC0","CC_BY"]: return null
+	if media.license_id == "CC_BY" and str(media.get("attribution", "")).strip_edges().is_empty(): return null
+	var path := str(media.get("asset_path", ""))
+	if not path.begins_with("res://assets/catalog/") or ".." in path or not path.ends_with(".jpg") or not FileAccess.file_exists(path): return null
+	var bytes := FileAccess.get_file_as_bytes(path)
+	if bytes.size() < 16 or bytes.size() > 5000000 or bytes[0] != 255 or bytes[1] != 216: return null
+	var hash := HashingContext.new()
+	hash.start(HashingContext.HASH_SHA256)
+	hash.update(bytes)
+	if hash.finish().hex_encode() != media.get("sha256"): return null
+	var decoded := Image.new()
+	if decoded.load_jpg_from_buffer(bytes) != OK or decoded.get_width() > 1024 or decoded.get_height() > 1024: return null
+	return ImageTexture.create_from_image(decoded)
 func ids() -> Array:
 	var result := _records.keys()
 	result.sort()

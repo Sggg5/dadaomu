@@ -143,7 +143,12 @@ func select_entry(index: int) -> void:
 	image_note.text = "暂无已核验本地照片 · 统一占位"
 	var id: String = visible_ids[index]
 	if mode == 0: detail.text = MuseumCodexText.owned(state,state.collection.find(StringName(id)))
-	else: detail.text = MuseumCodexText.research(catalog,catalog.record(id))
+	else:
+		detail.text = MuseumCodexText.research(catalog,catalog.record(id))
+		image.texture = catalog.image_for(id)
+		if image.texture != null:
+			var media := catalog.media_for(id)
+			image_note.text = "%s · %s\n%s" % [media.license_id,media.copyright_notice,media.attribution]
 
 func _input(event: InputEvent) -> void:
 	if not panel.visible or event.is_echo(): return
