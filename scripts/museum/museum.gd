@@ -31,6 +31,8 @@ var message: Label
 var prompt_label: Label
 var _night_after_close: bool = false
 var _shown_level: int = -1
+var codex_panel: MuseumCodexPanel
+var research_desk: MuseumInteractable
 
 
 func _ready() -> void:
@@ -42,6 +44,11 @@ func _ready() -> void:
 	add_child(player)
 	_make_hud()
 	player.prompt_label = prompt_label
+	codex_panel = MuseumCodexPanel.new()
+	codex_panel.state = state
+	codex_panel.player = player
+	add_child(codex_panel)
+	research_desk = _point("馆藏研究台",Vector2(900,190),Color("7daac4"),func() -> String: return "[E] 全球图鉴 · 只读研究",func() -> void: codex_panel.open())
 	collection_panel = MuseumCollectionPanel.new()
 	collection_panel.state = state
 	collection_panel.player = player

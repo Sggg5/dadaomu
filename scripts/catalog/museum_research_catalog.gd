@@ -54,7 +54,11 @@ func search(keyword: String = "", natural_only: bool = false) -> Array:
 		var row: Dictionary = _records[id]
 		if natural_only and row.object_kind != "NATURAL_HISTORY": continue
 		var haystack: String = str(row.get("recommended_zh_name", "")) + " " + row.original_name + " " + str(row.get("category", ""))
-		if row.object_kind == "NATURAL_HISTORY": haystack += " 自然历史 化石 矿物 陨石 岩石"
+		if row.object_kind == "NATURAL_HISTORY":
+			haystack += " 自然历史 " + str(row.get("natural_history", ""))
+			var aliases := {"FOSSIL_SPECIMEN":"化石", "MINERAL_SPECIMEN":"矿物", "METEORITE_SPECIMEN":"陨石", "ROCK_SPECIMEN":"岩石"}
+			haystack += str(aliases.get(row.category,""))
 		if keyword.is_empty() or haystack.to_lower().contains(keyword.to_lower()): result.append(id)
 	return result
+
 
