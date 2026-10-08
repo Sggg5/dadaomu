@@ -1,7 +1,10 @@
 class_name MuseumProfileStore
 extends RefCounted
 ## 版本化地面JSON。只编码纯值，内存/路径可注入；不保存Night Run。
-const VERSION: int = 4
+const VERSION: int = 5
+var write_blocked: bool = false
+var _source_sha: String = ""
+var _loaded_version: int = 0
 var save_path: String = "user://museum_profile_v1.json"
 var memory_only: bool = false
 var save_count: int = 0
@@ -21,11 +24,12 @@ func encode(state: MuseumState) -> Dictionary:
 		items.append({"instance_id":str(item.instance_id),"definition_id":str(item.definition_id),"acquired_day":item.acquired_day,"identified":item.identified,"condition":item.condition})
 	var assignments: Dictionary[String,String] = {}
 	for id in state.display_assignments: assignments[str(id)] = str(state.display_assignments[id])
-	return {"version":VERSION,"campaign_seed":state.campaign_seed,"day_number":state.day_number,"phase":"EVENING" if state.phase == MuseumState.Phase.EVENING else "MORNING","cash":state.cash,"museum_level":state.museum_level,"next_antique_id":state.collection.next_id(),"collection":items,"display_assignments":assignments,"last_day_visitors":state.last_day_visitors,"last_day_ticket_income":state.last_day_ticket_income,"auction_lot_instance_id":str(state.auction_lot_instance_id),"auction_reserve_mode":state.auction_reserve_mode}
+	return {"version":VERSION,"display_layout_version":1,"campaign_seed":state.campaign_seed,"day_number":state.day_number,"phase":"EVENING" if state.phase == MuseumState.Phase.EVENING else "MORNING","cash":state.cash,"museum_level":state.museum_level,"next_antique_id":state.collection.next_id(),"collection":items,"display_assignments":assignments,"last_day_visitors":state.last_day_visitors,"last_day_ticket_income":state.last_day_ticket_income,"auction_lot_instance_id":str(state.auction_lot_instance_id),"auction_reserve_mode":state.auction_reserve_mode}
 
 
 func save_profile(state: MuseumState) -> bool:
 	# OPEN现金仍在流动，NIGHT背包仍有风险，都不属于可保存地面快照。
+	if write_blocked: return false
 	if not state.can_edit(): return false
 	if not _integer(state.campaign_seed,1,ExpeditionSeedService.MAX_SEED): return _failed("Campaign Seed尚未初始化或非法，拒绝写入v4存档")
 	last_error = ""
@@ -35,6 +39,14 @@ func save_profile(state: MuseumState) -> bool:
 	else:
 		var directory := ProjectSettings.globalize_path(save_path).get_base_dir()
 		if DirAccess.make_dir_recursive_absolute(directory) != OK: return _failed("无法创建存档目录")
+		# A successful legacy migration writes v5 only after preserving the exact source.
+		if FileAccess.file_exists(save_path) and not _source_sha.is_empty():
+			if FileAccess.get_sha256(save_path) != _source_sha: return _failed("存档在读取后被修改，拒绝覆盖")
+			if _loaded_version in [1,2,3,4]:
+				var backup := "%s.v%d.%s.backup.json" % [save_path,_loaded_version,_source_sha.substr(0,12)]
+				if FileAccess.file_exists(backup):
+					if FileAccess.get_sha256(backup) != _source_sha: return _failed("旧档备份冲突，拒绝覆盖")
+				elif DirAccess.copy_absolute(ProjectSettings.globalize_path(save_path),ProjectSettings.globalize_path(backup)) != OK: return _failed("旧档备份失败，拒绝覆盖")
 		var temporary := save_path+".tmp"
 		var file := FileAccess.open(temporary,FileAccess.WRITE)
 		if file == null: return _failed("无法写入存档")
@@ -44,14 +56,19 @@ func save_profile(state: MuseumState) -> bool:
 		file.close()
 		if error != OK: return _failed("存档写入失败")
 		if DirAccess.rename_absolute(ProjectSettings.globalize_path(temporary),ProjectSettings.globalize_path(save_path)) != OK: return _failed("无法替换存档")
+	if not memory_only:
+		_source_sha = FileAccess.get_sha256(save_path)
+	_loaded_version = VERSION
 	save_count += 1
 	return true
 
 
 func load_profile() -> MuseumState:
 	last_error = ""
+	write_blocked = false
 	if memory_only: return decode(_memory) if not _memory.is_empty() else MuseumState.new()
 	if not FileAccess.file_exists(save_path): return MuseumState.new()
+	_source_sha = FileAccess.get_sha256(save_path)
 	var file := FileAccess.open(save_path,FileAccess.READ)
 	if file == null:
 		_failed("无法读取存档，使用新档")
@@ -67,6 +84,7 @@ func load_profile() -> MuseumState:
 
 func decode(payload: Variant) -> MuseumState:
 	var state := MuseumState.new()
+	write_blocked = false
 	if not payload is Dictionary:
 		_failed("存档根字段异常，使用新档")
 		return state
@@ -81,6 +99,10 @@ func decode(payload: Variant) -> MuseumState:
 		return state
 	if payload.get("phase","MORNING") not in ["MORNING","EVENING"]:
 		_failed("存档不是安全地面阶段，使用新档")
+		return state
+	_loaded_version = int(payload.version)
+	if _loaded_version == 5 and payload.get("display_layout_version") != 1:
+		_failed("未知展陈布局版本，保护原档")
 		return state
 	state.day_number = int(payload.day_number)
 	state.cash = int(payload.cash)
@@ -111,7 +133,7 @@ func decode(payload: Variant) -> MuseumState:
 	state.collection.restore(items,int(payload.next_antique_id))
 	for case_id in payload.display_assignments:
 		var id: Variant = payload.display_assignments[case_id]
-		if not case_id is String or not id is String or not state.assign(StringName(case_id),StringName(id)): _failed("忽略非法/未解锁/重复展柜归属")
+		if not case_id is String or not id is String or (int(payload.version) < 5 and StringName(case_id) not in state.case_ids()) or not state.place(StringName(case_id),StringName(id)): _failed("忽略非法/未解锁/重复展柜归属")
 	# 先恢复展柜归属再检查待拍，发生冲突时优先保留旧展品。
 	if int(payload.version) >= 3:
 		var pending: Variant = payload.get("auction_lot_instance_id","")
@@ -136,5 +158,6 @@ func _integer(value: Variant, minimum: int, maximum: int) -> bool:
 
 func _failed(message: String) -> bool:
 	last_error = message
+	write_blocked = true
 	push_warning(message)
 	return false

@@ -61,10 +61,18 @@ func construction() -> void:
 
 func place_new_case(item: OwnedAntique) -> void:
 	if not item.identified: await daytime.appraise(item.instance_id)
-	await daytime.walk_to(Vector2(940,450))
-	await daytime.walk_to(Vector2(940,348))
-	await daytime.walk_to(Vector2(1060,348))
-	await daytime.walk_to(flow.museum.cases[3].position+Vector2(0,48))
+	await daytime.walk_to(flow.museum.hall_guide.position+Vector2(0,40))
+	test.key(KEY_E)
+	await test.frames(2)
+	var hall_panel:=flow.museum.hall_panel
+	hall_panel.list.select(hall_panel.ids.find(&"EAST"))
+	hall_panel.panel.get_child(0).get_child(2).pressed.emit()
+	await test.frames(3)
+	var view:DisplayCase
+	for candidate in flow.museum.cases:
+		if candidate.case_id==&"CASE_4":view=candidate
+	await daytime.walk_to(Vector2(view.position.x,450))
+	await daytime.walk_to(view.position+Vector2(0,48))
 	test.key(KEY_E)
 	await test.frames(1)
 	var panel := flow.museum.collection_panel
@@ -72,7 +80,7 @@ func place_new_case(item: OwnedAntique) -> void:
 	panel.list.select(index)
 	panel.panel.get_node("VBoxContainer/Choose").pressed.emit()
 	await test.frames(3)
-	test.check(flow.museum_state.display_assignments.get(&"CASE_4") == item.instance_id and flow.museum.cases[3].label.text.contains(MuseumState.POOL.find_by_id(item.definition_id).display_name),"Actual new case4 E/UI displays remaining real night loot")
+	test.check(flow.museum_state.display_assignments.get(&"CASE_4") == item.instance_id and view.label.text.contains(MuseumState.POOL.find_by_id(item.definition_id).display_name),"Actual new case4 E/UI displays remaining real night loot")
 
 
 func run() -> void:
@@ -132,7 +140,7 @@ func run() -> void:
 	test.key(KEY_E)
 	await test.frames(3)
 	test.check(state.museum_level == 1 and state.cash == before-1000 and state.collection == old_collection and state.display_assignments == assignments,"Real construction E atomically buys Level1 and rapid repeats preserve original owned exhibits")
-	test.check(flow.museum.cases.size() == 5 and flow.museum.cases.slice(0,3).map(func(exhibit: DisplayCase) -> int: return exhibit.get_instance_id()) == old_cases and flow.museum.business.visitor_target(state.total_appeal(),3) == 45,"Scene really unlocks east CASE4/5, preserves old nodes and increases same-exhibit target30→45")
+	test.check(flow.museum.cases.size() == 3 and state.case_ids().size()==5 and flow.museum.cases.slice(0,3).map(func(exhibit: DisplayCase) -> int: return exhibit.get_instance_id()) == old_cases and state.total_appeal()==77 and flow.museum.business.visitor_target(state.total_appeal(),3) == 31,"Model unlocks east CASE4/5 while MAIN node count remains3; appeal target respects upgraded capacity")
 	test.capture("level1_unlocked")
 	var saved_upgrade := flow.profile_store.load_profile()
 	test.check(saved_upgrade.museum_level == 1 and saved_upgrade.cash == state.cash,"Upgrade is persisted immediately before any later display change")
@@ -147,7 +155,7 @@ func run() -> void:
 	await test.frames(4)
 	await create_flow()
 	state = flow.museum_state
-	test.check(flow.profile_store.encode(state) == expected and flow.museum.cases.size() == 5 and state.phase == MuseumState.Phase.EVENING,"New GameFlow automatically reloads date/cash/Level1/owned IDs/all assignments and closed phase")
+	test.check(flow.profile_store.encode(state) == expected and flow.museum.cases.size() == 3 and state.case_ids().size()==5 and state.phase == MuseumState.Phase.EVENING,"New GameFlow automatically reloads date/cash/Level1/owned IDs/all assignments and closed phase")
 	test.check(not flow.museum.business.start(),"Reloading finished business does not allow another same-day opening")
 	var next := state.collection.add(&"republic_silver_coin",state.day_number)
 	test.check(next.instance_id not in old_ids and next.instance_id == &"A000005","Post-restart collection boundary continues unique next ID")

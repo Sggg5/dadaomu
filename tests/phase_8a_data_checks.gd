@@ -20,7 +20,7 @@ func run() -> void:
 	copied.clear()
 	test.check(state.collection.all_items().size() == 2 and state.collection.find(second.instance_id) == second,"Collection returns independent array and finds specific instance")
 	test.check(state.assign(&"CASE_1",first.instance_id) and not state.assign(&"CASE_2",first.instance_id),"Same instance cannot occupy two display cases")
-	test.check(state.assign(&"CASE_2",second.instance_id) and state.total_appeal() == 64,"Separate duplicates exhibit simultaneously and sum exact appeal")
+	test.check(state.assign(&"CASE_2",second.instance_id) and state.total_appeal() == 53,"Separate duplicates display with configurable 1.0/0.65 repeat factors")
 	state.phase = MuseumState.Phase.OPEN
 	test.check(not state.unassign(&"CASE_1") and not state.assign(&"CASE_3",second.instance_id),"Data boundary refuses all exhibit changes while open")
 	state.phase = MuseumState.Phase.EVENING
@@ -31,7 +31,7 @@ func run() -> void:
 	business.config = config
 	test.check(config.open_duration == 60 and config.ticket_price == 5 and config.max_active_visitors == 8,"Default business duration/price/active limit")
 	test.check(business.visitor_target(0,0) == 0 and business.visitor_target(50,0) == 0,"Empty exhibit count means zero target regardless of appeal")
-	test.check(business.visitor_target(3,1) == 6 and business.visitor_target(50,1) == 30 and business.visitor_target(75,2) == 30 and business.visitor_target(117,3) == 30,"Displayed exhibits use5+floor(appeal*.5), Level0 capacity30")
+	test.check(business.visitor_target(3,1) == 6 and business.visitor_target(50,1) == 22 and business.visitor_target(75,2) == 30 and business.visitor_target(117,3) == 30,"Instance appeal uses5+floor(effective appeal*.35), Level0 capacity30")
 	test.check(business.visitor_target(0,1) == 5,"Opening does not require a minimum appeal")
 	var single_state := MuseumState.new()
 	single_state.campaign_seed = 52 # 明确的有效v4存档夹具。

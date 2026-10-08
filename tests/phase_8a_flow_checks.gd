@@ -75,7 +75,7 @@ func open_and_close(interact_visitor: bool) -> void:
 			peak = maxi(peak,museum.business.active.size())
 			var chosen: MuseumVisitor
 			for visitor in museum.business.active:
-				if visitor.activity == MuseumVisitor.Activity.VIEW:
+				if visitor.activity == MuseumVisitor.Activity.VIEW and visitor.visible:
 					chosen = visitor
 					break
 			if chosen != null:

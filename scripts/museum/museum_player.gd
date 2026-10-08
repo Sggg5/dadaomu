@@ -27,11 +27,13 @@ func _physics_process(delta: float) -> void:
 	position = position.clamp(Vector2(95,150), Vector2(1185,605))
 	focused = null
 	var nearest: float = 64.01
+	var best_priority: int = -1
 	if controls_enabled:
 		for target in interactables:
 			if not is_instance_valid(target) or target.is_queued_for_deletion(): continue
 			var distance := global_position.distance_to(target.global_position)
-			if distance < nearest:
+			if distance <= 64 and (target.interaction_priority > best_priority or (target.interaction_priority == best_priority and distance < nearest)):
+				best_priority = target.interaction_priority
 				nearest = distance
 				focused = target
 	if is_instance_valid(prompt_label):

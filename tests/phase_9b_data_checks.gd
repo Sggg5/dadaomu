@@ -65,7 +65,11 @@ func run() -> void:
 	for number in range(1, 6):
 		var layout := TombFloorGenerator.generate(33, number, TOMB)
 		print("[9B sample] Run33 floor%d seed=%d rooms=%d terminal=%s" % [number, layout.seed_value, layout.rooms.size(), layout.terminal_id])
-	test.check(MuseumProfileStore.VERSION == 4, "No Profile v5 or mid-run save")
+	var night_state:=MuseumState.new()
+	night_state.campaign_seed=52
+	night_state.phase=MuseumState.Phase.NIGHT
+	var guard_store:=MuseumProfileStore.in_memory()
+	test.check(MuseumProfileStore.VERSION == 5 and not guard_store.save_profile(night_state) and guard_store.save_count==0, "v5 only stores museum placements; mid-run save remains forbidden")
 
 
 func custom_terminal_comparison() -> void:

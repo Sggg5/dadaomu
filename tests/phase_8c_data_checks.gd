@@ -66,9 +66,10 @@ func run() -> void:
 	for seed in range(40):
 		var reference := RandomNumberGenerator.new()
 		reference.seed = seed
-		var roll := reference.randi_range(1,95)
+		reference.randi_range(1,79) # Hall selection consumes its own draw.
+		var roll := reference.randi_range(1,79)
 		visitor.rng.seed = seed
-		test.check(visitor.choose_exhibit() == cases[0 if roll <= 50 else 1],"Visitor uses50/45 effective weights seed%d" % seed)
+		test.check(visitor.choose_exhibit() == cases[0 if roll <= 50 else 1],"Visitor uses50/29 duplicate-adjusted weights after Hall selection seed%d" % seed)
 	visitor.free()
 	for exhibit in cases: exhibit.free()
 	state.changed.disconnect(save_callback)

@@ -1,0 +1,395 @@
+{
+  "schema_version": 1,
+  "repeat_decay": 0.65,
+  "minimum_repeat_factor": 0.0,
+  "visitor_appeal_scale": 0.35,
+  "additional_hall_visitors": 2,
+  "halls": [
+    {
+      "id": "MAIN",
+      "name": "主展厅 · 古物陈列",
+      "unlock_level": 0
+    },
+    {
+      "id": "EAST",
+      "name": "东展厅 · 钱币与书画",
+      "unlock_level": 0
+    },
+    {
+      "id": "WEST",
+      "name": "西展厅 · 综合与大型陈列",
+      "unlock_level": 2
+    }
+  ],
+  "units": [
+    {
+      "id": "CASE_1",
+      "hall_id": "MAIN",
+      "name": "小型展柜",
+      "kind": "SMALL_CASE",
+      "capacity": 4,
+      "categories": [
+        "COIN",
+        "CERAMIC",
+        "SCULPTURE",
+        "JADE",
+        "BRONZE",
+        "CERAMIC_SCULPTURE",
+        "JEWELRY",
+        "FRAGMENT"
+      ],
+      "max_size_cm": [
+        45,
+        45,
+        60
+      ],
+      "position": [
+        440,
+        300
+      ],
+      "unlock_level": 0,
+      "legacy_first_slot": true
+    },
+    {
+      "id": "CASE_2",
+      "hall_id": "MAIN",
+      "name": "标准组合展柜",
+      "kind": "STANDARD_CASE",
+      "capacity": 8,
+      "categories": [
+        "COIN",
+        "CERAMIC",
+        "SCULPTURE",
+        "JADE",
+        "BRONZE",
+        "CERAMIC_SCULPTURE",
+        "JEWELRY",
+        "FRAGMENT"
+      ],
+      "max_size_cm": [
+        45,
+        45,
+        60
+      ],
+      "position": [
+        640,
+        300
+      ],
+      "unlock_level": 0,
+      "legacy_first_slot": true
+    },
+    {
+      "id": "CASE_3",
+      "hall_id": "MAIN",
+      "name": "标准组合展柜",
+      "kind": "STANDARD_CASE",
+      "capacity": 8,
+      "categories": [
+        "COIN",
+        "CERAMIC",
+        "SCULPTURE",
+        "JADE",
+        "BRONZE",
+        "CERAMIC_SCULPTURE",
+        "JEWELRY",
+        "FRAGMENT"
+      ],
+      "max_size_cm": [
+        45,
+        45,
+        60
+      ],
+      "position": [
+        840,
+        300
+      ],
+      "unlock_level": 0,
+      "legacy_first_slot": true
+    },
+    {
+      "id": "CASE_4",
+      "hall_id": "EAST",
+      "name": "标准组合展柜",
+      "kind": "STANDARD_CASE",
+      "capacity": 8,
+      "categories": [
+        "COIN",
+        "CERAMIC",
+        "SCULPTURE",
+        "JADE",
+        "BRONZE",
+        "CERAMIC_SCULPTURE",
+        "JEWELRY",
+        "FRAGMENT"
+      ],
+      "max_size_cm": [
+        45,
+        45,
+        60
+      ],
+      "position": [
+        640,
+        300
+      ],
+      "unlock_level": 1,
+      "legacy_first_slot": true
+    },
+    {
+      "id": "CASE_5",
+      "hall_id": "EAST",
+      "name": "标准组合展柜",
+      "kind": "STANDARD_CASE",
+      "capacity": 8,
+      "categories": [
+        "COIN",
+        "CERAMIC",
+        "SCULPTURE",
+        "JADE",
+        "BRONZE",
+        "CERAMIC_SCULPTURE",
+        "JEWELRY",
+        "FRAGMENT"
+      ],
+      "max_size_cm": [
+        45,
+        45,
+        60
+      ],
+      "position": [
+        840,
+        300
+      ],
+      "unlock_level": 1,
+      "legacy_first_slot": true
+    },
+    {
+      "id": "CASE_6",
+      "hall_id": "WEST",
+      "name": "标准组合展柜",
+      "kind": "STANDARD_CASE",
+      "capacity": 8,
+      "categories": [
+        "COIN",
+        "CERAMIC",
+        "SCULPTURE",
+        "JADE",
+        "BRONZE",
+        "CERAMIC_SCULPTURE",
+        "JEWELRY",
+        "FRAGMENT"
+      ],
+      "max_size_cm": [
+        45,
+        45,
+        60
+      ],
+      "position": [
+        440,
+        300
+      ],
+      "unlock_level": 2,
+      "legacy_first_slot": true
+    },
+    {
+      "id": "CASE_7",
+      "hall_id": "WEST",
+      "name": "标准组合展柜",
+      "kind": "STANDARD_CASE",
+      "capacity": 8,
+      "categories": [
+        "COIN",
+        "CERAMIC",
+        "SCULPTURE",
+        "JADE",
+        "BRONZE",
+        "CERAMIC_SCULPTURE",
+        "JEWELRY",
+        "FRAGMENT"
+      ],
+      "max_size_cm": [
+        45,
+        45,
+        60
+      ],
+      "position": [
+        640,
+        300
+      ],
+      "unlock_level": 2,
+      "legacy_first_slot": true
+    },
+    {
+      "id": "CASE_8",
+      "hall_id": "WEST",
+      "name": "标准组合展柜",
+      "kind": "STANDARD_CASE",
+      "capacity": 8,
+      "categories": [
+        "COIN",
+        "CERAMIC",
+        "SCULPTURE",
+        "JADE",
+        "BRONZE",
+        "CERAMIC_SCULPTURE",
+        "JEWELRY",
+        "FRAGMENT"
+      ],
+      "max_size_cm": [
+        45,
+        45,
+        60
+      ],
+      "position": [
+        840,
+        300
+      ],
+      "unlock_level": 2,
+      "legacy_first_slot": true
+    },
+    {
+      "id": "COIN_E1",
+      "hall_id": "EAST",
+      "name": "钱币与小件柜",
+      "kind": "COIN_CASE",
+      "capacity": 16,
+      "categories": [
+        "COIN",
+        "JEWELRY"
+      ],
+      "max_size_cm": [
+        12,
+        12,
+        8
+      ],
+      "position": [
+        440,
+        300
+      ],
+      "unlock_level": 0
+    },
+    {
+      "id": "WALL_E1",
+      "hall_id": "EAST",
+      "name": "书画展墙",
+      "kind": "DISPLAY_WALL",
+      "capacity": 4,
+      "categories": [
+        "PAINTING",
+        "CALLIGRAPHY"
+      ],
+      "max_size_cm": [
+        120,
+        15,
+        180
+      ],
+      "position": [
+        1080,
+        260
+      ],
+      "unlock_level": 1
+    },
+    {
+      "id": "PLATFORM_W1",
+      "hall_id": "WEST",
+      "name": "大型展台 · 运输待开放",
+      "kind": "LARGE_PLATFORM",
+      "capacity": 1,
+      "categories": [
+        "LARGE_ARTIFACT",
+        "LARGE_FOSSIL"
+      ],
+      "max_size_cm": [
+        250,
+        250,
+        300
+      ],
+      "position": [
+        1080,
+        260
+      ],
+      "unlock_level": 2
+    }
+  ],
+  "profiles": {
+    "republic_silver_coin": {
+      "category": "COIN",
+      "size_cm": [
+        4,
+        4,
+        0.3
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "blue_white_jar": {
+      "category": "CERAMIC",
+      "size_cm": [
+        20,
+        20,
+        25
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "gilt_buddha": {
+      "category": "SCULPTURE",
+      "size_cm": [
+        20,
+        15,
+        30
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "han_jade_disc": {
+      "category": "JADE",
+      "size_cm": [
+        18,
+        18,
+        2
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "inlaid_bronze_mirror": {
+      "category": "BRONZE",
+      "size_cm": [
+        25,
+        25,
+        3
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "tang_sancai_horse": {
+      "category": "CERAMIC_SCULPTURE",
+      "size_cm": [
+        35,
+        15,
+        40
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "gold_thread_jade": {
+      "category": "JEWELRY",
+      "size_cm": [
+        8,
+        4,
+        1
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    },
+    "guardian_fragment": {
+      "category": "FRAGMENT",
+      "size_cm": [
+        30,
+        20,
+        25
+      ],
+      "transport": "HAND_CARRY",
+      "size_source": "GAME_DESIGN_FOOTPRINT_NOT_MUSEUM_MEASUREMENT"
+    }
+  }
+}

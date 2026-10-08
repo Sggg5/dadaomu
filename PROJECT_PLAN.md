@@ -1,3 +1,13 @@
+## Phase 10D.6 多展厅组合陈列（完成，人工体验待验收）
+
+分支codex/phase-10d6-museum-expansion，基线10D 18403e6。Museum→ExhibitionHall→DisplayUnit→DisplaySlot→OwnedAntique；仅实际馆藏实例可布展。独立display_layout.json配置3厅、5设施类型、11设施；三级总位置36/56/81，旧case_count仅用于历史CASE身份，不决定新容量。当前厅才实例化设施。
+
+原8古董/掉落/战斗/Boss/遗物/数据库冻结；8件游戏原型占位尺寸是独立GAME_DESIGN_FOOTPRINT，不是现实馆藏测量。未知尺寸、类型不匹配、大型化石无合法运输拒绝布展。真实研究1441/500候选不进入OwnedAntique。
+
+Profile VERSION5显式承接v1–4，CASE_1–8为迁移后的首位置稳定ID，其余位置独立ID。写v5前保留旧档SHA命名备份；坏迁移/损坏JSON/外部改档阻止覆盖。游客先选厅再选设施，逐实例吸引力按0.65重复衰减（无正下限，禁止无限堆叠）；票款与结算once规则保留。E管理位置，库房50条分页搜索/分类/状态；OPEN只读。固定设施E优先于近旁游客，不改变移动参数。
+
+测试与实际图形结果见docs/PHASE_10D6_VERIFICATION.md。只提交/push、不合并main，最终隔离试玩夹具展示组合柜；正式新游戏仍不赠送任何藏品，不继续下一阶段。
+
 ## Phase 10D Godot图鉴接入（实现完成，人工体验待验收）
 
 基于10C 62ed174，分支codex/phase-10d-museum-codex。研究台复用MuseumPlayer E交互，独立本地Research/Exhibition目录：1441真实对象、100待审图鉴（30 v2）、4专题各8对象；正式八件定义与500候选隔离。研究资料不是玩家实物，也不是1933年已知发现。

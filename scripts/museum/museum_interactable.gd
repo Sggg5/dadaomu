@@ -1,6 +1,7 @@
 class_name MuseumInteractable
 extends Node2D
 ## 统一距离/提示/回调接口；Player不包含库房或展柜类型分支。
+var interaction_priority: int = 10 # fixtures should not be occluded by visitors
 var prompt: Callable
 var action: Callable
 var alternate_action: Callable

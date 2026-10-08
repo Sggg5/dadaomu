@@ -1,0 +1,262 @@
+{
+  "baseline": "18403e6b4f41461d1f8397f7287b8a549dde2529",
+  "branch": "codex/phase-10d6-museum-expansion",
+  "halls": 3,
+  "units": 11,
+  "capacity_by_level": [
+    36,
+    56,
+    81
+  ],
+  "profile_version": 5,
+  "python_tests": 92,
+  "python_failures": 0,
+  "godot_total": 293842,
+  "godot_failures": 0,
+  "suites": [
+    {
+      "phase": "1",
+      "checks": 27,
+      "failures": 0
+    },
+    {
+      "phase": "2",
+      "checks": 204,
+      "failures": 0
+    },
+    {
+      "phase": "3",
+      "checks": 94,
+      "failures": 0
+    },
+    {
+      "phase": "4",
+      "checks": 105,
+      "failures": 0
+    },
+    {
+      "phase": "5a",
+      "checks": 61,
+      "failures": 0
+    },
+    {
+      "phase": "5b",
+      "checks": 236,
+      "failures": 0
+    },
+    {
+      "phase": "6",
+      "checks": 164,
+      "failures": 0
+    },
+    {
+      "phase": "6_5",
+      "checks": 174,
+      "failures": 0
+    },
+    {
+      "phase": "7a",
+      "checks": 306,
+      "failures": 0
+    },
+    {
+      "phase": "7b",
+      "checks": 722,
+      "failures": 0
+    },
+    {
+      "phase": "8a",
+      "checks": 482,
+      "failures": 0
+    },
+    {
+      "phase": "8b",
+      "checks": 305,
+      "failures": 0
+    },
+    {
+      "phase": "8c",
+      "checks": 297,
+      "failures": 0
+    },
+    {
+      "phase": "8d",
+      "checks": 2153,
+      "failures": 0
+    },
+    {
+      "phase": "9a",
+      "checks": 10510,
+      "failures": 0
+    },
+    {
+      "phase": "9b",
+      "checks": 30753,
+      "failures": 0
+    },
+    {
+      "phase": "9b2",
+      "checks": 4842,
+      "failures": 0
+    },
+    {
+      "phase": "9b3",
+      "checks": 29132,
+      "failures": 0
+    },
+    {
+      "phase": "9b32",
+      "checks": 1733,
+      "failures": 0
+    },
+    {
+      "phase": "9b33",
+      "checks": 2701,
+      "failures": 0
+    },
+    {
+      "phase": "geometry",
+      "checks": 206884,
+      "failures": 0
+    },
+    {
+      "phase": "softlock",
+      "checks": 1030,
+      "failures": 0
+    },
+    {
+      "phase": "baseline",
+      "checks": 727,
+      "failures": 0
+    },
+    {
+      "phase": "10a",
+      "checks": 49,
+      "failures": 0
+    },
+    {
+      "phase": "10d_bridge",
+      "checks": 9,
+      "failures": 0
+    },
+    {
+      "phase": "10d_media",
+      "checks": 11,
+      "failures": 0
+    },
+    {
+      "phase": "10d",
+      "checks": 40,
+      "failures": 0
+    },
+    {
+      "phase": "10d6",
+      "checks": 91,
+      "failures": 0
+    }
+  ],
+  "graphical_checks": 91,
+  "performance": {
+    "headless": [
+      {
+        "collection": 50,
+        "list_items": 50,
+        "open_us": 1525,
+        "search_us": 364,
+        "unit_nodes": 3
+      },
+      {
+        "collection": 100,
+        "list_items": 50,
+        "open_us": 1459,
+        "search_us": 450,
+        "unit_nodes": 3
+      },
+      {
+        "collection": 500,
+        "list_items": 50,
+        "open_us": 2757,
+        "search_us": 1297,
+        "unit_nodes": 3
+      }
+    ],
+    "Windows": [
+      {
+        "collection": 50,
+        "list_items": 50,
+        "open_us": 1649,
+        "search_us": 455,
+        "unit_nodes": 3
+      },
+      {
+        "collection": 100,
+        "list_items": 50,
+        "open_us": 1510,
+        "search_us": 446,
+        "unit_nodes": 3
+      },
+      {
+        "collection": 500,
+        "list_items": 50,
+        "open_us": 2773,
+        "search_us": 1297,
+        "unit_nodes": 3
+      },
+      {
+        "renderer": "graphical",
+        "resolution": "(1280, 720)"
+      }
+    ]
+  },
+  "screenshots": [
+    {
+      "path": "logs/phase10d6/combined_unit_eight.png",
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "4041b7e99aa95c883f75000cf778264369e83b7c43e2b8dcac9a12a60996e3e2"
+    },
+    {
+      "path": "logs/phase10d6/east_hall.png",
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "9d438ac42a9db99e3b6229be07eb861cec7bd9d6004f0474510a2f0cf4575462"
+    },
+    {
+      "path": "logs/phase10d6/hall_navigation.png",
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "e47b5e93e4b0eed61b45751f98f14104784021d6b19b108d8e082b8314b569ce"
+    },
+    {
+      "path": "logs/phase10d6/slot_manager_eight.png",
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "69a80f848aa038a25ecd6c937278eed60d4ac8ee685670e82f634cf002269c1f"
+    },
+    {
+      "path": "logs/phase10d6/storage_500.png",
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "e2ebf4181a6857fb8f91b89a4ad4cfe0a73d4557a5b57c21ddb41821b8816864"
+    },
+    {
+      "path": "logs/phase10d6/visitor_combined_display.png",
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "e2c7580015836c399dfaf202cb81abd6dd1b627909c52d4b6bf7b2469e10f75a"
+    }
+  ],
+  "human_acceptance": "PENDING"
+}

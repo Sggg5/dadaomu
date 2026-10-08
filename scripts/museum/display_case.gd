@@ -1,26 +1,42 @@
 class_name DisplayCase
 extends MuseumInteractable
+## Current-hall view of a DisplayUnit. Slot occupants are actual OwnedAntique instances.
 var case_id: StringName
 var state: MuseumState
 
-
 func refresh() -> void:
-	var definition := state.definition_for(case_id)
-	title = "%s\n%s" % [str(case_id).replace("CASE_","展柜"), definition.display_name if definition != null else "空柜"]
-	if definition != null:
-		var item := state.collection.find(state.display_assignments[case_id])
-		title += "\n品相%d · 吸引力%d" % [item.condition,state.appeal_for(item.instance_id)]
+	var unit := state.display_catalog.units[case_id]
+	var items := state.unit_items(case_id)
+	title = "%s · %s\n%d / %d位置 · 吸引力%d" % [unit.display_name,case_id,items.size(),unit.capacity,state.unit_appeal(case_id)]
+	if not items.is_empty(): title += "\n"+MuseumState.POOL.find_by_id(items[0].definition_id).display_name+(" 等%d件" % items.size() if items.size()>1 else "")
+	if not items.is_empty():title+="\n首件品相%d"%items[0].condition if items[0].identified else "\n首件未鉴定"
 	super.refresh()
-
+	label.position=Vector2(-100,55)
+	label.size=Vector2(200,75)
+	label.add_theme_font_size_override("font_size",14)
 
 func _draw() -> void:
-	draw_rect(Rect2(-52,-30,104,60),Color("465765"))
-	draw_rect(Rect2(-52,-30,104,60),Color("bcb09a"),false,3)
-	var definition := state.definition_for(case_id)
-	if definition == null: return
-	# 八件原型图标由池内稳定序号派生，仅呈现，不决定玩法。
-	var index := MuseumState.POOL.antiques.find(definition)
-	var color := Color.from_hsv(float(index)/8.0, .55, .95)
-	if index % 3 == 0: draw_circle(Vector2.ZERO,16,color)
-	elif index % 3 == 1: draw_rect(Rect2(-15,-15,30,30),color)
-	else: draw_colored_polygon(PackedVector2Array([Vector2(0,-18),Vector2(18,14),Vector2(-18,14)]),color)
+	if state==null or not state.display_catalog.units.has(case_id): return
+	var unit:=state.display_catalog.units[case_id]
+	if unit.kind=="DISPLAY_WALL":
+		draw_rect(Rect2(-83,-47,166,90),Color("b3a692"))
+		draw_rect(Rect2(-77,-41,154,78),Color("343c45"))
+	elif unit.kind=="LARGE_PLATFORM":
+		draw_colored_polygon(PackedVector2Array([Vector2(-75,-30),Vector2(55,-45),Vector2(80,30),Vector2(-55,45)]),Color("7b7972"))
+		draw_rect(Rect2(-52,32,104,17),Color("494a47"))
+	else:
+		# Timber plinth, legs, brass frame and a sloped glass top; not a plain square.
+		draw_rect(Rect2(-58,27,116,22),Color("57422e"))
+		draw_rect(Rect2(-51,47,12,10),Color("392b20"))
+		draw_rect(Rect2(39,47,12,10),Color("392b20"))
+		draw_colored_polygon(PackedVector2Array([Vector2(-78,-34),Vector2(64,-45),Vector2(78,27),Vector2(-64,38)]),Color("354e57"))
+		draw_polyline(PackedVector2Array([Vector2(-78,-34),Vector2(64,-45),Vector2(78,27),Vector2(-64,38),Vector2(-78,-34)]),Color("c4a86b"),3)
+		draw_line(Vector2(-64,-26),Vector2(58,-35),Color("89bfc4"),2)
+	var columns:=4 if unit.capacity>=8 else 2 if unit.capacity==4 else 1
+	var rows:=ceili(unit.capacity/float(columns))
+	for slot in unit.slots():
+		var center:=Vector2(-54+108*(slot.index%columns+.5)/columns,-28+53*(floori(slot.index/float(columns))+.5)/rows)
+		var cell:=Vector2(minf(26,108.0/columns-3),53.0/rows-3)
+		draw_rect(Rect2(center-cell*.5,cell),Color("24343e"))
+		var item:=state.collection.find(state.display_assignments.get(slot.id,&""))
+		if item!=null: DisplayArtifactGlyph.draw_icon(self,item.definition_id,center, minf(.85,cell.y/24.0))

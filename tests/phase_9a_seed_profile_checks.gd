@@ -45,7 +45,7 @@ func run() -> void:
 	test.root.add_child(flow)
 	await test.frames(3)
 	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(store.save_path))
-	test.check(MuseumProfileStore.VERSION == 4 and flow.museum_state.campaign_seed == 777 and data.version == 4 and data.campaign_seed == 777, "Actual GameFlow initializes migrated campaign exactly once and saves v4")
+	test.check(MuseumProfileStore.VERSION == 5 and flow.museum_state.campaign_seed == 777 and data.version == 5 and data.campaign_seed == 777, "Actual GameFlow initializes migrated campaign exactly once and saves v5 with legacy backup")
 	var snapshot := store.encode(flow.museum_state)
 	flow.queue_free()
 	await test.frames(3)
@@ -66,6 +66,7 @@ func run() -> void:
 		test.check(repaired.campaign_seed == 0 and repaired.cash == state.cash and repaired.collection.all_items().size() == 2 and repaired.auction_lot_instance_id == pending.instance_id and not store.last_error.is_empty(), "Malformed v4 Campaign safely requests initialization without losing old assets: " + str(invalid))
 	var uninitialized := MuseumState.new()
 	test.check(not store.save_profile(uninitialized), "Formal v4 saving rejects campaign0 instead of persisting an invalid seed")
+	store.load_profile() # Revalidate the untouched valid disk after bad decode attempts.
 	for boundary in [1, 2147483647]:
 		state.campaign_seed = boundary
 		test.check(store.save_profile(state) and store.load_profile().campaign_seed == boundary, "31-bit Campaign JSON disk roundtrip exact boundary%d" % boundary)

@@ -43,7 +43,14 @@ func run() -> void:
 	museum.config = config
 	test.root.add_child(museum)
 	await test.frames(3)
-	test.check(museum.cases.size() == 8 and museum.cases[3].case_id == &"CASE_4" and museum.cases[7].case_id == &"CASE_8","Level2 actually instantiates8 stable display nodes")
+	test.check(museum.cases.size() == 3 and museum.cases[0].case_id == &"CASE_1","Level2 only instantiates current MAIN facilities")
+	var legacy_seen:Array[StringName]=[]
+	for hall in state.display_catalog.hall_ids(2):
+		museum.switch_hall(hall)
+		await test.frames(2)
+		for view in museum.cases:
+			if str(view.case_id).begins_with("CASE_"):legacy_seen.append(view.case_id)
+	test.check(legacy_seen.size()==8 and &"CASE_4" in legacy_seen and &"CASE_8" in legacy_seen,"All eight historical facilities remain reachable across halls")
 	test.capture("level2_layout")
 	museum.construction_panel.open()
 	test.check(museum.construction_panel.label.text.contains("最高馆舍等级") and not museum.construction_panel.confirm() and state.cash == 1000,"Max-level construction UI refuses spending")

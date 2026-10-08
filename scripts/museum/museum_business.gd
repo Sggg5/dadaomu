@@ -27,7 +27,10 @@ func can_open() -> bool:
 func visitor_target(appeal: int, displayed_count: int) -> int:
 	if displayed_count == 0: return 0
 	var capacity := state.level_definition().visitor_capacity if state != null else MuseumState.LEVELS.at(0).visitor_capacity
-	return clampi(config.base_visitors+floori(appeal*.5),1,capacity)
+	var halls:=state.displayed_halls().size() if state!=null else 1
+	var scale:float=state.display_catalog.visitor_appeal_scale if state!=null else .35
+	var hall_bonus:int=state.display_catalog.additional_hall_visitors if state!=null else 2
+	return clampi(config.base_visitors+floori(appeal*scale)+maxi(0,halls-1)*hall_bonus,1,capacity)
 
 
 func start() -> bool:
@@ -69,6 +72,7 @@ func close_now() -> void:
 func spawn_visitor() -> void:
 	if not running or closing or active.size() >= config.max_active_visitors or spawned >= target: return
 	var visitor := MuseumVisitor.new()
+	visitor.state = state
 	visitor.config = config
 	visitor.cases = cases
 	visitor.configure(museum_seed,state.day_number,spawned)

@@ -33,6 +33,10 @@ var _night_after_close: bool = false
 var _shown_level: int = -1
 var codex_panel: MuseumCodexPanel
 var research_desk: MuseumInteractable
+var active_hall_id: StringName = &"MAIN"
+var hall_panel: MuseumHallPanel
+var hall_guide: MuseumInteractable
+var _display_bodies: Dictionary = {}
 
 
 func _ready() -> void:
@@ -44,6 +48,12 @@ func _ready() -> void:
 	add_child(player)
 	_make_hud()
 	player.prompt_label = prompt_label
+	hall_panel = MuseumHallPanel.new()
+	hall_panel.state = state
+	hall_panel.player = player
+	hall_panel.hall_selected.connect(switch_hall)
+	add_child(hall_panel)
+	hall_guide = _point("展厅通道",Vector2(1120,420),Color("73b59b"),func()->String:return "[E] 选择展厅 / 返回主厅",func()->void:hall_panel.open())
 	codex_panel = MuseumCodexPanel.new()
 	codex_panel.state = state
 	codex_panel.player = player
@@ -149,7 +159,8 @@ func _point(title: String, location: Vector2, color: Color, hint: Callable, acti
 
 
 func _visitor_arrived(visitor: MuseumVisitor) -> void:
-	player.interactables.append(visitor)
+	_sync_visitor(visitor)
+	visitor.hall_changed.connect(_sync_visitor)
 	visitor.action = func() -> void: message.text = visitor.comment()
 	visitor.leaving.connect(func(actor: MuseumVisitor) -> void: player.interactables.erase(actor))
 
@@ -163,26 +174,47 @@ func _refresh() -> void:
 	_sync_cases()
 	for exhibit in cases: exhibit.refresh()
 	if _shown_level >= 0 and _shown_level != state.museum_level and not message.text.begins_with("保存失败"):
-		message.text = "扩建完成：%s · 展柜%d · 游客容量%d · 当前现金%s" % [state.level_definition().display_name,state.level_definition().case_count,state.level_definition().visitor_capacity,AntiqueDefinition.money(state.cash)]
+		message.text = "扩建完成：%s · 展柜%d · 游客容量%d · 当前现金%s" % [state.level_definition().display_name,state.display_catalog.unit_ids(state.museum_level).size(),state.level_definition().visitor_capacity,AntiqueDefinition.money(state.cash)]
 	_shown_level = state.museum_level
 	queue_redraw()
 
 
+func switch_hall(id: StringName) -> void:
+	if id not in state.display_catalog.hall_ids(state.museum_level) or state.phase == MuseumState.Phase.NIGHT: return
+	active_hall_id = id
+	_sync_cases()
+	player.position = Vector2(1120,470)
+	player.velocity = Vector2.ZERO
+	if business != null:
+		for visitor in business.active: _sync_visitor(visitor)
+	message.text = "已进入"+state.display_catalog.halls[id].display_name
+	queue_redraw()
+
+func _sync_visitor(visitor: MuseumVisitor) -> void:
+	visitor.visible = visitor.hall_id == active_hall_id
+	player.interactables.erase(visitor)
+	if visitor.visible: player.interactables.append(visitor)
+
 func _sync_cases() -> void:
-	# 只追加新解锁柜；旧Case节点、馆藏与归属都保持，升级不会重新装配World。
-	var ids := state.case_ids()
-	while cases.size() < ids.size():
-		var index := cases.size()
+	var ids := state.display_catalog.unit_ids(state.museum_level,active_hall_id)
+	for exhibit in cases.duplicate():
+		if exhibit.case_id not in ids:
+			player.interactables.erase(exhibit)
+			cases.erase(exhibit)
+			exhibit.queue_free()
+			_display_bodies[exhibit.case_id].queue_free()
+			_display_bodies.erase(exhibit.case_id)
+	for id in ids:
+		if cases.any(func(view: DisplayCase)->bool:return view.case_id==id): continue
 		var exhibit := DisplayCase.new()
-		exhibit.name = "DisplayCase%d" % (index+1)
-		exhibit.case_id = ids[index]
+		exhibit.name = str(id)
+		exhibit.case_id = id
 		exhibit.state = state
-		exhibit.position = MuseumLayout.CASE_POSITIONS[index]
-		exhibit.prompt = func() -> String:
-			return "营业中不能调整展品 · [E] 查看" if not state.can_edit() else "[E] 查看/布置展品    [R] 撤展"
-		exhibit.action = func() -> void: collection_panel.open(exhibit.case_id if state.can_edit() else &"")
-		exhibit.alternate_action = func() -> void:
-			if not state.unassign(exhibit.case_id): message.text = "营业中不能调整展品" if not state.can_edit() else "展柜已空"
+		exhibit.position = state.display_catalog.units[id].position
+		exhibit.prompt = func()->String:return "[E] 查看组合陈列（营业中只读）" if not state.can_edit() else "[E] 管理陈列位置 · [R] 撤下第一位置"
+		exhibit.action = func()->void:collection_panel.open(exhibit.case_id)
+		exhibit.alternate_action = func()->void:
+			if not state.unassign(state.display_catalog.units[exhibit.case_id].slots()[0].id): message.text = "营业中不能调整展品" if not state.can_edit() else "位置已空"
 		add_child(exhibit)
 		cases.append(exhibit)
 		player.interactables.append(exhibit)
@@ -195,16 +227,18 @@ func _sync_cases() -> void:
 		collision.shape = shape
 		body.add_child(collision)
 		add_child(body)
+		_display_bodies[id]=body
+	if business != null: business.cases=cases
 
 
 func _process(_delta: float) -> void:
 	var phase_text := ["早晨 · 自由布展","营业中 · 不可调整展品","傍晚 · 前往情报板","夜晚"]
-	headline.text = "第%d天 · %s · %s" % [state.day_number,state.level_definition().display_name,phase_text[state.phase]]
+	headline.text = "第%d天 · %s · %s" % [state.day_number,state.level_definition().display_name+" / "+state.display_catalog.halls[active_hall_id].display_name,phase_text[state.phase]]
 	var minutes := 600+floori(420*clampf(business.elapsed/maxf(.01,config.open_duration),0,1))
 	if state.phase == MuseumState.Phase.EVENING: minutes = 1020
 	var visitors := state.last_day_visitors if state.phase == MuseumState.Phase.EVENING else business.visitors_today
 	var income := state.last_day_ticket_income if state.phase == MuseumState.Phase.EVENING else business.income_today
-	status.text = "%02d:%02d · 现金 %s · 展柜 %d / %d · 游客容量 %d · 吸引力%d\n馆藏 %d件 · 今日游客 %d人 · 门票 %s" % [minutes/60,minutes%60,AntiqueDefinition.money(state.cash),state.display_assignments.size(),state.level_definition().case_count,state.level_definition().visitor_capacity,state.total_appeal(),state.collection.all_items().size(),visitors,AntiqueDefinition.money(income)]
+	status.text = "%02d:%02d · 现金 %s · 已陈列 %d件 / %d位置 · 游客容量 %d · 有效吸引力%d\n馆藏 %d件 · 今日游客 %d人 · 门票 %s" % [minutes/60,minutes%60,AntiqueDefinition.money(state.cash),state.display_assignments.size(),display_capacity(),state.level_definition().visitor_capacity,state.total_appeal(),state.collection.all_items().size(),visitors,AntiqueDefinition.money(income)]
 
 
 func _make_hud() -> void:
@@ -234,8 +268,9 @@ func _unhandled_input(event: InputEvent) -> void:
 func _draw() -> void:
 	draw_rect(Rect2(70,145,1140,470),Color("20262b") if state.phase != MuseumState.Phase.EVENING else Color("171c27"))
 	draw_rect(Rect2(70,145,1140,470),Color("988d70"),false,4)
-	_draw_wing(Rect2(980,235,210,235),"东侧展厅",state.museum_level >= 1)
-	_draw_wing(Rect2(100,235,270,235),"西侧展厅",state.museum_level >= 2)
+	draw_string(ThemeDB.fallback_font,Vector2(100,255),state.display_catalog.halls[active_hall_id].display_name,HORIZONTAL_ALIGNMENT_LEFT,-1,20,Color("b6cbd0"))
+	draw_line(Vector2(100,450),Vector2(1180,450),Color("354349"),1)
+	draw_string(ThemeDB.fallback_font,Vector2(1010,470),"通往其它展厅",HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("85c4b1"))
 	draw_rect(Rect2(585,590,110,25),Color("789491"))
 	draw_string(ThemeDB.fallback_font,Vector2(594,582),"博物馆大门",HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("d0d6ca"))
 	draw_string(ThemeDB.fallback_font,Vector2(105,195),"馆长办公室",HORIZONTAL_ALIGNMENT_LEFT,-1,20,Color("b2ada3"))
@@ -248,3 +283,8 @@ func _draw_wing(area: Rect2, title: String, unlocked: bool) -> void:
 	if not unlocked:
 		draw_line(area.position+Vector2(10,40),area.end-Vector2(10,10),Color("403f3b"),2)
 		draw_line(area.position+Vector2(area.size.x-10,40),area.position+Vector2(10,area.size.y-10),Color("403f3b"),2)
+
+func display_capacity() -> int:
+	var total:=0
+	for id in state.display_catalog.unit_ids(state.museum_level):total+=state.display_catalog.units[id].capacity
+	return total

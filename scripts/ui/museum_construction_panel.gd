@@ -40,7 +40,7 @@ func open() -> void:
 
 func _refresh() -> void:
 	var current := state.level_definition()
-	label.text = "%s\n当前：展柜%d · 游客容量%d\n现金：%s\n\n" % [current.display_name,current.case_count,current.visitor_capacity,AntiqueDefinition.money(state.cash)]
+	label.text = "%s\n当前：展柜%d · 游客容量%d\n现金：%s\n\n" % [current.display_name,state.display_catalog.unit_ids(state.museum_level).size(),current.visitor_capacity,AntiqueDefinition.money(state.cash)]
 	if confirmed:
 		label.text += "扩建完成，展区已开放。\n请先关闭建设牌，再查看下一次扩建。"
 		return
@@ -48,7 +48,7 @@ func _refresh() -> void:
 	if next == null:
 		label.text += "当前已达到本阶段最高馆舍等级"
 		return
-	label.text += "扩建：%s\n解锁：+%d展柜 · 游客容量%d → %d\n费用：%s\n\n%s" % [next.display_name,next.case_count-current.case_count,current.visitor_capacity,next.visitor_capacity,AntiqueDefinition.money(current.upgrade_cost),"资金不足" if state.cash < current.upgrade_cost else "[E] 扩建"]
+	label.text += "扩建：%s\n解锁：+%d展柜 · 游客容量%d → %d\n费用：%s\n\n%s" % [next.display_name,state.display_catalog.unit_ids(state.museum_level+1).size()-state.display_catalog.unit_ids(state.museum_level).size(),current.visitor_capacity,next.visitor_capacity,AntiqueDefinition.money(current.upgrade_cost),"资金不足" if state.cash < current.upgrade_cost else "[E] 扩建"]
 	if not state.can_edit(): label.text += "\n营业中不能扩建"
 
 
