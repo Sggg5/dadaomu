@@ -17,7 +17,7 @@ func run() -> void:
 		flow.profile_store = MuseumProfileStore.in_memory()
 		test.root.add_child(flow)
 		await test.frames(3)
-		flow.start_night()
+		preload("res://tests/expedition_map_fixture.gd").confirm(flow)
 		await test.frames(5)
 		var session := flow.dungeon
 		for index in range(2): session.world.player.antiques.add(MuseumState.POOL.find_by_id(&"tang_sancai_horse"))

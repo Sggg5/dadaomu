@@ -50,7 +50,7 @@ func run() -> void:
 		flow.profile_store.save_profile(state)
 		test.root.add_child(flow)
 		await test.frames(3)
-		flow.start_night()
+		preload("res://tests/expedition_map_fixture.gd").confirm(flow)
 		await test.frames(5)
 		var actual := snapshot(flow.dungeon)
 		test.check(flow.dungeon.world.player.health.max_hp == 80 and flow.dungeon.world.player.antiques.capacity == 8 and not actual.stats.has("museum_level"),"Night starts with80HP/eight slots and no museum stats")

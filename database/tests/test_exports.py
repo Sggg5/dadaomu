@@ -105,4 +105,11 @@ class ExportTests(unittest.TestCase):
             if path in authorized_museum:
                 self.assertTrue(path.startswith(('scripts/museum/','scripts/ui/')))
                 continue
-            self.assertEqual(expected,hashlib.sha256(text.encode()).hexdigest(),path)
+            # Approved hotfix 848740d and Phase11A composition-only changes.
+            # Exact replacement hashes retain protection; no broad combat/flow exemption.
+            authorized_updates={
+                'scripts/bosses/encounters/twin_revenants.gd':'40b6f7aeb9719686db09bba60cd21e6c90b11d6767be657303737ebc299e3585',
+                'scripts/flow/game_flow.gd':'bcec27689a951c805b5ef04512a8c34ed3e3c50adbc5ce304c95b43507ca4b89',
+                'scripts/dungeon/dungeon_session.gd':'a499d45889c2839817546bed9aae11df434c92037b76867f77a87b2caf537b8c',
+            }
+            self.assertEqual(authorized_updates.get(path,expected),hashlib.sha256(text.encode()).hexdigest(),path)

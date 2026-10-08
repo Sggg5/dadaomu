@@ -30,7 +30,7 @@ func run() -> void:
 		flow.profile_store.save_profile(state)
 		test.root.add_child(flow)
 		await test.frames(3)
-		flow.start_night()
+		preload("res://tests/expedition_map_fixture.gd").confirm(flow)
 		await test.frames(5)
 		var actual := snapshot(flow.dungeon)
 		if variant == 0: baseline = actual

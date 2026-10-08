@@ -35,6 +35,8 @@ func night() -> void:
 	await daytime.walk_to(flow.museum.board.position+Vector2(-40,20))
 	var before := flow.profile_store.save_count
 	test.key(KEY_E)
+	await test.frames(2)
+	preload("res://tests/expedition_map_fixture.gd").confirm(flow)
 	await test.frames(5)
 	test.session = flow.dungeon
 	test.check(flow.current_phase == MuseumState.Phase.NIGHT and flow.profile_store.save_count > before,"Actual board E saves ground before entering unchanged Dungeon")

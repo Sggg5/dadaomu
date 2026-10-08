@@ -59,7 +59,9 @@ func choose_night(auction: bool) -> void:
 	test.check(panel.panel.visible and flow.current_phase != MuseumState.Phase.NIGHT,"Pending lot turns actual board E into night choice, not automatic activity")
 	test.capture("night_choice")
 	if auction: panel.auction_button.pressed.emit()
-	else: panel.dungeon_button.pressed.emit()
+	else:
+		panel.dungeon_button.pressed.emit()
+		preload("res://tests/expedition_map_fixture.gd").confirm(flow)
 	test.check(not panel.choose(not auction),"Rapid alternate action cannot select both activities")
 	await test.frames(5)
 	test.check(flow.current_phase == MuseumState.Phase.NIGHT and flow.museum == null and ((flow.auction != null and flow.dungeon == null) if auction else (flow.dungeon != null and flow.auction == null)),"Actual choice creates exclusively Auction or Dungeon")

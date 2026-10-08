@@ -34,7 +34,7 @@ func run() -> void:
 	flow.museum_state.last_day_ticket_income = 45
 	test.check(not business.start() and flow.museum_state.last_day_visitors == 9 and flow.museum_state.last_day_ticket_income == 45,"Rejected opening also preserves nonzero previous-day totals")
 	var cash_before := flow.museum_state.cash
-	flow.start_night()
+	preload("res://tests/expedition_map_fixture.gd").confirm(flow)
 	await test.frames(5)
 	var session := flow.dungeon
 	var state := flow.museum_state

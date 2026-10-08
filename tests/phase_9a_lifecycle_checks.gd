@@ -77,7 +77,7 @@ func exit_restore() -> void:
 	var fixture_seed := flow.forced_night_seed
 	test.root.add_child(flow)
 	await test.frames(3)
-	flow.start_night()
+	preload("res://tests/expedition_map_fixture.gd").confirm(flow)
 	await test.frames(5)
 	test.session = flow.dungeon
 	var world := flow.dungeon.world
@@ -108,7 +108,7 @@ func exit_restore() -> void:
 	test.root.add_child(flow)
 	await test.frames(3)
 	test.check(flow.current_day == 1 and flow.current_phase == MuseumState.Phase.MORNING and flow.museum_state.collection.all_items().is_empty(), "Quit during risk exploration restores preceding safe ground, no imported cargo")
-	flow.start_night()
+	preload("res://tests/expedition_map_fixture.gd").confirm(flow)
 	await test.frames(5)
 	test.check(flow.dungeon.world.player.health.current_hp == 80 and flow.dungeon.world.player.antiques.used_slots() == 0 and flow.dungeon.world.risk_service.results.is_empty(), "Next night is fresh80HP/eight-slot Run, never mid-event recovery")
 	flow.queue_free()

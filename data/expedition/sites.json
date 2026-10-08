@@ -1,0 +1,167 @@
+{
+  "version": 1,
+  "regions": [
+    {
+      "id": "JINBEI",
+      "name": "晋北",
+      "marker": [
+        385,
+        128
+      ],
+      "description": "晋北山地 · 现有五层地宫入口"
+    },
+    {
+      "id": "LUOYANG",
+      "name": "洛阳",
+      "marker": [
+        428,
+        226
+      ],
+      "description": "洛阳盆地 · 遗址情报调查中"
+    },
+    {
+      "id": "GUANZHONG",
+      "name": "关中",
+      "marker": [
+        310,
+        220
+      ],
+      "description": "关中平原 · 遗址情报调查中"
+    }
+  ],
+  "sites": [
+    {
+      "id": "DEFAULT_TOMB",
+      "region": "JINBEI",
+      "name": "晋北军阀墓",
+      "period": "架空民国与叠压古墓",
+      "tags": [
+        "FICTIONAL_SITE"
+      ],
+      "type": "墓穴调查档案",
+      "risk": 3,
+      "status": "AVAILABLE",
+      "background": "【虚构地点】游戏架空调查记录，不对应已核实真实古墓。年代标签仅作策划参考，不构成考古结论。",
+      "enemies": "已知尸怪、盗墓枪手与机关；每层深处存在镇守者。五层路线已开放。",
+      "artifacts": "青铜、玉器、陶瓷、钱币等；携带空间有限，值得斟酌取舍。",
+      "tomb": "res://data/tombs/default_tomb.tres",
+      "marker": [
+        385,
+        128
+      ],
+      "loot_profile_id": "FORMAL_DEFAULT"
+    },
+    {
+      "id": "JINBEI_STONE",
+      "region": "JINBEI",
+      "name": "北岭石椁调查点",
+      "period": "历史时期未确认",
+      "tags": [
+        "FICTIONAL_SITE"
+      ],
+      "type": "墓穴调查档案",
+      "risk": 2,
+      "status": "INVESTIGATING",
+      "background": "【虚构地点】游戏架空调查记录，不对应已核实真实古墓。年代标签仅作策划参考，不构成考古结论。",
+      "enemies": "尚未核验，不提供确定敌人或机关情报。",
+      "artifacts": "器物类别尚待调查，现阶段没有可用的探墓路线。",
+      "marker": [
+        385,
+        128
+      ],
+      "loot_profile_id": "FORMAL_DEFAULT"
+    },
+    {
+      "id": "LUOYANG_EAST",
+      "region": "LUOYANG",
+      "name": "东原封土调查点",
+      "period": "汉代器物风格参考（待确认）",
+      "tags": [
+        "FICTIONAL_SITE"
+      ],
+      "type": "墓穴调查档案",
+      "risk": 2,
+      "status": "INVESTIGATING",
+      "background": "【虚构地点】游戏架空调查记录，不对应已核实真实古墓。年代标签仅作策划参考，不构成考古结论。",
+      "enemies": "尚未核验，不提供确定敌人或机关情报。",
+      "artifacts": "器物类别尚待调查，现阶段没有可用的探墓路线。",
+      "marker": [
+        428,
+        226
+      ],
+      "loot_profile_id": "FORMAL_DEFAULT"
+    },
+    {
+      "id": "LUOYANG_RIVER",
+      "region": "LUOYANG",
+      "name": "洛水旧陵线索",
+      "period": "唐代墓葬形制参考（待确认）",
+      "tags": [
+        "FICTIONAL_SITE"
+      ],
+      "type": "墓穴调查档案",
+      "risk": 3,
+      "status": "INVESTIGATING",
+      "background": "【虚构地点】游戏架空调查记录，不对应已核实真实古墓。年代标签仅作策划参考，不构成考古结论。",
+      "enemies": "尚未核验，不提供确定敌人或机关情报。",
+      "artifacts": "器物类别尚待调查，现阶段没有可用的探墓路线。",
+      "marker": [
+        428,
+        226
+      ],
+      "loot_profile_id": "FORMAL_DEFAULT"
+    },
+    {
+      "id": "GUANZHONG_MOUND",
+      "region": "GUANZHONG",
+      "name": "渭北封土调查点",
+      "period": "秦汉形制参考（待确认）",
+      "tags": [
+        "FICTIONAL_SITE"
+      ],
+      "type": "墓穴调查档案",
+      "risk": 3,
+      "status": "INVESTIGATING",
+      "background": "【虚构地点】游戏架空调查记录，不对应已核实真实古墓。年代标签仅作策划参考，不构成考古结论。",
+      "enemies": "尚未核验，不提供确定敌人或机关情报。",
+      "artifacts": "器物类别尚待调查，现阶段没有可用的探墓路线。",
+      "marker": [
+        310,
+        220
+      ],
+      "loot_profile_id": "FORMAL_DEFAULT"
+    },
+    {
+      "id": "GUANZHONG_PASS",
+      "region": "GUANZHONG",
+      "name": "山口石室线索",
+      "period": "历史时期未确认",
+      "tags": [
+        "FICTIONAL_SITE"
+      ],
+      "type": "墓穴调查档案",
+      "risk": 2,
+      "status": "INVESTIGATING",
+      "background": "【虚构地点】游戏架空调查记录，不对应已核实真实古墓。年代标签仅作策划参考，不构成考古结论。",
+      "enemies": "尚未核验，不提供确定敌人或机关情报。",
+      "artifacts": "器物类别尚待调查，现阶段没有可用的探墓路线。",
+      "marker": [
+        310,
+        220
+      ],
+      "loot_profile_id": "FORMAL_DEFAULT"
+    }
+  ],
+  "loot_interfaces": [
+    {
+      "id": "FORMAL_DEFAULT",
+      "status": "RELEASED_EXISTING_ONLY",
+      "regional_types": [],
+      "period_ranges": [],
+      "category_weights": {},
+      "circulation_types": [],
+      "rare_types": [],
+      "note": "Only existing approved eight game definitions. Future profiles require explicit release review."
+    }
+  ]
+}

@@ -31,7 +31,7 @@ func run() -> void:
 	flow.profile_store = MuseumProfileStore.in_memory()
 	root.add_child(flow)
 	await frames(3)
-	flow.start_night()
+	preload("res://tests/expedition_map_fixture.gd").confirm(flow)
 	await frames(4)
 	var first := flow.dungeon.run_seed
 	# CLI单位生命周期，用正式Health死亡回馆；真正战斗三日流程另有专项。
@@ -39,7 +39,7 @@ func run() -> void:
 	await frames(2)
 	key_e()
 	await frames(4)
-	flow.start_night()
+	preload("res://tests/expedition_map_fixture.gd").confirm(flow)
 	await frames(4)
 	var second := flow.dungeon.run_seed
 	var valid := flow.museum_state.campaign_seed == 52 and flow.forced_night_seed == 0 and first == ExpeditionSeedService.derive(52, 1) and second == ExpeditionSeedService.derive(52, 2) and first != second and first != 52

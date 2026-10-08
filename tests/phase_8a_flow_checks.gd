@@ -113,10 +113,13 @@ func night() -> void:
 	await walk_to(Vector2(1000,450))
 	await walk_to(flow.museum.board.position+Vector2(-40,20))
 	test.key(KEY_E)
+	await test.frames(2)
+	test.check(flow.museum.expedition_map.panel.visible and flow.dungeon==null,"Board E opens map before confirmation")
+	preload("res://tests/expedition_map_fixture.gd").confirm(flow)
 	await test.frames(5)
 	test.session = flow.dungeon
 	test.session.child_entered_tree.connect(test.watch)
-	test.check(flow.current_phase == MuseumState.Phase.NIGHT and flow.museum == null and test.session.hub_mode,"Board E loads existing DungeonSession in hub mode")
+	test.check(flow.current_phase == MuseumState.Phase.NIGHT and flow.museum == null and test.session.hub_mode,"Board E plus map confirmation loads existing DungeonSession in hub mode")
 
 
 func run() -> void:
@@ -200,10 +203,13 @@ func run() -> void:
 	var no_new_visitors: bool = true
 	test.check(business.closing and museum._night_after_close and museum.message.text.contains("提前闭馆"),"Actual board E closes early and queues night after visitor exit")
 	for frame in range(600):
-		if flow.current_phase == MuseumState.Phase.NIGHT: break
+		if flow.museum.expedition_map.panel.visible:
+			preload("res://tests/expedition_map_fixture.gd").confirm(flow)
+			await test.frames(4)
+			break
 		no_new_visitors = no_new_visitors and business.spawned == frozen_spawned
 		await test.frames(1)
 	await test.frames(4)
 	test.session = flow.dungeon
-	test.check(no_new_visitors and flow.current_phase == MuseumState.Phase.NIGHT and flow.museum == null and not is_instance_valid(museum),"Early close stops arrivals, drains visitors then loads night without60s wait")
+	test.check(no_new_visitors and flow.current_phase == MuseumState.Phase.NIGHT and flow.museum == null and not is_instance_valid(museum),"Early close stops arrivals, drains visitors then map confirmation loads night without60s wait")
 	test.check(state.last_day_ticket_income == state.last_day_visitors*5 and state.cash >= skip_cash,"Early close records actual paid visitors once")

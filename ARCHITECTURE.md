@@ -1,3 +1,11 @@
+## Phase 11A 情报地图与远征选择（实现完成，人工待验收）
+
+基线848740d，包含组合展柜ab31402与双生尸煞热修；分支codex/phase-11a-expedition-map。情报板E→本地中国调查示意图→地区标记→地点档案→确认/保存→所选TombDefinition。晋北DEFAULT_TOMB仍为原五层；其它五个虚构调查档案不可出发。鼠标地图、返回地区、Tab/Esc关闭；未确认不进入NIGHT。
+
+RegionDefinition/SiteDefinition/SiteRegistry/ExpeditionSelection独立；本次只开放FORMAL_DEFAULT掉落接口，原8件/概率/Boss/遗物不变，1441研究与500候选不发布为实物。确认后GameFlow持有选择快照，Seed继续按Campaign/Day/Site派生，DEFAULT_TOMB兼容旧域；R/N沿用Session。失败保存保持地面与营业统计，拍卖/远征互斥与回馆保留。Profile VERSION5及v4迁移不改。
+
+测试、真实Godot地图/档案/地宫截图和限制见docs/PHASE_11A_VERIFICATION.md。历史测试显式注入legacy Tomb并确认地图，不恢复直接下墓绕过。只commit/push，不合并main、不进入下一阶段；最终隔离试玩不写用户正式档。
+
 ## Phase 10D.6 多展厅组合陈列（完成，人工体验待验收）
 
 分支codex/phase-10d6-museum-expansion，基线10D 18403e6。Museum→ExhibitionHall→DisplayUnit→DisplaySlot→OwnedAntique；仅实际馆藏实例可布展。独立display_layout.json配置3厅、5设施类型、11设施；三级总位置36/56/81，旧case_count仅用于历史CASE身份，不决定新容量。当前厅才实例化设施。

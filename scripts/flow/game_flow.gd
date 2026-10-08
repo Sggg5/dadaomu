@@ -23,6 +23,8 @@ var museum: Museum
 var dungeon: DungeonSession
 var auction: AuctionSession
 var current_auction_result: AuctionResult
+var site_registry:SiteRegistry=SiteRegistry.load_default()
+var active_expedition:ExpeditionSelection
 var _changing: bool = false
 var current_day: int:
 	get: return museum_state.day_number
@@ -47,7 +49,7 @@ func _ready() -> void:
 			museum_state.campaign_seed = rng.randi_range(1, ExpeditionSeedService.MAX_SEED)
 	museum_state.changed.connect(_save_profile)
 	if initial_test_collection: museum_state.collection.add(&"tang_sancai_horse",0,100,true)
-	_show_museum("原型馆藏：唐三彩马 · 可布展/开馆，也可到情报板直接下墓" if initial_test_collection else "地面状态已恢复 · 可整理展品，也可到情报板下墓",museum_state.phase)
+	_show_museum("原型馆藏：唐三彩马 · 可布展/开馆，也可到情报板选择远征" if initial_test_collection else "地面状态已恢复 · 可整理展品，也可到情报板选择远征",museum_state.phase)
 	if not profile_store.last_error.is_empty(): museum.message.text = profile_store.last_error
 	_save_profile()
 
@@ -59,24 +61,43 @@ func _show_museum(notice: String, phase: MuseumState.Phase = MuseumState.Phase.M
 	museum.config = museum_config
 	museum.museum_seed = museum_seed
 	museum.morning_notice = notice
-	museum.night_requested.connect(start_night)
+	museum.site_registry=site_registry
+	museum.night_requested.connect(confirm_expedition)
 	museum.auction_requested.connect(start_auction)
 	add_child(museum)
 	_changing = false
 
 
-func start_night() -> bool:
+func confirm_expedition(site_id:StringName)->bool:
+	if not site_registry.can_depart(site_id):return false
+	var choice:=ExpeditionSelection.capture(site_registry.site(site_id),museum_state.campaign_seed,current_day,forced_night_seed)
+	if choice==null:return false
+	if not start_night(choice):
+		if is_instance_valid(museum):museum.expedition_map.reject("远征未开始：保存失败或当前行动状态不可用。")
+		return false
+	return true
+func start_night(choice:ExpeditionSelection=null) -> bool:
+	if choice==null or choice.day_number!=current_day or choice.campaign_seed!=museum_state.campaign_seed:return false
+	var site:=site_registry.site(choice.site_id)
+	if not site_registry.can_depart(choice.site_id) or choice.tomb_definition!=site.tomb_definition:return false
 	if not _prepare_night(): return false
+	# Snapshot is owned by GameFlow after successful save, not by the map UI.
+	active_expedition=ExpeditionSelection.capture(site,museum_state.campaign_seed,current_day,forced_night_seed)
 	_enter_night.call_deferred()
 	return true
 
 
 func _prepare_night() -> bool:
 	if _changing or current_phase not in [MuseumState.Phase.MORNING,MuseumState.Phase.EVENING]: return false
+	var previous_visitors:=museum_state.last_day_visitors
+	var previous_income:=museum_state.last_day_ticket_income
 	if current_phase == MuseumState.Phase.MORNING:
 		museum_state.last_day_visitors = 0
 		museum_state.last_day_ticket_income = 0
-	if not _save_profile(): return false
+	if not _save_profile():
+		museum_state.last_day_visitors=previous_visitors
+		museum_state.last_day_ticket_income=previous_income
+		return false
 	_changing = true
 	museum.player.controls_enabled = false
 	museum_state.phase = MuseumState.Phase.NIGHT
@@ -122,6 +143,7 @@ func _return_auction_morning(result: AuctionResult) -> void:
 	remove_child(auction)
 	auction.queue_free()
 	auction = null
+	active_expedition=null
 	museum_state.day_number += 1
 	_show_museum(notice)
 	_save_profile()
@@ -137,11 +159,12 @@ func _enter_night() -> void:
 	dungeon.hub_mode = true
 	dungeon.progressive_relics = progressive_relics
 	dungeon.profiled_relic_rewards = profiled_relic_rewards
-	dungeon.tomb = tomb
+	dungeon.tomb = active_expedition.tomb_definition
+	dungeon.loot_profile_id=active_expedition.loot_profile_id
 	dungeon.exploration_enabled = tomb_exploration_enabled
 	dungeon.collection_day = current_day
-	dungeon.seed_value = forced_night_seed if forced_night_seed != 0 else ExpeditionSeedService.derive(museum_state.campaign_seed, current_day)
-	print("[Expedition] Campaign=%d Day=%d Site=%s Expedition=%d" % [museum_state.campaign_seed, current_day, ExpeditionSeedService.DEFAULT_SITE_ID, dungeon.seed_value])
+	dungeon.seed_value = active_expedition.seed_value
+	print("[Expedition] Campaign=%d Day=%d Site=%s Expedition=%d" % [museum_state.campaign_seed, current_day, active_expedition.site_id, dungeon.seed_value])
 	dungeon.run_started.connect(func() -> void: current_dungeon_result = null)
 	dungeon.result_ready.connect(func(result: RunResult) -> void: current_dungeon_result = result)
 	dungeon.return_requested.connect(return_from_night)
@@ -172,6 +195,7 @@ func _return_morning(result: RunResult) -> void:
 	remove_child(dungeon)
 	dungeon.queue_free()
 	dungeon = null
+	active_expedition=null
 	museum_state.day_number += 1
 	_show_museum(notice)
 	_save_profile()

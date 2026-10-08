@@ -49,7 +49,7 @@ func run()->void:
 			flow.forced_night_seed=33
 			test.root.add_child(flow)
 			await test.frames(3)
-			flow.start_night()
+			preload("res://tests/expedition_map_fixture.gd").confirm(flow)
 			await test.frames(5)
 			test.session=flow.dungeon
 			var session:DungeonSession=test.session

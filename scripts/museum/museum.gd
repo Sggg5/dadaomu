@@ -1,7 +1,9 @@
 class_name Museum
 extends Node2D
 ## 博物馆场景装配，不生成地宫。统一交互点将请求交给状态/营业/馆藏面板。
-signal night_requested
+signal night_requested(site_id:StringName)
+var site_registry:SiteRegistry=SiteRegistry.load_default()
+var expedition_map:ExpeditionMapPanel
 signal auction_requested
 var state: MuseumState
 var config: MuseumConfig
@@ -104,16 +106,22 @@ func _ready() -> void:
 	night_panel = NightActivityPanel.new()
 	night_panel.state = state
 	night_panel.player = player
-	night_panel.dungeon_chosen.connect(func() -> void: night_requested.emit())
+	night_panel.dungeon_chosen.connect(func() -> void: expedition_map.open())
 	night_panel.auction_chosen.connect(func() -> void: auction_requested.emit())
 	add_child(night_panel)
+	expedition_map=ExpeditionMapPanel.new()
+	expedition_map.registry=site_registry
+	expedition_map.state=state
+	expedition_map.player=player
+	expedition_map.expedition_selected.connect(func(id:StringName)->void:night_requested.emit(id))
+	add_child(expedition_map)
 	ticket = _point("售票台",Vector2(1080,500),Color("d5b371"),_ticket_prompt,func() -> void:
 		if not business.start():
 			message.text = "暂无展品，无法开馆" if not business.can_open() else ("营业尚未结束" if state.phase == MuseumState.Phase.OPEN else "今日已闭馆，请到情报板出发"))
-	board = _point("情报板 · 晋北军阀墓",Vector2(1060,170),Color("a588b3"),func() -> String:
+	board = _point("情报板 · 远征调查图",Vector2(1060,170),Color("a588b3"),func() -> String:
 		if _night_after_close: return "正在闭馆，游客离场后选择行动"
 		if state.auction_lot_instance_id != &"": return "[E] 提前闭馆并选择今晚行动" if state.phase == MuseumState.Phase.OPEN else "[E] 选择今晚行动"
-		return "[E] 提前闭馆并下墓" if state.phase == MuseumState.Phase.OPEN else "[E] 今晚下墓（无需开馆）",_request_night)
+		return "[E] 提前闭馆并查看地图" if state.phase == MuseumState.Phase.OPEN else "[E] 查看远征地图（无需开馆）",_request_night)
 	business = MuseumBusiness.new()
 	business.name = "Business"
 	business.state = state
@@ -135,7 +143,7 @@ func _request_night() -> void:
 	if state.phase == MuseumState.Phase.OPEN:
 		_night_after_close = true
 		business.close_now()
-		message.text = "提前闭馆 · 已停止进客，游客离场后选择今晚行动" if state.auction_lot_instance_id != &"" else "提前闭馆 · 已停止进客，游客离场后立即下墓"
+		message.text = "提前闭馆 · 已停止进客，游客离场后选择今晚行动" if state.auction_lot_instance_id != &"" else "提前闭馆 · 已停止进客，游客离场后查阅远征地图"
 	elif state.phase in [MuseumState.Phase.MORNING,MuseumState.Phase.EVENING]:
 		_present_night()
 
@@ -143,7 +151,7 @@ func _request_night() -> void:
 func _present_night() -> void:
 	_night_after_close = false
 	if state.auction_lot_instance_id != &"": night_panel.open()
-	else: night_requested.emit()
+	else: expedition_map.open()
 
 
 func _point(title: String, location: Vector2, color: Color, hint: Callable, action: Callable) -> MuseumInteractable:
