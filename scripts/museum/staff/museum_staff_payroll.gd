@@ -5,6 +5,7 @@ static func begin(state:MuseumState)->MuseumStaffWorkday:
 	var context:=MuseumStaffWorkday.new()
 	context.state=state
 	context.day=state.day_number
+	if state.phase!=MuseumState.Phase.OPEN:return context
 	if state.staff.active_count()==0:return context
 	if state.staff.payroll_days.has(state.day_number):return context
 	var attendance:Array[String]=[]

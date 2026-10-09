@@ -9,7 +9,7 @@ var ready_guides:Dictionary={}
 var reservations:Dictionary[int,StringName]={}
 var guide_counts:Dictionary={}
 func guide_position(id:StringName)->Vector2:
-	return Vector2(1100 if id==&"GUIDE_LIN" else 1160,550)
+	return Vector2(900 if id==&"GUIDE_LIN" else 1160,470)
 func reserve_guide(index:int,hall:StringName)->StringName:
 	for id in paid_ids:
 		var definition:MuseumStaffDefinition=MuseumStaffService.catalog()[id]
@@ -34,6 +34,7 @@ var completed_ids:Array[int]=[]
 var repair_fees_paid:=0
 var tasks_committed:=false
 func advance_tasks(delta:float,time_scale:float)->void:
+	if tasks_committed or state.phase!=MuseumState.Phase.OPEN or state.day_number!=day:return
 	MuseumStaffTasks.reconcile(state)
 	for id in paid_ids:
 		var definition:MuseumStaffDefinition=MuseumStaffService.catalog()[id]

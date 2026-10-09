@@ -3,7 +3,9 @@ extends RefCounted
 static func eligible(state:MuseumState,job:StringName,id:StringName)->bool:
 	var item:=state.collection.find(id)
 	if item==null or state.is_auction_locked(id):return false
-	return not item.identified if job==&"APPRAISER" else item.identified and item.condition<100 and state.restoration_cost(id)>0 if job==&"CONSERVATOR" else false
+	if job==&"APPRAISER":return not item.identified
+	if job==&"CONSERVATOR":return item.identified and item.condition<100 and state.restoration_cost(id)>0
+	return false
 static func enqueue(state:MuseumState,staff_id:StringName,instance_id:StringName)->MuseumStaffTask:
 	if not state.can_edit() or not state.staff.members.has(staff_id) or state.staff.members[staff_id].employment_status!=&"ACTIVE":return null
 	var job:StringName=MuseumStaffService.catalog()[staff_id].job

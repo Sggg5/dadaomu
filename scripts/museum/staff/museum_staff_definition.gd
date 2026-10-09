@@ -9,3 +9,5 @@ var hire_cost:int
 var skill_level:int
 var work_capacity:int
 var seconds_per_task:float
+var assigned_hall:StringName=&"MAIN"
+var employment_status:StringName=&"AVAILABLE"

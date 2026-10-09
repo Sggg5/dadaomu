@@ -1,0 +1,25 @@
+extends "res://tests/phase_11a_smoke.gd"
+func run()->void:
+	flow=preload("res://scenes/main/game_flow.tscn").instantiate();flow.profile_store=MuseumProfileStore.in_memory()
+	var fixture:=preload("res://tests/fixtures/museum_management_fixture.gd").state_with_displays(50)
+	fixture.cash=3000;MuseumStaffService.hire(fixture,&"APPRAISER_SHEN")
+	var item:=fixture.collection.add(&"ly_attendant",1,60,false)
+	MuseumStaffTasks.enqueue(fixture,&"APPRAISER_SHEN",item.instance_id)
+	flow.profile_store._memory=flow.profile_store.encode(fixture)
+	flow.museum_config=MuseumConfig.new();flow.museum_config.open_duration=60;flow.museum_config.visitor_speed=1500;flow.museum_config.view_duration=.05
+	root.add_child(flow);await frames(3)
+	var baseline:=flow.profile_store._memory.duplicate(true)
+	var saves:=flow.profile_store.save_count
+	var driver=preload("res://tests/phase_8a_flow_checks.gd").new(self,flow)
+	await driver.walk_to(Vector2(1080,540));key(KEY_E);await frames(540)
+	check(flow.museum_state.phase==MuseumState.Phase.OPEN and flow.museum.business.workday.prepared.size()==1,"Real GameFlow OPEN progresses queued staff work")
+	check(flow.profile_store.save_count==saves and flow.profile_store._memory==baseline,"OPEN ticket wages and partial tasks never overwrite ground snapshot")
+	var rollback:=flow.profile_store.load_profile()
+	check(rollback.cash==fixture.cash and rollback.staff.payroll_days.is_empty() and not rollback.collection.find(item.instance_id).identified and rollback.staff.tasks[0].worked_seconds==0,"Interrupted OPEN reloads exact pre-opening funds and job without free progress")
+	flow.museum.business.close_now();await frames(300)
+	check(flow.museum_state.phase==MuseumState.Phase.EVENING and flow.profile_store.save_count>saves,"Actual closure safely saves complete ground result")
+	var loaded:=flow.profile_store.load_profile()
+	check(not flow.profile_store.write_blocked and loaded.collection.find(item.instance_id).identified and loaded.staff.tasks[0].status==&"COMPLETED" and loaded.daily_reports[1].staff_wages_paid==14,"Safe GameFlow closure persists payroll and task exactly once")
+	check(not flow.museum.business.start(),"Closed same day cannot replay staff services")
+	flow.queue_free();flow=null;driver=null;await frames(3)
+	print("[11F flow] %d checks, %d failures"%[checks,failures]);quit(0 if failures==0 else 1)

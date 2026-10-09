@@ -1,9 +1,12 @@
 class_name MuseumStaffService
 extends RefCounted
+static var max_staff:=6
+static var max_per_job:=2
 static var _catalog:Dictionary[StringName,MuseumStaffDefinition]={}
 static func catalog()->Dictionary[StringName,MuseumStaffDefinition]:
 	if _catalog.is_empty():
 		var data:Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://data/museum/staff.json"))
+		max_staff=int(data.max_staff);max_per_job=int(data.max_per_job)
 		for row:Dictionary in data.templates:
 			var definition:=MuseumStaffDefinition.new()
 			definition.staff_id=StringName(row.staff_id)
@@ -14,18 +17,21 @@ static func catalog()->Dictionary[StringName,MuseumStaffDefinition]:
 			definition.skill_level=row.skill_level
 			definition.work_capacity=row.work_capacity
 			definition.seconds_per_task=row.seconds_per_task
+			definition.assigned_hall=StringName(row.assigned_hall)
+			definition.employment_status=StringName(row.employment_status)
 			_catalog[definition.staff_id]=definition
 	return _catalog
 static func hire(state:MuseumState,id:StringName)->bool:
 	var definition:MuseumStaffDefinition=catalog().get(id)
-	if not state.can_edit() or definition==null or state.cash<definition.hire_cost or state.staff.active_count()>=6:return false
+	if not state.can_edit() or definition==null or state.cash<definition.hire_cost or state.staff.active_count()>=max_staff:return false
+	if definition.employment_status!=&"AVAILABLE" or definition.assigned_hall not in state.display_catalog.hall_ids(state.museum_level):return false
 	if state.staff.members.has(id) and state.staff.members[id].employment_status==&"ACTIVE":return false
 	var same_job:=0
 	for member in state.staff.members.values():
 		if member.employment_status==&"ACTIVE" and catalog()[member.staff_id].job==definition.job:same_job+=1
-	if same_job>=2:return false
+	if same_job>=max_per_job:return false
 	var member:=MuseumStaffMember.new()
-	member.staff_id=id
+	member.staff_id=id;member.assigned_hall=definition.assigned_hall
 	state.cash-=definition.hire_cost
 	state.staff.members[id]=member
 	state.staff.record(state.day_number,"HIRE",str(id),definition.hire_cost)

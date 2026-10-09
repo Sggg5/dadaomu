@@ -6,6 +6,7 @@ var player: MuseumPlayer
 var business: MuseumBusiness
 var panel: PanelContainer
 var tabs: TabContainer
+var staff_view:MuseumStaffView
 var facility_view:MuseumFacilityView
 var overview: RichTextLabel
 var hall_list: ItemList
@@ -113,6 +114,7 @@ func _ready() -> void:
 	facility_view.paper_style=true
 	facility_view.state=state
 	tabs.add_child(facility_view)
+	staff_view=MuseumStaffView.new();staff_view.name="人事与工作";staff_view.state=state;staff_view.business=business;tabs.add_child(staff_view)
 	var close_button:=Button.new()
 	close_button.text="合上台账 [Tab / Esc]"
 	close_button.pressed.connect(close)
@@ -150,13 +152,16 @@ func refresh() -> void:
 		hall_list.add_item("%s · %s · %d件" % [hall.name,"已解锁" if hall.unlocked else "未解锁",hall.displayed])
 	var stats:=business.visits.snapshot()
 	visitors.text="本日实际付费 %d人 / 完成观看 %d次\n独立观看游客 %d人 / 器物观看 %d件次（不同实物%d件）\n\n各厅：%s\n热门设施：%s\n专题访问：%s\n兴趣类别：%s\n\n近期真实反馈：\n%s" % [business.visitors_today,stats.view_count,stats.unique_viewers,stats.artifact_views,stats.unique_artifacts,_stat_lines(stats.hall_visits,"hall"),_stat_lines(stats.unit_visits,"unit"),_stat_lines(stats.topic_visits,"topic"),_stat_lines(stats.interests,"category"),"\n".join(stats.feedback)]
+	visitors.text+="\n员工实际导览："+str(stats.staff_guides)
 	hall_list.select(selected_hall)
 	_select_hall(selected_hall)
 	_refresh_topic()
 	_refresh_history()
 	if is_instance_valid(facility_view):facility_view.refresh()
+	if is_instance_valid(staff_view):staff_view.refresh()
 	finance.text="现金（实际）：%s\n\n本日实时：%d位付费游客 / %s门票\n上次已结算：%d位游客 / %s门票\n\n预计游客：%d人；预测不记入现金。\n累计已记录：%d人 / %s门票；%d个营业日。" % [AntiqueDefinition.money(data.cash),data.live_visitors,AntiqueDefinition.money(data.live_income),data.last_visitors,AntiqueDefinition.money(data.last_income),data.forecast_visitors,MuseumDailyReport.totals(state).visitors,AntiqueDefinition.money(MuseumDailyReport.totals(state).income),MuseumDailyReport.totals(state).days]
 	finance.text+="\n\n本日建设投资（实际流水）：%s\n预计每日维护：%s\n当日运营净收益：%s\n维护不足：当日可用现金支付，余款减免；无负债、不补扣。"%[AntiqueDefinition.money(MuseumConstructionService.capital_today(state)),AntiqueDefinition.money(MuseumConstructionService.maintenance_due(state)),AntiqueDefinition.money(MuseumOperatingFinance.net_for_day(state,state.day_number)) if state.daily_reports.has(state.day_number) else "尚未结算"]
+	finance.text+="\n今日实际工资：¥%d；招聘与修复费为独立流水，不重复计入营业净收益。"%[int(state.staff.payroll_days.get(state.day_number,{"wages_paid":0}).wages_paid)]
 func _select_hall(index:int) -> void:
 	var data:=MuseumOverview.snapshot(state,business)
 	if index<0 or index>=data.halls.size():return
@@ -191,6 +196,7 @@ func _refresh_history()->void:
 		text+="Day %d · %d人 · 门票%s · 展品%d件 / 吸引力%d\n参观次数%s · 专题%s\n\n"%[report.day_number,report.visitor_count,AntiqueDefinition.money(report.ticket_income),report.total_exhibit_count,report.exhibit_appeal,_stat_lines(report.hall_visit_statistics,"hall"),_topic_names(report.active_exhibitions)]
 		text+="维护应付%s / 已付%s / 减免%s / 净收益%s\n建设（截至闭馆）%s\n"%[AntiqueDefinition.money(int(report.get("maintenance_due",0))),AntiqueDefinition.money(int(report.get("maintenance_paid",0))),AntiqueDefinition.money(int(report.get("maintenance_waived",0))),AntiqueDefinition.money(int(report.get("operating_net_income",report.ticket_income))),AntiqueDefinition.money(int(report.get("construction_at_close",0)))]
 		text+="设施观看：%s\n专题评分：%s / 访问：%s\n器物观看%d件次 / 独立观看%d人\n兴趣：%s\n\n"%[_stat_lines(report.popular_units,"unit"),_stat_lines(report.exhibition_scores,"hall"),_stat_lines(report.exhibition_visits,"topic"),report.artifact_views,report.unique_viewers,_stat_lines(report.interest_distribution,"category")]
+		text+="工资实际%s / 修复独立支出%s / 员工作业%s / 导览服务%s\n"%[AntiqueDefinition.money(int(report.get("staff_wages_paid",0))),AntiqueDefinition.money(int(report.get("staff_repair_fees",0))),str(report.get("staff_task_counts",{})),str(report.get("staff_guide_counts",{}))]
 	history.text=text
 
 func _process(delta:float)->void:

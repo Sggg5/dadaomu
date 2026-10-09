@@ -14,12 +14,19 @@ func run()->void:
 	check(museum.business.visits.staff_guides.get("GUIDE_LIN",0)>0,"Real paid visitor and guide actor finish guidance")
 	check(museum.business.visits.staff_guides.get("GUIDE_LIN",0)<=8,"Guide daily capacity bounded")
 	for visitor in museum.business.active:check(visitor.view_count<=3,"Board plus employee never exceeds three actual views")
+	var context:=museum.business.workday
+	context.reservations[999]=&"GUIDE_LIN"
+	museum.guide_nodes[&"GUIDE_LIN"].queue_free();await frames(3)
+	check(not context.ready_guides.has(&"GUIDE_LIN") and not context.reservations.has(999) and not context.complete_guide(999,&"GUIDE_LIN"),"Actual NPC unload cancels service without phantom credit")
+	museum._sync_guides();await frames(3)
+	check(is_instance_valid(museum.guide_nodes[&"GUIDE_LIN"]),"Scene refresh safely replaces freed guide reference")
 	museum.switch_hall(&"EAST");await frames(3)
 	check(not museum.guide_nodes[&"GUIDE_LIN"].visible,"Player hall switch preserves logical guide but hides wrong-hall actor")
 	museum.business.close_now();await frames(240)
 	check(museum.business.workday.reservations.is_empty() and not museum.business.running,"Closing cancels pending guidance without stuck visitor")
 	museum.queue_free();await frames(3)
 	var poor:=MuseumState.new();poor.cash=1000;MuseumStaffService.hire(poor,&"GUIDE_LIN");poor.cash=0
+	poor.phase=MuseumState.Phase.OPEN
 	var day:=MuseumStaffPayroll.begin(poor)
 	check(day.paid_ids.is_empty() and day.wages_paid==0 and poor.cash==0,"Unfunded employee does not attend or create arrears")
 	check(MuseumStaffPayroll.begin(poor).wages_paid==0,"Same-day payroll cannot run twice")

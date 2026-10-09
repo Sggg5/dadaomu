@@ -3,7 +3,7 @@ extends RefCounted
 ## VERSION8 staff extension. Decode into a temporary roster; reject conflicts before installation.
 static func encode(state:MuseumState)->Dictionary:
 	var members:Array=[];var tasks:Array=[];var days:Dictionary={}
-	var ids:=state.staff.members.keys();ids.sort()
+	var ids:=state.staff.members.keys();ids.sort_custom(func(a:StringName,b:StringName)->bool:return str(a)<str(b))
 	for id in ids:
 		var m:MuseumStaffMember=state.staff.members[id]
 		var d:MuseumStaffDefinition=MuseumStaffService.catalog()[id]
@@ -35,11 +35,17 @@ static func decode(state:MuseumState,payload:Dictionary)->bool:
 		member.last_attended_day=int(row.last_attended_day);member.last_completed_count=int(row.last_completed_count);roster.members[id]=member
 		if member.employment_status==&"ACTIVE":job_counts[str(d.job)]=int(job_counts.get(str(d.job),0))+1
 	for count in job_counts.values():
-		if count>2:return false
-	if roster.active_count()>6:return false
+		if count>MuseumStaffService.max_per_job:return false
+	if roster.active_count()>MuseumStaffService.max_staff:return false
+	var pending_instances:Dictionary={}
 	for row:Variant in payload.staff_tasks:
 		if not row is Dictionary or row.get("task_id")!=roster.next_task_id or not row.get("staff_id") is String or not row.get("instance_id") is String:return false
 		var id:=StringName(row.staff_id)
+		var suffix:String=row.instance_id.trim_prefix("A")
+		if not row.instance_id.begins_with("A") or not suffix.is_valid_int() or suffix.to_int()<1:return false
+		if row.get("status") in ["PENDING","WAITING_FUNDS"]:
+			if pending_instances.has(row.instance_id):return false
+			pending_instances[row.instance_id]=true
 		if not roster.members.has(id) or row.get("job")!=str(catalog[id].job) or row.job=="GUIDE":return false
 		if row.get("status") not in ["PENDING","WAITING_FUNDS","CANCELLED","COMPLETED"] or not row.get("note") is String:return false
 		for key in ["created_day","completed_day","fee_paid"]:
@@ -54,9 +60,12 @@ static func decode(state:MuseumState,payload:Dictionary)->bool:
 		task.created_day=int(row.created_day);task.completed_day=int(row.completed_day);task.worked_seconds=float(row.worked_seconds);task.fee_paid=int(row.fee_paid);task.note=row.note
 		roster.tasks.append(task);roster.next_task_id+=1
 	var hires:Dictionary={};var wages:Dictionary={};var repairs:Dictionary={}
+	var previous_day:=0
 	for row:Variant in payload.staff_expenses:
 		if not row is Dictionary or row.get("expense_id")!=roster.next_expense_id or not row.get("target_id") is String:return false
 		if not MuseumManagementCodec.integer(row.get("day_number"),1,state.day_number) or not MuseumManagementCodec.integer(row.get("amount"),1,1000000000):return false
+		if int(row.day_number)<previous_day:return false
+		previous_day=int(row.day_number)
 		var target:=StringName(row.target_id)
 		if row.get("kind")=="HIRE":
 			if not roster.members.has(target) or row.amount!=catalog[target].hire_cost:return false
@@ -107,6 +116,18 @@ static func decode(state:MuseumState,payload:Dictionary)->bool:
 				if not report[field] is Dictionary:return false
 				for id in report[field]:
 					if not catalog.has(StringName(id)) or not MuseumManagementCodec.integer(report[field][id],0,catalog[StringName(id)].work_capacity):return false
+		var attendance:Array=roster.payroll_days.get(day,{"paid_ids":[]}).paid_ids
+		var task_counts:Dictionary={}
+		for task in roster.tasks:
+			if task.status==&"COMPLETED" and task.completed_day==day:
+				if str(task.staff_id) not in attendance:return false
+				task_counts[str(task.staff_id)]=int(task_counts.get(str(task.staff_id),0))+1
+		var actual_counts:Dictionary=report.get("staff_task_counts",{})
+		if actual_counts.size()!=task_counts.size():return false
+		for id in actual_counts:
+			if not task_counts.has(id) or actual_counts[id]!=task_counts[id]:return false
+		for id in report.get("staff_guide_counts",{}):
+			if id not in attendance or catalog[StringName(id)].job!=&"GUIDE" or report.staff_guide_counts[id]>report.visitor_count:return false
 		for field in ["staff_wages_paid","staff_repair_fees"]:
 			if report.has(field):report[field]=int(report[field])
 		for field in ["staff_guide_counts","staff_task_counts"]:

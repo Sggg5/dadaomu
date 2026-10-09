@@ -344,6 +344,8 @@ func _sync_services()->void:
 
 func _sync_guides()->void:
 	for id in guide_nodes.keys():
+		if not is_instance_valid(guide_nodes[id]):
+			guide_nodes.erase(id);continue
 		if not state.staff.members.has(id) or state.staff.members[id].employment_status!=&"ACTIVE":
 			guide_nodes[id].queue_free();guide_nodes.erase(id)
 	for id in MuseumStaffService.active_ids(state):

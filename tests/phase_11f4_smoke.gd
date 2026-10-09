@@ -8,10 +8,12 @@ func run()->void:
 	MuseumStaffTasks.enqueue(state,&"APPRAISER_SHEN",unknown.instance_id)
 	MuseumStaffTasks.enqueue(state,&"CONSERVATOR_SU",broken.instance_id)
 	var hire:=20000-state.cash
+	MuseumConstructionService.purchase(state,MuseumConstructionService.quote(state,&"CASE_2:LIGHT"))
+	var investment:=MuseumConstructionService.capital_today(state)
 	var museum:=Museum.new();museum.state=state;museum.config=MuseumConfig.new()
 	museum.config.open_duration=4;museum.config.visitor_speed=1800;museum.config.view_duration=.03;museum.config.staff_task_time_scale=.02
 	root.add_child(museum);await frames(3)
-	var gross:=0;var wages:=0;var fees:=0
+	var gross:=0;var wages:=0;var fees:=0;var maintenance:=0
 	for day in range(1,31):
 		state.day_number=day;state.phase=MuseumState.Phase.MORNING
 		check(museum.business.start(),"Start actual staffed day "+str(day))
@@ -19,16 +21,20 @@ func run()->void:
 		check(state.daily_reports.has(day),"Real close stores daily report")
 		var r:Dictionary=state.daily_reports[day]
 		check(r.staff_wages_paid==42 and r.operating_net_income==r.ticket_income-r.maintenance_paid-42,"Locked wages and operating net reconcile")
-		gross+=r.ticket_income;wages+=r.staff_wages_paid;fees+=r.staff_repair_fees
+		gross+=r.ticket_income;wages+=r.staff_wages_paid;fees+=r.staff_repair_fees;maintenance+=r.maintenance_paid
 		var cash:=state.cash
 		check(not MuseumStaffPayroll.begin(state).wages_paid and state.cash==cash,"Repeated opening payroll never pays twice")
-	check(state.cash==20000-hire+gross-wages-fees,"30 real days reconcile separate recruitment repair and payroll")
-	var stats:={"days":30,"gross":gross,"wages":wages,"hire":hire,"repair_fees":fees,"cash":state.cash}
+	check(state.cash==20000-hire-investment+gross-wages-fees-maintenance,"30 real days reconcile separate recruitment repair and payroll")
+	var stats:={"days":30,"gross":gross,"wages":wages,"hire":hire,"repair_fees":fees,"investment":investment,"maintenance":maintenance,"cash":state.cash}
 	var f:=FileAccess.open("res://logs/11f_30days.json",FileAccess.WRITE);f.store_string(JSON.stringify(stats));f.close()
 	var store:=MuseumProfileStore.new();store.save_path="res://logs/11f_v8_%d.json"%Time.get_ticks_usec()
 	check(store.save_profile(state),"Isolated V8 profile writes")
 	var loaded:=store.load_profile()
 	check(not store.write_blocked and store.encode(state)==store.encode(loaded),"V8 disk preserves employees tasks IDs cash display reports")
+	var reopened:=Museum.new();reopened.state=loaded;reopened.config=MuseumConfig.new();root.add_child(reopened);await frames(3)
+	var view:=reopened.office_panel.staff_view;view.employees.select(view.ids.find(&"APPRAISER_SHEN"));view.refresh()
+	check("未出勤" not in view.detail.text and "出勤" in view.detail.text,"Reloaded ground personnel page shows persisted daily attendance")
+	reopened.queue_free();await frames(3)
 	var legacy:=store.encode(state);legacy.version=7
 	for key in legacy.keys():
 		if str(key).begins_with("staff_"):legacy.erase(key)

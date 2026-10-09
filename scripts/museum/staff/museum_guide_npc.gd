@@ -18,7 +18,7 @@ func _physics_process(delta:float)->void:
 	hall_id=member.assigned_hall
 	var definition:MuseumStaffDefinition=MuseumStaffService.catalog()[staff_id]
 	var attending:=business.running and not business.closing and business.workday!=null and staff_id in business.workday.paid_ids
-	var target:=Vector2(1100 if staff_id==&"GUIDE_LIN" else 1160,550)
+	var target:=Vector2(900 if staff_id==&"GUIDE_LIN" else 1160,470)
 	position=position.move_toward(target,90*delta)
 	if attending and position.distance_to(target)<2:business.workday.ready_guides[staff_id]=true
 	elif business.workday!=null:business.workday.ready_guides.erase(staff_id)
@@ -30,4 +30,7 @@ func _draw()->void:
 	draw_colored_polygon(PackedVector2Array([Vector2(-12,3),Vector2(12,3),Vector2(10,17),Vector2(-10,17)]),Color("798e9c"))
 	draw_rect(Rect2(5,3,8,9),Color("e6d8b5"))
 func _exit_tree()->void:
-	if is_instance_valid(business) and business.workday!=null:business.workday.ready_guides.erase(staff_id)
+	if is_instance_valid(business) and business.workday!=null:
+		business.workday.ready_guides.erase(staff_id)
+		for index in business.workday.reservations.keys():
+			if business.workday.reservations[index]==staff_id:business.workday.cancel_guide(index)

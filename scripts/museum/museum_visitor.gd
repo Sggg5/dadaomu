@@ -138,6 +138,7 @@ func comment() -> String:
 
 
 func _physics_process(delta: float) -> void:
+	label.position=Vector2(-105,16) if _staff_guide_id!=&"" else Vector2(-35,16)
 	if not route.is_empty():
 		position = position.move_toward(route[0],config.visitor_speed*delta)
 		if position.distance_to(route[0]) < 1: route.pop_front()
@@ -236,7 +237,7 @@ func _begin_staff_guide()->bool:
 	_service_id=&"STAFF_GUIDE"
 	_service_timer=MuseumStaffService.catalog()[id].seconds_per_task
 	_service_after=Activity.CHOOSE_EXHIBIT
-	var target:=workday.guide_position(id)
+	var target:=workday.guide_position(id)+Vector2(-30,0)
 	route=[Vector2(position.x,450),Vector2(target.x,450),target]
 	activity=Activity.SERVICE
 	title="听取导览"
