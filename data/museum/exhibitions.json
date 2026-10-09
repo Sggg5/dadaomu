@@ -32,12 +32,12 @@
       "id": "COINS",
       "name": "古代钱币与流通展",
       "period_min": -1000,
-      "period_max": 1933,
+      "period_max": 907,
       "categories": [
         "COIN"
       ],
       "min_items": 3,
-      "min_unique": 3,
+      "min_unique": 2,
       "min_categories": 1,
       "min_condition": 40,
       "repeat_decay": 0.5,
@@ -50,17 +50,17 @@
       "year_min": 618,
       "year_max": 907
     },
-    "han_jade_bi": {
-      "category": "JADE",
-      "year_min": -206,
-      "year_max": 220
-    },
     "republic_silver_coin": {
       "category": "COIN",
       "year_min": 1912,
       "year_max": 1933
     },
-    "warring_bronze_mirror": {
+    "han_jade_disc": {
+      "category": "JADE",
+      "year_min": -206,
+      "year_max": 220
+    },
+    "inlaid_bronze_mirror": {
       "category": "BRONZE",
       "year_min": -475,
       "year_max": -221

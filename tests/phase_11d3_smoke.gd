@@ -8,6 +8,10 @@ func run()->void:
 		state.place(slots[i].id,item.instance_id)
 		i+=1
 	ExhibitionService.start(state,&"MAIN",&"HAN_WEI")
+	for id in [&"ly_wuzhu",&"gz_kaiyuan",&"ly_wuzhu"]:
+		var item:=state.collection.add(id,1,90,true)
+		state.fill_unit(&"COIN_E1",[item.instance_id])
+	ExhibitionService.start(state,&"EAST",&"COINS")
 	var result:=VisitorViewResult.snapshot(state,&"CASE_2",{})
 	check(result.instance_ids.size()==3 and result.topic_id=="HAN_WEI" and result.feedback.contains("汉魏"),"Feedback derives from actual complete Han display")
 	var repeat:=VisitorViewResult.snapshot(state,&"CASE_2",{"COIN":true})
@@ -24,12 +28,15 @@ func run()->void:
 	await frames(800)
 	var stats:=museum.business.visits.snapshot()
 	check(stats.view_count>0 and stats.artifact_views>=3 and stats.hall_visits.has("MAIN"),"Real walking visitors finish watching and record hall objects")
+	check(stats.hall_visits.has("EAST") and stats.unique_viewers<=museum.business.visitors_today and stats.view_count>=stats.unique_viewers,"Real multi-hall viewing distinguishes visits from unique paid people")
 	var cash:=state.cash
 	var paid:=museum.business.visitors_today
 	museum.business._on_paid(0)
 	check(state.cash==cash and museum.business.visitors_today==paid,"Repeated ticket signal never pays again")
 	var visitor_ids:=museum.business.visits._visitors.keys()
 	var index:int=visitor_ids[0]
+	for visit_key in museum.business.visits._seen:
+		if str(visit_key).ends_with(":CASE_2"):index=str(visit_key).split(":")[0].to_int();break
 	var views:int=stats.view_count
 	museum.business._on_view_completed(index,result)
 	check(museum.business.visits.view_count==views,"Repeated completed view does not double count")

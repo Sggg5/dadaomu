@@ -147,6 +147,7 @@ func _ready() -> void:
 	office_desk.prompt=func()->String:return "[E] 馆务 / 策展 / 营业台账"
 	office_desk.action=func()->void:office_panel.open()
 	add_child(office_desk)
+	player.interactables.append(office_desk)
 	state.changed.connect(_refresh)
 	message.text = morning_notice
 	_refresh()

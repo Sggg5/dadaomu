@@ -1,3 +1,13 @@
+## Phase 11D 博物馆策展与经营（自动验证完成，人工待验收）
+
+基线5350796，独立分支codex/phase-11d-museum-management。馆长办公室E进入六页台账：总览、展厅管理、财务、参观反馈、营业日报、专题策展。只读总览不修改归属；布展仍经合法DisplaySlot/OwnedAntique规则。三种游戏经营专题按实际已鉴定馆藏、时代/类型、品相和重复折减评估；不批准研究专题、数据库索引或500候选。
+
+专题规则data/museum/exhibitions.json；评分最高200，单厅兴趣及全馆吸引力额外加成最高20%。真实游客完成观看才记录稳定厅/柜/实例ID、兴趣及有依据的反馈，票款和观看独立去重。日报每日期一次，历史每页5日，累计只统计已记录历史，旧档不虚构营业史。
+
+MuseumProfileStore VERSION6追加专题与报表，v1–5显式兼容。写迁移档前保存原字节SHA备份，坏档/冲突日报/外部修改拒绝覆盖，读报表不再发钱。战斗、Boss、50件古董数值、地区掉落、研究及11C审核授权不改。50/100/500及隔离81位满载、30天真实营业、GameFlow夜间撤离回Day2、历史全回归和真实Godot图形见docs/PHASE_11D_MUSEUM_MANAGEMENT_VERIFICATION.md。
+
+独立五阶段commit/push，不合并main。用户出差，人工经营体验待验收；只提供tests/phase_11d_playtest.gd隔离500件固定夹具，不读写正式档，停止不进入后续阶段。
+
 ## Phase 11B 地区古墓与50种古董（实现完成，人工体验待验收）
 
 基线6dbfcfe，分支codex/phase-11b-regional-tombs-loot。晋北原五层/旧八件掉落精确保留；洛阳北邙汉魏疑冢与关中唐陵隐墓各两层，分别四种独立Geometry与门闸扫击/定向火口。地图开放三墓，其余调查中。旧Enemy/Boss/Player/Relic数据与数值不改。

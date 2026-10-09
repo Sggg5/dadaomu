@@ -16,6 +16,19 @@ func run()->void:
 	check(result.qualified and result.matched_ids.size()==3 and result.category_count>=2,"Three real Han definitions qualify")
 	check(ExhibitionService.start(state,&"MAIN",&"HAN_WEI"),"Start actual hall exhibition")
 	check(not ExhibitionService.start(state,&"EAST",&"HAN_WEI"),"Other hall does not borrow displayed instances")
+	var original_plans:=state.exhibition_plans.duplicate()
+	for repeat in range(10):ExhibitionService.start(state,&"MAIN",&"HAN_WEI")
+	check(state.exhibition_plans==original_plans and is_equal_approx(ExhibitionService.active(state,&"MAIN").score,result.score),"Repeated start replaces one plan without stacking heat")
+	state.collection.find(ids[2]).identified=false
+	check(not ExhibitionService.evaluate(state,plan).qualified,"Illegally retained unidentified display cannot satisfy theme")
+	state.collection.find(ids[2]).identified=true
+	state.auction_lot_instance_id=ids[2]
+	check(not ExhibitionService.evaluate(state,plan).qualified,"Pending auction instance cannot satisfy theme")
+	state.auction_lot_instance_id=&""
+	var profile:Dictionary=state.display_catalog.profiles["ly_granary"].duplicate(true)
+	state.display_catalog.profiles["ly_granary"].erase("size_cm")
+	check(not ExhibitionService.evaluate(state,plan).qualified,"Unknown facility footprint excluded from scoring")
+	state.display_catalog.profiles["ly_granary"]=profile
 	var score:=result.score
 	state.unassign(slots[2].id)
 	check(not ExhibitionService.active(state,&"MAIN").qualified and ExhibitionService.bonus_appeal(state)==0,"Removing display immediately disables effective theme")

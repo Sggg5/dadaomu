@@ -33,7 +33,7 @@ func save_profile(state: MuseumState) -> bool:
 	# OPEN现金仍在流动，NIGHT背包仍有风险，都不属于可保存地面快照。
 	if write_blocked: return false
 	if not state.can_edit(): return false
-	if not _integer(state.campaign_seed,1,ExpeditionSeedService.MAX_SEED): return _failed("Campaign Seed尚未初始化或非法，拒绝写入v4存档")
+	if not _integer(state.campaign_seed,1,ExpeditionSeedService.MAX_SEED): return _failed("Campaign Seed尚未初始化或非法，拒绝写入v6存档")
 	last_error = ""
 	var payload := encode(state)
 	if memory_only:
