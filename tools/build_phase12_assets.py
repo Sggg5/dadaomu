@@ -7,7 +7,7 @@ import json, shutil, hashlib, argparse
 ROOT=Path(__file__).resolve().parents[1]
 DEST=ROOT/'assets/art'
 def main():
- p=argparse.ArgumentParser();p.add_argument('--actors',required=True);p.add_argument('--environment',required=True);p.add_argument('--antiques');a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--actors',required=True);p.add_argument('--environment',required=True);p.add_argument('--antiques');p.add_argument('--npcs');a=p.parse_args()
  DEST.mkdir(parents=True,exist_ok=True);(DEST/'sources').mkdir(exist_ok=True)
  rows=[]
  def source(path,name):
@@ -40,6 +40,15 @@ def main():
    if not box:raise ValueError('empty antique')
    cell=cell.crop(box);cell.thumbnail((240,240),Image.Resampling.NEAREST);detail=Image.new('RGBA',(256,256));detail.alpha_composite(cell,((256-cell.width)//2,(256-cell.height)//2))
    save(detail,name+'.png',src,'alpha bounds aspect fit240; centered256; icon/display share identity')
+ if a.npcs:
+  im,src=source(a.npcs,'museum_npcs_original.png');atlas=Image.new('RGBA',(288,128))
+  for y in range(2):
+   for x in range(6):
+    cell=im.crop((x*im.width//6,y*im.height//2,(x+1)*im.width//6,(y+1)*im.height//2))
+    cell.putalpha(cell.getchannel('A').point(lambda value:255 if value>=128 else 0))
+    cell=cell.crop(cell.getbbox());cell.thumbnail((46,58),Image.Resampling.NEAREST)
+    atlas.alpha_composite(cell,(x*48+(48-cell.width)//2,y*64+62-cell.height))
+  save(atlas,'museum_npcs.png',src,'6x2 grid; binary alpha128; aspect fit46x58; feet62')
  (DEST/'manifest.json').write_text(json.dumps({'version':1,'approval':'PENDING_USER_REVIEW','assets':rows},ensure_ascii=False,indent=2),encoding='utf-8')
 if __name__=='__main__':main()
 

@@ -24,7 +24,7 @@ func _draw() -> void:
 	elif unit.kind=="LARGE_PLATFORM":
 		draw_colored_polygon(PackedVector2Array([Vector2(-75,-30),Vector2(55,-45),Vector2(80,30),Vector2(-55,45)]),Color("7b7972"))
 		draw_rect(Rect2(-52,32,104,17),Color("494a47"))
-	else:
+	elif not MuseumDisplayVisual.showcase(self):
 		# Timber plinth, legs, brass frame and a sloped glass top; not a plain square.
 		draw_rect(Rect2(-58,27,116,22),Color("57422e"))
 		draw_rect(Rect2(-51,47,12,10),Color("392b20"))

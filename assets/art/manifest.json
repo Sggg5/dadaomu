@@ -188,6 +188,17 @@
       "status": "DRAFT",
       "derivation": "alpha bounds aspect fit240; centered256; icon/display share identity",
       "sha256": "95d2499b3413251d0e3de5fdd9ef5a437dbc6a0033a5e7cc0d57c8848757aff4"
+    },
+    {
+      "id": "museum_npcs",
+      "path": "res://assets/art/museum_npcs.png",
+      "source": "res://assets/art/sources/museum_npcs_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "6x2 grid; binary alpha128; aspect fit46x58; feet62",
+      "sha256": "dabe4df33cc06e0168ef8e0465c153f26942d706f6a06262db551f89a5bb5df7"
     }
   ]
 }

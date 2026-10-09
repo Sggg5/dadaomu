@@ -317,7 +317,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _draw() -> void:
-	draw_rect(Rect2(70,145,1140,470),Color("20262b") if state.phase != MuseumState.Phase.EVENING else Color("171c27"))
+	if not MuseumDisplayVisual.floor(self):
+		draw_rect(Rect2(70,145,1140,470),Color("20262b") if state.phase != MuseumState.Phase.EVENING else Color("171c27"))
 	draw_rect(Rect2(70,145,1140,470),Color("988d70"),false,4)
 	draw_string(ThemeDB.fallback_font,Vector2(100,255),state.display_catalog.halls[active_hall_id].display_name,HORIZONTAL_ALIGNMENT_LEFT,-1,20,Color("b6cbd0"))
 	draw_line(Vector2(100,450),Vector2(1180,450),Color("354349"),1)
