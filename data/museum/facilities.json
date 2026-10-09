@@ -1,0 +1,124 @@
+{
+  "version": 1,
+  "unit_bonus_cap": 0.18,
+  "museum_bonus_cap": 0.15,
+  "unit_types": [
+    {
+      "kind": "LIGHT",
+      "name": "柜内照明",
+      "costs": [
+        80,
+        150,
+        240
+      ],
+      "maintenance": [
+        1,
+        2,
+        3
+      ],
+      "interest_per_level": 0.03,
+      "visual_status": "PROCEDURAL_GODOT_2D"
+    },
+    {
+      "kind": "BASE",
+      "name": "陈列底座",
+      "costs": [
+        60,
+        100,
+        160
+      ],
+      "maintenance": [
+        0,
+        1,
+        2
+      ],
+      "interest_per_level": 0.02,
+      "visual_status": "PROCEDURAL_GODOT_2D"
+    },
+    {
+      "kind": "LABEL",
+      "name": "展品说明牌",
+      "costs": [
+        40,
+        80,
+        140
+      ],
+      "maintenance": [
+        0,
+        1,
+        2
+      ],
+      "interest_per_level": 0.015,
+      "visual_status": "PROCEDURAL_GODOT_2D"
+    },
+    {
+      "kind": "PROTECT",
+      "name": "玻璃与锁护",
+      "costs": [
+        90,
+        180,
+        300
+      ],
+      "maintenance": [
+        1,
+        2,
+        3
+      ],
+      "interest_per_level": 0,
+      "visual_status": "PROCEDURAL_GODOT_2D"
+    }
+  ],
+  "public": [
+    {
+      "id": "MAIN_GUIDE",
+      "hall": "MAIN",
+      "kind": "GUIDE",
+      "name": "博物馆导览牌",
+      "unlock": 0,
+      "costs": [
+        120,
+        220,
+        340
+      ],
+      "maintenance": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "EAST_REST",
+      "hall": "EAST",
+      "kind": "REST",
+      "name": "游客休息区",
+      "unlock": 0,
+      "costs": [
+        160,
+        260,
+        380
+      ],
+      "maintenance": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "MAIN_RECEPTION",
+      "hall": "MAIN",
+      "kind": "RECEPTION",
+      "name": "接待设施",
+      "unlock": 1,
+      "costs": [
+        180,
+        280,
+        420
+      ],
+      "maintenance": [
+        1,
+        2,
+        3
+      ]
+    }
+  ]
+}

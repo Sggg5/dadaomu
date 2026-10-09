@@ -14,6 +14,7 @@ var collection := MuseumCollection.new()
 var display_catalog := MuseumDisplayCatalog.new()
 # Stable DisplaySlot IDs -> OwnedAntique instance IDs. CASE_n is the migrated first slot.
 var display_assignments: Dictionary[StringName, StringName] = {}
+var facilities:=MuseumFacilityState.new()
 var daily_reports: Dictionary[int,Dictionary] = {}
 var exhibition_plans: Dictionary[StringName,StringName] = {}
 var last_day_visitors: int = 0
@@ -37,6 +38,7 @@ func upgrade(expected_level: int) -> bool:
 	var cost := level_definition().upgrade_cost
 	if cash < cost: return false
 	cash -= cost
+	facilities.record(day_number,"HALL_EXPANSION","MUSEUM",cost,museum_level,museum_level+1)
 	museum_level += 1
 	changed.emit()
 	return true
