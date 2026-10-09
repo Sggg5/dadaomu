@@ -1,0 +1,52 @@
+extends "res://tests/phase_11a_smoke.gd"
+## Accelerated actual business, not full GameFlow / human playtest.
+func run()->void:
+	var path:=""
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--checkpoint="):path=arg.trim_prefix("--checkpoint=")
+	check(path.begins_with("res://logs/11i_earned_") and FileAccess.file_exists(path),"Isolated earned checkpoint required")
+	if failures>0:quit(1);return
+	var source:=MuseumProfileStore.new();source.save_path=path
+	var initial:=source.load_profile();check(not source.write_blocked,"Earned checkpoint safely decodes")
+	var output:Array=[]
+	for strategy in ["A","B","C"]:
+		var memory:=MuseumProfileStore.in_memory();memory._memory=source.encode(initial)
+		var state:=memory.load_profile()
+		var museum:=preload("res://scenes/museum/museum.tscn").instantiate() as Museum
+		museum.state=state;museum.config=preload("res://data/museum/default_config.tres").duplicate();museum.config.open_duration=8
+		root.add_child(museum);await frames(4)
+		var rows:Array=[];var hired:=false;var investments:=0
+		var item:=state.collection.all_items()[0]
+		MuseumResearchService.register(state,item.instance_id)
+		var unit:=""
+		for display in museum.cases:
+			if item in state.unit_items(display.case_id):unit=str(display.case_id)
+		var facility:=StringName(unit+":LIGHT")
+		for offset in range(30):
+			state.day_number=initial.day_number+offset+1;state.phase=MuseumState.Phase.MORNING
+			var opening:=state.cash;var hire_cost:=0;var construction_cost:=0
+			if strategy=="B" and not hired and state.cash>=134:
+				hired=MuseumStaffService.hire(state,&"APPRAISER_SHEN")
+				if hired:hire_cost=120;MuseumStaffTasks.enqueue(state,&"APPRAISER_SHEN",item.instance_id,&"RESEARCH",2)
+			if strategy=="C" and investments<1:
+				var quote:=MuseumConstructionService.quote(state,facility)
+				if quote!=null and state.cash>=quote.price:
+					construction_cost=quote.price
+					check(MuseumConstructionService.purchase(state,quote),"Actual facility investment")
+					investments+=1
+			check(museum.business.start(),"Real accelerated business %s day%d"%[strategy,state.day_number])
+			for frame in range(2400):
+				await frames(1)
+				if state.phase==MuseumState.Phase.EVENING:break
+			check(state.daily_reports.has(state.day_number),"Actual close report")
+			var report:Dictionary=state.daily_reports[state.day_number]
+			var delta:int=report.ticket_income-report.maintenance_paid-report.staff_wages_paid-report.staff_repair_fees-hire_cost-construction_cost
+			check(state.cash==opening+delta and state.cash>=0,"Daily cash reconciles without debt")
+			check(not museum.business.start(),"Same day reopening rejected")
+			var rating:=MuseumReputationService.evaluate(state)
+			rows.append({"day":state.day_number,"opening":opening,"ticket_income":report.ticket_income,"wages":report.staff_wages_paid,"maintenance":report.maintenance_paid,"repair":report.staff_repair_fees,"hire":hire_cost,"construction":construction_cost,"cash":state.cash,"visitors":museum.business.visitors_today,"collection":state.collection.all_items().size(),"displayed":state.display_assignments.size(),"rating":rating.rank,"score":rating.score,"goals":state.achievements.keys()})
+		output.append({"strategy":strategy,"method":"ACTUAL_BUSINESS_ACCELERATED_8_SECONDS_DATE_ADVANCED_BY_FIXTURE","checkpoint":path,"initial_cash":initial.cash,"initial_artifacts":initial.collection.all_items().size(),"new_acquisitions":0,"rows":rows})
+		museum.queue_free();await frames(4)
+	var file:=FileAccess.open("res://logs/11i_economy.json",FileAccess.WRITE);file.store_string(JSON.stringify(output,"  "));file.close()
+	print("[11I2] %d checks, %d failures"%[checks,failures]);quit(0 if failures==0 else 1)
+
