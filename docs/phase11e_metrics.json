@@ -1,0 +1,398 @@
+{
+  "baseline": "323e68ea84065364a934ff8499fb0ee802b4f830",
+  "full_suites": [
+    {
+      "phase": "1",
+      "exit": 0,
+      "checks": 27,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "2",
+      "exit": 0,
+      "checks": 204,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "3",
+      "exit": 0,
+      "checks": 94,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "4",
+      "exit": 0,
+      "checks": 105,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "5a",
+      "exit": 0,
+      "checks": 61,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "5b",
+      "exit": 0,
+      "checks": 236,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "6",
+      "exit": 0,
+      "checks": 164,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "6_5",
+      "exit": 0,
+      "checks": 174,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "7a",
+      "exit": 0,
+      "checks": 306,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "7b",
+      "exit": 0,
+      "checks": 722,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "8a",
+      "exit": 0,
+      "checks": 486,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "8b",
+      "exit": 0,
+      "checks": 305,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 18
+    },
+    {
+      "phase": "8c",
+      "exit": 0,
+      "checks": 297,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 19
+    },
+    {
+      "phase": "8d",
+      "exit": 0,
+      "checks": 2153,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 8
+    },
+    {
+      "phase": "9a",
+      "exit": 0,
+      "checks": 10513,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 9
+    },
+    {
+      "phase": "9b",
+      "exit": 0,
+      "checks": 30758,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "9b2",
+      "exit": 0,
+      "checks": 4843,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "9b3",
+      "exit": 0,
+      "checks": 29133,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "9b32",
+      "exit": 0,
+      "checks": 1734,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "9b33",
+      "exit": 0,
+      "checks": 2702,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "geometry",
+      "exit": 0,
+      "checks": 206885,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "softlock",
+      "exit": 0,
+      "checks": 1030,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "baseline",
+      "exit": 0,
+      "checks": 728,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "10a",
+      "exit": 0,
+      "checks": 49,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "10d_bridge",
+      "exit": 0,
+      "checks": 9,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "10d_media",
+      "exit": 0,
+      "checks": 11,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "10d",
+      "exit": 0,
+      "checks": 40,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "10d6",
+      "exit": 0,
+      "checks": 91,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 3
+    },
+    {
+      "phase": "11a",
+      "exit": 0,
+      "checks": 717,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "11b_tombs",
+      "exit": 0,
+      "checks": 1172,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "11b_catalog",
+      "exit": 0,
+      "checks": 178,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "11b",
+      "exit": 0,
+      "checks": 40973,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "twin_death_hotfix",
+      "exit": 0,
+      "checks": 47,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "11d1",
+      "exit": 0,
+      "checks": 7,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "11d2",
+      "exit": 0,
+      "checks": 20,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "11d3",
+      "exit": 0,
+      "checks": 9,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "11d4",
+      "exit": 0,
+      "checks": 169,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 4
+    },
+    {
+      "phase": "11d5",
+      "exit": 0,
+      "checks": 235,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "11d_flow",
+      "exit": 0,
+      "checks": 108,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "11e1",
+      "exit": 0,
+      "checks": 335,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "11e2",
+      "exit": 0,
+      "checks": 19,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "11e3",
+      "exit": 0,
+      "checks": 9,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    },
+    {
+      "phase": "11e4",
+      "exit": 0,
+      "checks": 130,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 3
+    },
+    {
+      "phase": "11e5",
+      "exit": 0,
+      "checks": 10,
+      "failures": 0,
+      "script_errors": [],
+      "expected_warning_count": 0
+    }
+  ],
+  "full_checks": 337998,
+  "full_failures": 0,
+  "final_targeted": {
+    "finance_after_legacy_net_fix": 131,
+    "cycle": 10,
+    "services_after_layout": 9,
+    "graphical": 44,
+    "failures": 0
+  },
+  "python_tests": 107,
+  "python_failures": 0,
+  "thirty_days": {
+    "cash": 9690,
+    "days": 30,
+    "gross": 1200,
+    "investment": 1240,
+    "maintenance": 270,
+    "net": 930,
+    "visitors": 240
+  },
+  "performance": [
+    {
+      "displayed": 50,
+      "evaluate_ms": 0.1904,
+      "office_ms": 9.25863636363636,
+      "owned": 50
+    },
+    {
+      "displayed": 81,
+      "evaluate_ms": 0.1836,
+      "office_ms": 13.1662727272727,
+      "owned": 100
+    },
+    {
+      "displayed": 81,
+      "evaluate_ms": 0.188,
+      "office_ms": 13.5042727272727,
+      "owned": 500
+    }
+  ],
+  "manual_acceptance": "PENDING_USER_TRAVEL"
+}

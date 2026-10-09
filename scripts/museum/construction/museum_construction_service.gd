@@ -68,9 +68,16 @@ static func unit_bonus(state:MuseumState,unit:StringName)->float:
 	return minf(float(rules().unit_bonus_cap),value)
 static func unit_interest(state:MuseumState,unit:StringName)->int:return roundi(state.unit_appeal(unit)*(1.0+unit_bonus(state,unit)))
 static func bonus_appeal(state:MuseumState)->int:
+	# One repeat-adjusted projection per query, not two sorts for every facility.
+	var values:=state.displayed_appeals()
 	var total:=0
-	for id in state.display_catalog.unit_ids(state.museum_level):total+=unit_interest(state,id)-state.unit_appeal(id)
-	return mini(floori(state.total_appeal()*float(rules().museum_bonus_cap)),total)
+	var base_total:=0
+	for value:int in values.values():base_total+=value
+	for id in state.display_catalog.unit_ids(state.museum_level):
+		var base:=0
+		for item in state.unit_items(id):base+=int(values.get(item.instance_id,0))
+		total+=roundi(base*(1.0+unit_bonus(state,id)))-base
+	return mini(floori(base_total*float(rules().museum_bonus_cap)),total)
 static func maintenance_due(state:MuseumState)->int:
 	var total:=0
 	var catalog:=definitions(state)

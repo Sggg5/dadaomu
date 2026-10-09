@@ -10,3 +10,8 @@ static func settle(state:MuseumState,business:MuseumBusiness)->bool:
 	state.cash-=paid
 	if paid>0:state.facilities.record(state.day_number,"MAINTENANCE","DAY_"+str(state.day_number),paid,0,0)
 	return MuseumDailyReport.store(state,report)
+
+static func net_for_day(state:MuseumState,day:int)->int:
+	# Legacy reports have no maintenance: their gross remains their net, without mutation.
+	var report:Dictionary=state.daily_reports.get(day,{})
+	return int(report.get("operating_net_income",report.get("ticket_income",0)))

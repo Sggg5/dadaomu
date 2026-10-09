@@ -2,6 +2,14 @@ class_name MuseumOverview
 extends RefCounted
 ## Read-only management projection. Forecasts never change cash or ownership.
 static func snapshot(state: MuseumState, business: MuseumBusiness) -> Dictionary:
+	var appeals:=state.displayed_appeals()
+	var unit_values:Dictionary={}
+	var base_appeal:=0
+	for value:int in appeals.values():base_appeal+=value
+	for unit_id in state.display_catalog.unit_ids(state.museum_level):
+		var value:=0
+		for item in state.unit_items(unit_id):value+=int(appeals.get(item.instance_id,0))
+		unit_values[unit_id]=value
 	var identified := 0
 	for item in state.collection.all_items():
 		if item.identified: identified += 1
@@ -17,9 +25,9 @@ static func snapshot(state: MuseumState, business: MuseumBusiness) -> Dictionary
 			row.units += 1
 			row.slots += unit.capacity
 			row.displayed += count
-			row.appeal += state.unit_appeal(id)
+			row.appeal += int(unit_values.get(id,0))
 			if count==0: row.empty_units += 1
 			else: used_units += 1
 		capacity += row.slots
 		halls.append(row)
-	return {"level":state.level_definition().display_name,"cash":state.cash,"owned":state.collection.all_items().size(),"identified":identified,"displayed":state.display_assignments.size(),"stored":state.collection.all_items().size()-state.display_assignments.size(),"capacity":capacity,"used_units":used_units,"halls":halls,"appeal":state.total_appeal(),"forecast_visitors":business.visitor_target(state.total_appeal()+ExhibitionService.bonus_appeal(state)+MuseumConstructionService.bonus_appeal(state),state.display_assignments.size()),"live_visitors":business.visitors_today,"live_income":business.income_today,"last_visitors":state.last_day_visitors,"last_income":state.last_day_ticket_income}
+	return {"level":state.level_definition().display_name,"cash":state.cash,"owned":state.collection.all_items().size(),"identified":identified,"displayed":state.display_assignments.size(),"stored":state.collection.all_items().size()-state.display_assignments.size(),"capacity":capacity,"used_units":used_units,"halls":halls,"appeal":base_appeal,"forecast_visitors":business.visitor_target(base_appeal+ExhibitionService.bonus_appeal(state)+MuseumConstructionService.bonus_appeal(state),state.display_assignments.size()),"live_visitors":business.visitors_today,"live_income":business.income_today,"last_visitors":state.last_day_visitors,"last_income":state.last_day_ticket_income}

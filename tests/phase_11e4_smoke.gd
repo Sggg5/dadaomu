@@ -38,6 +38,7 @@ func run()->void:
 	var sha:=FileAccess.get_sha256(migration.save_path)
 	var migrated:=migration.load_profile()
 	check(not migration.write_blocked and migrated.facilities.levels.is_empty() and migrated.daily_reports.size()==30 and migrated.exhibition_plans==state.exhibition_plans and migrated.display_assignments==state.display_assignments and migrated.cash==state.cash,"V6 migration preserves all actual assets and no fabricated maintenance")
+	check(MuseumOperatingFinance.net_for_day(migrated,state.day_number)==int(migrated.daily_reports[state.day_number].ticket_income),"Legacy V6 reports show original gross as net without fictitious historic cost")
 	check(migration.save_profile(migrated) and FileAccess.get_sha256("%s.v6.%s.backup.json"%[migration.save_path,sha.substr(0,12)])==sha,"First V7 write retains byte-exact V6 backup")
 	var bad:=store.encode(state);bad.facility_levels["CASE_2:LIGHT"]=3
 	store.decode(bad);check(store.write_blocked,"Level and paid upgrade chain conflict blocks writes")

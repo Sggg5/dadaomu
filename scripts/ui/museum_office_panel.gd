@@ -156,7 +156,7 @@ func refresh() -> void:
 	_refresh_history()
 	if is_instance_valid(facility_view):facility_view.refresh()
 	finance.text="现金（实际）：%s\n\n本日实时：%d位付费游客 / %s门票\n上次已结算：%d位游客 / %s门票\n\n预计游客：%d人；预测不记入现金。\n累计已记录：%d人 / %s门票；%d个营业日。" % [AntiqueDefinition.money(data.cash),data.live_visitors,AntiqueDefinition.money(data.live_income),data.last_visitors,AntiqueDefinition.money(data.last_income),data.forecast_visitors,MuseumDailyReport.totals(state).visitors,AntiqueDefinition.money(MuseumDailyReport.totals(state).income),MuseumDailyReport.totals(state).days]
-	finance.text+="\n\n本日建设投资（实际流水）：%s\n预计每日维护：%s\n当日运营净收益（已结算）：%s\n维护不足：当日可用现金支付，余款减免；无负债、不补扣。"%[AntiqueDefinition.money(MuseumConstructionService.capital_today(state)),AntiqueDefinition.money(MuseumConstructionService.maintenance_due(state)),AntiqueDefinition.money(int(state.daily_reports.get(state.day_number,{}).get("operating_net_income",0)))]
+	finance.text+="\n\n本日建设投资（实际流水）：%s\n预计每日维护：%s\n当日运营净收益：%s\n维护不足：当日可用现金支付，余款减免；无负债、不补扣。"%[AntiqueDefinition.money(MuseumConstructionService.capital_today(state)),AntiqueDefinition.money(MuseumConstructionService.maintenance_due(state)),AntiqueDefinition.money(MuseumOperatingFinance.net_for_day(state,state.day_number)) if state.daily_reports.has(state.day_number) else "尚未结算"]
 func _select_hall(index:int) -> void:
 	var data:=MuseumOverview.snapshot(state,business)
 	if index<0 or index>=data.halls.size():return

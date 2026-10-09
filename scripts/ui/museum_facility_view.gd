@@ -71,7 +71,7 @@ func _selected()->void:
 	next_quote.disabled=not _confirmed or level>=definition.max_level
 func _effects(definition:MuseumFacilityDefinition,level:int,next:int)->String:
 	if definition.interest_per_level>0:return "实际柜内兴趣 +%.1f%% → +%.1f%%\n单柜合计上限18%%，全馆设施额外吸引力上限15%%。\n画面对应灯带 / 底座 / 说明卡；没有展品不会凭空产生吸引力。"%[level*definition.interest_per_level*100,next*definition.interest_per_level*100]
-	if definition.kind==&"PROTECT":return "玻璃框与锁护等级%d → %d。\n保护等级接口供后续维护使用；本版不伪称已阻止不存在的磨损。"%[level,next]
+	if definition.kind==&"PROTECT":return "玻璃框与锁护等级%d → %d。\n玻璃框与锁护会升级；当前不会自动改变藏品品相。"%[level,next]
 	return "公共服务等级%d → %d：%s。\n需游客实际经过/停留后才记录使用，不能增加重复票款。"%[level,next,{&"GUIDE":"导览后至多加看一次",&"REST":"参观间隙短时休息",&"RECEPTION":"入馆接待说明"}.get(definition.kind,"")]
 func _purchase()->void:
 	if _confirmed:return
