@@ -1,0 +1,120 @@
+class_name MuseumStaffCodec
+extends RefCounted
+## VERSION8 staff extension. Decode into a temporary roster; reject conflicts before installation.
+static func encode(state:MuseumState)->Dictionary:
+	var members:Array=[];var tasks:Array=[];var days:Dictionary={}
+	var ids:=state.staff.members.keys();ids.sort()
+	for id in ids:
+		var m:MuseumStaffMember=state.staff.members[id]
+		var d:MuseumStaffDefinition=MuseumStaffService.catalog()[id]
+		members.append({"staff_id":str(id),"job":str(d.job),"skill_level":d.skill_level,"assigned_hall":str(m.assigned_hall),"employment_status":str(m.employment_status),"last_attended_day":m.last_attended_day,"last_completed_count":m.last_completed_count})
+	for task in state.staff.tasks:tasks.append(task.values())
+	for day in state.staff.payroll_days:days[str(day)]=state.staff.payroll_days[day].duplicate(true)
+	return {"staff_config_version":1,"staff_members":members,"staff_tasks":tasks,"staff_next_task":state.staff.next_task_id,"staff_expenses":state.staff.expenses.duplicate(true),"staff_next_expense":state.staff.next_expense_id,"staff_payroll_days":days}
+static func safe_to_save(state:MuseumState)->bool:
+	for day in state.staff.payroll_days:
+		if not state.staff.payroll_days[day].get("settled",false) or not state.daily_reports.has(day):return false
+	return true
+static func decode(state:MuseumState,payload:Dictionary)->bool:
+	if payload.get("staff_config_version")!=1:return false
+	for key in ["staff_members","staff_tasks","staff_expenses"]:
+		if not payload.get(key) is Array or payload[key].size()>100000:return false
+	if not payload.get("staff_payroll_days") is Dictionary:return false
+	var roster:=MuseumStaffRoster.new();var catalog:=MuseumStaffService.catalog()
+	var job_counts:Dictionary={}
+	for row:Variant in payload.staff_members:
+		if not row is Dictionary or not row.get("staff_id") is String:return false
+		var id:=StringName(row.staff_id)
+		if not catalog.has(id) or roster.members.has(id):return false
+		var d:MuseumStaffDefinition=catalog[id]
+		if row.get("job")!=str(d.job) or row.get("skill_level")!=d.skill_level or row.get("employment_status") not in ["ACTIVE","DISMISSED"] or not row.get("assigned_hall") is String:return false
+		var hall:=StringName(row.assigned_hall)
+		if not state.display_catalog.halls.has(hall) or hall not in state.display_catalog.hall_ids(state.museum_level):return false
+		if not MuseumManagementCodec.integer(row.get("last_attended_day"),0,state.day_number) or not MuseumManagementCodec.integer(row.get("last_completed_count"),0,d.work_capacity):return false
+		var member:=MuseumStaffMember.new();member.staff_id=id;member.assigned_hall=hall;member.employment_status=StringName(row.employment_status)
+		member.last_attended_day=int(row.last_attended_day);member.last_completed_count=int(row.last_completed_count);roster.members[id]=member
+		if member.employment_status==&"ACTIVE":job_counts[str(d.job)]=int(job_counts.get(str(d.job),0))+1
+	for count in job_counts.values():
+		if count>2:return false
+	if roster.active_count()>6:return false
+	for row:Variant in payload.staff_tasks:
+		if not row is Dictionary or row.get("task_id")!=roster.next_task_id or not row.get("staff_id") is String or not row.get("instance_id") is String:return false
+		var id:=StringName(row.staff_id)
+		if not roster.members.has(id) or row.get("job")!=str(catalog[id].job) or row.job=="GUIDE":return false
+		if row.get("status") not in ["PENDING","WAITING_FUNDS","CANCELLED","COMPLETED"] or not row.get("note") is String:return false
+		for key in ["created_day","completed_day","fee_paid"]:
+			if not MuseumManagementCodec.integer(row.get(key),0,1000000000):return false
+		if row.created_day<1 or row.created_day>state.day_number or row.completed_day>state.day_number:return false
+		if not (row.get("worked_seconds") is float or row.get("worked_seconds") is int) or not is_finite(float(row.worked_seconds)) or row.worked_seconds<0 or row.worked_seconds>catalog[id].seconds_per_task:return false
+		if row.status=="COMPLETED" and (row.completed_day<row.created_day or row.worked_seconds<catalog[id].seconds_per_task):return false
+		if row.status!="COMPLETED" and (row.completed_day!=0 or row.fee_paid!=0):return false
+		if row.job=="APPRAISER" and row.fee_paid!=0:return false
+		var task:=MuseumStaffTask.new()
+		task.task_id=int(row.task_id);task.staff_id=id;task.instance_id=StringName(row.instance_id);task.job=StringName(row.job);task.status=StringName(row.status)
+		task.created_day=int(row.created_day);task.completed_day=int(row.completed_day);task.worked_seconds=float(row.worked_seconds);task.fee_paid=int(row.fee_paid);task.note=row.note
+		roster.tasks.append(task);roster.next_task_id+=1
+	var hires:Dictionary={};var wages:Dictionary={};var repairs:Dictionary={}
+	for row:Variant in payload.staff_expenses:
+		if not row is Dictionary or row.get("expense_id")!=roster.next_expense_id or not row.get("target_id") is String:return false
+		if not MuseumManagementCodec.integer(row.get("day_number"),1,state.day_number) or not MuseumManagementCodec.integer(row.get("amount"),1,1000000000):return false
+		var target:=StringName(row.target_id)
+		if row.get("kind")=="HIRE":
+			if not roster.members.has(target) or row.amount!=catalog[target].hire_cost:return false
+			hires[target]=true
+		elif row.get("kind")=="WAGES":
+			var key:=str(int(row.day_number))+":"+str(target)
+			if not hires.has(target) or row.amount!=catalog[target].daily_wage or wages.has(key):return false
+			wages[key]=int(row.amount)
+		elif row.get("kind")=="STAFF_REPAIR":
+			if not row.target_id.is_valid_int():return false
+			var tid:int=int(row.target_id)
+			if tid<1 or tid>=roster.next_task_id or repairs.has(tid):return false
+			var task:MuseumStaffTask=roster.tasks[tid-1]
+			if task.status!=&"COMPLETED" or task.job!=&"CONSERVATOR" or task.fee_paid!=row.amount or task.completed_day!=row.day_number:return false
+			repairs[tid]=true
+		else:return false
+		var normalized:Dictionary=row.duplicate(true)
+		for key in ["expense_id","day_number","amount"]:normalized[key]=int(normalized[key])
+		roster.expenses.append(normalized);roster.next_expense_id+=1
+	for id in roster.members:
+		if not hires.has(id):return false
+	for task in roster.tasks:
+		if task.fee_paid>0 and not repairs.has(task.task_id):return false
+	var wage_keys:Dictionary={}
+	for key:Variant in payload.staff_payroll_days:
+		if not key is String or not key.is_valid_int():return false
+		var day:int=int(key);var row:Variant=payload.staff_payroll_days[key]
+		if day<1 or day>state.day_number or not row is Dictionary or row.get("settled")!=true or not row.get("paid_ids") is Array or not state.daily_reports.has(day):return false
+		var total:=0;var seen:Dictionary={};var normalized_ids:Array[String]=[]
+		for id:Variant in row.paid_ids:
+			if not id is String or not roster.members.has(StringName(id)) or seen.has(id):return false
+			var wk:String=str(day)+":"+id
+			if not wages.has(wk):return false
+			total+=wages[wk];seen[id]=true;wage_keys[wk]=true;normalized_ids.append(id)
+		if row.get("wages_paid")!=total or state.daily_reports[day].get("staff_wages_paid",0)!=total:return false
+		roster.payroll_days[day]={"paid_ids":normalized_ids,"wages_paid":total,"settled":true}
+	if wage_keys.size()!=wages.size() or payload.get("staff_next_task")!=roster.next_task_id or payload.get("staff_next_expense")!=roster.next_expense_id:return false
+	for day in state.daily_reports:
+		var report:Dictionary=state.daily_reports[day]
+		if not MuseumManagementCodec.integer(report.get("staff_wages_paid",0),0,1000000000) or not MuseumManagementCodec.integer(report.get("staff_repair_fees",0),0,1000000000):return false
+		if report.get("staff_wages_paid",0)>0 and not roster.payroll_days.has(day):return false
+		var fees:=0
+		for expense in roster.expenses:
+			if expense.day_number==day and expense.kind=="STAFF_REPAIR":fees+=expense.amount
+		if report.get("staff_repair_fees",0)!=fees:return false
+		for field in ["staff_guide_counts","staff_task_counts"]:
+			if report.has(field):
+				if not report[field] is Dictionary:return false
+				for id in report[field]:
+					if not catalog.has(StringName(id)) or not MuseumManagementCodec.integer(report[field][id],0,catalog[StringName(id)].work_capacity):return false
+		for field in ["staff_wages_paid","staff_repair_fees"]:
+			if report.has(field):report[field]=int(report[field])
+		for field in ["staff_guide_counts","staff_task_counts"]:
+			if report.has(field):
+				for id in report[field]:report[field][id]=int(report[field][id])
+	state.staff=roster
+	MuseumStaffTasks.reconcile(state)
+	return true
+
+
+

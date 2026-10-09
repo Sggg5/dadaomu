@@ -18,7 +18,7 @@ func run()->void:
 		check(entry.rarity==["COMMON","UNCOMMON","RARE","TREASURE"][definition.rarity],"Legacy rarity unchanged")
 		entry.base_value=1
 		check(catalog.definition(str(definition.id)).base_value==definition.base_value,"Reader returns independent snapshots")
-	check(MuseumProfileStore.VERSION==7,"Authorized management migration uses VERSION7; catalog still has no persistence role")
+	check(MuseumProfileStore.VERSION==8,"Authorized management migration uses VERSION8; catalog still has no persistence role")
 	var owned:=OwnedAntique.new()
 	owned.instance_id=&"test_identity"
 	check(owned.instance_id==&"test_identity","OwnedAntique identity remains intact")

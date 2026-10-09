@@ -65,7 +65,7 @@ static func validate_report(state:MuseumState,report:Dictionary)->bool:
 	if has_financial:
 		for key in financial:
 			if not MuseumManagementCodec.integer(report.get(key),-1000000000 if key=="operating_net_income" else 0,1000000000):return false
-		if report.maintenance_due!=report.maintenance_paid+report.maintenance_waived or report.operating_net_income!=report.ticket_income-report.maintenance_paid:return false
+		if report.maintenance_due!=report.maintenance_paid+report.maintenance_waived or report.operating_net_income!=report.ticket_income-report.maintenance_paid-report.get("staff_wages_paid",0):return false
 	if report.has("service_visits"):
 		if not report.service_visits is Dictionary:return false
 		for id:Variant in report.service_visits:

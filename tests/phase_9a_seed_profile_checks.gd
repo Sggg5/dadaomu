@@ -22,7 +22,7 @@ func run() -> void:
 	legacy.erase("campaign_seed")
 	var migrated := store.decode(legacy)
 	test.check(migrated.campaign_seed == 0 and migrated.cash == 2468 and migrated.day_number == 5 and migrated.museum_level == 1 and migrated.phase == MuseumState.Phase.EVENING, "Pure v3 decode preserves old ground values and leaves Campaign uninitialized")
-	test.check(migrated.collection.next_id() == state.collection.next_id() and migrated.display_assignments == state.display_assignments and migrated.auction_lot_instance_id == pending.instance_id and migrated.auction_reserve_mode == 2 and migrated.collection.find(display.instance_id).condition == 73 and migrated.collection.find(pending.instance_id).identified, "v3 appraisal/condition/next ID/exhibition/pending auction preserved")
+	test.check(migrated.collection.next_id() == state.collection.next_id() and migrated.display_assignments == state.display_assignments and migrated.auction_lot_instance_id == pending.instance_id and migrated.auction_reserve_mode == 2 and migrated.collection.find(display.instance_id).condition == 83 and migrated.collection.find(pending.instance_id).identified, "v3 appraisal/condition/next ID/exhibition/pending auction preserved")
 	for version in [1, 2]:
 		var older := legacy.duplicate(true)
 		older.version = version
@@ -45,7 +45,7 @@ func run() -> void:
 	test.root.add_child(flow)
 	await test.frames(3)
 	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(store.save_path))
-	test.check(MuseumProfileStore.VERSION == 7 and flow.museum_state.campaign_seed == 777 and data.version == 7 and data.campaign_seed == 777, "Actual GameFlow initializes migrated campaign exactly once and saves v7 with legacy backup")
+	test.check(MuseumProfileStore.VERSION == 8 and flow.museum_state.campaign_seed == 877 and data.version == 8 and data.campaign_seed == 877, "Actual GameFlow initializes migrated campaign exactly once and saves v8 with legacy backup")
 	var snapshot := store.encode(flow.museum_state)
 	flow.queue_free()
 	await test.frames(3)
@@ -56,7 +56,7 @@ func run() -> void:
 	flow.campaign_seed_override = 999
 	test.root.add_child(flow)
 	await test.frames(3)
-	test.check(flow.museum_state.campaign_seed == 777 and store.encode(flow.museum_state) == snapshot, "Second startup preserves campaign and every old field despite a different init override")
+	test.check(flow.museum_state.campaign_seed == 877 and store.encode(flow.museum_state) == snapshot, "Second startup preserves campaign and every old field despite a different init override")
 	flow.queue_free()
 	await test.frames(3)
 	for invalid in [0, -1, 2147483648, 1.5, true, "52", null, INF, NAN]:
