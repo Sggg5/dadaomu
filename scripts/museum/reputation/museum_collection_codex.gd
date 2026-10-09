@@ -5,13 +5,13 @@ static func capture(state:MuseumState,legacy:bool=false)->void:
 	for record:CollectionResearchRecord in state.collection.archives.values():
 		var key:=str(record.definition_id)
 		var row:Dictionary=state.collection_history.get(key,{"discovered_day":0,"identified_day":0,"researched_day":0,"research_level":0,"regions":[]})
-		if row.discovered_day==0 and not legacy:row.discovered_day=record.acquired_day
+		if not state.collection_history.has(key) and not legacy:row.discovered_day=record.acquired_day
 		var item:=state.collection.find(record.instance_id)
 		var identified:bool=item.identified if item!=null else record.last_identified
-		if identified and row.identified_day==0 and not legacy:row.identified_day=state.day_number
+		if identified and not bool(row.get("identified",false)) and not legacy:row.identified_day=state.day_number
 		if record.level>=2:
+			if row.researched_day==0 and int(row.research_level)<2 and not legacy:row.researched_day=state.day_number
 			row.research_level=maxi(int(row.research_level),record.level)
-			if row.researched_day==0 and not legacy:row.researched_day=state.day_number
 		if not record.source.is_empty() and record.source.region_id not in row.regions:row.regions.append(str(record.source.region_id));row.regions.sort()
 		# Evidence flags survive selling and bounded archive pruning, but dates may be unknown.
 		row["identified"]=bool(row.get("identified",false)) or identified
@@ -49,3 +49,6 @@ static func counts(state:MuseumState)->Dictionary:
 		if row.owned>0:result.owned+=1
 	return result
 
+
+static func category_name(id:String)->String:
+	return {"COIN":"钱币","CERAMIC":"陶瓷","CERAMIC_SCULPTURE":"陶俑与明器","BRONZE":"青铜器","JADE":"玉器","JEWELRY":"金银饰件","FOSSIL":"化石","FRAGMENT":"器物残片","SCULPTURE":"雕塑"}.get(id,id if id!="" else "未知")

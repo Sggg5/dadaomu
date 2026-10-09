@@ -37,7 +37,7 @@ func save_profile(state: MuseumState) -> bool:
 	# OPEN现金仍在流动，NIGHT背包仍有风险，都不属于可保存地面快照。
 	if write_blocked: return false
 	if not state.can_edit() or not MuseumStaffCodec.safe_to_save(state): return false
-	if not _integer(state.campaign_seed,1,ExpeditionSeedService.MAX_SEED): return _failed("Campaign Seed尚未初始化或非法，拒绝写入v9存档")
+	if not _integer(state.campaign_seed,1,ExpeditionSeedService.MAX_SEED): return _failed("Campaign Seed尚未初始化或非法，拒绝写入v10存档")
 	last_error = ""
 	if state.collection.archives.size()>MuseumResearchCodec.MAX_ARCHIVES:return _failed("馆藏档案容量上限，保护原档")
 	var payload := encode(state)
@@ -47,7 +47,7 @@ func save_profile(state: MuseumState) -> bool:
 		var directory := ProjectSettings.globalize_path(save_path).get_base_dir()
 		if DirAccess.make_dir_recursive_absolute(directory) != OK: return _failed("无法创建存档目录")
 		if FileAccess.file_exists(save_path) and _source_sha.is_empty():return _failed("未读取的存档已存在，拒绝覆盖")
-		# A successful legacy migration writes v9 only after preserving the exact source.
+		# A successful legacy migration writes v10 only after preserving the exact source.
 		if FileAccess.file_exists(save_path) and not _source_sha.is_empty():
 			if FileAccess.get_sha256(save_path) != _source_sha: return _failed("存档在读取后被修改，拒绝覆盖")
 			if _loaded_version in [1,2,3,4,5,6,7,8,9]:

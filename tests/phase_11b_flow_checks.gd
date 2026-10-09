@@ -64,6 +64,8 @@ func run()->void:
 				if definition.region_ids.size()==1 and definition.region_ids[0]==flow.site_registry.site(site_id).region_id:local=item;break
 			test.check(local!=null,"A local new prototype actually reaches museum")
 			if local!=null:
+				test.check(state.collection_history.has(str(local.definition_id)) and str(flow.site_registry.site(site_id).region_id) in state.collection_history[str(local.definition_id)].regions,"11H real regional return records collectible discovery region")
+			if local!=null:
 				await daytime.appraise(local.instance_id)
 				await daytime.place(1,local.instance_id)
 				test.check(state.unit_items(&"CASE_2").has(local) and state.display_catalog.accepts(state.display_catalog.units[&"CASE_2"],state.display_catalog.profiles[str(local.definition_id)]),"Actual appraisal/combination-case UI exhibits legal new prototype")

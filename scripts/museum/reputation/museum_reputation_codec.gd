@@ -22,6 +22,7 @@ static func decode(state:MuseumState,payload:Dictionary)->bool:
 		if row.research_level==1 or (row.research_level>=2 and not row.identified):return false
 		if (not row.identified and row.identified_day!=0) or (row.research_level<2 and row.researched_day!=0):return false
 		if row.discovered_day>0 and ((row.identified_day>0 and row.identified_day<row.discovered_day) or (row.researched_day>0 and row.researched_day<row.discovered_day)):return false
+		if row.identified_day>0 and row.researched_day>0 and row.researched_day<row.identified_day:return false
 		if row.regions.size()>3:return false
 		var unique:Dictionary={}
 		for region in row.regions:
@@ -45,5 +46,8 @@ static func decode(state:MuseumState,payload:Dictionary)->bool:
 		if award.get("id")!=id or award.get("metric")!=goal.metric or award.get("reward")!=goal.reward:return false
 		if not integer(award.get("day_number"),1,state.day_number) or not integer(award.get("value"),int(goal.target),1000000000):return false
 		if award.get("event") not in ["COLLECTION","MUSEUM","REPORT","RESEARCH"]:return false
+		var limits:Dictionary={"discovered":50,"identified_history":50,"owned":50,"region_topic":1,"displayed":50,"topics":3,"hall_unique":50,"research_history":50,"topic_research":10000,"research_instances":10000,"rank":MuseumReputationDefinition.rules().ratings.size()-1,"business_days":1000000,"visitors":1000000000}
+		if award.value>limits.get(goal.metric,1000000000):return false
+		if goal.metric in ["business_days","visitors"] and MuseumDailyReport.totals(state)["days" if goal.metric=="business_days" else "visitors"]<award.value:return false
 		awards[id]=award.duplicate(true);awards[id].day_number=int(award.day_number);awards[id].value=int(award.value)
 	state.collection_history=cleaned;state.achievements=awards;return true

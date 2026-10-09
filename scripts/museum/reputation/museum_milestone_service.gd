@@ -17,7 +17,8 @@ static func metrics(state:MuseumState)->Dictionary:
 	for region in SiteRegistry.load_default().regions:
 		var rows:=MuseumCollectionCodex.rows(state,str(region.region_id));var types:Dictionary={}
 		for row in rows:types[row.category]=true
-		if rows.size()>=5 and types.size()>=2:m.region_topic=1
+		var region_rules:Dictionary=MuseumMilestoneDefinition.rules().region_topic_rules
+		if rows.size()>=int(region_rules.min_definitions) and types.size()>=int(region_rules.min_categories):m.region_topic=1
 	return m
 static func observe(state:MuseumState,event:String)->void:
 	if state.progress_suspended:return

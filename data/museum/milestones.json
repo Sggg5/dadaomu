@@ -113,5 +113,9 @@
       "target": 30,
       "reward": "三十日馆史纪念框"
     }
-  ]
+  ],
+  "region_topic_rules": {
+    "min_definitions": 5,
+    "min_categories": 2
+  }
 }

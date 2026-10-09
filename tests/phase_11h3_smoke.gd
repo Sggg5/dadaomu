@@ -13,4 +13,11 @@ func run()->void:
 	var ids:Dictionary={}
 	for goal in MuseumMilestoneDefinition.goals():ids[goal.id]=true;check(goal.target>0 and goal.reward!="","Target is finite with visible cosmetic reward: "+goal.id)
 	check(ids.size()==MuseumMilestoneDefinition.goals().size(),"Goal IDs unique")
+	var exhibition:=preload("res://tests/fixtures/museum_management_fixture.gd").state_with_displays(50)
+	var score:=MuseumReputationService.evaluate(exhibition).score;var honors:=exhibition.achievements.duplicate(true)
+	for index in range(20):
+		ExhibitionService.stop(exhibition,&"MAIN");ExhibitionService.start(exhibition,&"MAIN",&"HAN_WEI")
+	check(MuseumReputationService.evaluate(exhibition).score==score and exhibition.achievements==honors,"Restarting same qualified topic never stacks reputation/honors")
+	exhibition.withdraw_unit(&"CASE_2")
+	check(MuseumReputationService.evaluate(exhibition).metrics.topics==1 and exhibition.achievements.has("TWO_TOPICS"),"Withdrawal invalidates current topic strength but retains historical honor")
 	print("[11H3] %d checks, %d failures"%[checks,failures]);quit(0 if failures==0 else 1)
