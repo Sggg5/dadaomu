@@ -44,6 +44,7 @@ var risk_content: TombRiskContent
 var route_warning_sides: Array[int] = []
 var can_exit: Callable
 var doors: Dictionary[int, Door] = {}
+var art_visual: RoomVisual
 var _connected_sides: Array[int] = []
 var _wall_rects: Array[Rect2] = []
 
@@ -67,6 +68,9 @@ func configure(data: RoomDefinition, state: RoomState, connected_sides: Array[in
 func _ready() -> void:
 	assert(definition != null and room_state != null, "Room must be configured before entering tree")
 	_build_geometry()
+	art_visual = RoomVisual.new()
+	art_visual.room = self
+	add_child(art_visual)
 	hazards=EncounterHazards.new()
 	hazards.room=self
 	add_child(hazards)
@@ -285,20 +289,21 @@ func _add_block(walls: StaticBody2D, rect: Rect2) -> void:
 func _draw() -> void:
 	if definition == null:
 		return
-	draw_rect(ROOM_RECT, geometry.floor_color if geometry!=null and geometry.floor_color.a>0 else definition.floor_color)
-	if geometry!=null and geometry.visual_motif!=&"":RegionalRoomDecor.draw(self,geometry)
-	for x in range(64, 1216, 48):
-		draw_line(Vector2(x, 144), Vector2(x, 592), Color(1, 1, 1, 0.035))
-	for y in range(144, 592, 48):
-		draw_line(Vector2(64, y), Vector2(1216, y), Color(1, 1, 1, 0.035))
-	for rect in _wall_rects:
-		draw_rect(rect, geometry.wall_color if geometry!=null else Color("4f4b43"))
-		draw_rect(rect, geometry.accent_color if geometry!=null else Color("9b8c68"), false, 2.0)
-	if coffin_style():
-		for rect in obstacles():
-			draw_rect(rect,Color("574433"))
-			draw_rect(rect,Color("bb9371"),false,2)
-			draw_line(rect.position+Vector2(5,8),rect.end-Vector2(5,8),Color("30261f"),3)
+	if not (ArtRenderSettings.active() and art_visual != null and art_visual.supported()):
+		draw_rect(ROOM_RECT, geometry.floor_color if geometry!=null and geometry.floor_color.a>0 else definition.floor_color)
+		if geometry!=null and geometry.visual_motif!=&"":RegionalRoomDecor.draw(self,geometry)
+		for x in range(64, 1216, 48):
+			draw_line(Vector2(x, 144), Vector2(x, 592), Color(1, 1, 1, 0.035))
+		for y in range(144, 592, 48):
+			draw_line(Vector2(64, y), Vector2(1216, y), Color(1, 1, 1, 0.035))
+		for rect in _wall_rects:
+			draw_rect(rect, geometry.wall_color if geometry!=null else Color("4f4b43"))
+			draw_rect(rect, geometry.accent_color if geometry!=null else Color("9b8c68"), false, 2.0)
+		if coffin_style():
+			for rect in obstacles():
+				draw_rect(rect,Color("574433"))
+				draw_rect(rect,Color("bb9371"),false,2)
+				draw_line(rect.position+Vector2(5,8),rect.end-Vector2(5,8),Color("30261f"),3)
 	for side in route_warning_sides:
 		var point := get_entry_position(side)
 		draw_circle(point + Vector2(22, 0), 8, Color("78382f"))

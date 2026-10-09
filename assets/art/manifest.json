@@ -1,0 +1,193 @@
+{
+  "version": 1,
+  "approval": "PENDING_USER_REVIEW",
+  "assets": [
+    {
+      "id": "actors",
+      "path": "res://assets/art/actors.png",
+      "source": "res://assets/art/sources/actors_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "6x6 alpha-bounds crop; preserve aspect; nearest fit46x58; feet baseline62",
+      "sha256": "d8cec9394774f363d9fc2c97cacada840ee0d362d241da1933a9d7926a193248"
+    },
+    {
+      "id": "stone_0",
+      "path": "res://assets/art/stone_0.png",
+      "source": "res://assets/art/sources/environment_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "equal grid crop; nearest resize (32, 32)",
+      "sha256": "d29bd3fe8a55d5bfa8ab96a59640b9dd235b4b220888c95a6a30903f654e826a"
+    },
+    {
+      "id": "stone_1",
+      "path": "res://assets/art/stone_1.png",
+      "source": "res://assets/art/sources/environment_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "equal grid crop; nearest resize (32, 32)",
+      "sha256": "6cf3240fa55afca1cb940f3cc6c598f9f052c4a2e30d7db8d19ea19ee45f1bc3"
+    },
+    {
+      "id": "stone_2",
+      "path": "res://assets/art/stone_2.png",
+      "source": "res://assets/art/sources/environment_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "equal grid crop; nearest resize (32, 32)",
+      "sha256": "2e9663d83ce6408556e4aea9b79106a82c83565217d8d31fd1901126e7b26889"
+    },
+    {
+      "id": "stone_3",
+      "path": "res://assets/art/stone_3.png",
+      "source": "res://assets/art/sources/environment_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "equal grid crop; nearest resize (32, 32)",
+      "sha256": "96631639ab229cb798585c4fc44ae949b53859d58ab36c47c816823256dfcf2f"
+    },
+    {
+      "id": "wall",
+      "path": "res://assets/art/wall.png",
+      "source": "res://assets/art/sources/environment_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "equal grid crop; nearest resize (128, 128)",
+      "sha256": "021bcc2813737a728299b85235a7559b2f802ad2692982cce57da4dadfa9b240"
+    },
+    {
+      "id": "coffin",
+      "path": "res://assets/art/coffin.png",
+      "source": "res://assets/art/sources/environment_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "equal grid crop; nearest resize (128, 128)",
+      "sha256": "46f69642a4c283ff5aaed0179a86e766418fdf8e58e334c67ef9c3d012d92fd5"
+    },
+    {
+      "id": "parquet",
+      "path": "res://assets/art/parquet.png",
+      "source": "res://assets/art/sources/environment_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "equal grid crop; nearest resize (32, 32)",
+      "sha256": "864fe1d873c19d7ea7f0d9c6ec99ab73ba772e42ac5306deefa4ff26ef46a0b2"
+    },
+    {
+      "id": "showcase",
+      "path": "res://assets/art/showcase.png",
+      "source": "res://assets/art/sources/environment_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "equal grid crop; nearest resize (128, 128)",
+      "sha256": "630c9d0838205f6a0626f0fe8ace541d77b45b6bd5d3a4816c705558008bdb12"
+    },
+    {
+      "id": "republic_silver_coin",
+      "path": "res://assets/art/republic_silver_coin.png",
+      "source": "res://assets/art/sources/antiques_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "alpha bounds aspect fit240; centered256; icon/display share identity",
+      "sha256": "ee02b3e63a41326573fd38b64050ea0536e78c11ffc9690ad861acc7994e90b2"
+    },
+    {
+      "id": "blue_white_jar",
+      "path": "res://assets/art/blue_white_jar.png",
+      "source": "res://assets/art/sources/antiques_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "alpha bounds aspect fit240; centered256; icon/display share identity",
+      "sha256": "9522678aa016aff536694edde926052b7c22ad5cf27ed40b13701803180384d5"
+    },
+    {
+      "id": "gilt_buddha",
+      "path": "res://assets/art/gilt_buddha.png",
+      "source": "res://assets/art/sources/antiques_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "alpha bounds aspect fit240; centered256; icon/display share identity",
+      "sha256": "a1094c53fc753f9699bac1947e486ece388ff587276e01be610d9bbd305b950f"
+    },
+    {
+      "id": "han_jade_disc",
+      "path": "res://assets/art/han_jade_disc.png",
+      "source": "res://assets/art/sources/antiques_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "alpha bounds aspect fit240; centered256; icon/display share identity",
+      "sha256": "72c0f1fbfa82e62bfe52237ea09fd449c56e1d45b068407e176de659f2497ae3"
+    },
+    {
+      "id": "inlaid_bronze_mirror",
+      "path": "res://assets/art/inlaid_bronze_mirror.png",
+      "source": "res://assets/art/sources/antiques_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "alpha bounds aspect fit240; centered256; icon/display share identity",
+      "sha256": "82922e4e0106e9ff2fa191b2b7560360205559be67f3ded723bae9fd5b90d3fc"
+    },
+    {
+      "id": "tang_sancai_horse",
+      "path": "res://assets/art/tang_sancai_horse.png",
+      "source": "res://assets/art/sources/antiques_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "alpha bounds aspect fit240; centered256; icon/display share identity",
+      "sha256": "1070c91a31dc438f0cf11edacc5539805e4ff89f766d83802b507096e6434643"
+    },
+    {
+      "id": "gold_thread_jade",
+      "path": "res://assets/art/gold_thread_jade.png",
+      "source": "res://assets/art/sources/antiques_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "alpha bounds aspect fit240; centered256; icon/display share identity",
+      "sha256": "a021a9d21f26e8521f06c7df70edc122c86acb2cb4479c4378a9838eee6ead95"
+    },
+    {
+      "id": "guardian_fragment",
+      "path": "res://assets/art/guardian_fragment.png",
+      "source": "res://assets/art/sources/antiques_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "alpha bounds aspect fit240; centered256; icon/display share identity",
+      "sha256": "95d2499b3413251d0e3de5fdd9ef5a437dbc6a0033a5e7cc0d57c8848757aff4"
+    }
+  ]
+}

@@ -34,7 +34,7 @@ def main():
   save(cell.resize(size,Image.Resampling.NEAREST),name+'.png',src,'equal grid crop; nearest resize '+str(size))
  if a.antiques:
   im,src=source(a.antiques,'antiques_original.png')
-  ids=['republic_silver_coin','blue_white_jar','gilt_buddha','han_jade_disc','inlaid_bronze_mirror','tang_sancai_horse','gold_jade_pendant','tomb_beast_fragment']
+  ids=['republic_silver_coin','blue_white_jar','gilt_buddha','han_jade_disc','inlaid_bronze_mirror','tang_sancai_horse','gold_thread_jade','guardian_fragment']
   for i,name in enumerate(ids):
    x,y=i%4,i//4;cell=im.crop((x*im.width//4,y*im.height//2,(x+1)*im.width//4,(y+1)*im.height//2));box=cell.getbbox()
    if not box:raise ValueError('empty antique')
@@ -42,3 +42,4 @@ def main():
    save(detail,name+'.png',src,'alpha bounds aspect fit240; centered256; icon/display share identity')
  (DEST/'manifest.json').write_text(json.dumps({'version':1,'approval':'PENDING_USER_REVIEW','assets':rows},ensure_ascii=False,indent=2),encoding='utf-8')
 if __name__=='__main__':main()
+
