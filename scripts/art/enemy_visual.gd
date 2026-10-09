@@ -14,7 +14,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	clock += delta
 	visible = ArtRenderSettings.active() and supported()
-	if not visible: return
+	actor.z_index = clampi(int(actor.global_position.y),0,1000) if visible else 0
+	if not visible:
+		actor.queue_redraw()
+		return
 	var column := 0 if actor.velocity.length() < 5 else 1 + int(clock * 8) % 2
 	if actor.dying: column = 5
 	elif actor._flash_remaining > 0: column = 4

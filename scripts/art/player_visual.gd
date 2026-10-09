@@ -13,7 +13,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	clock += delta
 	visible = ArtRenderSettings.active() and ArtAssetCatalog.texture("actors") != null
-	if not visible: return
+	actor.z_index = clampi(int(actor.global_position.y),0,1000) if visible else 0
+	if not visible:
+		actor.queue_redraw()
+		return
 	var direction: Vector2 = actor.aim_direction if actor is Player else actor.facing
 	var row := 3 if direction.y < 0 else 0
 	if absf(direction.x) > absf(direction.y): row = 1 if direction.x < 0 else 2

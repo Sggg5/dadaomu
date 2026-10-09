@@ -35,7 +35,12 @@ func configure_spawn(player: Player, bullets: Node2D, data: EnemyDefinition = nu
 		target.died.connect(stop_ai)
 
 
+var art_visual: EnemyVisual
+
 func _ready() -> void:
+	art_visual = EnemyVisual.new()
+	art_visual.actor = self
+	add_child(art_visual)
 	assert(definition != null, "Enemy requires definition")
 	health.died.connect(_on_died)
 	health.initialize(definition.max_hp * difficulty.hp_multiplier)
@@ -142,7 +147,8 @@ func _draw() -> void:
 		color = Color("ffb749")
 	elif activation_remaining > 0.0:
 		color = color.lightened(0.35)
-	_draw_body(color)
+	if not (ArtRenderSettings.active() and art_visual != null and art_visual.supported()):
+		_draw_body(color)
 	if definition.elite: draw_arc(Vector2.ZERO,26,0,TAU,32,Color("efd477"),3)
 	if telegraphing:
 		draw_arc(Vector2.ZERO, 23, 0, TAU, 24, Color("ff784f"), 2)

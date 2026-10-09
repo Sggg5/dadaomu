@@ -9,7 +9,12 @@ var focused: MuseumInteractable
 var prompt_label: Label
 
 
+var art_visual: PlayerVisual
+
 func _ready() -> void:
+	art_visual = PlayerVisual.new()
+	art_visual.actor = self
+	add_child(art_visual)
 	collision_layer = 0
 	collision_mask = 1
 	var shape := CollisionShape2D.new()
@@ -52,6 +57,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _draw() -> void:
+	if ArtRenderSettings.active() and ArtAssetCatalog.texture("actors") != null:
+		return
 	draw_circle(Vector2.ZERO, 16, Color("63c8c1"))
 	draw_arc(Vector2.ZERO,16,0,TAU,24,Color.WHITE,2)
 	draw_line(facing * 8, facing * 23, Color("eee3b2"), 4)
