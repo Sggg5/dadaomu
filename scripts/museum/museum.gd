@@ -38,6 +38,8 @@ var research_desk: MuseumInteractable
 var active_hall_id: StringName = &"MAIN"
 var hall_panel: MuseumHallPanel
 var hall_guide: MuseumInteractable
+var office_desk: MuseumOfficeDesk
+var office_panel: MuseumOfficePanel
 var _display_bodies: Dictionary = {}
 
 
@@ -134,6 +136,17 @@ func _ready() -> void:
 		message.text = "今日营业结束 · 游客 %d人 · 门票收入 %s · 现金 %s\n可整理展品，再去情报板 [E] 今晚下墓" % [state.last_day_visitors,AntiqueDefinition.money(state.last_day_ticket_income),AntiqueDefinition.money(state.cash)]
 		if _night_after_close: _present_night())
 	add_child(business)
+	office_panel=MuseumOfficePanel.new()
+	office_panel.state=state
+	office_panel.player=player
+	office_panel.business=business
+	add_child(office_panel)
+	office_desk=MuseumOfficeDesk.new()
+	office_desk.position=Vector2(230,190)
+	office_desk.title="馆长办公室"
+	office_desk.prompt=func()->String:return "[E] 馆务 / 策展 / 营业台账"
+	office_desk.action=func()->void:office_panel.open()
+	add_child(office_desk)
 	state.changed.connect(_refresh)
 	message.text = morning_notice
 	_refresh()
