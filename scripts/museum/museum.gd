@@ -8,7 +8,7 @@ signal auction_requested
 var state: MuseumState
 var config: MuseumConfig
 var museum_seed: int = 192034
-var morning_notice: String = "早晨 · 可开馆，也可到情报板直接下墓"
+var morning_notice: String = "早晨 · 至少布展1件才能开馆；到情报板按E选择远征"
 var player: MuseumPlayer
 var business: MuseumBusiness
 var collection_panel: MuseumCollectionPanel

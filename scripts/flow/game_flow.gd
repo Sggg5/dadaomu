@@ -49,7 +49,11 @@ func _ready() -> void:
 			museum_state.campaign_seed = rng.randi_range(1, ExpeditionSeedService.MAX_SEED)
 	museum_state.changed.connect(_save_profile)
 	if initial_test_collection: museum_state.collection.add(&"tang_sancai_horse",0,100,true)
-	_show_museum("原型馆藏：唐三彩马 · 可布展/开馆，也可到情报板选择远征" if initial_test_collection else "地面状态已恢复 · 可整理展品，也可到情报板选择远征",museum_state.phase)
+	var notice:="地面状态已恢复 · 可整理展品，也可到情报板选择远征"
+	if museum_state.collection.all_items().is_empty():
+		notice="暂无馆藏：到右上情报板按E选择远征；带回古董后免费鉴定、布展，再到售票台开馆。"
+	if initial_test_collection:notice="原型馆藏：唐三彩马 · 可布展/开馆，也可到情报板选择远征"
+	_show_museum(notice,museum_state.phase)
 	if not profile_store.last_error.is_empty(): museum.message.text = profile_store.last_error
 	_save_profile()
 
