@@ -2,6 +2,8 @@ class_name MuseumOfficeDesk
 extends MuseumInteractable
 ## Physical desk silhouette, lamp and open ledger; not a generic interaction square.
 func _draw() -> void:
+	z_index = int(global_position.y+34) if ArtRenderSettings.active() else 0
+	if MuseumDisplayVisual.furniture(self,"馆长办公室"): return
 	draw_rect(Rect2(-55,-29,110,58),Color("443122"))
 	draw_rect(Rect2(-51,-25,102,48),Color("977246"))
 	draw_rect(Rect2(-51,-25,102,48),Color("d2b67a"),false,2)

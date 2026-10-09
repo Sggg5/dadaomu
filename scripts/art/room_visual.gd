@@ -6,25 +6,32 @@ var floor_layer: TileMapLayer
 var lamps: Array[PointLight2D] = []
 var clock: float = 0.0
 func supported() -> bool:
-	return ArtAssetCatalog.texture("stone_0") != null
+	return ArtAssetCatalog.texture("stone_0") != null and ArtAssetCatalog.texture("wall") != null and ArtAssetCatalog.texture("coffin") != null
 func _ready() -> void:
+	if not supported(): return
 	floor_layer = TileMapLayer.new()
 	floor_layer.position = Room.ROOM_RECT.position
 	floor_layer.z_index = -100
 	floor_layer.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	if room.geometry != null:
+		# Region palettes are visual-only; keep their existing motifs below.
+		if room.geometry.visual_motif == &"HAN_BRICK": floor_layer.modulate = Color(.92,.95,1)
+		elif room.geometry.visual_motif == &"TANG_MURAL": floor_layer.modulate = Color(1,.88,.77)
 	var tiles := TileSet.new()
 	tiles.tile_size = Vector2i(32,32)
 	for i in range(4):
 		var source := TileSetAtlasSource.new()
 		source.texture = ArtAssetCatalog.texture("stone_%d" % i)
+		if source.texture == null: source.texture = ArtAssetCatalog.texture("stone_0")
 		source.texture_region_size = Vector2i(32,32)
 		source.create_tile(Vector2i.ZERO)
 		tiles.add_source(source,i)
 	floor_layer.tile_set = tiles
+	var visual_key: int = int(room.definition.room_id.hash()) ^ (int(room.geometry.id.hash()) if room.geometry != null else 0)
 	for y in range(14):
 		for x in range(36):
 			# Local arithmetic hash only; never consumes any gameplay random stream.
-			floor_layer.set_cell(Vector2i(x,y),(x*17+y*31)%4,Vector2i.ZERO)
+			floor_layer.set_cell(Vector2i(x,y),absi((x*73856093) ^ (y*19349663) ^ visual_key)%4,Vector2i.ZERO)
 	add_child(floor_layer)
 	for rect in room._wall_rects:
 		var obstacle := rect in room.obstacles()

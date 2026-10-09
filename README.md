@@ -510,3 +510,10 @@ godot --fixed-fps 60 --path . --script tests/phase_11e_graphical.gd
 ```
 
 100件测试馆藏、等级2、资金12000、Campaign52，建设牌旁待验收。E→设施建设，选择柜/设施、确认投资、显式查看下一等级报价；办公室第七页同样管理。正式新游戏仍空馆零现金，没有测试赠送。营业后日报查看毛收入、维护实付/减免和净收益；保护升级本版可见但不改变藏品品相。
+
+
+## Phase 12 视觉草稿
+
+分支codex/phase-12a-hd2d-art。原创像素角色、晋北纹理/原生局部光影、博物馆家具与原8件古董图已接入；F6切换旧/贴图/光影。保留旧绘制和缺失资源回退，不改战斗/经营/Profile10。完整美术仍有缺口，所有素材DRAFT，等待用户验收。
+
+参见docs/PHASE_12_VISUAL_VERIFICATION.md与docs/PHASE_12_ASSET_GAPS.md。隔离试玩：Godot --path . --script tests/phase12_playtest.gd（内存新档，通过实际情报地图进入晋北，不读写正式档）。

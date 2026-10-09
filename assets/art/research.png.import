@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2j7ksqnhb21i"
-path="res://.godot/imported/antiques_original.png-7495815a3b14ad1aacff7bf908c235f0.ctex"
+uid="uid://tce71l6bwea4"
+path="res://.godot/imported/research.png-a1de0ade5fc6faf67403e16b0066c4de.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/sources/antiques_original.png"
-dest_files=["res://.godot/imported/antiques_original.png-7495815a3b14ad1aacff7bf908c235f0.ctex"]
+source_file="res://assets/art/research.png"
+dest_files=["res://.godot/imported/research.png-a1de0ade5fc6faf67403e16b0066c4de.ctex"]
 
 [params]
 

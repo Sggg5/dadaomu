@@ -216,10 +216,11 @@ func select_entry(index: int) -> void:
 	image.visible=mode not in [0,4];image_note.visible=mode not in [0,4]
 	if mode in [0,4]:
 		dossier_id=StringName(id);history_page=0;_dossier()
+		image.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		image.texture = AntiqueVisual.icon(state.collection.archives[dossier_id].definition_id)
 		image.visible = image.texture != null
 		image_note.visible = image.visible
-		image_note.text = "原创游戏器物图 · DRAFT待美术验收 · 非真实馆藏照片"
+		image_note.text = "原创游戏器物示意图 · 非现实馆藏照片"
 		if image.visible: placeholder.hide()
 	else:
 		detail.text = MuseumCodexText.research(catalog,catalog.record(id))
@@ -234,6 +235,7 @@ func select_entry(index: int) -> void:
 			detail.text += "\n专题原始资料来源：\n"
 			for source: Dictionary in plan.source_notes:
 				detail.text += "%s · %s\n%s\n" % [source.get("source_id",""),source.get("license_id","未知"),source.get("record_url","")]
+		image.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 		image.texture = catalog.image_for(id)
 		if image.texture != null:
 			placeholder.hide()

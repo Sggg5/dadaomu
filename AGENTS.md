@@ -1,3 +1,9 @@
+## Phase 12 美术草稿与隔离验收
+
+基线a4ea1fc，codex/phase-12a-hd2d-art。视觉适配器只读游戏状态，F6三模式，旧绘制/缺图回退必须保留。素材全部DRAFT/PENDING_USER_REVIEW，来源与派生见assets/art/manifest.json。Boss、其它敌人和42件地区古董仍有专属美术缺口，不冒称全游戏正式美术完成。
+
+Profile10、50种定义、碰撞、Boss/遗物/掉落与经营冻结；tests/fixtures/phase12_gameplay_freeze.json与数据库Python测试保护原功能方法和数据。所有试玩/实机图只用内存档或11I实际所得隔离夹具。报告docs/PHASE_12_VISUAL_VERIFICATION.md；完成八次提交与push，不合并main，不进入新玩法，等待人工美术验收。
+
 ## Phase 11I 整合验收（自动完成，人工待验）
 
 独立分支 codex/phase-11i-integration-qa，基线d9c840e。正式零资产GameFlow由真实输入完成30营业日与三地区远征，834项通过；历史59组338474项、Python107项、图形232项均零失败。只修空馆起步提示，未改经济/战斗/掉落，Profile仍VERSION10。

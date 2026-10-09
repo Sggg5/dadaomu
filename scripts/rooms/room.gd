@@ -66,6 +66,7 @@ func configure(data: RoomDefinition, state: RoomState, connected_sides: Array[in
 
 
 func _ready() -> void:
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	assert(definition != null and room_state != null, "Room must be configured before entering tree")
 	_build_geometry()
 	art_visual = RoomVisual.new()
@@ -291,7 +292,6 @@ func _draw() -> void:
 		return
 	if not (ArtRenderSettings.active() and art_visual != null and art_visual.supported()):
 		draw_rect(ROOM_RECT, geometry.floor_color if geometry!=null and geometry.floor_color.a>0 else definition.floor_color)
-		if geometry!=null and geometry.visual_motif!=&"":RegionalRoomDecor.draw(self,geometry)
 		for x in range(64, 1216, 48):
 			draw_line(Vector2(x, 144), Vector2(x, 592), Color(1, 1, 1, 0.035))
 		for y in range(144, 592, 48):
@@ -304,6 +304,7 @@ func _draw() -> void:
 				draw_rect(rect,Color("574433"))
 				draw_rect(rect,Color("bb9371"),false,2)
 				draw_line(rect.position+Vector2(5,8),rect.end-Vector2(5,8),Color("30261f"),3)
+	if geometry!=null and geometry.visual_motif!=&"":RegionalRoomDecor.draw(self,geometry)
 	for side in route_warning_sides:
 		var point := get_entry_position(side)
 		draw_circle(point + Vector2(22, 0), 8, Color("78382f"))

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://calerurttagm5"
-path="res://.godot/imported/actors_original.png-0bd3a3820e77953b4f510ddbd6ebb5d6.ctex"
+uid="uid://cykf6k0gt3njj"
+path="res://.godot/imported/restoration.png-bbc7aa61639670358223ca11d8d1eb1d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/sources/actors_original.png"
-dest_files=["res://.godot/imported/actors_original.png-0bd3a3820e77953b4f510ddbd6ebb5d6.ctex"]
+source_file="res://assets/art/restoration.png"
+dest_files=["res://.godot/imported/restoration.png-bbc7aa61639670358223ca11d8d1eb1d.ctex"]
 
 [params]
 

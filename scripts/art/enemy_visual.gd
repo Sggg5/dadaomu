@@ -7,14 +7,16 @@ var last_column: int = -1
 func supported() -> bool:
 	return actor != null and actor.definition != null and actor.definition.id in [&"scarab", &"bandit_shooter"] and ArtAssetCatalog.texture("actors") != null
 func _ready() -> void:
+	show_behind_parent = true
 	sprite = Sprite2D.new()
+	sprite.show_behind_parent = true
 	sprite.position = Vector2(0,-20)
 	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_child(sprite)
 func _process(delta: float) -> void:
 	clock += delta
 	visible = ArtRenderSettings.active() and supported()
-	actor.z_index = clampi(int(actor.global_position.y),0,1000) if visible else 0
+	actor.z_index = clampi(int(actor.global_position.y+12),0,1000) if visible else 0
 	if not visible:
 		actor.queue_redraw()
 		return

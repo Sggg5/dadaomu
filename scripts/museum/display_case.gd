@@ -16,6 +16,7 @@ func refresh() -> void:
 	label.add_theme_font_size_override("font_size",14)
 
 func _draw() -> void:
+	z_index = int(global_position.y+58) if ArtRenderSettings.active() else 0
 	if state==null or not state.display_catalog.units.has(case_id): return
 	var unit:=state.display_catalog.units[case_id]
 	if unit.kind=="DISPLAY_WALL":

@@ -124,4 +124,6 @@ class ExportTests(unittest.TestCase):
                 'scripts/dungeon/events/tomb_risk_service.gd':'cf7bfcd5c56bdcba7a2a55e6757f5149e57f2472833e021192dd1523e11f137e',
                 'scripts/dungeon/events/tomb_risk_content.gd':'a7529c17ca2f597f5313742c4f72e4611e3780724c05dd5ffb4119112a329037',
             }
-            self.assertEqual(authorized_updates.get(path,expected),hashlib.sha256(text.encode()).hexdigest(),path)
+            # Phase12 authorizes exact rendering hooks, with separate gameplay-function/data freeze tests.
+            visual_updates=json.loads((ROOT/'samples/phase12_visual_authorized_hashes.json').read_text())
+            self.assertEqual(visual_updates.get(path,authorized_updates.get(path,expected)),hashlib.sha256(text.encode()).hexdigest(),path)

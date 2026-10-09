@@ -35,5 +35,7 @@ func alternate() -> void:
 
 
 func _draw() -> void:
+	z_index = int(global_position.y+34) if ArtRenderSettings.active() else 0
+	if MuseumDisplayVisual.furniture(self,title): return
 	draw_rect(Rect2(-30,-22,60,44), tint)
 	draw_rect(Rect2(-30,-22,60,44), Color("efdfb7"), false, 2)

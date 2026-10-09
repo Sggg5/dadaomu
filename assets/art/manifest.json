@@ -11,7 +11,12 @@
       "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
       "status": "DRAFT",
       "derivation": "6x6 alpha-bounds crop; preserve aspect; nearest fit46x58; feet baseline62",
-      "sha256": "d8cec9394774f363d9fc2c97cacada840ee0d362d241da1933a9d7926a193248"
+      "sha256": "d8cec9394774f363d9fc2c97cacada840ee0d362d241da1933a9d7926a193248",
+      "width": 288,
+      "height": 384,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "FEET62"
     },
     {
       "id": "stone_0",
@@ -21,8 +26,13 @@
       "provenance": "Original AI-generated game artwork; no museum media",
       "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
       "status": "DRAFT",
-      "derivation": "equal grid crop; nearest resize (32, 32)",
-      "sha256": "d29bd3fe8a55d5bfa8ab96a59640b9dd235b4b220888c95a6a30903f654e826a"
+      "derivation": "equal grid crop; floor box16palette/contrast0.65/brightness0.60; parquet128contrast0.70/brightness0.70; props nearest",
+      "sha256": "0c6ae4ec210a992ec4c18e05c4ab03d32905e3b718cf67913032b5a9874bade3",
+      "width": 32,
+      "height": 32,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
     },
     {
       "id": "stone_1",
@@ -32,8 +42,13 @@
       "provenance": "Original AI-generated game artwork; no museum media",
       "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
       "status": "DRAFT",
-      "derivation": "equal grid crop; nearest resize (32, 32)",
-      "sha256": "6cf3240fa55afca1cb940f3cc6c598f9f052c4a2e30d7db8d19ea19ee45f1bc3"
+      "derivation": "equal grid crop; floor box16palette/contrast0.65/brightness0.60; parquet128contrast0.70/brightness0.70; props nearest",
+      "sha256": "a0ca44608fae708d96f354ee3459cfd40c7adda9ba5d2a18112872c844643930",
+      "width": 32,
+      "height": 32,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
     },
     {
       "id": "stone_2",
@@ -43,8 +58,13 @@
       "provenance": "Original AI-generated game artwork; no museum media",
       "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
       "status": "DRAFT",
-      "derivation": "equal grid crop; nearest resize (32, 32)",
-      "sha256": "2e9663d83ce6408556e4aea9b79106a82c83565217d8d31fd1901126e7b26889"
+      "derivation": "equal grid crop; floor box16palette/contrast0.65/brightness0.60; parquet128contrast0.70/brightness0.70; props nearest",
+      "sha256": "9df3f8ede568cea867e7e2c1dd2fd4eb790e4191cfe9c2e0b716f72e3b877a62",
+      "width": 32,
+      "height": 32,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
     },
     {
       "id": "stone_3",
@@ -54,8 +74,13 @@
       "provenance": "Original AI-generated game artwork; no museum media",
       "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
       "status": "DRAFT",
-      "derivation": "equal grid crop; nearest resize (32, 32)",
-      "sha256": "96631639ab229cb798585c4fc44ae949b53859d58ab36c47c816823256dfcf2f"
+      "derivation": "equal grid crop; floor box16palette/contrast0.65/brightness0.60; parquet128contrast0.70/brightness0.70; props nearest",
+      "sha256": "36b9006b4d75b393c8d244d8d3a882c31322105f4ef5bddca5a2fddd15a52ede",
+      "width": 32,
+      "height": 32,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
     },
     {
       "id": "wall",
@@ -65,8 +90,13 @@
       "provenance": "Original AI-generated game artwork; no museum media",
       "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
       "status": "DRAFT",
-      "derivation": "equal grid crop; nearest resize (128, 128)",
-      "sha256": "021bcc2813737a728299b85235a7559b2f802ad2692982cce57da4dadfa9b240"
+      "derivation": "equal grid crop; floor box16palette/contrast0.65/brightness0.60; parquet128contrast0.70/brightness0.70; props nearest",
+      "sha256": "021bcc2813737a728299b85235a7559b2f802ad2692982cce57da4dadfa9b240",
+      "width": 128,
+      "height": 128,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
     },
     {
       "id": "coffin",
@@ -76,8 +106,13 @@
       "provenance": "Original AI-generated game artwork; no museum media",
       "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
       "status": "DRAFT",
-      "derivation": "equal grid crop; nearest resize (128, 128)",
-      "sha256": "46f69642a4c283ff5aaed0179a86e766418fdf8e58e334c67ef9c3d012d92fd5"
+      "derivation": "equal grid crop; floor box16palette/contrast0.65/brightness0.60; parquet128contrast0.70/brightness0.70; props nearest",
+      "sha256": "46f69642a4c283ff5aaed0179a86e766418fdf8e58e334c67ef9c3d012d92fd5",
+      "width": 128,
+      "height": 128,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
     },
     {
       "id": "parquet",
@@ -87,8 +122,13 @@
       "provenance": "Original AI-generated game artwork; no museum media",
       "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
       "status": "DRAFT",
-      "derivation": "equal grid crop; nearest resize (32, 32)",
-      "sha256": "864fe1d873c19d7ea7f0d9c6ec99ab73ba772e42ac5306deefa4ff26ef46a0b2"
+      "derivation": "equal grid crop; floor box16palette/contrast0.65/brightness0.60; parquet128contrast0.70/brightness0.70; props nearest",
+      "sha256": "750176e05bc8dd568ce23adc5b8c530201a180f7e6a484b272d1a30889d712a7",
+      "width": 128,
+      "height": 128,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
     },
     {
       "id": "showcase",
@@ -98,8 +138,13 @@
       "provenance": "Original AI-generated game artwork; no museum media",
       "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
       "status": "DRAFT",
-      "derivation": "equal grid crop; nearest resize (128, 128)",
-      "sha256": "630c9d0838205f6a0626f0fe8ace541d77b45b6bd5d3a4816c705558008bdb12"
+      "derivation": "equal grid crop; floor box16palette/contrast0.65/brightness0.60; parquet128contrast0.70/brightness0.70; props nearest",
+      "sha256": "630c9d0838205f6a0626f0fe8ace541d77b45b6bd5d3a4816c705558008bdb12",
+      "width": 128,
+      "height": 128,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
     },
     {
       "id": "republic_silver_coin",
@@ -110,7 +155,12 @@
       "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
       "status": "DRAFT",
       "derivation": "alpha bounds aspect fit240; centered256; icon/display share identity",
-      "sha256": "ee02b3e63a41326573fd38b64050ea0536e78c11ffc9690ad861acc7994e90b2"
+      "sha256": "ee02b3e63a41326573fd38b64050ea0536e78c11ffc9690ad861acc7994e90b2",
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
     },
     {
       "id": "blue_white_jar",
@@ -121,7 +171,12 @@
       "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
       "status": "DRAFT",
       "derivation": "alpha bounds aspect fit240; centered256; icon/display share identity",
-      "sha256": "9522678aa016aff536694edde926052b7c22ad5cf27ed40b13701803180384d5"
+      "sha256": "9522678aa016aff536694edde926052b7c22ad5cf27ed40b13701803180384d5",
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
     },
     {
       "id": "gilt_buddha",
@@ -132,7 +187,12 @@
       "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
       "status": "DRAFT",
       "derivation": "alpha bounds aspect fit240; centered256; icon/display share identity",
-      "sha256": "a1094c53fc753f9699bac1947e486ece388ff587276e01be610d9bbd305b950f"
+      "sha256": "a1094c53fc753f9699bac1947e486ece388ff587276e01be610d9bbd305b950f",
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
     },
     {
       "id": "han_jade_disc",
@@ -143,7 +203,12 @@
       "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
       "status": "DRAFT",
       "derivation": "alpha bounds aspect fit240; centered256; icon/display share identity",
-      "sha256": "72c0f1fbfa82e62bfe52237ea09fd449c56e1d45b068407e176de659f2497ae3"
+      "sha256": "72c0f1fbfa82e62bfe52237ea09fd449c56e1d45b068407e176de659f2497ae3",
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
     },
     {
       "id": "inlaid_bronze_mirror",
@@ -154,7 +219,12 @@
       "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
       "status": "DRAFT",
       "derivation": "alpha bounds aspect fit240; centered256; icon/display share identity",
-      "sha256": "82922e4e0106e9ff2fa191b2b7560360205559be67f3ded723bae9fd5b90d3fc"
+      "sha256": "82922e4e0106e9ff2fa191b2b7560360205559be67f3ded723bae9fd5b90d3fc",
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
     },
     {
       "id": "tang_sancai_horse",
@@ -165,7 +235,12 @@
       "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
       "status": "DRAFT",
       "derivation": "alpha bounds aspect fit240; centered256; icon/display share identity",
-      "sha256": "1070c91a31dc438f0cf11edacc5539805e4ff89f766d83802b507096e6434643"
+      "sha256": "1070c91a31dc438f0cf11edacc5539805e4ff89f766d83802b507096e6434643",
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
     },
     {
       "id": "gold_thread_jade",
@@ -176,7 +251,12 @@
       "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
       "status": "DRAFT",
       "derivation": "alpha bounds aspect fit240; centered256; icon/display share identity",
-      "sha256": "a021a9d21f26e8521f06c7df70edc122c86acb2cb4479c4378a9838eee6ead95"
+      "sha256": "a021a9d21f26e8521f06c7df70edc122c86acb2cb4479c4378a9838eee6ead95",
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
     },
     {
       "id": "guardian_fragment",
@@ -187,7 +267,12 @@
       "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
       "status": "DRAFT",
       "derivation": "alpha bounds aspect fit240; centered256; icon/display share identity",
-      "sha256": "95d2499b3413251d0e3de5fdd9ef5a437dbc6a0033a5e7cc0d57c8848757aff4"
+      "sha256": "95d2499b3413251d0e3de5fdd9ef5a437dbc6a0033a5e7cc0d57c8848757aff4",
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
     },
     {
       "id": "museum_npcs",
@@ -198,7 +283,140 @@
       "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
       "status": "DRAFT",
       "derivation": "6x2 grid; binary alpha128; aspect fit46x58; feet62",
-      "sha256": "dabe4df33cc06e0168ef8e0465c153f26942d706f6a06262db551f89a5bb5df7"
+      "sha256": "dabe4df33cc06e0168ef8e0465c153f26942d706f6a06262db551f89a5bb5df7",
+      "width": 288,
+      "height": 128,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "FEET62"
+    },
+    {
+      "id": "office",
+      "path": "res://assets/art/office.png",
+      "source": "res://assets/art/sources/furniture_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "equal grid alpha128; aspect fit124x92; feet94",
+      "sha256": "8e5c64acea4a6ae146bac13cd9d826c414679ca5de5c86f47c88e5c5a93a69a8",
+      "width": 128,
+      "height": 96,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
+    },
+    {
+      "id": "construction",
+      "path": "res://assets/art/construction.png",
+      "source": "res://assets/art/sources/furniture_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "equal grid alpha128; aspect fit124x92; feet94",
+      "sha256": "99b27753dbe45d8d4064f9b7a6c80aaa4d70188101bca71ee79cfeca3d8c6afd",
+      "width": 128,
+      "height": 96,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
+    },
+    {
+      "id": "appraisal",
+      "path": "res://assets/art/appraisal.png",
+      "source": "res://assets/art/sources/furniture_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "equal grid alpha128; aspect fit124x92; feet94",
+      "sha256": "ad5a14c8a6b25856e366eb45f158bfbd54b18de0c669a2bbab57d5a5e8114c17",
+      "width": 128,
+      "height": 96,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
+    },
+    {
+      "id": "restoration",
+      "path": "res://assets/art/restoration.png",
+      "source": "res://assets/art/sources/furniture_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "equal grid alpha128; aspect fit124x92; feet94",
+      "sha256": "8dec8d87974d27278bb6f9f885198e271e979a8a5005c3c826f152c17a942498",
+      "width": 128,
+      "height": 96,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
+    },
+    {
+      "id": "research",
+      "path": "res://assets/art/research.png",
+      "source": "res://assets/art/sources/furniture_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "equal grid alpha128; aspect fit124x92; feet94",
+      "sha256": "511e5d3e9dc81d2ffd0cc08c7c5b0a022e7660e3ca05dbd58bb1271c5c26655e",
+      "width": 128,
+      "height": 96,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
+    },
+    {
+      "id": "board",
+      "path": "res://assets/art/board.png",
+      "source": "res://assets/art/sources/furniture_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "equal grid alpha128; aspect fit124x92; feet94",
+      "sha256": "eed329021f188f0a8a4e6964666bf84405971638ffb85a1c040713a642a75365",
+      "width": 128,
+      "height": 96,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
+    },
+    {
+      "id": "ticket",
+      "path": "res://assets/art/ticket.png",
+      "source": "res://assets/art/sources/furniture_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "equal grid alpha128; aspect fit124x92; feet94",
+      "sha256": "85f7af66494f4d331243a7553eb37dffc7b724ea83d3b7a91377270950664600",
+      "width": 128,
+      "height": 96,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
+    },
+    {
+      "id": "dealer",
+      "path": "res://assets/art/dealer.png",
+      "source": "res://assets/art/sources/furniture_original.png",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated game artwork; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "status": "DRAFT",
+      "derivation": "equal grid alpha128; aspect fit124x92; feet94",
+      "sha256": "9ce1812245c6067b3c86698cb86e9482914c25390bace7df5b2e3b24788ed9f9",
+      "width": 128,
+      "height": 96,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CENTER"
     }
   ]
 }

@@ -3,8 +3,11 @@ extends RefCounted
 ## Missing PNGs are a normal fallback, never an error in gameplay configuration.
 static var _textures: Dictionary = {}
 static func texture(id: String) -> Texture2D:
+	if _textures.has(id): return _textures[id] as Texture2D
 	var path := "res://assets/art/%s.png" % id
-	if not ResourceLoader.exists(path): return null
+	if not ResourceLoader.exists(path):
+		_textures[id] = null
+		return null
 	if not _textures.has(id): _textures[id] = load(path) as Texture2D
 	return _textures[id] as Texture2D
 static func frame(id: String, column: int, row: int) -> Texture2D:

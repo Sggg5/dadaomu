@@ -209,6 +209,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _draw() -> void:
+	z_index = int(global_position.y+12) if ArtRenderSettings.active() else 0
 	if MuseumNPCVisual.draw(self,visitor_index%2,activity in [Activity.ENTER,Activity.WALK_TO_EXHIBIT,Activity.EXIT]): return
 	draw_colored_polygon(PackedVector2Array([Vector2(0,-13),Vector2(13,0),Vector2(0,13),Vector2(-13,0)]),tint)
 

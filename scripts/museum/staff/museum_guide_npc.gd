@@ -26,7 +26,8 @@ func _physics_process(delta:float)->void:
 	visible=hall_id==get_parent().active_hall_id
 	queue_redraw()
 func _draw()->void:
-	if MuseumNPCVisual.draw(self,2,false): return
+	z_index = int(global_position.y+12) if ArtRenderSettings.active() else 0
+	if MuseumNPCVisual.draw(self,2,position.distance_to(Vector2(900 if staff_id==&"GUIDE_LIN" else 1160,470))>2): return
 	draw_circle(Vector2(0,-5),8,Color("dcc5a0"))
 	draw_colored_polygon(PackedVector2Array([Vector2(-12,3),Vector2(12,3),Vector2(10,17),Vector2(-10,17)]),Color("798e9c"))
 	draw_rect(Rect2(5,3,8,9),Color("e6d8b5"))
