@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "weights": {
+    "identified": 4,
+    "researched": 6,
+    "topics": 15,
+    "business_days": 1,
+    "visitors": 0.05,
+    "displayed": 2,
+    "quality": 0.1,
+    "protected": 2
+  },
+  "caps": {
+    "identified": 50,
+    "researched": 50,
+    "topics": 3,
+    "business_days": 30,
+    "visitors": 1000,
+    "displayed": 50,
+    "quality": 100,
+    "protected": 20
+  },
+  "ratings": [
+    {
+      "id": "PRIVATE",
+      "name": "私人收藏室",
+      "conditions": {}
+    },
+    {
+      "id": "NEIGHBORHOOD",
+      "name": "街坊陈列馆",
+      "conditions": {
+        "identified": 5,
+        "displayed": 3,
+        "business_days": 1
+      }
+    },
+    {
+      "id": "LOCAL",
+      "name": "地方知名古物馆",
+      "conditions": {
+        "identified": 15,
+        "researched": 5,
+        "topics": 1,
+        "displayed": 8,
+        "business_days": 5,
+        "visitors": 50
+      }
+    },
+    {
+      "id": "REGIONAL",
+      "name": "区域文化名馆",
+      "conditions": {
+        "identified": 30,
+        "researched": 15,
+        "topics": 2,
+        "displayed": 16,
+        "business_days": 15,
+        "visitors": 200,
+        "protected": 4,
+        "quality": 80
+      }
+    }
+  ]
+}
