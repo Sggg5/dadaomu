@@ -18,6 +18,10 @@ var _service_timer:=0.0
 var _service_after:Activity=Activity.CHOOSE_EXHIBIT
 var used_services:Dictionary={}
 var max_view_count:=2
+signal staff_guide_completed(visitor_index:int,staff_id:StringName)
+var workday:MuseumStaffWorkday
+var _staff_guide_id:StringName=&""
+var _guided_once:=false
 signal paid(visitor_index: int)
 signal leaving(visitor: MuseumVisitor)
 var visitor_index: int
@@ -113,6 +117,8 @@ func pay_ticket() -> bool:
 func close_museum() -> void:
 	if closing: return
 	closing = true
+	if workday!=null:workday.cancel_guide(visitor_index)
+	_staff_guide_id=&""
 	title = ""
 	refresh()
 	activity = Activity.EXIT
@@ -175,7 +181,8 @@ func _physics_process(delta: float) -> void:
 					for category in _view_result.categories:_seen_categories[category]=true
 					view_completed.emit(visitor_index,_view_result.duplicate(true))
 					_view_result.clear()
-				if _begin_service(&"GUIDE",.6,Activity.CHOOSE_EXHIBIT):pass
+				if _begin_staff_guide():pass
+				elif _begin_service(&"GUIDE",.6,Activity.CHOOSE_EXHIBIT):pass
 				elif _begin_service(&"REST",.8,Activity.CHOOSE_EXHIBIT):pass
 				elif view_count < max_view_count and (max_view_count==3 or rng.randf() < .5): activity = Activity.CHOOSE_EXHIBIT
 				else: close_museum()
@@ -183,8 +190,15 @@ func _physics_process(delta: float) -> void:
 			_service_timer-=delta
 			if _service_timer<=0:
 				used_services[_service_id]=true
-				if _service_id==&"MAIN_GUIDE":max_view_count=3
-				last_feedback="%s"%{&"MAIN_GUIDE":"导览牌让参观路线更清楚。",&"EAST_REST":"看展之间可以坐下歇歇。",&"MAIN_RECEPTION":"接待台讲清了参观规则。"}.get(_service_id,"")
+				if _service_id==&"MAIN_GUIDE":max_view_count=3;_guided_once=true
+				if _staff_guide_id!=&"":
+					if workday.complete_guide(visitor_index,_staff_guide_id):
+						max_view_count=3
+						_guided_once=true
+						staff_guide_completed.emit(visitor_index,_staff_guide_id)
+						_service_id=&"STAFF_GUIDE_DONE"
+					_staff_guide_id=&""
+				last_feedback="%s"%{&"STAFF_GUIDE_DONE":"导览员带我继续看展。",&"MAIN_GUIDE":"导览牌让参观路线更清楚。",&"EAST_REST":"看展之间可以坐下歇歇。",&"MAIN_RECEPTION":"接待台讲清了参观规则。"}.get(_service_id,"")
 				service_completed.emit(visitor_index,_service_id)
 				_service_id=&""
 				activity=_service_after
@@ -197,6 +211,7 @@ func _draw() -> void:
 	draw_colored_polygon(PackedVector2Array([Vector2(0,-13),Vector2(13,0),Vector2(0,13),Vector2(-13,0)]),tint)
 
 func _begin_service(kind:StringName,duration:float,after:Activity)->bool:
+	if kind==&"GUIDE" and _guided_once:return false
 	if kind!=&"RECEPTION" and view_count>=max_view_count:return false
 	var id:=MuseumConstructionService.public_id(kind)
 	var level:=state.facilities.level(id)
@@ -212,3 +227,20 @@ func _begin_service(kind:StringName,duration:float,after:Activity)->bool:
 	title={&"GUIDE":"阅读导览",&"REST":"休息中",&"RECEPTION":"接待中"}[kind]
 	refresh()
 	return true
+
+func _begin_staff_guide()->bool:
+	if workday==null or _guided_once or used_services.has(&"MAIN_GUIDE") or view_count>=max_view_count or closing:return false
+	var id:=workday.reserve_guide(visitor_index,hall_id)
+	if id==&"":return false
+	_staff_guide_id=id
+	_service_id=&"STAFF_GUIDE"
+	_service_timer=MuseumStaffService.catalog()[id].seconds_per_task
+	_service_after=Activity.CHOOSE_EXHIBIT
+	var target:=workday.guide_position(id)
+	route=[Vector2(position.x,450),Vector2(target.x,450),target]
+	activity=Activity.SERVICE
+	title="听取导览"
+	refresh()
+	return true
+func _exit_tree()->void:
+	if workday!=null:workday.cancel_guide(visitor_index)

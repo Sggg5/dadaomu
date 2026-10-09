@@ -18,6 +18,7 @@ var running: bool = false
 var closing: bool = false
 var _paid: Dictionary[int,bool] = {}
 var visits:=MuseumVisitStatistics.new()
+var workday:MuseumStaffWorkday
 var maintenance_budget:=0
 var _spawn_timer: float = 0.0
 
@@ -36,7 +37,7 @@ func visitor_target(appeal: int, displayed_count: int) -> int:
 
 
 func start() -> bool:
-	if running or state.phase != MuseumState.Phase.MORNING or not can_open() or state.daily_reports.has(state.day_number): return false
+	if running or state.phase != MuseumState.Phase.MORNING or not can_open() or state.daily_reports.has(state.day_number) or state.staff.payroll_days.has(state.day_number): return false
 	spawned=0
 	visitors_today=0
 	income_today=0
@@ -49,6 +50,7 @@ func start() -> bool:
 	running = true
 	closing = false
 	state.phase = MuseumState.Phase.OPEN
+	workday=MuseumStaffPayroll.begin(state)
 	state.changed.emit()
 	return true
 
@@ -84,12 +86,14 @@ func spawn_visitor() -> void:
 	if not running or closing or active.size() >= config.max_active_visitors or spawned >= target: return
 	var visitor := MuseumVisitor.new()
 	visitor.state = state
+	visitor.workday=workday
 	visitor.config = config
 	visitor.cases = cases
 	visitor.configure(museum_seed,state.day_number,spawned)
 	visitor.position = Vector2(640,600)
 	visitor.paid.connect(_on_paid)
 	visitor.leaving.connect(_on_leaving)
+	visitor.staff_guide_completed.connect(_on_staff_guide_completed)
 	visitor.service_completed.connect(_on_service_completed)
 	visitor.view_completed.connect(_on_view_completed)
 	spawned += 1
@@ -116,3 +120,7 @@ func _on_view_completed(index:int,result:Dictionary)->void:
 func _on_service_completed(index:int,id:StringName)->void:
 	if not running or closing or not _paid.has(index) or state.facilities.level(id)<=0:return
 	visits.record_service(index,id)
+
+func _on_staff_guide_completed(index:int,id:StringName)->void:
+	if not running or closing or not _paid.has(index):return
+	visits.record_staff_guide(index,id)

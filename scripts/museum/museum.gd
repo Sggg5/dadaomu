@@ -13,6 +13,7 @@ var player: MuseumPlayer
 var business: MuseumBusiness
 var collection_panel: MuseumCollectionPanel
 var _service_signature:String=""
+var guide_nodes:Dictionary[StringName,MuseumGuideNPC]={}
 var _service_nodes:Array[Node2D]=[]
 var facility_panel:MuseumFacilityPanel
 var construction_panel: MuseumConstructionPanel
@@ -203,6 +204,7 @@ func _ticket_prompt() -> String:
 func _refresh() -> void:
 	_sync_cases()
 	_sync_services()
+	_sync_guides()
 	for exhibit in cases: exhibit.refresh()
 	if _shown_level >= 0 and _shown_level != state.museum_level and not message.text.begins_with("保存失败"):
 		message.text = "扩建完成：%s · 展柜%d · 游客容量%d · 当前现金%s" % [state.level_definition().display_name,state.display_catalog.unit_ids(state.museum_level).size(),state.level_definition().visitor_capacity,AntiqueDefinition.money(state.cash)]
@@ -214,6 +216,7 @@ func switch_hall(id: StringName) -> void:
 	if id not in state.display_catalog.hall_ids(state.museum_level) or state.phase == MuseumState.Phase.NIGHT: return
 	active_hall_id = id
 	_sync_services()
+	_sync_guides()
 	_sync_cases()
 	player.position = Vector2(1120,470)
 	player.velocity = Vector2.ZERO
@@ -338,3 +341,15 @@ func _sync_services()->void:
 		node.position=Vector2(row.position[0],row.position[1])
 		add_child(node)
 		_service_nodes.append(node)
+
+func _sync_guides()->void:
+	for id in guide_nodes.keys():
+		if not state.staff.members.has(id) or state.staff.members[id].employment_status!=&"ACTIVE":
+			guide_nodes[id].queue_free();guide_nodes.erase(id)
+	for id in MuseumStaffService.active_ids(state):
+		if MuseumStaffService.catalog()[id].job!=&"GUIDE":continue
+		if not guide_nodes.has(id):
+			var guide:=MuseumGuideNPC.new()
+			guide.staff_id=id;guide.state=state;guide.business=business
+			add_child(guide);guide_nodes[id]=guide
+		guide_nodes[id].visible=state.staff.members[id].assigned_hall==active_hall_id
