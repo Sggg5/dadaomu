@@ -32,6 +32,7 @@ static func complete(state:MuseumState,id:StringName,target:int,actor:String)->b
 	var record:CollectionResearchRecord=state.collection.archives[id]
 	record.references.assign(MuseumState.POOL.find_by_id(record.definition_id).reference_urls)
 	record.level=target;record.record(state.day_number,"TYPE_RESEARCH" if target==2 else "TOPIC_RESEARCH",actor,{"related_ids":(same_type(state,id) if target==2 else related(state,id,true)).slice(0,128).map(func(member:StringName)->String:return str(member))})
+	MuseumMilestoneService.observe(state,"RESEARCH")
 	return true
 static func notes(state:MuseumState,id:StringName)->String:
 	var record:CollectionResearchRecord=state.collection.archives.get(id)

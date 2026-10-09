@@ -10,6 +10,8 @@ var campaign_seed: int = 0 # 0仅为新档/迁移待初始化，正式v4存档�
 var cash: int = 0
 var museum_level: int = 0
 var phase: Phase = Phase.MORNING
+var achievements:Dictionary={}
+var progress_suspended:bool=false
 var collection_history:Dictionary={} # Bounded playable-definition evidence; no research catalog data.
 var collection := MuseumCollection.new()
 var display_catalog := MuseumDisplayCatalog.new()
@@ -24,6 +26,14 @@ var last_day_ticket_income: int = 0
 var auction_lot_instance_id: StringName = &""
 var auction_reserve_mode: int = AntiqueMarketService.Reserve.NORMAL
 
+
+func _init()->void:
+	# Service owns all progress writes. UI queries remain pure; profile restore suspends events.
+	collection.changed.connect(_on_collection_progress)
+	changed.connect(_on_museum_progress)
+
+func _on_collection_progress()->void:MuseumMilestoneService.observe(self,"COLLECTION")
+func _on_museum_progress()->void:MuseumMilestoneService.observe(self,"MUSEUM")
 
 func level_definition() -> MuseumLevelDefinition: return LEVELS.at(museum_level)
 

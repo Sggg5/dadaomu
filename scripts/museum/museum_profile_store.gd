@@ -92,6 +92,7 @@ func load_profile() -> MuseumState:
 
 func decode(payload: Variant) -> MuseumState:
 	var state := MuseumState.new()
+	state.progress_suspended=true
 	write_blocked = false
 	if not payload is Dictionary:
 		_failed("存档根字段异常，使用新档")
@@ -163,6 +164,7 @@ func decode(payload: Variant) -> MuseumState:
 	if int(payload.version)<9:
 		for record in state.collection.archives.values():record.inspection_anchor=state.daily_reports.size()
 	if int(payload.version)>=8 and not MuseumStaffCodec.decode(state,payload):_failed("员工/任务/工资流水异常，保护原档")
+	state.progress_suspended=false
 	return state
 
 

@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "goals": [
+    {
+      "id": "FIRST_ACCESSION",
+      "name": "首件古董入馆",
+      "metric": "discovered",
+      "target": 1,
+      "reward": "收藏图鉴纪念徽记"
+    },
+    {
+      "id": "FIRST_IDENTIFIED",
+      "name": "首次完成鉴定",
+      "metric": "identified_history",
+      "target": 1,
+      "reward": "鉴定登记纪念证书"
+    },
+    {
+      "id": "OWN_FIVE",
+      "name": "拥有五种古董",
+      "metric": "owned",
+      "target": 5,
+      "reward": "五器收藏铜牌"
+    },
+    {
+      "id": "OWN_FIFTEEN",
+      "name": "拥有十五种古董",
+      "metric": "owned",
+      "target": 15,
+      "reward": "多样馆藏纪念牌"
+    },
+    {
+      "id": "REGION_TOPIC",
+      "name": "地区收藏小专题",
+      "metric": "region_topic",
+      "target": 1,
+      "reward": "地区收藏档案徽记"
+    },
+    {
+      "id": "FIRST_DISPLAY",
+      "name": "首次合法陈列",
+      "metric": "displayed",
+      "target": 1,
+      "reward": "开柜纪念铭牌"
+    },
+    {
+      "id": "FIRST_EXHIBITION",
+      "name": "首次合格专题",
+      "metric": "topics",
+      "target": 1,
+      "reward": "专题策展纪念证书"
+    },
+    {
+      "id": "TWO_TOPICS",
+      "name": "同时两个不同专题",
+      "metric": "topics",
+      "target": 2,
+      "reward": "双专题荣誉框"
+    },
+    {
+      "id": "HALL_SIX",
+      "name": "单厅六种器物展示",
+      "metric": "hall_unique",
+      "target": 6,
+      "reward": "展厅陈列纪念牌"
+    },
+    {
+      "id": "FIRST_RESEARCH",
+      "name": "首次类型研究",
+      "metric": "research_history",
+      "target": 1,
+      "reward": "研究登记徽记"
+    },
+    {
+      "id": "FIRST_TOPIC_RESEARCH",
+      "name": "首次专题研究",
+      "metric": "topic_research",
+      "target": 1,
+      "reward": "专题研究纪念证书"
+    },
+    {
+      "id": "FIVE_RESEARCH",
+      "name": "五件独立研究",
+      "metric": "research_instances",
+      "target": 5,
+      "reward": "研究工作纪念牌"
+    },
+    {
+      "id": "FIRST_BUSINESS",
+      "name": "首次正常闭馆",
+      "metric": "business_days",
+      "target": 1,
+      "reward": "开馆纪念纸档"
+    },
+    {
+      "id": "HUNDRED_VISITORS",
+      "name": "接待百名付费观众",
+      "metric": "visitors",
+      "target": 100,
+      "reward": "百客纪念铜牌"
+    },
+    {
+      "id": "LOCAL_RATING",
+      "name": "达到地方知名古物馆",
+      "metric": "rank",
+      "target": 2,
+      "reward": "地方知名馆游戏称号"
+    },
+    {
+      "id": "THIRTY_DAYS",
+      "name": "三十日经营记录",
+      "metric": "business_days",
+      "target": 30,
+      "reward": "三十日馆史纪念框"
+    }
+  ]
+}

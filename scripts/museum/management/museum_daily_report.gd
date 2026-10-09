@@ -18,6 +18,7 @@ static func store(state:MuseumState,report:MuseumDailyReport)->bool:
 	var day:int=report.values.day_number
 	if state.daily_reports.has(day):return false
 	state.daily_reports[day]=report.values.duplicate(true)
+	MuseumMilestoneService.observe(state,"REPORT")
 	return true
 static func recent(state:MuseumState,page:int=0,page_size:int=5)->Array[Dictionary]:
 	var days:=state.daily_reports.keys()
