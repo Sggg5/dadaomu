@@ -1,6 +1,7 @@
 class_name MuseumConstructionPanel
 extends CanvasLayer
 ## 单次确认绑定打开时等级；成功后必须关闭再打开才能购买下一等级。
+var facility_panel:MuseumFacilityPanel
 var state: MuseumState
 var player: MuseumPlayer
 var panel: Panel
@@ -17,9 +18,15 @@ func _ready() -> void:
 	add_child(panel)
 	label = Label.new()
 	label.position = Vector2(30,25)
-	label.size = Vector2(620,365)
+	label.size = Vector2(620,315)
 	label.add_theme_font_size_override("font_size",22)
 	panel.add_child(label)
+	var facilities:=Button.new()
+	facilities.text="设施建设 / 查看各厅升级"
+	facilities.position=Vector2(30,350)
+	facilities.size=Vector2(620,36)
+	facilities.pressed.connect(func()->void:close();facility_panel.open())
+	panel.add_child(facilities)
 	var close_button := Button.new()
 	close_button.text = "关闭 [Tab]"
 	close_button.position = Vector2(30,395)

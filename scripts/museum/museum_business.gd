@@ -43,7 +43,7 @@ func start() -> bool:
 	_spawn_timer=0.0
 	_paid.clear()
 	visits=MuseumVisitStatistics.new()
-	target = visitor_target(state.total_appeal()+ExhibitionService.bonus_appeal(state),state.display_assignments.size())
+	target = visitor_target(state.total_appeal()+ExhibitionService.bonus_appeal(state)+MuseumConstructionService.bonus_appeal(state),state.display_assignments.size())
 	running = true
 	closing = false
 	state.phase = MuseumState.Phase.OPEN

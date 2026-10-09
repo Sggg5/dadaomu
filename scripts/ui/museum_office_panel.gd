@@ -6,6 +6,7 @@ var player: MuseumPlayer
 var business: MuseumBusiness
 var panel: PanelContainer
 var tabs: TabContainer
+var facility_view:MuseumFacilityView
 var overview: RichTextLabel
 var hall_list: ItemList
 var hall_detail: RichTextLabel
@@ -107,6 +108,11 @@ func _ready() -> void:
 		ExhibitionService.stop(state,[&"MAIN",&"EAST",&"WEST"][topic_hall.selected])
 		refresh())
 	actions.add_child(topic_stop)
+	facility_view=MuseumFacilityView.new()
+	facility_view.name="设施建设"
+	facility_view.paper_style=true
+	facility_view.state=state
+	tabs.add_child(facility_view)
 	var close_button:=Button.new()
 	close_button.text="合上台账 [Tab / Esc]"
 	close_button.pressed.connect(close)
@@ -148,6 +154,7 @@ func refresh() -> void:
 	_select_hall(selected_hall)
 	_refresh_topic()
 	_refresh_history()
+	if is_instance_valid(facility_view):facility_view.refresh()
 	finance.text="现金（实际）：%s\n\n本日实时：%d位付费游客 / %s门票\n上次已结算：%d位游客 / %s门票\n\n预计游客：%d人；预测不记入现金。\n累计已记录：%d人 / %s门票；%d个营业日。" % [AntiqueDefinition.money(data.cash),data.live_visitors,AntiqueDefinition.money(data.live_income),data.last_visitors,AntiqueDefinition.money(data.last_income),data.forecast_visitors,MuseumDailyReport.totals(state).visitors,AntiqueDefinition.money(MuseumDailyReport.totals(state).income),MuseumDailyReport.totals(state).days]
 func _select_hall(index:int) -> void:
 	var data:=MuseumOverview.snapshot(state,business)

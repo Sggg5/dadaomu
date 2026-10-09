@@ -12,6 +12,7 @@ var morning_notice: String = "早晨 · 可开馆，也可到情报板直接下�
 var player: MuseumPlayer
 var business: MuseumBusiness
 var collection_panel: MuseumCollectionPanel
+var facility_panel:MuseumFacilityPanel
 var construction_panel: MuseumConstructionPanel
 var construction: MuseumInteractable
 var appraisal: MuseumInteractable
@@ -68,9 +69,14 @@ func _ready() -> void:
 	collection_panel.player = player
 	add_child(collection_panel)
 	_sync_cases()
+	facility_panel=MuseumFacilityPanel.new()
+	facility_panel.state=state
+	facility_panel.player=player
+	add_child(facility_panel)
 	construction_panel = MuseumConstructionPanel.new()
 	construction_panel.state = state
 	construction_panel.player = player
+	construction_panel.facility_panel=facility_panel
 	add_child(construction_panel)
 	construction = _point("馆舍建设",Vector2(400,190),Color("b99b7f"),func() -> String: return "[E] 查看扩建",func() -> void: construction_panel.open())
 	storage = _point("库房",Vector2(180,500),Color("8e9a74"),func() -> String: return "[E] 查看库房",func() -> void: collection_panel.open())

@@ -52,7 +52,7 @@ func _choose_unit() -> StringName:
 	var hall_weights: Dictionary[StringName,int]={}
 	for id in state.display_catalog.unit_ids(state.museum_level):
 		if id in seen_cases:continue
-		var appeal:=roundi(state.unit_appeal(id)*(1.0+ExhibitionService.active(state,state.display_catalog.units[id].hall_id).heat))
+		var appeal:=roundi(MuseumConstructionService.unit_interest(state,id)*(1.0+ExhibitionService.active(state,state.display_catalog.units[id].hall_id).heat))
 		if appeal>0:
 			var hall:=state.display_catalog.units[id].hall_id
 			hall_weights[hall]=hall_weights.get(hall,0)+appeal
@@ -69,7 +69,7 @@ func _choose_unit() -> StringName:
 	roll=rng.randi_range(1,hall_weights[selected])
 	for id in state.display_catalog.unit_ids(state.museum_level,selected):
 		if id in seen_cases:continue
-		roll-=roundi(state.unit_appeal(id)*(1.0+ExhibitionService.active(state,selected).heat))
+		roll-=roundi(MuseumConstructionService.unit_interest(state,id)*(1.0+ExhibitionService.active(state,selected).heat))
 		if roll<=0:return id
 	return &""
 

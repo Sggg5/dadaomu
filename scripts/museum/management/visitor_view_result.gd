@@ -25,4 +25,6 @@ static func snapshot(state:MuseumState,unit_id:StringName,seen_categories:Dictio
 	elif watched_theme and topic_id==&"TANG_SILK":text="这一组唐代器物摆在一起挺好看。"
 	elif watched_theme and topic_id==&"COINS":text="这些钱币让人看到了流通的变化。"
 	elif not ids.is_empty() and condition/ids.size()>=90:text="这些器物保存得不错。"
-	return {"hall_id":str(unit.hall_id),"unit_id":str(unit_id),"instance_ids":ids,"categories":categories,"effective_appeal":state.unit_appeal(unit_id),"topic_id":str(topic_id) if watched_theme else "","repeat_category":repeated,"feedback":text}
+	if MuseumConstructionService.unit_level(state,unit_id,&"LABEL")>0:text="说明牌把器物背景交代得很清楚。"+text
+	elif MuseumConstructionService.unit_level(state,unit_id,&"LIGHT")>0:text="柜内照明让细节更清楚。"+text
+	return {"hall_id":str(unit.hall_id),"unit_id":str(unit_id),"instance_ids":ids,"categories":categories,"effective_appeal":MuseumConstructionService.unit_interest(state,unit_id),"topic_id":str(topic_id) if watched_theme else "","repeat_category":repeated,"feedback":text}

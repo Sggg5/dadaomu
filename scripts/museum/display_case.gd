@@ -32,6 +32,20 @@ func _draw() -> void:
 		draw_colored_polygon(PackedVector2Array([Vector2(-78,-34),Vector2(64,-45),Vector2(78,27),Vector2(-64,38)]),Color("354e57"))
 		draw_polyline(PackedVector2Array([Vector2(-78,-34),Vector2(64,-45),Vector2(78,27),Vector2(-64,38),Vector2(-78,-34)]),Color("c4a86b"),3)
 		draw_line(Vector2(-64,-26),Vector2(58,-35),Color("89bfc4"),2)
+	var light:=MuseumConstructionService.unit_level(state,case_id,&"LIGHT")
+	var base:=MuseumConstructionService.unit_level(state,case_id,&"BASE")
+	var plaque:=MuseumConstructionService.unit_level(state,case_id,&"LABEL")
+	var protection:=MuseumConstructionService.unit_level(state,case_id,&"PROTECT")
+	if light>0:
+		draw_rect(Rect2(-69,-39,132,4+light),Color("efcf83"))
+		for i in range(light*2):draw_circle(Vector2(-57+i*114.0/maxi(1,light*2-1),-33),3+light,Color("fff0b6"))
+	if protection>0:
+		draw_rect(Rect2(-80,-47,160,85),Color("83adbc"),false,1+protection)
+		draw_rect(Rect2(-6,29,12,12),Color("c6a257"))
+		draw_circle(Vector2(0,34),2,Color("423725"))
+	if plaque>0:
+		draw_rect(Rect2(-31,27,62,14+plaque*2),Color("e9ddbd"))
+		for i in range(plaque+1):draw_line(Vector2(-25,31+i*3),Vector2(22,31+i*3),Color("776b54"),1)
 	var columns:=4 if unit.capacity>=8 else 2 if unit.capacity==4 else 1
 	var rows:=ceili(unit.capacity/float(columns))
 	for slot in unit.slots():
@@ -39,4 +53,5 @@ func _draw() -> void:
 		var cell:=Vector2(minf(26,108.0/columns-3),53.0/rows-3)
 		draw_rect(Rect2(center-cell*.5,cell),Color("24343e"))
 		var item:=state.collection.find(state.display_assignments.get(slot.id,&""))
-		if item!=null: DisplayArtifactGlyph.draw_icon(self,item.definition_id,center, minf(.85,cell.y/24.0))
+		if base>0:draw_rect(Rect2(center-cell*.5+Vector2(0,cell.y-4),Vector2(cell.x,4)),Color("a28359"))
+		if item!=null: DisplayArtifactGlyph.draw_icon(self,item.definition_id,center, minf(.85,cell.y/24.0)*(1.0+base*.025))
