@@ -44,20 +44,20 @@ func advance_tasks(delta:float,time_scale:float)->void:
 			var reserved:=0
 			for task_id in prepared:
 				for candidate in state.staff.tasks:
-					if candidate.task_id==task_id and candidate.job==&"CONSERVATOR":reserved+=state.restoration_cost(candidate.instance_id)
-			if task.job==&"CONSERVATOR" and state.cash-reserved<state.restoration_cost(task.instance_id):
+					if candidate.task_id==task_id and candidate.action()==&"RESTORE":reserved+=state.restoration_cost(candidate.instance_id)
+			if task.action()==&"RESTORE" and state.cash-reserved<state.restoration_cost(task.instance_id):
 				task.status=&"WAITING_FUNDS";task.note="修复资金不足，保留待处理"
 				break
 			task.status=&"PENDING"
 			var seconds:float=progress.get(task.task_id,task.worked_seconds)+delta/maxf(.001,time_scale)
-			progress[task.task_id]=minf(definition.seconds_per_task,seconds)
-			if seconds>=definition.seconds_per_task:
+			progress[task.task_id]=minf(task.duration(),seconds)
+			if seconds>=task.duration():
 				prepared[task.task_id]=id
 				prepared_counts[str(id)]=prepared_counts.get(str(id),0)+1
 			break
 func task_progress(task:MuseumStaffTask)->float:
 	var definition:MuseumStaffDefinition=MuseumStaffService.catalog()[task.staff_id]
-	return minf(1.0,float(progress.get(task.task_id,task.worked_seconds))/definition.seconds_per_task)
+	return minf(1.0,float(progress.get(task.task_id,task.worked_seconds))/task.duration())
 func commit_tasks()->void:
 	if tasks_committed:return
 	tasks_committed=true
@@ -65,9 +65,9 @@ func commit_tasks()->void:
 	for task in state.staff.tasks:
 		if task.status not in [&"PENDING",&"WAITING_FUNDS"]:continue
 		if progress.has(task.task_id):task.worked_seconds=progress[task.task_id]
-		if not prepared.has(task.task_id) or not MuseumStaffTasks.eligible(state,task.job,task.instance_id):continue
+		if not prepared.has(task.task_id) or not MuseumStaffTasks.task_eligible(state,task):continue
 		var item:=state.collection.find(task.instance_id)
-		if task.job==&"CONSERVATOR":
+		if task.action()==&"RESTORE":
 			var cost:=state.restoration_cost(task.instance_id)
 			if state.cash<cost:
 				task.status=&"WAITING_FUNDS";task.note="结算后资金不足，待后续营业处理";continue
@@ -76,6 +76,7 @@ func commit_tasks()->void:
 			repair_fees_paid+=cost
 			state.staff.record(day,"STAFF_REPAIR",str(task.task_id),cost)
 			item.condition=100
+		elif task.action()==&"RESEARCH":MuseumResearchService.complete(state,task.instance_id,task.target_level,str(task.staff_id))
 		else:item.identified=true
 		task.status=&"COMPLETED";task.completed_day=day;task.note="真实营业作业完成，闭馆统一提交"
 		completed_ids.append(task.task_id)
