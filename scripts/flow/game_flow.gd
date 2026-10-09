@@ -189,7 +189,10 @@ func _return_morning(result: RunResult) -> void:
 			var definition := MuseumState.POOL.find_by_id(id)
 			if definition == null: continue
 			if index >= result.antique_conditions.size(): continue
-			museum_state.collection.add(id,current_day,result.antique_conditions[index],false)
+			var origin:Dictionary={}
+			if active_expedition!=null:
+				origin={"site_id":str(active_expedition.site_id),"region_id":str(active_expedition.region_id),"run_seed":result.run_seed,"expedition_day":active_expedition.day_number}
+			museum_state.collection.add(id,current_day,result.antique_conditions[index],false,origin)
 			names.append(definition.display_name)
 	var notice := "昨夜新入藏：%s · 已存入库房，待正式鉴定" % ("、".join(names) if not names.is_empty() else "无")
 	if result.outcome == RunResult.Outcome.DEAD: notice = "昨夜探墓失败 · 遗失古董 %s · 没有新藏品带回" % AntiqueDefinition.money(result.antique_value)
@@ -207,3 +210,4 @@ func _save_profile() -> bool:
 	if profile_store.save_profile(museum_state): return true
 	if is_instance_valid(museum): museum.message.text = "保存失败："+profile_store.last_error
 	return false
+
