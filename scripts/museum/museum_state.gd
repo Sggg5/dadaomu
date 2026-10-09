@@ -10,6 +10,7 @@ var campaign_seed: int = 0 # 0仅为新档/迁移待初始化，正式v4存档�
 var cash: int = 0
 var museum_level: int = 0
 var phase: Phase = Phase.MORNING
+var collection_history:Dictionary={} # Bounded playable-definition evidence; no research catalog data.
 var collection := MuseumCollection.new()
 var display_catalog := MuseumDisplayCatalog.new()
 # Stable DisplaySlot IDs -> OwnedAntique instance IDs. CASE_n is the migrated first slot.
