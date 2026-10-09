@@ -1,0 +1,43 @@
+extends "res://tests/phase_5b_smoke.gd"
+func run()->void:
+	var state:=preload("res://tests/fixtures/museum_management_fixture.gd").state_with_displays(50)
+	state.cash=5000
+	MuseumStaffService.hire(state,&"APPRAISER_SHEN");MuseumStaffService.hire(state,&"CONSERVATOR_SU")
+	var unknown:=state.collection.add(&"ly_attendant",1,70,false)
+	var damaged:=state.collection.find(state.display_assignments[&"CASE_2"])
+	var cost:=state.restoration_cost(damaged.instance_id)
+	var app:=MuseumStaffTasks.enqueue(state,&"APPRAISER_SHEN",unknown.instance_id)
+	var repair:=MuseumStaffTasks.enqueue(state,&"CONSERVATOR_SU",damaged.instance_id)
+	check(app!=null and repair!=null,"Actual owned instances enter staff queues")
+	check(MuseumStaffTasks.enqueue(state,&"APPRAISER_SHEN",unknown.instance_id)==null,"Duplicate task rejected")
+	check(MuseumStaffTasks.enqueue(state,&"APPRAISER_SHEN",&"research_object")==null,"Research records cannot become jobs")
+	var before:=damaged.condition
+	var museum:=Museum.new();museum.state=state;museum.config=MuseumConfig.new()
+	museum.config.open_duration=20;museum.config.staff_task_time_scale=.02;museum.config.visitor_speed=1200;museum.config.view_duration=.02
+	root.add_child(museum);await frames(3)
+	var cash:=state.cash
+	museum.business.start();await frames(45)
+	check(museum.business.workday.prepared.size()==2,"Actual OPEN frames advance two work queues")
+	check(not unknown.identified and damaged.condition==before,"Queued or prepared work never changes artifacts early")
+	check(not state.can_edit(),"OPEN retains editing protection")
+	museum.business.close_now();await frames(600)
+	check(unknown.identified and app.status==&"COMPLETED","Appraisal applied at real closure")
+	check(damaged.condition==100 and repair.fee_paid==cost,"Restoration charges existing rule at completion")
+	check(damaged.instance_id in state.display_assignments.values(),"Restoration preserves display ownership")
+	check(state.cash==cash-32-cost+museum.business.income_today,"Wages repair and gross tickets reconcile")
+	var settled:=state.cash
+	check(not MuseumOperatingFinance.settle(state,museum.business) and state.cash==settled,"Repeated closure cannot repeat repair")
+	museum.queue_free();await frames(3)
+	var manual:=state.collection.add(&"ly_attendant",1,70,false)
+	var task:=MuseumStaffTasks.enqueue(state,&"APPRAISER_SHEN",manual.instance_id)
+	state.identify(manual.instance_id);MuseumStaffTasks.reconcile(state)
+	check(task.status==&"CANCELLED","Manual appraisal cancels retained task")
+	var missing:=state.collection.add(&"ly_attendant",1,70,false)
+	var lost:=MuseumStaffTasks.enqueue(state,&"APPRAISER_SHEN",missing.instance_id)
+	state.collection.remove(missing.instance_id);MuseumStaffTasks.reconcile(state)
+	check(lost.status==&"CANCELLED","Missing artifact safely cancels")
+	var pending:=state.collection.add(&"ly_attendant",1,70,false)
+	var dismissed:=MuseumStaffTasks.enqueue(state,&"APPRAISER_SHEN",pending.instance_id)
+	MuseumStaffService.dismiss(state,&"APPRAISER_SHEN")
+	check(dismissed.status==&"CANCELLED" and dismissed in state.staff.tasks,"Dismissal retains unfinished work history")
+	print("[11F3] %d checks, %d failures"%[checks,failures]);quit(0 if failures==0 else 1)

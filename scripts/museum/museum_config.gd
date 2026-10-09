@@ -8,3 +8,5 @@ extends Resource
 @export var visitor_speed: float = 320.0
 @export var view_duration: float = 1.5
 @export var player_speed: float = 300.0
+
+@export var staff_task_time_scale:float=1.0 # Isolated tests may accelerate; formal default untouched.

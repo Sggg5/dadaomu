@@ -5,10 +5,11 @@ static func settle(state:MuseumState,business:MuseumBusiness)->bool:
 	if state.daily_reports.has(state.day_number):return false
 	var due:=business.maintenance_budget
 	var paid:=mini(state.cash,due)
-	var report:=MuseumDailyReport.create(state,business)
-	report.values.merge({"maintenance_due":due,"maintenance_paid":paid,"maintenance_waived":due-paid,"operating_net_income":business.income_today-paid,"construction_at_close":MuseumConstructionService.capital_today(state)})
 	state.cash-=paid
 	if paid>0:state.facilities.record(state.day_number,"MAINTENANCE","DAY_"+str(state.day_number),paid,0,0)
+	if business.workday!=null:business.workday.commit_tasks()
+	var report:=MuseumDailyReport.create(state,business)
+	report.values.merge({"maintenance_due":due,"maintenance_paid":paid,"maintenance_waived":due-paid,"operating_net_income":business.income_today-paid,"construction_at_close":MuseumConstructionService.capital_today(state)})
 	return MuseumDailyReport.store(state,report)
 
 static func net_for_day(state:MuseumState,day:int)->int:

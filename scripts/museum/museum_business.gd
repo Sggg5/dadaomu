@@ -61,6 +61,7 @@ func _physics_process(delta: float) -> void:
 	if elapsed >= config.open_duration and not closing:
 		close_now()
 	if not closing:
+		if workday!=null:workday.advance_tasks(delta,config.staff_task_time_scale)
 		_spawn_timer -= delta
 		if spawned < target and active.size() < config.max_active_visitors and _spawn_timer <= 0:
 			spawn_visitor()
