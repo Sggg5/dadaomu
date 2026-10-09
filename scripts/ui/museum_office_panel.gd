@@ -10,6 +10,11 @@ var overview: RichTextLabel
 var hall_list: ItemList
 var hall_detail: RichTextLabel
 var finance: RichTextLabel
+var topic_hall: OptionButton
+var topic_select: OptionButton
+var topic_detail: RichTextLabel
+var topic_start: Button
+var topic_stop: Button
 var hall_ids: Array[StringName] = []
 func _ready() -> void:
 	layer=38
@@ -44,6 +49,35 @@ func _ready() -> void:
 	hall_box.add_child(hall_detail)
 	hall_list.item_selected.connect(_select_hall)
 	finance=_page("财务台账")
+	var topic_box:=VBoxContainer.new()
+	topic_box.name="专题策展"
+	tabs.add_child(topic_box)
+	var selectors:=HBoxContainer.new()
+	topic_box.add_child(selectors)
+	topic_hall=OptionButton.new()
+	for id in [&"MAIN",&"EAST",&"WEST"]:topic_hall.add_item(state.display_catalog.halls[id].display_name)
+	selectors.add_child(topic_hall)
+	topic_select=OptionButton.new()
+	for definition in ExhibitionService.definitions():topic_select.add_item(definition.display_name)
+	selectors.add_child(topic_select)
+	topic_hall.item_selected.connect(func(_index:int)->void:_refresh_topic())
+	topic_select.item_selected.connect(func(_index:int)->void:_refresh_topic())
+	topic_detail=_text()
+	topic_box.add_child(topic_detail)
+	var actions:=HBoxContainer.new()
+	topic_box.add_child(actions)
+	topic_start=Button.new()
+	topic_start.text="举办 / 替换专题"
+	topic_start.pressed.connect(func()->void:
+		ExhibitionService.start(state,[&"MAIN",&"EAST",&"WEST"][topic_hall.selected],ExhibitionService.definitions()[topic_select.selected].id)
+		refresh())
+	actions.add_child(topic_start)
+	topic_stop=Button.new()
+	topic_stop.text="撤下专题"
+	topic_stop.pressed.connect(func()->void:
+		ExhibitionService.stop(state,[&"MAIN",&"EAST",&"WEST"][topic_hall.selected])
+		refresh())
+	actions.add_child(topic_stop)
 	var close_button:=Button.new()
 	close_button.text="合上台账 [Tab / Esc]"
 	close_button.pressed.connect(close)
@@ -79,6 +113,7 @@ func refresh() -> void:
 		hall_ids.append(hall.id)
 		hall_list.add_item("%s · %s · %d件" % [hall.name,"已解锁" if hall.unlocked else "未解锁",hall.displayed])
 	_select_hall(0)
+	_refresh_topic()
 	finance.text="现金（实际）：%s\n\n本日实时：%d位付费游客 / %s门票\n上次已结算：%d位游客 / %s门票\n\n预计游客：%d人；预测不记入现金。\n历史营业记录将在日报页查询。" % [AntiqueDefinition.money(data.cash),data.live_visitors,AntiqueDefinition.money(data.live_income),data.last_visitors,AntiqueDefinition.money(data.last_income),data.forecast_visitors]
 func _select_hall(index:int) -> void:
 	var data:=MuseumOverview.snapshot(state,business)
@@ -89,3 +124,12 @@ func _input(event:InputEvent) -> void:
 	if panel.visible and event is InputEventKey and event.pressed and not event.echo and event.physical_keycode in [KEY_TAB,KEY_ESCAPE]:
 		close()
 		get_viewport().set_input_as_handled()
+
+func _refresh_topic()->void:
+	var hall:StringName=[&"MAIN",&"EAST",&"WEST"][topic_hall.selected]
+	var topic:=ExhibitionService.definitions()[topic_select.selected]
+	var evaluation:=ExhibitionService.evaluate(state,ExhibitionPlan.new(hall,topic.id))
+	var current:=ExhibitionService.find(state.exhibition_plans.get(hall,&""))
+	topic_detail.text="游戏经营专题 · 非学术审核结论\n\n当前配置：%s\n%s：%s\n匹配 %d件 / 不同器物 %d种 / 类别 %d类\n平均品相 %.1f / 评分 %.1f\n展厅兴趣加成 %.1f%%（最高20%%）\n\n%s\n\n只采用本厅合法、已鉴定实物；布展请到实体展柜。" % [current.display_name if current!=null else "无",topic.display_name,"条件合格" if evaluation.qualified else "条件不足",evaluation.matched_ids.size(),evaluation.unique_count,evaluation.category_count,evaluation.average_condition,evaluation.score,evaluation.heat*100.0,"缺少："+"；".join(evaluation.missing) if not evaluation.qualified else "可以举办。移走展品后自动重新评估。"]
+	topic_start.disabled=not state.can_edit() or not evaluation.qualified
+	topic_stop.disabled=not state.can_edit() or not state.exhibition_plans.has(hall)

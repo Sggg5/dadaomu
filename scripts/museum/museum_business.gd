@@ -35,7 +35,7 @@ func visitor_target(appeal: int, displayed_count: int) -> int:
 
 func start() -> bool:
 	if running or state.phase != MuseumState.Phase.MORNING or not can_open(): return false
-	target = visitor_target(state.total_appeal(),state.display_assignments.size())
+	target = visitor_target(state.total_appeal()+ExhibitionService.bonus_appeal(state),state.display_assignments.size())
 	running = true
 	closing = false
 	state.phase = MuseumState.Phase.OPEN

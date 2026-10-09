@@ -15,7 +15,7 @@ func run()->void:
 	check(data.identified==1 and data.displayed==1 and data.stored==0 and data.appeal>0,"Office counts actual identified displayed instance")
 	museum.office_desk.interact()
 	check(museum.office_panel.panel.visible and not museum.player.controls_enabled,"Physical office opens usable modal ledger")
-	check(museum.office_panel.tabs.get_tab_count()==3,"Office has overview hall and finance pages")
+	check(museum.office_panel.tabs.get_tab_count()>=3,"Office has overview hall and finance pages")
 	museum.office_panel.close()
 	check(museum.player.controls_enabled and state.cash==0,"Close restores controls without forecast cash")
 	museum.queue_free()
