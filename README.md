@@ -1,3 +1,9 @@
+## Phase 11I 整合验收（自动完成，人工待验）
+
+独立分支 codex/phase-11i-integration-qa，基线d9c840e。正式零资产GameFlow由真实输入完成30营业日与三地区远征，834项通过；历史59组338474项、Python107项、图形232项均零失败。只修空馆起步提示，未改经济/战斗/掉落，Profile仍VERSION10。
+
+报告：docs/PHASE_11I_INTEGRATION_QA.md、docs/PHASE_11I_ISSUES.md、docs/PHASE_11I_ECONOMY_ANALYSIS.md。经济三策略分开记录实际MuseumBusiness，不能冒称真人试玩。tests/phase_11i_playtest.gd空档内存隔离；--midgame读取实际所得Day13快照。不读写正式档、不合并main，等待人工验收，不启动Phase12。
+
 ## Phase 11H 声望、经营评级、50种收藏图鉴与馆史目标（自动完成，人工待验收）
 
 基线6d95292，独立分支codex/phase-11h-museum-reputation。MuseumReputationService纯计算当前实力，MuseumLevels与现金不直接购买经营评级；重复器物按定义去重，研究按不同定义、专题按不同主题、客流按唯一日报。出售/撤展/检查到期能降低当前实力；一次性历史纪念荣誉独立保存。

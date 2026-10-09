@@ -1,0 +1,81 @@
+{
+  "date": "2026-10-09",
+  "godot": "4.6.2",
+  "python_tests": 107,
+  "python_passed": true,
+  "human_acceptance": "PENDING",
+  "formal_player_save_accessed": false,
+  "suites": [
+    {
+      "suite": "11i_long_run",
+      "summary": [
+        "834",
+        "0"
+      ],
+      "script_or_error": false
+    },
+    {
+      "suite": "11i2",
+      "summary": [
+        "363",
+        "0"
+      ],
+      "script_or_error": false
+    },
+    {
+      "suite": "11i2_midgame",
+      "summary": [
+        "363",
+        "0"
+      ],
+      "script_or_error": false
+    },
+    {
+      "suite": "11i4_long_run",
+      "summary": [
+        "69",
+        "0"
+      ],
+      "script_or_error": false
+    },
+    {
+      "suite": "11i1_graphical",
+      "summary": [
+        "30",
+        "0"
+      ],
+      "script_or_error": false
+    },
+    {
+      "suite": "11i3_graphical",
+      "summary": [
+        "101",
+        "0"
+      ],
+      "script_or_error": false
+    },
+    {
+      "suite": "11i3_midgame_graphical",
+      "summary": [
+        "101",
+        "0"
+      ],
+      "script_or_error": false
+    },
+    {
+      "suite": "11i_final_import",
+      "summary": null,
+      "script_or_error": false
+    },
+    {
+      "suite": "11i_startup_empty",
+      "summary": null,
+      "script_or_error": false
+    },
+    {
+      "suite": "11i_startup_midgame",
+      "summary": null,
+      "script_or_error": false
+    }
+  ]
+}

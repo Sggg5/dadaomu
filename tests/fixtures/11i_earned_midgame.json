@@ -1,0 +1,1668 @@
+{
+	"auction_lot_instance_id": "",
+	"auction_reserve_mode": 1,
+	"campaign_seed": 52,
+	"cash": 339,
+	"collection": [
+		{
+			"acquired_day": 1,
+			"condition": 58,
+			"definition_id": "blue_white_jar",
+			"identified": true,
+			"instance_id": "A000001"
+		},
+		{
+			"acquired_day": 2,
+			"condition": 75,
+			"definition_id": "han_jade_disc",
+			"identified": true,
+			"instance_id": "A000002"
+		},
+		{
+			"acquired_day": 3,
+			"condition": 61,
+			"definition_id": "shared_jade_bead",
+			"identified": true,
+			"instance_id": "A000003"
+		},
+		{
+			"acquired_day": 4,
+			"condition": 83,
+			"definition_id": "gilt_buddha",
+			"identified": true,
+			"instance_id": "A000004"
+		},
+		{
+			"acquired_day": 4,
+			"condition": 88,
+			"definition_id": "gilt_buddha",
+			"identified": true,
+			"instance_id": "A000005"
+		},
+		{
+			"acquired_day": 5,
+			"condition": 75,
+			"definition_id": "ly_belt_hook",
+			"identified": true,
+			"instance_id": "A000006"
+		},
+		{
+			"acquired_day": 7,
+			"condition": 67,
+			"definition_id": "han_jade_disc",
+			"identified": true,
+			"instance_id": "A000007"
+		},
+		{
+			"acquired_day": 9,
+			"condition": 89,
+			"definition_id": "gz_kaiyuan",
+			"identified": true,
+			"instance_id": "A000008"
+		},
+		{
+			"acquired_day": 10,
+			"condition": 81,
+			"definition_id": "blue_white_jar",
+			"identified": true,
+			"instance_id": "A000009"
+		},
+		{
+			"acquired_day": 10,
+			"condition": 77,
+			"definition_id": "gilt_buddha",
+			"identified": true,
+			"instance_id": "A000010"
+		},
+		{
+			"acquired_day": 11,
+			"condition": 85,
+			"definition_id": "shared_jade_ring",
+			"identified": true,
+			"instance_id": "A000011"
+		},
+		{
+			"acquired_day": 11,
+			"condition": 67,
+			"definition_id": "ly_pig",
+			"identified": true,
+			"instance_id": "A000012"
+		},
+		{
+			"acquired_day": 12,
+			"condition": 72,
+			"definition_id": "gz_celadon_cup",
+			"identified": true,
+			"instance_id": "A000013"
+		}
+	],
+	"collection_archives": [
+		{
+			"acquired_day": 1,
+			"definition_id": "blue_white_jar",
+			"events": [
+				{
+					"actor": "MANUAL",
+					"day_number": 5,
+					"details": {
+
+					},
+					"event_id": 1,
+					"kind": "REGISTER"
+				},
+				{
+					"actor": "APPRAISER_SHEN",
+					"day_number": 5,
+					"details": {
+						"related_ids": [
+							"A000001"
+						]
+					},
+					"event_id": 2,
+					"kind": "TYPE_RESEARCH"
+				}
+			],
+			"exhibited_topics": [],
+			"inspection_anchor": 0,
+			"instance_id": "A000001",
+			"last_condition": 58,
+			"last_identified": true,
+			"level": 2,
+			"next_event": 3,
+			"references": [],
+			"source": {
+				"expedition_day": 1,
+				"region_id": "JINBEI",
+				"run_seed": 522269330,
+				"site_id": "DEFAULT_TOMB"
+			}
+		},
+		{
+			"acquired_day": 2,
+			"definition_id": "han_jade_disc",
+			"events": [
+				{
+					"actor": "MANUAL",
+					"day_number": 6,
+					"details": {
+
+					},
+					"event_id": 1,
+					"kind": "REGISTER"
+				},
+				{
+					"actor": "APPRAISER_SHEN",
+					"day_number": 6,
+					"details": {
+						"related_ids": [
+							"A000002"
+						]
+					},
+					"event_id": 2,
+					"kind": "TYPE_RESEARCH"
+				}
+			],
+			"exhibited_topics": [
+				"HAN_WEI"
+			],
+			"inspection_anchor": 0,
+			"instance_id": "A000002",
+			"last_condition": 75,
+			"last_identified": true,
+			"level": 2,
+			"next_event": 3,
+			"references": [],
+			"source": {
+				"expedition_day": 2,
+				"region_id": "LUOYANG",
+				"run_seed": 216479609,
+				"site_id": "LUOYANG_EAST"
+			}
+		},
+		{
+			"acquired_day": 3,
+			"definition_id": "shared_jade_bead",
+			"events": [
+				{
+					"actor": "MANUAL",
+					"day_number": 7,
+					"details": {
+
+					},
+					"event_id": 1,
+					"kind": "REGISTER"
+				},
+				{
+					"actor": "APPRAISER_SHEN",
+					"day_number": 7,
+					"details": {
+						"related_ids": [
+							"A000003"
+						]
+					},
+					"event_id": 2,
+					"kind": "TYPE_RESEARCH"
+				}
+			],
+			"exhibited_topics": [
+				"HAN_WEI"
+			],
+			"inspection_anchor": 0,
+			"instance_id": "A000003",
+			"last_condition": 61,
+			"last_identified": true,
+			"level": 2,
+			"next_event": 3,
+			"references": [
+				"https://dia.org/collection/cicada-3430"
+			],
+			"source": {
+				"expedition_day": 3,
+				"region_id": "GUANZHONG",
+				"run_seed": 1181456009,
+				"site_id": "GUANZHONG_MOUND"
+			}
+		},
+		{
+			"acquired_day": 4,
+			"definition_id": "gilt_buddha",
+			"events": [
+				{
+					"actor": "MANUAL",
+					"day_number": 8,
+					"details": {
+
+					},
+					"event_id": 1,
+					"kind": "REGISTER"
+				},
+				{
+					"actor": "APPRAISER_SHEN",
+					"day_number": 8,
+					"details": {
+						"related_ids": [
+							"A000004",
+							"A000005"
+						]
+					},
+					"event_id": 2,
+					"kind": "TYPE_RESEARCH"
+				}
+			],
+			"exhibited_topics": [],
+			"inspection_anchor": 0,
+			"instance_id": "A000004",
+			"last_condition": 83,
+			"last_identified": true,
+			"level": 2,
+			"next_event": 3,
+			"references": [],
+			"source": {
+				"expedition_day": 4,
+				"region_id": "JINBEI",
+				"run_seed": 1726271689,
+				"site_id": "DEFAULT_TOMB"
+			}
+		},
+		{
+			"acquired_day": 4,
+			"definition_id": "gilt_buddha",
+			"events": [
+				{
+					"actor": "MANUAL",
+					"day_number": 9,
+					"details": {
+
+					},
+					"event_id": 1,
+					"kind": "REGISTER"
+				},
+				{
+					"actor": "APPRAISER_SHEN",
+					"day_number": 9,
+					"details": {
+						"related_ids": [
+							"A000004",
+							"A000005"
+						]
+					},
+					"event_id": 2,
+					"kind": "TYPE_RESEARCH"
+				}
+			],
+			"exhibited_topics": [],
+			"inspection_anchor": 0,
+			"instance_id": "A000005",
+			"last_condition": 88,
+			"last_identified": true,
+			"level": 2,
+			"next_event": 3,
+			"references": [],
+			"source": {
+				"expedition_day": 4,
+				"region_id": "JINBEI",
+				"run_seed": 1726271689,
+				"site_id": "DEFAULT_TOMB"
+			}
+		},
+		{
+			"acquired_day": 5,
+			"definition_id": "ly_belt_hook",
+			"events": [
+				{
+					"actor": "MANUAL",
+					"day_number": 10,
+					"details": {
+
+					},
+					"event_id": 1,
+					"kind": "REGISTER"
+				},
+				{
+					"actor": "APPRAISER_SHEN",
+					"day_number": 10,
+					"details": {
+						"related_ids": [
+							"A000006"
+						]
+					},
+					"event_id": 2,
+					"kind": "TYPE_RESEARCH"
+				}
+			],
+			"exhibited_topics": [
+				"HAN_WEI"
+			],
+			"inspection_anchor": 0,
+			"instance_id": "A000006",
+			"last_condition": 75,
+			"last_identified": true,
+			"level": 2,
+			"next_event": 3,
+			"references": [
+				"https://www.britishmuseum.org/collection/object/A_1945-1017-87"
+			],
+			"source": {
+				"expedition_day": 5,
+				"region_id": "LUOYANG",
+				"run_seed": 1420481968,
+				"site_id": "LUOYANG_EAST"
+			}
+		},
+		{
+			"acquired_day": 7,
+			"definition_id": "han_jade_disc",
+			"events": [
+				{
+					"actor": "MANUAL",
+					"day_number": 11,
+					"details": {
+
+					},
+					"event_id": 1,
+					"kind": "REGISTER"
+				},
+				{
+					"actor": "APPRAISER_SHEN",
+					"day_number": 11,
+					"details": {
+						"related_ids": [
+							"A000002",
+							"A000007"
+						]
+					},
+					"event_id": 2,
+					"kind": "TYPE_RESEARCH"
+				}
+			],
+			"exhibited_topics": [
+				"HAN_WEI"
+			],
+			"inspection_anchor": 0,
+			"instance_id": "A000007",
+			"last_condition": 67,
+			"last_identified": true,
+			"level": 2,
+			"next_event": 3,
+			"references": [],
+			"source": {
+				"expedition_day": 7,
+				"region_id": "JINBEI",
+				"run_seed": 782790401,
+				"site_id": "DEFAULT_TOMB"
+			}
+		},
+		{
+			"acquired_day": 9,
+			"definition_id": "gz_kaiyuan",
+			"events": [
+				{
+					"actor": "MANUAL",
+					"day_number": 12,
+					"details": {
+
+					},
+					"event_id": 1,
+					"kind": "REGISTER"
+				},
+				{
+					"actor": "APPRAISER_SHEN",
+					"day_number": 12,
+					"details": {
+						"related_ids": [
+							"A000008"
+						]
+					},
+					"event_id": 2,
+					"kind": "TYPE_RESEARCH"
+				}
+			],
+			"exhibited_topics": [],
+			"inspection_anchor": 0,
+			"instance_id": "A000008",
+			"last_condition": 89,
+			"last_identified": true,
+			"level": 2,
+			"next_event": 3,
+			"references": [
+				"https://www.britishmuseum.org/collection/object/C_1884-0511-909"
+			],
+			"source": {
+				"expedition_day": 9,
+				"region_id": "GUANZHONG",
+				"run_seed": 1631369748,
+				"site_id": "GUANZHONG_MOUND"
+			}
+		},
+		{
+			"acquired_day": 10,
+			"definition_id": "blue_white_jar",
+			"events": [
+				{
+					"actor": "MANUAL",
+					"day_number": 13,
+					"details": {
+
+					},
+					"event_id": 1,
+					"kind": "REGISTER"
+				},
+				{
+					"actor": "APPRAISER_SHEN",
+					"day_number": 13,
+					"details": {
+						"related_ids": [
+							"A000001",
+							"A000009"
+						]
+					},
+					"event_id": 2,
+					"kind": "TYPE_RESEARCH"
+				}
+			],
+			"exhibited_topics": [],
+			"inspection_anchor": 0,
+			"instance_id": "A000009",
+			"last_condition": 81,
+			"last_identified": true,
+			"level": 2,
+			"next_event": 3,
+			"references": [],
+			"source": {
+				"expedition_day": 10,
+				"region_id": "JINBEI",
+				"run_seed": 676330286,
+				"site_id": "DEFAULT_TOMB"
+			}
+		},
+		{
+			"acquired_day": 10,
+			"definition_id": "gilt_buddha",
+			"events": [],
+			"exhibited_topics": [],
+			"inspection_anchor": 0,
+			"instance_id": "A000010",
+			"last_condition": 77,
+			"last_identified": true,
+			"level": 0,
+			"next_event": 1,
+			"references": [],
+			"source": {
+				"expedition_day": 10,
+				"region_id": "JINBEI",
+				"run_seed": 676330286,
+				"site_id": "DEFAULT_TOMB"
+			}
+		},
+		{
+			"acquired_day": 11,
+			"definition_id": "shared_jade_ring",
+			"events": [],
+			"exhibited_topics": [
+				"HAN_WEI"
+			],
+			"inspection_anchor": 0,
+			"instance_id": "A000011",
+			"last_condition": 85,
+			"last_identified": true,
+			"level": 0,
+			"next_event": 1,
+			"references": [],
+			"source": {
+				"expedition_day": 11,
+				"region_id": "LUOYANG",
+				"run_seed": 370540565,
+				"site_id": "LUOYANG_EAST"
+			}
+		},
+		{
+			"acquired_day": 11,
+			"definition_id": "ly_pig",
+			"events": [],
+			"exhibited_topics": [
+				"HAN_WEI"
+			],
+			"inspection_anchor": 0,
+			"instance_id": "A000012",
+			"last_condition": 67,
+			"last_identified": true,
+			"level": 0,
+			"next_event": 1,
+			"references": [],
+			"source": {
+				"expedition_day": 11,
+				"region_id": "LUOYANG",
+				"run_seed": 370540565,
+				"site_id": "LUOYANG_EAST"
+			}
+		},
+		{
+			"acquired_day": 12,
+			"definition_id": "gz_celadon_cup",
+			"events": [],
+			"exhibited_topics": [],
+			"inspection_anchor": 0,
+			"instance_id": "A000013",
+			"last_condition": 72,
+			"last_identified": true,
+			"level": 0,
+			"next_event": 1,
+			"references": [],
+			"source": {
+				"expedition_day": 12,
+				"region_id": "GUANZHONG",
+				"run_seed": 214986492,
+				"site_id": "GUANZHONG_MOUND"
+			}
+		}
+	],
+	"collection_history": {
+		"blue_white_jar": {
+			"discovered_day": 1,
+			"identified": true,
+			"identified_day": 2,
+			"regions": [
+				"JINBEI"
+			],
+			"research_level": 2,
+			"researched_day": 5
+		},
+		"gilt_buddha": {
+			"discovered_day": 4,
+			"identified": true,
+			"identified_day": 5,
+			"regions": [
+				"JINBEI"
+			],
+			"research_level": 2,
+			"researched_day": 8
+		},
+		"gz_celadon_cup": {
+			"discovered_day": 12,
+			"identified": true,
+			"identified_day": 13,
+			"regions": [
+				"GUANZHONG"
+			],
+			"research_level": 0,
+			"researched_day": 0
+		},
+		"gz_kaiyuan": {
+			"discovered_day": 9,
+			"identified": true,
+			"identified_day": 10,
+			"regions": [
+				"GUANZHONG"
+			],
+			"research_level": 2,
+			"researched_day": 12
+		},
+		"han_jade_disc": {
+			"discovered_day": 2,
+			"identified": true,
+			"identified_day": 3,
+			"regions": [
+				"JINBEI",
+				"LUOYANG"
+			],
+			"research_level": 2,
+			"researched_day": 6
+		},
+		"ly_belt_hook": {
+			"discovered_day": 5,
+			"identified": true,
+			"identified_day": 6,
+			"regions": [
+				"LUOYANG"
+			],
+			"research_level": 2,
+			"researched_day": 10
+		},
+		"ly_pig": {
+			"discovered_day": 11,
+			"identified": true,
+			"identified_day": 12,
+			"regions": [
+				"LUOYANG"
+			],
+			"research_level": 0,
+			"researched_day": 0
+		},
+		"shared_jade_bead": {
+			"discovered_day": 3,
+			"identified": true,
+			"identified_day": 4,
+			"regions": [
+				"GUANZHONG"
+			],
+			"research_level": 2,
+			"researched_day": 7
+		},
+		"shared_jade_ring": {
+			"discovered_day": 11,
+			"identified": true,
+			"identified_day": 12,
+			"regions": [
+				"LUOYANG"
+			],
+			"research_level": 0,
+			"researched_day": 0
+		}
+	},
+	"collection_research_version": 1,
+	"daily_reports": [
+		{
+			"active_exhibitions": {
+
+			},
+			"artifact_views": 7,
+			"construction_at_close": 0,
+			"day_number": 2,
+			"exhibit_appeal": 7,
+			"exhibition_scores": {
+
+			},
+			"exhibition_visits": {
+
+			},
+			"hall_visit_statistics": {
+				"MAIN": 7
+			},
+			"interest_distribution": {
+				"CERAMIC": 7
+			},
+			"maintenance_due": 0,
+			"maintenance_paid": 0,
+			"maintenance_waived": 0,
+			"museum_level": 0,
+			"operating_net_income": 35,
+			"popular_units": {
+				"CASE_1": 7
+			},
+			"service_visits": {
+
+			},
+			"staff_guide_counts": {
+
+			},
+			"staff_repair_fees": 0,
+			"staff_task_counts": {
+
+			},
+			"staff_wages_paid": 0,
+			"ticket_income": 35,
+			"total_exhibit_count": 1,
+			"unique_artifacts": 1,
+			"unique_viewers": 7,
+			"view_count": 7,
+			"view_limit": 2,
+			"visitor_count": 7
+		},
+		{
+			"active_exhibitions": {
+
+			},
+			"artifact_views": 28,
+			"construction_at_close": 0,
+			"day_number": 3,
+			"exhibit_appeal": 26,
+			"exhibition_scores": {
+
+			},
+			"exhibition_visits": {
+
+			},
+			"hall_visit_statistics": {
+				"MAIN": 14
+			},
+			"interest_distribution": {
+				"CERAMIC": 14,
+				"JADE": 14
+			},
+			"maintenance_due": 0,
+			"maintenance_paid": 0,
+			"maintenance_waived": 0,
+			"museum_level": 0,
+			"operating_net_income": 70,
+			"popular_units": {
+				"CASE_1": 14
+			},
+			"service_visits": {
+
+			},
+			"staff_guide_counts": {
+
+			},
+			"staff_repair_fees": 0,
+			"staff_task_counts": {
+
+			},
+			"staff_wages_paid": 0,
+			"ticket_income": 70,
+			"total_exhibit_count": 2,
+			"unique_artifacts": 2,
+			"unique_viewers": 14,
+			"view_count": 14,
+			"view_limit": 2,
+			"visitor_count": 14
+		},
+		{
+			"active_exhibitions": {
+
+			},
+			"artifact_views": 45,
+			"construction_at_close": 0,
+			"day_number": 4,
+			"exhibit_appeal": 30,
+			"exhibition_scores": {
+
+			},
+			"exhibition_visits": {
+
+			},
+			"hall_visit_statistics": {
+				"MAIN": 15
+			},
+			"interest_distribution": {
+				"CERAMIC": 15,
+				"JADE": 30
+			},
+			"maintenance_due": 0,
+			"maintenance_paid": 0,
+			"maintenance_waived": 0,
+			"museum_level": 0,
+			"operating_net_income": 75,
+			"popular_units": {
+				"CASE_1": 15
+			},
+			"service_visits": {
+
+			},
+			"staff_guide_counts": {
+
+			},
+			"staff_repair_fees": 0,
+			"staff_task_counts": {
+
+			},
+			"staff_wages_paid": 0,
+			"ticket_income": 75,
+			"total_exhibit_count": 3,
+			"unique_artifacts": 3,
+			"unique_viewers": 15,
+			"view_count": 15,
+			"view_limit": 2,
+			"visitor_count": 15
+		},
+		{
+			"active_exhibitions": {
+
+			},
+			"artifact_views": 108,
+			"construction_at_close": 0,
+			"day_number": 5,
+			"exhibit_appeal": 61,
+			"exhibition_scores": {
+
+			},
+			"exhibition_visits": {
+
+			},
+			"hall_visit_statistics": {
+				"MAIN": 42
+			},
+			"interest_distribution": {
+				"CERAMIC": 22,
+				"JADE": 44,
+				"SCULPTURE": 42
+			},
+			"maintenance_due": 0,
+			"maintenance_paid": 0,
+			"maintenance_waived": 0,
+			"museum_level": 0,
+			"operating_net_income": 116,
+			"popular_units": {
+				"CASE_1": 22,
+				"CASE_2": 20
+			},
+			"service_visits": {
+
+			},
+			"staff_guide_counts": {
+
+			},
+			"staff_repair_fees": 0,
+			"staff_task_counts": {
+				"APPRAISER_SHEN": 1
+			},
+			"staff_wages_paid": 14,
+			"ticket_income": 130,
+			"total_exhibit_count": 5,
+			"unique_artifacts": 5,
+			"unique_viewers": 26,
+			"view_count": 42,
+			"view_limit": 2,
+			"visitor_count": 26
+		},
+		{
+			"active_exhibitions": {
+				"MAIN": "HAN_WEI"
+			},
+			"artifact_views": 128,
+			"construction_at_close": 0,
+			"day_number": 6,
+			"exhibit_appeal": 73,
+			"exhibition_scores": {
+				"MAIN": 25.6
+			},
+			"exhibition_visits": {
+				"HAN_WEI": 41
+			},
+			"hall_visit_statistics": {
+				"MAIN": 41
+			},
+			"interest_distribution": {
+				"BRONZE": 18,
+				"CERAMIC": 23,
+				"JADE": 46,
+				"SCULPTURE": 41
+			},
+			"maintenance_due": 0,
+			"maintenance_paid": 0,
+			"maintenance_waived": 0,
+			"museum_level": 0,
+			"operating_net_income": 136,
+			"popular_units": {
+				"CASE_1": 23,
+				"CASE_2": 18
+			},
+			"service_visits": {
+
+			},
+			"staff_guide_counts": {
+
+			},
+			"staff_repair_fees": 0,
+			"staff_task_counts": {
+				"APPRAISER_SHEN": 1
+			},
+			"staff_wages_paid": 14,
+			"ticket_income": 150,
+			"total_exhibit_count": 6,
+			"unique_artifacts": 6,
+			"unique_viewers": 30,
+			"view_count": 41,
+			"view_limit": 2,
+			"visitor_count": 30
+		},
+		{
+			"active_exhibitions": {
+				"MAIN": "HAN_WEI"
+			},
+			"artifact_views": 146,
+			"construction_at_close": 0,
+			"day_number": 7,
+			"exhibit_appeal": 73,
+			"exhibition_scores": {
+				"MAIN": 25.6
+			},
+			"exhibition_visits": {
+				"HAN_WEI": 49
+			},
+			"hall_visit_statistics": {
+				"MAIN": 49
+			},
+			"interest_distribution": {
+				"BRONZE": 25,
+				"CERAMIC": 24,
+				"JADE": 48,
+				"SCULPTURE": 49
+			},
+			"maintenance_due": 0,
+			"maintenance_paid": 0,
+			"maintenance_waived": 0,
+			"museum_level": 0,
+			"operating_net_income": 136,
+			"popular_units": {
+				"CASE_1": 24,
+				"CASE_2": 25
+			},
+			"service_visits": {
+
+			},
+			"staff_guide_counts": {
+
+			},
+			"staff_repair_fees": 0,
+			"staff_task_counts": {
+				"APPRAISER_SHEN": 1
+			},
+			"staff_wages_paid": 14,
+			"ticket_income": 150,
+			"total_exhibit_count": 6,
+			"unique_artifacts": 6,
+			"unique_viewers": 30,
+			"view_count": 49,
+			"view_limit": 2,
+			"visitor_count": 30
+		},
+		{
+			"active_exhibitions": {
+				"MAIN": "HAN_WEI"
+			},
+			"artifact_views": 171,
+			"construction_at_close": 0,
+			"day_number": 8,
+			"exhibit_appeal": 84,
+			"exhibition_scores": {
+				"MAIN": 29.955
+			},
+			"exhibition_visits": {
+				"HAN_WEI": 48
+			},
+			"hall_visit_statistics": {
+				"MAIN": 48
+			},
+			"interest_distribution": {
+				"BRONZE": 21,
+				"CERAMIC": 27,
+				"JADE": 75,
+				"SCULPTURE": 48
+			},
+			"maintenance_due": 0,
+			"maintenance_paid": 0,
+			"maintenance_waived": 0,
+			"museum_level": 0,
+			"operating_net_income": 136,
+			"popular_units": {
+				"CASE_1": 27,
+				"CASE_2": 21
+			},
+			"service_visits": {
+
+			},
+			"staff_guide_counts": {
+
+			},
+			"staff_repair_fees": 0,
+			"staff_task_counts": {
+				"APPRAISER_SHEN": 1
+			},
+			"staff_wages_paid": 14,
+			"ticket_income": 150,
+			"total_exhibit_count": 7,
+			"unique_artifacts": 7,
+			"unique_viewers": 30,
+			"view_count": 48,
+			"view_limit": 2,
+			"visitor_count": 30
+		},
+		{
+			"active_exhibitions": {
+				"MAIN": "HAN_WEI"
+			},
+			"artifact_views": 157,
+			"construction_at_close": 0,
+			"day_number": 9,
+			"exhibit_appeal": 84,
+			"exhibition_scores": {
+				"MAIN": 29.955
+			},
+			"exhibition_visits": {
+				"HAN_WEI": 45
+			},
+			"hall_visit_statistics": {
+				"MAIN": 45
+			},
+			"interest_distribution": {
+				"BRONZE": 23,
+				"CERAMIC": 22,
+				"JADE": 67,
+				"SCULPTURE": 45
+			},
+			"maintenance_due": 0,
+			"maintenance_paid": 0,
+			"maintenance_waived": 0,
+			"museum_level": 0,
+			"operating_net_income": 136,
+			"popular_units": {
+				"CASE_1": 22,
+				"CASE_2": 23
+			},
+			"service_visits": {
+
+			},
+			"staff_guide_counts": {
+
+			},
+			"staff_repair_fees": 0,
+			"staff_task_counts": {
+				"APPRAISER_SHEN": 1
+			},
+			"staff_wages_paid": 14,
+			"ticket_income": 150,
+			"total_exhibit_count": 7,
+			"unique_artifacts": 7,
+			"unique_viewers": 30,
+			"view_count": 45,
+			"view_limit": 2,
+			"visitor_count": 30
+		},
+		{
+			"active_exhibitions": {
+				"MAIN": "HAN_WEI"
+			},
+			"artifact_views": 180,
+			"construction_at_close": 0,
+			"day_number": 10,
+			"exhibit_appeal": 89,
+			"exhibition_scores": {
+				"MAIN": 29.955
+			},
+			"exhibition_visits": {
+				"HAN_WEI": 45
+			},
+			"hall_visit_statistics": {
+				"MAIN": 45
+			},
+			"interest_distribution": {
+				"BRONZE": 21,
+				"CERAMIC": 24,
+				"COIN": 21,
+				"JADE": 69,
+				"SCULPTURE": 45
+			},
+			"maintenance_due": 0,
+			"maintenance_paid": 0,
+			"maintenance_waived": 0,
+			"museum_level": 0,
+			"operating_net_income": 136,
+			"popular_units": {
+				"CASE_1": 24,
+				"CASE_2": 21
+			},
+			"service_visits": {
+
+			},
+			"staff_guide_counts": {
+
+			},
+			"staff_repair_fees": 0,
+			"staff_task_counts": {
+				"APPRAISER_SHEN": 1
+			},
+			"staff_wages_paid": 14,
+			"ticket_income": 150,
+			"total_exhibit_count": 8,
+			"unique_artifacts": 8,
+			"unique_viewers": 30,
+			"view_count": 45,
+			"view_limit": 2,
+			"visitor_count": 30
+		},
+		{
+			"active_exhibitions": {
+				"MAIN": "HAN_WEI"
+			},
+			"artifact_views": 212,
+			"construction_at_close": 0,
+			"day_number": 11,
+			"exhibit_appeal": 104,
+			"exhibition_scores": {
+				"MAIN": 29.955
+			},
+			"exhibition_visits": {
+				"HAN_WEI": 42
+			},
+			"hall_visit_statistics": {
+				"MAIN": 42
+			},
+			"interest_distribution": {
+				"BRONZE": 22,
+				"CERAMIC": 42,
+				"COIN": 22,
+				"JADE": 62,
+				"SCULPTURE": 64
+			},
+			"maintenance_due": 0,
+			"maintenance_paid": 0,
+			"maintenance_waived": 0,
+			"museum_level": 0,
+			"operating_net_income": 136,
+			"popular_units": {
+				"CASE_1": 20,
+				"CASE_2": 22
+			},
+			"service_visits": {
+
+			},
+			"staff_guide_counts": {
+
+			},
+			"staff_repair_fees": 0,
+			"staff_task_counts": {
+				"APPRAISER_SHEN": 1
+			},
+			"staff_wages_paid": 14,
+			"ticket_income": 150,
+			"total_exhibit_count": 10,
+			"unique_artifacts": 10,
+			"unique_viewers": 30,
+			"view_count": 42,
+			"view_limit": 2,
+			"visitor_count": 30
+		},
+		{
+			"active_exhibitions": {
+				"MAIN": "HAN_WEI"
+			},
+			"artifact_views": 264,
+			"construction_at_close": 0,
+			"day_number": 12,
+			"exhibit_appeal": 120,
+			"exhibition_scores": {
+				"MAIN": 47.705
+			},
+			"exhibition_visits": {
+				"HAN_WEI": 43
+			},
+			"hall_visit_statistics": {
+				"MAIN": 43
+			},
+			"interest_distribution": {
+				"BRONZE": 23,
+				"CERAMIC": 43,
+				"CERAMIC_SCULPTURE": 23,
+				"COIN": 23,
+				"JADE": 86,
+				"SCULPTURE": 66
+			},
+			"maintenance_due": 0,
+			"maintenance_paid": 0,
+			"maintenance_waived": 0,
+			"museum_level": 0,
+			"operating_net_income": 136,
+			"popular_units": {
+				"CASE_1": 20,
+				"CASE_2": 23
+			},
+			"service_visits": {
+
+			},
+			"staff_guide_counts": {
+
+			},
+			"staff_repair_fees": 0,
+			"staff_task_counts": {
+				"APPRAISER_SHEN": 1
+			},
+			"staff_wages_paid": 14,
+			"ticket_income": 150,
+			"total_exhibit_count": 12,
+			"unique_artifacts": 12,
+			"unique_viewers": 30,
+			"view_count": 43,
+			"view_limit": 2,
+			"visitor_count": 30
+		},
+		{
+			"active_exhibitions": {
+				"MAIN": "HAN_WEI"
+			},
+			"artifact_views": 415,
+			"construction_at_close": 1000,
+			"day_number": 13,
+			"exhibit_appeal": 132,
+			"exhibition_scores": {
+				"MAIN": 47.705
+			},
+			"exhibition_visits": {
+				"HAN_WEI": 65
+			},
+			"hall_visit_statistics": {
+				"MAIN": 72
+			},
+			"interest_distribution": {
+				"BRONZE": 37,
+				"CERAMIC": 72,
+				"CERAMIC_SCULPTURE": 37,
+				"COIN": 37,
+				"JADE": 130,
+				"SCULPTURE": 102
+			},
+			"maintenance_due": 0,
+			"maintenance_paid": 0,
+			"maintenance_waived": 0,
+			"museum_level": 1,
+			"operating_net_income": 211,
+			"popular_units": {
+				"CASE_1": 28,
+				"CASE_2": 37,
+				"CASE_3": 7
+			},
+			"service_visits": {
+
+			},
+			"staff_guide_counts": {
+
+			},
+			"staff_repair_fees": 0,
+			"staff_task_counts": {
+				"APPRAISER_SHEN": 1
+			},
+			"staff_wages_paid": 14,
+			"ticket_income": 225,
+			"total_exhibit_count": 13,
+			"unique_artifacts": 13,
+			"unique_viewers": 45,
+			"view_count": 72,
+			"view_limit": 2,
+			"visitor_count": 45
+		}
+	],
+	"day_number": 13,
+	"display_assignments": {
+		"CASE_1": "A000001",
+		"CASE_1/02": "A000002",
+		"CASE_1/03": "A000003",
+		"CASE_1/04": "A000004",
+		"CASE_2": "A000005",
+		"CASE_2/02": "A000006",
+		"CASE_2/03": "A000007",
+		"CASE_2/04": "A000008",
+		"CASE_2/05": "A000009",
+		"CASE_2/06": "A000010",
+		"CASE_2/07": "A000011",
+		"CASE_2/08": "A000012",
+		"CASE_3": "A000013"
+	},
+	"display_layout_version": 1,
+	"exhibition_plans": {
+		"MAIN": "HAN_WEI"
+	},
+	"facility_config_version": 1,
+	"facility_expenses": [
+		{
+			"amount": 1000,
+			"day_number": 13,
+			"from_level": 0,
+			"kind": "HALL_EXPANSION",
+			"target_id": "MUSEUM",
+			"to_level": 1,
+			"transaction_id": 1
+		}
+	],
+	"facility_foundation_level": 0,
+	"facility_levels": {
+
+	},
+	"facility_next_transaction": 2,
+	"last_day_ticket_income": 225,
+	"last_day_visitors": 45,
+	"museum_achievements": {
+		"FIRST_ACCESSION": {
+			"day_number": 1,
+			"event": "COLLECTION",
+			"id": "FIRST_ACCESSION",
+			"metric": "discovered",
+			"reward": "收藏图鉴纪念徽记",
+			"value": 1
+		},
+		"FIRST_BUSINESS": {
+			"day_number": 2,
+			"event": "REPORT",
+			"id": "FIRST_BUSINESS",
+			"metric": "business_days",
+			"reward": "开馆纪念纸档",
+			"value": 1
+		},
+		"FIRST_DISPLAY": {
+			"day_number": 2,
+			"event": "MUSEUM",
+			"id": "FIRST_DISPLAY",
+			"metric": "displayed",
+			"reward": "开柜纪念铭牌",
+			"value": 1
+		},
+		"FIRST_EXHIBITION": {
+			"day_number": 6,
+			"event": "MUSEUM",
+			"id": "FIRST_EXHIBITION",
+			"metric": "topics",
+			"reward": "专题策展纪念证书",
+			"value": 1
+		},
+		"FIRST_IDENTIFIED": {
+			"day_number": 2,
+			"event": "MUSEUM",
+			"id": "FIRST_IDENTIFIED",
+			"metric": "identified_history",
+			"reward": "鉴定登记纪念证书",
+			"value": 1
+		},
+		"FIRST_RESEARCH": {
+			"day_number": 5,
+			"event": "RESEARCH",
+			"id": "FIRST_RESEARCH",
+			"metric": "research_history",
+			"reward": "研究登记徽记",
+			"value": 1
+		},
+		"FIVE_RESEARCH": {
+			"day_number": 9,
+			"event": "RESEARCH",
+			"id": "FIVE_RESEARCH",
+			"metric": "research_instances",
+			"reward": "研究工作纪念牌",
+			"value": 5
+		},
+		"HALL_SIX": {
+			"day_number": 10,
+			"event": "MUSEUM",
+			"id": "HALL_SIX",
+			"metric": "hall_unique",
+			"reward": "展厅陈列纪念牌",
+			"value": 6
+		},
+		"HUNDRED_VISITORS": {
+			"day_number": 7,
+			"event": "REPORT",
+			"id": "HUNDRED_VISITORS",
+			"metric": "visitors",
+			"reward": "百客纪念铜牌",
+			"value": 122
+		},
+		"OWN_FIVE": {
+			"day_number": 5,
+			"event": "COLLECTION",
+			"id": "OWN_FIVE",
+			"metric": "owned",
+			"reward": "五器收藏铜牌",
+			"value": 5
+		}
+	},
+	"museum_level": 1,
+	"next_antique_id": 14,
+	"phase": "EVENING",
+	"reputation_version": 1,
+	"staff_config_version": 1,
+	"staff_expenses": [
+		{
+			"amount": 120,
+			"day_number": 5,
+			"expense_id": 1,
+			"kind": "HIRE",
+			"target_id": "APPRAISER_SHEN"
+		},
+		{
+			"amount": 14,
+			"day_number": 5,
+			"expense_id": 2,
+			"kind": "WAGES",
+			"target_id": "APPRAISER_SHEN"
+		},
+		{
+			"amount": 14,
+			"day_number": 6,
+			"expense_id": 3,
+			"kind": "WAGES",
+			"target_id": "APPRAISER_SHEN"
+		},
+		{
+			"amount": 14,
+			"day_number": 7,
+			"expense_id": 4,
+			"kind": "WAGES",
+			"target_id": "APPRAISER_SHEN"
+		},
+		{
+			"amount": 14,
+			"day_number": 8,
+			"expense_id": 5,
+			"kind": "WAGES",
+			"target_id": "APPRAISER_SHEN"
+		},
+		{
+			"amount": 14,
+			"day_number": 9,
+			"expense_id": 6,
+			"kind": "WAGES",
+			"target_id": "APPRAISER_SHEN"
+		},
+		{
+			"amount": 14,
+			"day_number": 10,
+			"expense_id": 7,
+			"kind": "WAGES",
+			"target_id": "APPRAISER_SHEN"
+		},
+		{
+			"amount": 14,
+			"day_number": 11,
+			"expense_id": 8,
+			"kind": "WAGES",
+			"target_id": "APPRAISER_SHEN"
+		},
+		{
+			"amount": 14,
+			"day_number": 12,
+			"expense_id": 9,
+			"kind": "WAGES",
+			"target_id": "APPRAISER_SHEN"
+		},
+		{
+			"amount": 14,
+			"day_number": 13,
+			"expense_id": 10,
+			"kind": "WAGES",
+			"target_id": "APPRAISER_SHEN"
+		}
+	],
+	"staff_members": [
+		{
+			"assigned_hall": "MAIN",
+			"employment_status": "ACTIVE",
+			"job": "APPRAISER",
+			"last_attended_day": 13,
+			"last_completed_count": 1,
+			"skill_level": 1,
+			"staff_id": "APPRAISER_SHEN"
+		}
+	],
+	"staff_next_expense": 11,
+	"staff_next_task": 10,
+	"staff_payroll_days": {
+		"10": {
+			"paid_ids": [
+				"APPRAISER_SHEN"
+			],
+			"settled": true,
+			"wages_paid": 14
+		},
+		"11": {
+			"paid_ids": [
+				"APPRAISER_SHEN"
+			],
+			"settled": true,
+			"wages_paid": 14
+		},
+		"12": {
+			"paid_ids": [
+				"APPRAISER_SHEN"
+			],
+			"settled": true,
+			"wages_paid": 14
+		},
+		"13": {
+			"paid_ids": [
+				"APPRAISER_SHEN"
+			],
+			"settled": true,
+			"wages_paid": 14
+		},
+		"5": {
+			"paid_ids": [
+				"APPRAISER_SHEN"
+			],
+			"settled": true,
+			"wages_paid": 14
+		},
+		"6": {
+			"paid_ids": [
+				"APPRAISER_SHEN"
+			],
+			"settled": true,
+			"wages_paid": 14
+		},
+		"7": {
+			"paid_ids": [
+				"APPRAISER_SHEN"
+			],
+			"settled": true,
+			"wages_paid": 14
+		},
+		"8": {
+			"paid_ids": [
+				"APPRAISER_SHEN"
+			],
+			"settled": true,
+			"wages_paid": 14
+		},
+		"9": {
+			"paid_ids": [
+				"APPRAISER_SHEN"
+			],
+			"settled": true,
+			"wages_paid": 14
+		}
+	},
+	"staff_tasks": [
+		{
+			"completed_day": 5,
+			"created_day": 5,
+			"fee_paid": 0,
+			"instance_id": "A000001",
+			"job": "APPRAISER",
+			"note": "真实营业作业完成，闭馆统一提交",
+			"staff_id": "APPRAISER_SHEN",
+			"status": "COMPLETED",
+			"target_level": 2,
+			"task_id": 1,
+			"work_kind": "RESEARCH",
+			"worked_seconds": 12.0
+		},
+		{
+			"completed_day": 6,
+			"created_day": 6,
+			"fee_paid": 0,
+			"instance_id": "A000002",
+			"job": "APPRAISER",
+			"note": "真实营业作业完成，闭馆统一提交",
+			"staff_id": "APPRAISER_SHEN",
+			"status": "COMPLETED",
+			"target_level": 2,
+			"task_id": 2,
+			"work_kind": "RESEARCH",
+			"worked_seconds": 12.0
+		},
+		{
+			"completed_day": 7,
+			"created_day": 7,
+			"fee_paid": 0,
+			"instance_id": "A000003",
+			"job": "APPRAISER",
+			"note": "真实营业作业完成，闭馆统一提交",
+			"staff_id": "APPRAISER_SHEN",
+			"status": "COMPLETED",
+			"target_level": 2,
+			"task_id": 3,
+			"work_kind": "RESEARCH",
+			"worked_seconds": 12.0
+		},
+		{
+			"completed_day": 8,
+			"created_day": 8,
+			"fee_paid": 0,
+			"instance_id": "A000004",
+			"job": "APPRAISER",
+			"note": "真实营业作业完成，闭馆统一提交",
+			"staff_id": "APPRAISER_SHEN",
+			"status": "COMPLETED",
+			"target_level": 2,
+			"task_id": 4,
+			"work_kind": "RESEARCH",
+			"worked_seconds": 12.0
+		},
+		{
+			"completed_day": 9,
+			"created_day": 9,
+			"fee_paid": 0,
+			"instance_id": "A000005",
+			"job": "APPRAISER",
+			"note": "真实营业作业完成，闭馆统一提交",
+			"staff_id": "APPRAISER_SHEN",
+			"status": "COMPLETED",
+			"target_level": 2,
+			"task_id": 5,
+			"work_kind": "RESEARCH",
+			"worked_seconds": 12.0
+		},
+		{
+			"completed_day": 10,
+			"created_day": 10,
+			"fee_paid": 0,
+			"instance_id": "A000006",
+			"job": "APPRAISER",
+			"note": "真实营业作业完成，闭馆统一提交",
+			"staff_id": "APPRAISER_SHEN",
+			"status": "COMPLETED",
+			"target_level": 2,
+			"task_id": 6,
+			"work_kind": "RESEARCH",
+			"worked_seconds": 12.0
+		},
+		{
+			"completed_day": 11,
+			"created_day": 11,
+			"fee_paid": 0,
+			"instance_id": "A000007",
+			"job": "APPRAISER",
+			"note": "真实营业作业完成，闭馆统一提交",
+			"staff_id": "APPRAISER_SHEN",
+			"status": "COMPLETED",
+			"target_level": 2,
+			"task_id": 7,
+			"work_kind": "RESEARCH",
+			"worked_seconds": 12.0
+		},
+		{
+			"completed_day": 12,
+			"created_day": 12,
+			"fee_paid": 0,
+			"instance_id": "A000008",
+			"job": "APPRAISER",
+			"note": "真实营业作业完成，闭馆统一提交",
+			"staff_id": "APPRAISER_SHEN",
+			"status": "COMPLETED",
+			"target_level": 2,
+			"task_id": 8,
+			"work_kind": "RESEARCH",
+			"worked_seconds": 12.0
+		},
+		{
+			"completed_day": 13,
+			"created_day": 13,
+			"fee_paid": 0,
+			"instance_id": "A000009",
+			"job": "APPRAISER",
+			"note": "真实营业作业完成，闭馆统一提交",
+			"staff_id": "APPRAISER_SHEN",
+			"status": "COMPLETED",
+			"target_level": 2,
+			"task_id": 9,
+			"work_kind": "RESEARCH",
+			"worked_seconds": 12.0
+		}
+	],
+	"version": 10
+}
