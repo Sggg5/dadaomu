@@ -1,6 +1,7 @@
 class_name MuseumOfficePanel
 extends CanvasLayer
 ## Tabbed ledger UI; bounded hall/report lists. All decisions belong to services.
+signal reputation_requested
 signal archives_requested
 var state: MuseumState
 var player: MuseumPlayer
@@ -44,6 +45,7 @@ func _ready() -> void:
 	title.add_theme_font_size_override("font_size",26)
 	var title_row:=HBoxContainer.new();box.add_child(title_row);title.size_flags_horizontal=Control.SIZE_EXPAND_FILL;title_row.add_child(title)
 	var archives:=Button.new();archives.text="馆藏档案 / 研究";archives.pressed.connect(func()->void:archives_requested.emit());title_row.add_child(archives)
+	var reputation:=Button.new();reputation.text="荣誉 / 收藏";reputation.pressed.connect(func()->void:reputation_requested.emit());title_row.add_child(reputation)
 	tabs=TabContainer.new()
 	tabs.size_flags_vertical=Control.SIZE_EXPAND_FILL
 	var ledger:=StyleBoxFlat.new()

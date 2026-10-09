@@ -1,7 +1,7 @@
 class_name MuseumProfileStore
 extends RefCounted
 ## 版本化地面JSON。只编码纯值，内存/路径可注入；不保存Night Run。
-const VERSION: int = 9
+const VERSION: int = 10
 var write_blocked: bool = false
 var _source_sha: String = ""
 var _loaded_version: int = 0
@@ -29,6 +29,7 @@ func encode(state: MuseumState) -> Dictionary:
 	payload.merge(MuseumFacilityCodec.encode(state))
 	payload.merge(MuseumStaffCodec.encode(state))
 	payload.merge(MuseumResearchCodec.encode(state))
+	payload.merge(MuseumReputationCodec.encode(state))
 	return payload
 
 
@@ -49,7 +50,7 @@ func save_profile(state: MuseumState) -> bool:
 		# A successful legacy migration writes v9 only after preserving the exact source.
 		if FileAccess.file_exists(save_path) and not _source_sha.is_empty():
 			if FileAccess.get_sha256(save_path) != _source_sha: return _failed("存档在读取后被修改，拒绝覆盖")
-			if _loaded_version in [1,2,3,4,5,6,7,8]:
+			if _loaded_version in [1,2,3,4,5,6,7,8,9]:
 				var backup := "%s.v%d.%s.backup.json" % [save_path,_loaded_version,_source_sha.substr(0,12)]
 				if FileAccess.file_exists(backup):
 					if FileAccess.get_sha256(backup) != _source_sha: return _failed("旧档备份冲突，拒绝覆盖")
@@ -164,6 +165,9 @@ func decode(payload: Variant) -> MuseumState:
 	if int(payload.version)<9:
 		for record in state.collection.archives.values():record.inspection_anchor=state.daily_reports.size()
 	if int(payload.version)>=8 and not MuseumStaffCodec.decode(state,payload):_failed("员工/任务/工资流水异常，保护原档")
+	if int(payload.version)>=10:
+		if not MuseumReputationCodec.decode(state,payload):_failed("声望/收藏/成就凭据异常，保护原档")
+	else:MuseumCollectionCodex.capture(state,true)
 	state.progress_suspended=false
 	return state
 

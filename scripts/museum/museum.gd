@@ -38,6 +38,8 @@ var prompt_label: Label
 var _night_after_close: bool = false
 var _shown_level: int = -1
 var codex_panel: MuseumCodexPanel
+var reputation_panel:MuseumReputationPanel
+var honor_wall:MuseumHonorWall
 var research_desk: MuseumInteractable
 var active_hall_id: StringName = &"MAIN"
 var hall_panel: MuseumHallPanel
@@ -159,6 +161,17 @@ func _ready() -> void:
 	office_desk.action=func()->void:office_panel.open()
 	add_child(office_desk)
 	player.interactables.append(office_desk)
+	reputation_panel=MuseumReputationPanel.new();reputation_panel.state=state;reputation_panel.player=player;add_child(reputation_panel)
+	reputation_panel.archive_requested.connect(func(id:StringName)->void:reputation_panel.close();codex_panel.open_at(id))
+	office_panel.reputation_requested.connect(func()->void:office_panel.close();reputation_panel.open())
+	honor_wall=MuseumHonorWall.new()
+	honor_wall.state=state
+	honor_wall.position=Vector2(115,350)
+	honor_wall.title="馆史荣誉墙"
+	honor_wall.prompt=func()->String:return "[E] 声望 / 收藏 / 纪念荣誉"
+	honor_wall.action=func()->void:reputation_panel.open(2)
+	add_child(honor_wall)
+	player.interactables.append(honor_wall)
 	state.changed.connect(_refresh)
 	message.text = morning_notice
 	_refresh()
@@ -204,6 +217,7 @@ func _ticket_prompt() -> String:
 
 
 func _refresh() -> void:
+	if is_instance_valid(honor_wall):honor_wall.queue_redraw()
 	_sync_cases()
 	_sync_services()
 	_sync_guides()
