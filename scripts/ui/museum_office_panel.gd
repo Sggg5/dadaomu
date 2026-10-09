@@ -10,6 +10,7 @@ var overview: RichTextLabel
 var hall_list: ItemList
 var hall_detail: RichTextLabel
 var finance: RichTextLabel
+var visitors: RichTextLabel
 var topic_hall: OptionButton
 var topic_select: OptionButton
 var topic_detail: RichTextLabel
@@ -49,6 +50,7 @@ func _ready() -> void:
 	hall_box.add_child(hall_detail)
 	hall_list.item_selected.connect(_select_hall)
 	finance=_page("财务台账")
+	visitors=_page("参观反馈")
 	var topic_box:=VBoxContainer.new()
 	topic_box.name="专题策展"
 	tabs.add_child(topic_box)
@@ -112,6 +114,8 @@ func refresh() -> void:
 	for hall in data.halls:
 		hall_ids.append(hall.id)
 		hall_list.add_item("%s · %s · %d件" % [hall.name,"已解锁" if hall.unlocked else "未解锁",hall.displayed])
+	var stats:=business.visits.snapshot()
+	visitors.text="本日实际付费 %d人 / 完成观看 %d次\n独立观看游客 %d人 / 器物观看 %d件次（不同实物%d件）\n\n各厅：%s\n热门设施：%s\n专题访问：%s\n兴趣类别：%s\n\n近期真实反馈：\n%s" % [business.visitors_today,stats.view_count,stats.unique_viewers,stats.artifact_views,stats.unique_artifacts,str(stats.hall_visits),str(stats.unit_visits),str(stats.topic_visits),str(stats.interests),"\n".join(stats.feedback)]
 	_select_hall(0)
 	_refresh_topic()
 	finance.text="现金（实际）：%s\n\n本日实时：%d位付费游客 / %s门票\n上次已结算：%d位游客 / %s门票\n\n预计游客：%d人；预测不记入现金。\n历史营业记录将在日报页查询。" % [AntiqueDefinition.money(data.cash),data.live_visitors,AntiqueDefinition.money(data.live_income),data.last_visitors,AntiqueDefinition.money(data.last_income),data.forecast_visitors]

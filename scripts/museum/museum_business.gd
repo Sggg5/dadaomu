@@ -17,6 +17,7 @@ var elapsed: float = 0.0
 var running: bool = false
 var closing: bool = false
 var _paid: Dictionary[int,bool] = {}
+var visits:=MuseumVisitStatistics.new()
 var _spawn_timer: float = 0.0
 
 
@@ -79,6 +80,7 @@ func spawn_visitor() -> void:
 	visitor.position = Vector2(640,600)
 	visitor.paid.connect(_on_paid)
 	visitor.leaving.connect(_on_leaving)
+	visitor.view_completed.connect(_on_view_completed)
 	spawned += 1
 	active.append(visitor)
 	visitor_parent.add_child(visitor)
@@ -95,3 +97,7 @@ func _on_paid(index: int) -> void:
 
 
 func _on_leaving(visitor: MuseumVisitor) -> void: active.erase(visitor)
+
+func _on_view_completed(index:int,result:Dictionary)->void:
+	if not running or closing or not _paid.has(index):return
+	visits.record(index,result)

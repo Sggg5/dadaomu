@@ -8,6 +8,10 @@ var hall_id: StringName = &"MAIN"
 var chosen_unit_id: StringName = &""
 var viewed_instance_ids: Array[StringName] = []
 var _pending_hall: StringName = &""
+signal view_completed(visitor_index:int,result:Dictionary)
+var _view_result:Dictionary={}
+var _seen_categories:Dictionary={}
+var last_feedback:String=""
 signal paid(visitor_index: int)
 signal leaving(visitor: MuseumVisitor)
 var visitor_index: int
@@ -114,6 +118,7 @@ func close_museum() -> void:
 
 
 func comment() -> String:
+	if not last_feedback.is_empty():return "“"+last_feedback+"”"
 	if state==null or chosen_unit_id==&"":return "“今天来看看馆里的收藏。”"
 	var items:=state.unit_items(chosen_unit_id)
 	if items.is_empty():return "“馆里很安静。”"
@@ -152,12 +157,18 @@ func _physics_process(delta: float) -> void:
 			view_count += 1
 			for item in state.unit_items(chosen_unit_id):
 				if item.instance_id not in viewed_instance_ids:viewed_instance_ids.append(item.instance_id)
+			_view_result=VisitorViewResult.snapshot(state,chosen_unit_id,_seen_categories)
 			view_remaining = config.view_duration
 			title = "观看中"
 			refresh()
 		Activity.VIEW:
 			view_remaining -= delta
 			if view_remaining <= 0:
+				if not _view_result.is_empty():
+					last_feedback=_view_result.feedback
+					for category in _view_result.categories:_seen_categories[category]=true
+					view_completed.emit(visitor_index,_view_result.duplicate(true))
+					_view_result.clear()
 				if view_count < 2 and rng.randf() < .5: activity = Activity.CHOOSE_EXHIBIT
 				else: close_museum()
 		Activity.EXIT:
