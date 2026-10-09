@@ -24,6 +24,8 @@ func _ready() -> void:
 	columns.text = "名称 · 占格 · 估值 · 价值/格"
 	box.add_child(columns)
 	list = ItemList.new()
+	list.fixed_icon_size = Vector2i(28,28)
+	list.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	list.custom_minimum_size = Vector2(600,280)
 	list.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	list.add_theme_font_size_override("font_size",19)
@@ -42,7 +44,9 @@ func _ready() -> void:
 func refresh() -> void:
 	var selected := list.get_selected_items()
 	list.clear()
-	for item in inventory.items(): list.add_item("%s    %d格    %s    %s/格" % [item.display_name,item.slots,AntiqueDefinition.money(item.base_value),AntiqueDefinition.money(floori(float(item.base_value)/item.slots))])
+	for item in inventory.items():
+		list.add_item("%s    %d格    %s    %s/格" % [item.display_name,item.slots,AntiqueDefinition.money(item.base_value),AntiqueDefinition.money(floori(float(item.base_value)/item.slots))])
+		list.set_item_icon(list.item_count-1,AntiqueVisual.icon(item.id))
 	if not selected.is_empty() and selected[0] < list.item_count: list.select(selected[0])
 	header.text = "随身背包 %d / %d · Tab关闭" % [inventory.used_slots(),inventory.capacity]
 	footer.text = "总估值：%s · 背包打开时战斗继续" % AntiqueDefinition.money(inventory.total_value())

@@ -80,6 +80,8 @@ func _ready() -> void:
 	columns.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	box.add_child(columns)
 	list = ItemList.new()
+	list.fixed_icon_size = Vector2i(28,28)
+	list.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	list.custom_minimum_size.x = 280
 	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	list.size_flags_stretch_ratio = .7
@@ -214,6 +216,11 @@ func select_entry(index: int) -> void:
 	image.visible=mode not in [0,4];image_note.visible=mode not in [0,4]
 	if mode in [0,4]:
 		dossier_id=StringName(id);history_page=0;_dossier()
+		image.texture = AntiqueVisual.icon(state.collection.archives[dossier_id].definition_id)
+		image.visible = image.texture != null
+		image_note.visible = image.visible
+		image_note.text = "原创游戏器物图 · DRAFT待美术验收 · 非真实馆藏照片"
+		if image.visible: placeholder.hide()
 	else:
 		detail.text = MuseumCodexText.research(catalog,catalog.record(id))
 		if mode == 3:

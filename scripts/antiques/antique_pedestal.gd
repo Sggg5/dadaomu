@@ -53,5 +53,6 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _draw() -> void:
 	draw_rect(Rect2(-22,-14,44,28),Color("567d82"))
-	draw_circle(Vector2(0,-14),13,Color("efd8a2"))
+	if not AntiqueVisual.draw(self,definition.id,Vector2(0,-14),Vector2(32,32)):
+		draw_circle(Vector2(0,-14),13,Color("efd8a2"))
 	draw_arc(Vector2(0,-14),17,0,TAU,24,Color("abebe2"),2)

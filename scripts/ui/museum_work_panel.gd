@@ -32,6 +32,8 @@ func _ready() -> void:
 	label.add_theme_font_size_override("font_size",20)
 	box.add_child(label)
 	list = ItemList.new()
+	list.fixed_icon_size = Vector2i(28,28)
+	list.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	list.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	list.add_theme_font_size_override("font_size",18)
 	box.add_child(list)
@@ -59,6 +61,7 @@ func open() -> bool:
 		_ids.append(item.instance_id)
 		var definition := MuseumState.POOL.find_by_id(item.definition_id)
 		list.add_item("%s · 品相%d → 100 · 费用%s" % [definition.display_name,item.condition,AntiqueDefinition.money(state.restoration_cost(item.instance_id))] if restoration else "%s · 待正式鉴定 · 第%d天入藏" % [definition.display_name,item.acquired_day])
+		list.set_item_icon(list.item_count-1,AntiqueVisual.icon(item.definition_id))
 	if _ids.is_empty(): label.text += "\n暂无待修复古董" if restoration else "\n暂无待鉴定古董"
 	else: list.select(0)
 	panel.show()

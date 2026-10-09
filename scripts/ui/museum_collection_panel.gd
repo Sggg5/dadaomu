@@ -61,6 +61,8 @@ func _ready()->void:
 	body.size_flags_vertical=Control.SIZE_EXPAND_FILL
 	box.add_child(body)
 	slot_list=ItemList.new()
+	slot_list.fixed_icon_size = Vector2i(28,28)
+	slot_list.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	slot_list.custom_minimum_size.x=360
 	slot_list.fixed_column_width=0
 	slot_list.max_columns=1
@@ -69,6 +71,8 @@ func _ready()->void:
 	slot_list.item_selected.connect(func(index:int)->void:selected_slot=_slot_ids[index])
 	body.add_child(slot_list)
 	list=ItemList.new()
+	list.fixed_icon_size = Vector2i(28,28)
+	list.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	list.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	list.add_theme_font_size_override("font_size",16)
 	body.add_child(list)
@@ -180,6 +184,7 @@ func refresh_library()->void:
 		var definition:=MuseumState.POOL.find_by_id(item.definition_id)
 		var location:=state.case_for(id)
 		list.add_item("%s · %s · %s · %s"%[id,definition.display_name,"品相%d"%item.condition if item.identified else "待正式鉴定", "待拍锁定" if state.is_auction_locked(id) else ("库房" if location==&"" else str(location))])
+		list.set_item_icon(list.item_count-1,AntiqueVisual.icon(item.definition_id))
 	page_label.text="筛选%d / 馆藏%d · 第%d/%d页 · 本页%d"%[filtered_ids.size(),state.collection.all_items().size(),page+1,maxi(1,ceili(filtered_ids.size()/float(PAGE_SIZE))),_ids.size()]
 	if not _ids.is_empty():list.select(0)
 

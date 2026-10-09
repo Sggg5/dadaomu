@@ -2,6 +2,7 @@ class_name DisplayArtifactGlyph
 extends RefCounted
 ## Original miniature silhouettes, no museum photograph implies ownership.
 static func draw_icon(canvas: Node2D, id: StringName, at: Vector2, scale: float = 1) -> void:
+	if AntiqueVisual.draw(canvas,id,at,Vector2.ONE*24*scale): return
 	var index := MuseumState.POOL.antiques.find(MuseumState.POOL.find_by_id(id))
 	var color := Color.from_hsv(maxi(0,index)/8.0,.45,.92)
 	if id == &"republic_silver_coin":
