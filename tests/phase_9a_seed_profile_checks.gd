@@ -45,7 +45,7 @@ func run() -> void:
 	test.root.add_child(flow)
 	await test.frames(3)
 	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(store.save_path))
-	test.check(MuseumProfileStore.VERSION == 5 and flow.museum_state.campaign_seed == 777 and data.version == 5 and data.campaign_seed == 777, "Actual GameFlow initializes migrated campaign exactly once and saves v5 with legacy backup")
+	test.check(MuseumProfileStore.VERSION == 6 and flow.museum_state.campaign_seed == 777 and data.version == 6 and data.campaign_seed == 777, "Actual GameFlow initializes migrated campaign exactly once and saves v6 with legacy backup")
 	var snapshot := store.encode(flow.museum_state)
 	flow.queue_free()
 	await test.frames(3)

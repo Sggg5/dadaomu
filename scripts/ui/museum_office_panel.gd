@@ -11,6 +11,9 @@ var hall_list: ItemList
 var hall_detail: RichTextLabel
 var finance: RichTextLabel
 var visitors: RichTextLabel
+var history: RichTextLabel
+var history_page:=0
+var history_heading: Label
 var topic_hall: OptionButton
 var topic_select: OptionButton
 var topic_detail: RichTextLabel
@@ -51,6 +54,23 @@ func _ready() -> void:
 	hall_list.item_selected.connect(_select_hall)
 	finance=_page("财务台账")
 	visitors=_page("参观反馈")
+	var reports:=VBoxContainer.new()
+	reports.name="营业日报"
+	tabs.add_child(reports)
+	var pages:=HBoxContainer.new()
+	reports.add_child(pages)
+	var previous:=Button.new()
+	previous.text="较近日期"
+	previous.pressed.connect(func()->void:history_page=maxi(0,history_page-1);_refresh_history())
+	pages.add_child(previous)
+	history_heading=Label.new()
+	pages.add_child(history_heading)
+	var next:=Button.new()
+	next.text="较早日期"
+	next.pressed.connect(func()->void:history_page=mini(maxi(0,ceili(state.daily_reports.size()/5.0)-1),history_page+1);_refresh_history())
+	pages.add_child(next)
+	history=_text()
+	reports.add_child(history)
 	var topic_box:=VBoxContainer.new()
 	topic_box.name="专题策展"
 	tabs.add_child(topic_box)
@@ -118,7 +138,8 @@ func refresh() -> void:
 	visitors.text="本日实际付费 %d人 / 完成观看 %d次\n独立观看游客 %d人 / 器物观看 %d件次（不同实物%d件）\n\n各厅：%s\n热门设施：%s\n专题访问：%s\n兴趣类别：%s\n\n近期真实反馈：\n%s" % [business.visitors_today,stats.view_count,stats.unique_viewers,stats.artifact_views,stats.unique_artifacts,str(stats.hall_visits),str(stats.unit_visits),str(stats.topic_visits),str(stats.interests),"\n".join(stats.feedback)]
 	_select_hall(0)
 	_refresh_topic()
-	finance.text="现金（实际）：%s\n\n本日实时：%d位付费游客 / %s门票\n上次已结算：%d位游客 / %s门票\n\n预计游客：%d人；预测不记入现金。\n历史营业记录将在日报页查询。" % [AntiqueDefinition.money(data.cash),data.live_visitors,AntiqueDefinition.money(data.live_income),data.last_visitors,AntiqueDefinition.money(data.last_income),data.forecast_visitors]
+	_refresh_history()
+	finance.text="现金（实际）：%s\n\n本日实时：%d位付费游客 / %s门票\n上次已结算：%d位游客 / %s门票\n\n预计游客：%d人；预测不记入现金。\n累计已记录：%d人 / %s门票；%d个营业日。" % [AntiqueDefinition.money(data.cash),data.live_visitors,AntiqueDefinition.money(data.live_income),data.last_visitors,AntiqueDefinition.money(data.last_income),data.forecast_visitors,MuseumDailyReport.totals(state).visitors,AntiqueDefinition.money(MuseumDailyReport.totals(state).income),MuseumDailyReport.totals(state).days]
 func _select_hall(index:int) -> void:
 	var data:=MuseumOverview.snapshot(state,business)
 	if index<0 or index>=data.halls.size():return
@@ -137,3 +158,10 @@ func _refresh_topic()->void:
 	topic_detail.text="游戏经营专题 · 非学术审核结论\n\n当前配置：%s\n%s：%s\n匹配 %d件 / 不同器物 %d种 / 类别 %d类\n平均品相 %.1f / 评分 %.1f\n展厅兴趣加成 %.1f%%（最高20%%）\n\n%s\n\n只采用本厅合法、已鉴定实物；布展请到实体展柜。" % [current.display_name if current!=null else "无",topic.display_name,"条件合格" if evaluation.qualified else "条件不足",evaluation.matched_ids.size(),evaluation.unique_count,evaluation.category_count,evaluation.average_condition,evaluation.score,evaluation.heat*100.0,"缺少："+"；".join(evaluation.missing) if not evaluation.qualified else "可以举办。移走展品后自动重新评估。"]
 	topic_start.disabled=not state.can_edit() or not evaluation.qualified
 	topic_stop.disabled=not state.can_edit() or not state.exhibition_plans.has(hall)
+
+func _refresh_history()->void:
+	history_heading.text="第%d页 / %d个已结算日（每页5日）"%[history_page+1,state.daily_reports.size()]
+	var text:="日报只记录实际营业；读取不重复结算。\n\n"
+	for report in MuseumDailyReport.recent(state,history_page):
+		text+="Day %d · %d人 · 门票%s · 展品%d件 / 吸引力%d\n参观次数%s · 专题%s\n\n"%[report.day_number,report.visitor_count,AntiqueDefinition.money(report.ticket_income),report.total_exhibit_count,report.exhibit_appeal,str(report.hall_visit_statistics),str(report.active_exhibitions)]
+	history.text=text

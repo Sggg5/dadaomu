@@ -35,7 +35,14 @@ func visitor_target(appeal: int, displayed_count: int) -> int:
 
 
 func start() -> bool:
-	if running or state.phase != MuseumState.Phase.MORNING or not can_open(): return false
+	if running or state.phase != MuseumState.Phase.MORNING or not can_open() or state.daily_reports.has(state.day_number): return false
+	spawned=0
+	visitors_today=0
+	income_today=0
+	elapsed=0.0
+	_spawn_timer=0.0
+	_paid.clear()
+	visits=MuseumVisitStatistics.new()
 	target = visitor_target(state.total_appeal()+ExhibitionService.bonus_appeal(state),state.display_assignments.size())
 	running = true
 	closing = false
@@ -56,6 +63,7 @@ func _physics_process(delta: float) -> void:
 			_spawn_timer = .35
 	elif active.is_empty():
 		running = false
+		MuseumDailyReport.store(state,MuseumDailyReport.create(state,self))
 		state.last_day_visitors = visitors_today
 		state.last_day_ticket_income = income_today
 		state.phase = MuseumState.Phase.EVENING

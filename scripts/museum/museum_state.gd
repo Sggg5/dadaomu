@@ -14,6 +14,7 @@ var collection := MuseumCollection.new()
 var display_catalog := MuseumDisplayCatalog.new()
 # Stable DisplaySlot IDs -> OwnedAntique instance IDs. CASE_n is the migrated first slot.
 var display_assignments: Dictionary[StringName, StringName] = {}
+var daily_reports: Dictionary[int,Dictionary] = {}
 var exhibition_plans: Dictionary[StringName,StringName] = {}
 var last_day_visitors: int = 0
 var last_day_ticket_income: int = 0

@@ -1,7 +1,7 @@
 class_name MuseumProfileStore
 extends RefCounted
 ## 版本化地面JSON。只编码纯值，内存/路径可注入；不保存Night Run。
-const VERSION: int = 5
+const VERSION: int = 6
 var write_blocked: bool = false
 var _source_sha: String = ""
 var _loaded_version: int = 0
@@ -24,7 +24,9 @@ func encode(state: MuseumState) -> Dictionary:
 		items.append({"instance_id":str(item.instance_id),"definition_id":str(item.definition_id),"acquired_day":item.acquired_day,"identified":item.identified,"condition":item.condition})
 	var assignments: Dictionary[String,String] = {}
 	for id in state.display_assignments: assignments[str(id)] = str(state.display_assignments[id])
-	return {"version":VERSION,"display_layout_version":1,"campaign_seed":state.campaign_seed,"day_number":state.day_number,"phase":"EVENING" if state.phase == MuseumState.Phase.EVENING else "MORNING","cash":state.cash,"museum_level":state.museum_level,"next_antique_id":state.collection.next_id(),"collection":items,"display_assignments":assignments,"last_day_visitors":state.last_day_visitors,"last_day_ticket_income":state.last_day_ticket_income,"auction_lot_instance_id":str(state.auction_lot_instance_id),"auction_reserve_mode":state.auction_reserve_mode}
+	var payload := {"version":VERSION,"display_layout_version":1,"campaign_seed":state.campaign_seed,"day_number":state.day_number,"phase":"EVENING" if state.phase == MuseumState.Phase.EVENING else "MORNING","cash":state.cash,"museum_level":state.museum_level,"next_antique_id":state.collection.next_id(),"collection":items,"display_assignments":assignments,"last_day_visitors":state.last_day_visitors,"last_day_ticket_income":state.last_day_ticket_income,"auction_lot_instance_id":str(state.auction_lot_instance_id),"auction_reserve_mode":state.auction_reserve_mode}
+	payload.merge(MuseumManagementCodec.encode(state))
+	return payload
 
 
 func save_profile(state: MuseumState) -> bool:
@@ -39,10 +41,11 @@ func save_profile(state: MuseumState) -> bool:
 	else:
 		var directory := ProjectSettings.globalize_path(save_path).get_base_dir()
 		if DirAccess.make_dir_recursive_absolute(directory) != OK: return _failed("无法创建存档目录")
-		# A successful legacy migration writes v5 only after preserving the exact source.
+		if FileAccess.file_exists(save_path) and _source_sha.is_empty():return _failed("未读取的存档已存在，拒绝覆盖")
+		# A successful legacy migration writes v6 only after preserving the exact source.
 		if FileAccess.file_exists(save_path) and not _source_sha.is_empty():
 			if FileAccess.get_sha256(save_path) != _source_sha: return _failed("存档在读取后被修改，拒绝覆盖")
-			if _loaded_version in [1,2,3,4]:
+			if _loaded_version in [1,2,3,4,5]:
 				var backup := "%s.v%d.%s.backup.json" % [save_path,_loaded_version,_source_sha.substr(0,12)]
 				if FileAccess.file_exists(backup):
 					if FileAccess.get_sha256(backup) != _source_sha: return _failed("旧档备份冲突，拒绝覆盖")
@@ -55,6 +58,7 @@ func save_profile(state: MuseumState) -> bool:
 		var error := file.get_error()
 		file.close()
 		if error != OK: return _failed("存档写入失败")
+		if FileAccess.file_exists(save_path) and FileAccess.get_sha256(save_path)!=_source_sha:return _failed("写入期间原档发生变化，拒绝替换")
 		if DirAccess.rename_absolute(ProjectSettings.globalize_path(temporary),ProjectSettings.globalize_path(save_path)) != OK: return _failed("无法替换存档")
 	if not memory_only:
 		_source_sha = FileAccess.get_sha256(save_path)
@@ -101,7 +105,7 @@ func decode(payload: Variant) -> MuseumState:
 		_failed("存档不是安全地面阶段，使用新档")
 		return state
 	_loaded_version = int(payload.version)
-	if _loaded_version == 5 and payload.get("display_layout_version") != 1:
+	if _loaded_version >= 5 and payload.get("display_layout_version") != 1:
 		_failed("未知展陈布局版本，保护原档")
 		return state
 	state.day_number = int(payload.day_number)
@@ -149,6 +153,7 @@ func decode(payload: Variant) -> MuseumState:
 	if int(payload.version) >= 4:
 		if _integer(payload.get("campaign_seed"),1,ExpeditionSeedService.MAX_SEED): state.campaign_seed = int(payload.campaign_seed)
 		else: _failed("Campaign Seed字段异常，将在安全地面重新初始化")
+	if int(payload.version)>=6 and not MuseumManagementCodec.decode(state,payload):_failed("专题/日报字段冲突或损坏，保护原档")
 	return state
 
 
