@@ -1,6 +1,8 @@
 class_name MuseumVisitStatistics
 extends RefCounted
 ## Deduplicates complete views independently from exactly-once paid visitors.
+var services:Dictionary={}
+var _service_seen:Dictionary={}
 var hall_visits:Dictionary={}
 var unit_visits:Dictionary={}
 var topic_visits:Dictionary={}
@@ -28,4 +30,11 @@ func record(visitor_index:int,result:Dictionary)->bool:
 	if feedback.size()>8:feedback.pop_front()
 	return true
 func snapshot()->Dictionary:
-	return {"view_count":view_count,"artifact_views":artifact_views,"unique_viewers":_visitors.size(),"unique_artifacts":_instances.size(),"hall_visits":hall_visits.duplicate(),"unit_visits":unit_visits.duplicate(),"topic_visits":topic_visits.duplicate(),"interests":interests.duplicate(),"feedback":feedback.duplicate()}
+	return {"service_visits":services.duplicate(),"view_count":view_count,"artifact_views":artifact_views,"unique_viewers":_visitors.size(),"unique_artifacts":_instances.size(),"hall_visits":hall_visits.duplicate(),"unit_visits":unit_visits.duplicate(),"topic_visits":topic_visits.duplicate(),"interests":interests.duplicate(),"feedback":feedback.duplicate()}
+
+func record_service(index:int,id:StringName)->bool:
+	var key:="%d:%s"%[index,id]
+	if _service_seen.has(key):return false
+	_service_seen[key]=true
+	services[str(id)]=services.get(str(id),0)+1
+	return true

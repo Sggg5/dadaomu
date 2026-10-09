@@ -12,6 +12,8 @@ var morning_notice: String = "早晨 · 可开馆，也可到情报板直接下�
 var player: MuseumPlayer
 var business: MuseumBusiness
 var collection_panel: MuseumCollectionPanel
+var _service_signature:String=""
+var _service_nodes:Array[Node2D]=[]
 var facility_panel:MuseumFacilityPanel
 var construction_panel: MuseumConstructionPanel
 var construction: MuseumInteractable
@@ -200,6 +202,7 @@ func _ticket_prompt() -> String:
 
 func _refresh() -> void:
 	_sync_cases()
+	_sync_services()
 	for exhibit in cases: exhibit.refresh()
 	if _shown_level >= 0 and _shown_level != state.museum_level and not message.text.begins_with("保存失败"):
 		message.text = "扩建完成：%s · 展柜%d · 游客容量%d · 当前现金%s" % [state.level_definition().display_name,state.display_catalog.unit_ids(state.museum_level).size(),state.level_definition().visitor_capacity,AntiqueDefinition.money(state.cash)]
@@ -210,6 +213,7 @@ func _refresh() -> void:
 func switch_hall(id: StringName) -> void:
 	if id not in state.display_catalog.hall_ids(state.museum_level) or state.phase == MuseumState.Phase.NIGHT: return
 	active_hall_id = id
+	_sync_services()
 	_sync_cases()
 	player.position = Vector2(1120,470)
 	player.velocity = Vector2.ZERO
@@ -316,3 +320,21 @@ func display_capacity() -> int:
 	var total:=0
 	for id in state.display_catalog.unit_ids(state.museum_level):total+=state.display_catalog.units[id].capacity
 	return total
+
+func _sync_services()->void:
+	var signature:=str(active_hall_id)
+	for row:Dictionary in MuseumConstructionService.rules().public:signature+="/%s:%d"%[row.id,state.facilities.level(StringName(row.id))]
+	if signature==_service_signature:return
+	_service_signature=signature
+	for node in _service_nodes:
+		if is_instance_valid(node):node.queue_free()
+	_service_nodes.clear()
+	for row:Dictionary in MuseumConstructionService.rules().public:
+		var level:=state.facilities.level(StringName(row.id))
+		if level<=0 or row.hall!=str(active_hall_id):continue
+		var node:=MuseumServiceFixture.new()
+		node.kind=StringName(row.kind)
+		node.level=level
+		node.position=Vector2(row.position[0],row.position[1])
+		add_child(node)
+		_service_nodes.append(node)

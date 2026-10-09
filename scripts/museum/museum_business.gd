@@ -88,6 +88,7 @@ func spawn_visitor() -> void:
 	visitor.position = Vector2(640,600)
 	visitor.paid.connect(_on_paid)
 	visitor.leaving.connect(_on_leaving)
+	visitor.service_completed.connect(_on_service_completed)
 	visitor.view_completed.connect(_on_view_completed)
 	spawned += 1
 	active.append(visitor)
@@ -109,3 +110,7 @@ func _on_leaving(visitor: MuseumVisitor) -> void: active.erase(visitor)
 func _on_view_completed(index:int,result:Dictionary)->void:
 	if not running or closing or not _paid.has(index):return
 	visits.record(index,result)
+
+func _on_service_completed(index:int,id:StringName)->void:
+	if not running or closing or not _paid.has(index) or state.facilities.level(id)<=0:return
+	visits.record_service(index,id)

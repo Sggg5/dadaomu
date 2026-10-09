@@ -1,7 +1,7 @@
 class_name MuseumVisitor
 extends MuseumInteractable
 ## 一名游客的独立RNG/路线/一次票款。闭馆强制EXIT，不再观看新展柜。
-enum Activity { ENTER, CHOOSE_EXHIBIT, WALK_TO_EXHIBIT, VIEW, EXIT }
+enum Activity { ENTER, CHOOSE_EXHIBIT, WALK_TO_EXHIBIT, VIEW, EXIT, SERVICE }
 signal hall_changed(visitor: MuseumVisitor)
 var state: MuseumState
 var hall_id: StringName = &"MAIN"
@@ -12,6 +12,12 @@ signal view_completed(visitor_index:int,result:Dictionary)
 var _view_result:Dictionary={}
 var _seen_categories:Dictionary={}
 var last_feedback:String=""
+signal service_completed(visitor_index:int,facility_id:StringName)
+var _service_id:StringName=&""
+var _service_timer:=0.0
+var _service_after:Activity=Activity.CHOOSE_EXHIBIT
+var used_services:Dictionary={}
+var max_view_count:=2
 signal paid(visitor_index: int)
 signal leaving(visitor: MuseumVisitor)
 var visitor_index: int
@@ -140,7 +146,7 @@ func _physics_process(delta: float) -> void:
 	match activity:
 		Activity.ENTER:
 			pay_ticket()
-			activity = Activity.CHOOSE_EXHIBIT
+			if not _begin_service(&"RECEPTION",.3,Activity.CHOOSE_EXHIBIT):activity = Activity.CHOOSE_EXHIBIT
 		Activity.CHOOSE_EXHIBIT:
 			chosen_unit_id=_choose_unit()
 			chosen_case=_visible_case(chosen_unit_id)
@@ -169,8 +175,19 @@ func _physics_process(delta: float) -> void:
 					for category in _view_result.categories:_seen_categories[category]=true
 					view_completed.emit(visitor_index,_view_result.duplicate(true))
 					_view_result.clear()
-				if view_count < 2 and rng.randf() < .5: activity = Activity.CHOOSE_EXHIBIT
+				if _begin_service(&"GUIDE",.6,Activity.CHOOSE_EXHIBIT):pass
+				elif _begin_service(&"REST",.8,Activity.CHOOSE_EXHIBIT):pass
+				elif view_count < max_view_count and (max_view_count==3 or rng.randf() < .5): activity = Activity.CHOOSE_EXHIBIT
 				else: close_museum()
+		Activity.SERVICE:
+			_service_timer-=delta
+			if _service_timer<=0:
+				used_services[_service_id]=true
+				if _service_id==&"MAIN_GUIDE":max_view_count=3
+				last_feedback="%s"%{&"MAIN_GUIDE":"导览牌让参观路线更清楚。",&"EAST_REST":"看展之间可以坐下歇歇。",&"MAIN_RECEPTION":"接待台讲清了参观规则。"}.get(_service_id,"")
+				service_completed.emit(visitor_index,_service_id)
+				_service_id=&""
+				activity=_service_after
 		Activity.EXIT:
 			leaving.emit(self)
 			queue_free()
@@ -178,3 +195,20 @@ func _physics_process(delta: float) -> void:
 
 func _draw() -> void:
 	draw_colored_polygon(PackedVector2Array([Vector2(0,-13),Vector2(13,0),Vector2(0,13),Vector2(-13,0)]),tint)
+
+func _begin_service(kind:StringName,duration:float,after:Activity)->bool:
+	if kind!=&"RECEPTION" and view_count>=max_view_count:return false
+	var id:=MuseumConstructionService.public_id(kind)
+	var level:=state.facilities.level(id)
+	if level<=0 or used_services.has(id) or closing:return false
+	var definition:=MuseumConstructionService.find(state,id)
+	if definition.hall_id!=hall_id:return false
+	_service_id=id
+	_service_timer=duration+level*.1
+	_service_after=after
+	var target:=MuseumConstructionService.public_position(kind)
+	route=[Vector2(position.x,450),Vector2(target.x,450),target]
+	activity=Activity.SERVICE
+	title={&"GUIDE":"阅读导览",&"REST":"休息中",&"RECEPTION":"接待中"}[kind]
+	refresh()
+	return true

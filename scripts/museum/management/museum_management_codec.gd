@@ -41,7 +41,7 @@ static func decode(state:MuseumState,payload:Dictionary)->bool:
 		for hall:Variant in report.exhibition_scores:
 			var score:Variant=report.exhibition_scores[hall]
 			if not report.active_exhibitions.has(hall) or not (score is int or score is float) or not is_finite(float(score)) or score<0 or score>200:return false
-		if report.unique_viewers>report.view_count or report.view_count>report.visitor_count*2 or report.unique_artifacts>report.total_exhibit_count:return false
+		if report.unique_viewers>report.view_count or report.view_count>report.visitor_count*int(report.get("view_limit",2)) or report.unique_artifacts>report.total_exhibit_count:return false
 		var hall_total:=0
 		var unit_total:=0
 		var interest_total:=0
@@ -49,6 +49,7 @@ static func decode(state:MuseumState,payload:Dictionary)->bool:
 		for count:Variant in report.popular_units.values():unit_total+=int(count)
 		for count:Variant in report.interest_distribution.values():interest_total+=int(count)
 		if hall_total!=report.view_count or unit_total!=report.view_count or interest_total!=report.artifact_views:return false
+		if not integer(report.get("view_limit",2),2,3):return false
 		var normalized:Dictionary=report.duplicate(true)
 		for key in ["day_number","visitor_count","ticket_income","total_exhibit_count","museum_level","exhibit_appeal","view_count","artifact_views","unique_viewers","unique_artifacts"]:normalized[key]=int(normalized[key])
 		for key in ["hall_visit_statistics","popular_units","exhibition_visits","interest_distribution"]:

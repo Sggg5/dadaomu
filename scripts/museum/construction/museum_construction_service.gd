@@ -83,3 +83,12 @@ static func capital_today(state:MuseumState)->int:
 	for row in state.facilities.expenses:
 		if row.day_number==state.day_number and row.kind in ["FACILITY_UPGRADE","HALL_EXPANSION"]:total+=int(row.amount)
 	return total
+
+static func public_id(kind:StringName)->StringName:
+	for row:Dictionary in rules().public:
+		if row.kind==str(kind):return StringName(row.id)
+	return &""
+static func public_position(kind:StringName)->Vector2:
+	for row:Dictionary in rules().public:
+		if row.kind==str(kind):return Vector2(row.position[0],row.position[1])
+	return Vector2.ZERO
