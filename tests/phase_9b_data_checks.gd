@@ -69,7 +69,7 @@ func run() -> void:
 	night_state.campaign_seed=52
 	night_state.phase=MuseumState.Phase.NIGHT
 	var guard_store:=MuseumProfileStore.in_memory()
-	test.check(MuseumProfileStore.VERSION == 6 and not guard_store.save_profile(night_state) and guard_store.save_count==0, "v6 only stores safe museum management; mid-run save remains forbidden")
+	test.check(MuseumProfileStore.VERSION == 7 and not guard_store.save_profile(night_state) and guard_store.save_count==0, "v7 only stores safe museum management; mid-run save remains forbidden")
 
 
 func custom_terminal_comparison() -> void:

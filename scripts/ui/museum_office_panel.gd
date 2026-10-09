@@ -156,6 +156,7 @@ func refresh() -> void:
 	_refresh_history()
 	if is_instance_valid(facility_view):facility_view.refresh()
 	finance.text="现金（实际）：%s\n\n本日实时：%d位付费游客 / %s门票\n上次已结算：%d位游客 / %s门票\n\n预计游客：%d人；预测不记入现金。\n累计已记录：%d人 / %s门票；%d个营业日。" % [AntiqueDefinition.money(data.cash),data.live_visitors,AntiqueDefinition.money(data.live_income),data.last_visitors,AntiqueDefinition.money(data.last_income),data.forecast_visitors,MuseumDailyReport.totals(state).visitors,AntiqueDefinition.money(MuseumDailyReport.totals(state).income),MuseumDailyReport.totals(state).days]
+	finance.text+="\n\n本日建设投资（实际流水）：%s\n预计每日维护：%s\n当日运营净收益（已结算）：%s\n维护不足：当日可用现金支付，余款减免；无负债、不补扣。"%[AntiqueDefinition.money(MuseumConstructionService.capital_today(state)),AntiqueDefinition.money(MuseumConstructionService.maintenance_due(state)),AntiqueDefinition.money(int(state.daily_reports.get(state.day_number,{}).get("operating_net_income",0)))]
 func _select_hall(index:int) -> void:
 	var data:=MuseumOverview.snapshot(state,business)
 	if index<0 or index>=data.halls.size():return
@@ -188,6 +189,7 @@ func _refresh_history()->void:
 	var text:="日报只记录实际营业；读取不重复结算。\n\n"
 	for report in MuseumDailyReport.recent(state,history_page):
 		text+="Day %d · %d人 · 门票%s · 展品%d件 / 吸引力%d\n参观次数%s · 专题%s\n\n"%[report.day_number,report.visitor_count,AntiqueDefinition.money(report.ticket_income),report.total_exhibit_count,report.exhibit_appeal,_stat_lines(report.hall_visit_statistics,"hall"),_topic_names(report.active_exhibitions)]
+		text+="维护应付%s / 已付%s / 减免%s / 净收益%s\n建设（截至闭馆）%s\n"%[AntiqueDefinition.money(int(report.get("maintenance_due",0))),AntiqueDefinition.money(int(report.get("maintenance_paid",0))),AntiqueDefinition.money(int(report.get("maintenance_waived",0))),AntiqueDefinition.money(int(report.get("operating_net_income",report.ticket_income))),AntiqueDefinition.money(int(report.get("construction_at_close",0)))]
 		text+="设施观看：%s\n专题评分：%s / 访问：%s\n器物观看%d件次 / 独立观看%d人\n兴趣：%s\n\n"%[_stat_lines(report.popular_units,"unit"),_stat_lines(report.exhibition_scores,"hall"),_stat_lines(report.exhibition_visits,"topic"),report.artifact_views,report.unique_viewers,_stat_lines(report.interest_distribution,"category")]
 	history.text=text
 

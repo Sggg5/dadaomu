@@ -18,6 +18,7 @@ var running: bool = false
 var closing: bool = false
 var _paid: Dictionary[int,bool] = {}
 var visits:=MuseumVisitStatistics.new()
+var maintenance_budget:=0
 var _spawn_timer: float = 0.0
 
 
@@ -43,6 +44,7 @@ func start() -> bool:
 	_spawn_timer=0.0
 	_paid.clear()
 	visits=MuseumVisitStatistics.new()
+	maintenance_budget=MuseumConstructionService.maintenance_due(state)
 	target = visitor_target(state.total_appeal()+ExhibitionService.bonus_appeal(state)+MuseumConstructionService.bonus_appeal(state),state.display_assignments.size())
 	running = true
 	closing = false
@@ -63,7 +65,7 @@ func _physics_process(delta: float) -> void:
 			_spawn_timer = .35
 	elif active.is_empty():
 		running = false
-		MuseumDailyReport.store(state,MuseumDailyReport.create(state,self))
+		MuseumOperatingFinance.settle(state,self)
 		state.last_day_visitors = visitors_today
 		state.last_day_ticket_income = income_today
 		state.phase = MuseumState.Phase.EVENING

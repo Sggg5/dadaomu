@@ -7,7 +7,7 @@ var state: MuseumState
 func refresh() -> void:
 	var unit := state.display_catalog.units[case_id]
 	var items := state.unit_items(case_id)
-	title = "%s · %s\n%d / %d位置 · 吸引力%d" % [unit.display_name,case_id,items.size(),unit.capacity,state.unit_appeal(case_id)]
+	title = "%s · %s\n%d / %d位置 · 吸引力%d" % [unit.display_name,case_id,items.size(),unit.capacity,MuseumConstructionService.unit_interest(state,case_id)]
 	if not items.is_empty(): title += "\n"+MuseumState.POOL.find_by_id(items[0].definition_id).display_name+(" 等%d件" % items.size() if items.size()>1 else "")
 	if not items.is_empty():title+="\n首件品相%d"%items[0].condition if items[0].identified else "\n首件未鉴定"
 	super.refresh()

@@ -1,7 +1,7 @@
 class_name MuseumProfileStore
 extends RefCounted
 ## 版本化地面JSON。只编码纯值，内存/路径可注入；不保存Night Run。
-const VERSION: int = 6
+const VERSION: int = 7
 var write_blocked: bool = false
 var _source_sha: String = ""
 var _loaded_version: int = 0
@@ -26,6 +26,7 @@ func encode(state: MuseumState) -> Dictionary:
 	for id in state.display_assignments: assignments[str(id)] = str(state.display_assignments[id])
 	var payload := {"version":VERSION,"display_layout_version":1,"campaign_seed":state.campaign_seed,"day_number":state.day_number,"phase":"EVENING" if state.phase == MuseumState.Phase.EVENING else "MORNING","cash":state.cash,"museum_level":state.museum_level,"next_antique_id":state.collection.next_id(),"collection":items,"display_assignments":assignments,"last_day_visitors":state.last_day_visitors,"last_day_ticket_income":state.last_day_ticket_income,"auction_lot_instance_id":str(state.auction_lot_instance_id),"auction_reserve_mode":state.auction_reserve_mode}
 	payload.merge(MuseumManagementCodec.encode(state))
+	payload.merge(MuseumFacilityCodec.encode(state))
 	return payload
 
 
@@ -33,7 +34,7 @@ func save_profile(state: MuseumState) -> bool:
 	# OPEN现金仍在流动，NIGHT背包仍有风险，都不属于可保存地面快照。
 	if write_blocked: return false
 	if not state.can_edit(): return false
-	if not _integer(state.campaign_seed,1,ExpeditionSeedService.MAX_SEED): return _failed("Campaign Seed尚未初始化或非法，拒绝写入v6存档")
+	if not _integer(state.campaign_seed,1,ExpeditionSeedService.MAX_SEED): return _failed("Campaign Seed尚未初始化或非法，拒绝写入v7存档")
 	last_error = ""
 	var payload := encode(state)
 	if memory_only:
@@ -42,10 +43,10 @@ func save_profile(state: MuseumState) -> bool:
 		var directory := ProjectSettings.globalize_path(save_path).get_base_dir()
 		if DirAccess.make_dir_recursive_absolute(directory) != OK: return _failed("无法创建存档目录")
 		if FileAccess.file_exists(save_path) and _source_sha.is_empty():return _failed("未读取的存档已存在，拒绝覆盖")
-		# A successful legacy migration writes v6 only after preserving the exact source.
+		# A successful legacy migration writes v7 only after preserving the exact source.
 		if FileAccess.file_exists(save_path) and not _source_sha.is_empty():
 			if FileAccess.get_sha256(save_path) != _source_sha: return _failed("存档在读取后被修改，拒绝覆盖")
-			if _loaded_version in [1,2,3,4,5]:
+			if _loaded_version in [1,2,3,4,5,6]:
 				var backup := "%s.v%d.%s.backup.json" % [save_path,_loaded_version,_source_sha.substr(0,12)]
 				if FileAccess.file_exists(backup):
 					if FileAccess.get_sha256(backup) != _source_sha: return _failed("旧档备份冲突，拒绝覆盖")
@@ -154,6 +155,7 @@ func decode(payload: Variant) -> MuseumState:
 		if _integer(payload.get("campaign_seed"),1,ExpeditionSeedService.MAX_SEED): state.campaign_seed = int(payload.campaign_seed)
 		else: _failed("Campaign Seed字段异常，将在安全地面重新初始化")
 	if int(payload.version)>=6 and not MuseumManagementCodec.decode(state,payload):_failed("专题/日报字段冲突或损坏，保护原档")
+	if int(payload.version)>=7 and not MuseumFacilityCodec.decode(state,payload):_failed("设施等级/建设流水/运营费用冲突，保护原档")
 	return state
 
 
