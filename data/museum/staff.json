@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "max_staff": 6,
+  "max_per_job": 2,
+  "templates": [
+    {
+      "staff_id": "GUIDE_LIN",
+      "display_name": "林清和",
+      "job": "GUIDE",
+      "daily_wage": 10,
+      "hire_cost": 90,
+      "skill_level": 1,
+      "work_capacity": 8,
+      "seconds_per_task": 0.6,
+      "assigned_hall": "MAIN",
+      "employment_status": "AVAILABLE"
+    },
+    {
+      "staff_id": "GUIDE_ZHOU",
+      "display_name": "周文远",
+      "job": "GUIDE",
+      "daily_wage": 14,
+      "hire_cost": 140,
+      "skill_level": 2,
+      "work_capacity": 12,
+      "seconds_per_task": 0.5,
+      "assigned_hall": "MAIN",
+      "employment_status": "AVAILABLE"
+    },
+    {
+      "staff_id": "APPRAISER_SHEN",
+      "display_name": "沈知微",
+      "job": "APPRAISER",
+      "daily_wage": 14,
+      "hire_cost": 120,
+      "skill_level": 1,
+      "work_capacity": 2,
+      "seconds_per_task": 8,
+      "assigned_hall": "MAIN",
+      "employment_status": "AVAILABLE"
+    },
+    {
+      "staff_id": "APPRAISER_JIANG",
+      "display_name": "江守真",
+      "job": "APPRAISER",
+      "daily_wage": 20,
+      "hire_cost": 180,
+      "skill_level": 2,
+      "work_capacity": 3,
+      "seconds_per_task": 6,
+      "assigned_hall": "MAIN",
+      "employment_status": "AVAILABLE"
+    },
+    {
+      "staff_id": "CONSERVATOR_SU",
+      "display_name": "苏平",
+      "job": "CONSERVATOR",
+      "daily_wage": 18,
+      "hire_cost": 140,
+      "skill_level": 1,
+      "work_capacity": 1,
+      "seconds_per_task": 12,
+      "assigned_hall": "MAIN",
+      "employment_status": "AVAILABLE"
+    },
+    {
+      "staff_id": "CONSERVATOR_LU",
+      "display_name": "陆绍文",
+      "job": "CONSERVATOR",
+      "daily_wage": 26,
+      "hire_cost": 220,
+      "skill_level": 2,
+      "work_capacity": 2,
+      "seconds_per_task": 9,
+      "assigned_hall": "MAIN",
+      "employment_status": "AVAILABLE"
+    }
+  ]
+}
