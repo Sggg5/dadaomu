@@ -1,6 +1,7 @@
 class_name MuseumOfficePanel
 extends CanvasLayer
 ## Tabbed ledger UI; bounded hall/report lists. All decisions belong to services.
+signal archives_requested
 var state: MuseumState
 var player: MuseumPlayer
 var business: MuseumBusiness
@@ -41,7 +42,8 @@ func _ready() -> void:
 	title.text="馆长办公室  /  经营档案与台账"
 	title.add_theme_color_override("font_color",Color("382d22"))
 	title.add_theme_font_size_override("font_size",26)
-	box.add_child(title)
+	var title_row:=HBoxContainer.new();box.add_child(title_row);title.size_flags_horizontal=Control.SIZE_EXPAND_FILL;title_row.add_child(title)
+	var archives:=Button.new();archives.text="馆藏档案 / 研究";archives.pressed.connect(func()->void:archives_requested.emit());title_row.add_child(archives)
 	tabs=TabContainer.new()
 	tabs.size_flags_vertical=Control.SIZE_EXPAND_FILL
 	var ledger:=StyleBoxFlat.new()

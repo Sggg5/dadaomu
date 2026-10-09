@@ -39,6 +39,11 @@ func remove(instance_id: StringName) -> bool:
 	archives[instance_id].snapshot(item)
 	_items.erase(item)
 	_by_id.erase(instance_id)
+	var retired:Array[StringName]=[]
+	for id in archives:
+		if not _by_id.has(id):retired.append(id)
+	retired.sort_custom(func(a:StringName,b:StringName)->bool:return str(a).trim_prefix("A").to_int()<str(b).trim_prefix("A").to_int())
+	while retired.size()>1000:archives.erase(retired.pop_front())
 	changed.emit()
 	return true
 

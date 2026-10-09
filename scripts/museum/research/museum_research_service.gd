@@ -31,7 +31,7 @@ static func complete(state:MuseumState,id:StringName,target:int,actor:String)->b
 	if not eligible(state,id,target):return false
 	var record:CollectionResearchRecord=state.collection.archives[id]
 	record.references.assign(MuseumState.POOL.find_by_id(record.definition_id).reference_urls)
-	record.level=target;record.record(state.day_number,"TYPE_RESEARCH" if target==2 else "TOPIC_RESEARCH",actor,{"related_ids":related(state,id,true).slice(0,128)})
+	record.level=target;record.record(state.day_number,"TYPE_RESEARCH" if target==2 else "TOPIC_RESEARCH",actor,{"related_ids":(same_type(state,id) if target==2 else related(state,id,true)).slice(0,128).map(func(member:StringName)->String:return str(member))})
 	return true
 static func notes(state:MuseumState,id:StringName)->String:
 	var record:CollectionResearchRecord=state.collection.archives.get(id)
@@ -46,3 +46,13 @@ static func notes(state:MuseumState,id:StringName)->String:
 		text+="\n原型参考链接（授权按原机构，不自动下载媒体）：\n"+"\n".join(definition.reference_urls)
 	if record.level==3:text+="\n专题研究："+ResearchDefinition.topic(definition)+"\n关联真实持有实例："+", ".join(related(state,id,true))+"\n馆内研究记录，非学术批准。"
 	return text
+
+static func same_type(state:MuseumState,id:StringName)->Array[StringName]:
+	var result:Array[StringName]=[]
+	var record:CollectionResearchRecord=state.collection.archives.get(id)
+	if record==null:return result
+	var definition:=MuseumState.POOL.find_by_id(record.definition_id)
+	for item in state.collection.all_items():
+		var other:=MuseumState.POOL.find_by_id(item.definition_id)
+		if item.identified and (other.category==definition.category if definition.category!=&"" else other.id==definition.id):result.append(item.instance_id)
+	result.sort_custom(func(a:StringName,b:StringName)->bool:return str(a)<str(b));return result

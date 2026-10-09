@@ -50,6 +50,11 @@ static func decode(state:MuseumState,payload:Dictionary)->bool:
 		for event:Variant in row.events:
 			if not event is Dictionary or event.get("event_id")!=expected or not MuseumManagementCodec.integer(event.get("day_number"),row.acquired_day,state.day_number) or event.day_number<last_day:return false
 			if not event.get("actor") is String or event.actor.length()>64 or event.get("kind") not in ["REGISTER","TYPE_RESEARCH","TOPIC_RESEARCH","RESTORATION","INSPECTION","DISPOSED"] or not event.get("details") is Dictionary:return false
+			var actor:=StringName(event.actor)
+			if event.kind=="REGISTER" and event.actor!="MANUAL":return false
+			if event.kind in ["TYPE_RESEARCH","TOPIC_RESEARCH"] and (not MuseumStaffService.catalog().has(actor) or MuseumStaffService.catalog()[actor].job!=&"APPRAISER"):return false
+			if event.kind in ["INSPECTION","RESTORATION"] and not (event.kind=="RESTORATION" and event.actor=="MANUAL") and (not MuseumStaffService.catalog().has(actor) or MuseumStaffService.catalog()[actor].job!=&"CONSERVATOR"):return false
+			if event.kind=="DISPOSED" and event.actor not in ["DEALER","AUCTION"]:return false
 			var details:Dictionary=event.details.duplicate(true)
 			if event.kind=="RESTORATION":
 				if not MuseumManagementCodec.integer(details.get("before"),0,99) or details.get("after")!=100 or details.get("fee")!=ceili((100-float(details.before))/10.0)*[20,40,60,100][definition.rarity]:return false
@@ -57,13 +62,14 @@ static func decode(state:MuseumState,payload:Dictionary)->bool:
 			elif event.kind=="INSPECTION":
 				if not MuseumManagementCodec.integer(details.get("condition"),0,100) or not MuseumManagementCodec.integer(details.get("protect_level"),0,3) or not MuseumManagementCodec.integer(details.get("business_index"),1,state.daily_reports.size()) or details.get("repair_recommended")!=(details.condition<100):return false
 				if not details.get("slot_id") is String or not details.get("unit_id") is String:return false
+				if details.slot_id=="" and details.unit_id!="":return false
 				if details.slot_id!="" and (not state.display_catalog.slots.has(StringName(details.slot_id)) or str(state.display_catalog.slots[StringName(details.slot_id)].unit_id)!=details.unit_id):return false
 				if details.get("interval")!=ResearchDefinition.rules().inspection_intervals[int(details.protect_level)]:return false
 				for field in ["condition","protect_level","business_index","interval"]:details[field]=int(details[field])
 			elif event.kind in ["TYPE_RESEARCH","TOPIC_RESEARCH"]:
 				if not details.get("related_ids") is Array or details.related_ids.size()>128:return false
 				for related:Variant in details.related_ids:
-					if not related is String or not related.begins_with("A") or not related.trim_prefix("A").is_valid_int() or related.trim_prefix("A").to_int()>=state.collection.next_id():return false
+					if not related is String or not related.begins_with("A") or not related.trim_prefix("A").is_valid_int() or related.trim_prefix("A").to_int()<1 or related.trim_prefix("A").to_int()>=state.collection.next_id():return false
 			var normalized:Dictionary=event.duplicate(true);normalized.event_id=expected;normalized.day_number=int(event.day_number);normalized.details=details
 			events.append(normalized);expected+=1;last_day=int(event.day_number)
 		var record:=CollectionResearchRecord.new();record.instance_id=id;record.definition_id=StringName(row.definition_id);record.acquired_day=int(row.acquired_day);record.source=source

@@ -86,8 +86,8 @@ func refresh()->void:
 	queue_page=clampi(queue_page,0,maxi(0,ceili(state.staff.tasks.size()/20.0)-1));queue.clear();task_ids.clear()
 	for task in state.staff.tasks.slice(queue_page*20,(queue_page+1)*20):
 		task_ids.append(task.task_id)
-		var progress:float=business.workday.task_progress(task) if live_day else task.worked_seconds/MuseumStaffService.catalog()[task.staff_id].seconds_per_task
-		queue.add_item("#%d %s %s · %s %.0f%%"%[task.task_id,task.instance_id,_job(task.job),_status(task.status),progress*100])
+		var progress:float=business.workday.task_progress(task) if live_day else task.worked_seconds/task.duration()
+		queue.add_item("#%d %s %s · %s %.0f%%"%[task.task_id,task.instance_id,{&"RESEARCH":"研究%d级"%task.target_level,&"INSPECT":"保护检查",&"APPRAISE":"鉴定",&"RESTORE":"修复"}.get(task.action(),str(task.action())),_status(task.status),progress*100])
 	if old_task in task_ids:queue.select(task_ids.find(old_task))
 	submit.disabled=not state.can_edit() or not active or definition.job==&"GUIDE";cancel_task.disabled=not state.can_edit()
 	heading.text="现金 ¥%d · 库房%d件 / 页%d · 工作记录%d / 页%d · OPEN只读；完工闭馆提交"%[state.cash,eligible.size(),page+1,state.staff.tasks.size(),queue_page+1]

@@ -1,7 +1,10 @@
 class_name MuseumCollectionPanel
 extends CanvasLayer
 ## Current-unit slot manager plus searchable/paged storage. No research candidates enter this UI.
+signal archive_requested(instance_id:StringName)
 const PAGE_SIZE:=50
+var research_card:PanelContainer
+var research_text:RichTextLabel
 var state: MuseumState
 var player: MuseumPlayer
 var panel: Panel
@@ -81,6 +84,9 @@ func _ready()->void:
 	choose.text="将选中馆藏放入选中位置"
 	choose.pressed.connect(choose_selected)
 	box.add_child(choose)
+	var archive:=Button.new();archive.text="选中实物独立档案 / 研究说明";archive.pressed.connect(func()->void:
+		if not list.get_selected_items().is_empty():archive_requested.emit(_ids[list.get_selected_items()[0]]))
+	box.add_child(archive)
 	var actions:=HBoxContainer.new()
 	box.add_child(actions)
 	button(actions,"撤下选中位置",func()->void:if state.unassign(selected_slot):refresh_slots();refresh_library())
@@ -89,7 +95,13 @@ func _ready()->void:
 		var count:=state.fill_unit(case_id,filtered_ids)
 		heading.text="本次放入%d件 · 容量/类型/尺寸/鉴定限制仍校验"%count
 		refresh_slots();refresh_library())
+	button(actions,"研究说明牌",_show_research_card)
 	button(actions,"关闭 [Tab / E]",close)
+	research_card=PanelContainer.new();research_card.position=Vector2(290,150);research_card.size=Vector2(700,410);add_child(research_card)
+	var content:=VBoxContainer.new();research_card.add_child(content)
+	research_text=RichTextLabel.new();research_text.custom_minimum_size=Vector2(680,340);research_text.size_flags_vertical=Control.SIZE_EXPAND_FILL;research_text.add_theme_font_size_override("normal_font_size",18);content.add_child(research_text)
+	button(content,"合上说明牌",func()->void:research_card.hide())
+	research_card.hide()
 	panel.hide()
 	state.changed.connect(_on_state_changed)
 
@@ -181,6 +193,7 @@ func choose_selected()->bool:
 	return true
 
 func close()->void:
+	research_card.hide()
 	panel.hide()
 	search_box.release_focus()
 	category.get_popup().hide()
@@ -192,3 +205,12 @@ func _input(event:InputEvent)->void:
 	if (event.is_action_pressed("interact") and not search_box.has_focus()) or (event is InputEventKey and event.pressed and event.physical_keycode==KEY_TAB):
 		close()
 		get_viewport().set_input_as_handled()
+
+func _show_research_card()->void:
+	research_text.text="展柜研究说明牌 · 游戏馆内研究，非专家审定\n\n"
+	var found:=false
+	for item in state.unit_items(case_id):
+		if state.collection.archives[item.instance_id].level>=2:
+			found=true;research_text.text+=MuseumState.POOL.find_by_id(item.definition_id).display_name+" ["+str(item.instance_id)+"]\n"+MuseumResearchService.notes(state,item.instance_id)+"\n\n"
+	if not found:research_text.text+="此设施尚无已解锁研究说明；请到研究台整理实际持有馆藏。"
+	research_card.show()

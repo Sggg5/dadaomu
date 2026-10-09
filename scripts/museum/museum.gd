@@ -66,8 +66,9 @@ func _ready() -> void:
 	codex_panel.state = state
 	codex_panel.player = player
 	add_child(codex_panel)
-	research_desk = _point("馆藏研究台",Vector2(900,190),Color("7daac4"),func() -> String: return "[E] 全球图鉴 · 只读研究",func() -> void: codex_panel.open())
+	research_desk = _point("馆藏研究台",Vector2(900,190),Color("7daac4"),func() -> String: return "[E] 我的馆藏档案 / 全球研究资料",func() -> void: codex_panel.open())
 	collection_panel = MuseumCollectionPanel.new()
+	collection_panel.archive_requested.connect(func(id:StringName)->void:collection_panel.close();codex_panel.open_at(id))
 	collection_panel.state = state
 	collection_panel.player = player
 	add_child(collection_panel)
@@ -148,6 +149,7 @@ func _ready() -> void:
 	office_panel=MuseumOfficePanel.new()
 	office_panel.state=state
 	office_panel.player=player
+	office_panel.archives_requested.connect(func()->void:office_panel.close();codex_panel.open();codex_panel.set_mode(0))
 	office_panel.business=business
 	add_child(office_panel)
 	office_desk=MuseumOfficeDesk.new()

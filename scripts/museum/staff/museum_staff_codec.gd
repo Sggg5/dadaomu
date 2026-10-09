@@ -51,6 +51,7 @@ static func decode(state:MuseumState,payload:Dictionary)->bool:
 		for key in ["created_day","completed_day","fee_paid"]:
 			if not MuseumManagementCodec.integer(row.get(key),0,1000000000):return false
 		if row.created_day<1 or row.created_day>state.day_number or row.completed_day>state.day_number:return false
+		if int(payload.version)>=9 and (not row.get("work_kind","") is String or not MuseumManagementCodec.integer(row.get("target_level",0),0,3)):return false
 		var kind:StringName=StringName(row.get("work_kind","")) if int(payload.version)>=9 else &""
 		var target:int=int(row.get("target_level",0)) if int(payload.version)>=9 else 0
 		var effective:=kind if kind!=&"" else &"APPRAISE" if row.job=="APPRAISER" else &"RESTORE"
@@ -61,7 +62,8 @@ static func decode(state:MuseumState,payload:Dictionary)->bool:
 		if not (row.get("worked_seconds") is float or row.get("worked_seconds") is int) or not is_finite(float(row.worked_seconds)) or row.worked_seconds<0 or row.worked_seconds>duration:return false
 		if row.status=="COMPLETED" and (row.completed_day<row.created_day or row.worked_seconds<duration):return false
 		if row.status!="COMPLETED" and (row.completed_day!=0 or row.fee_paid!=0):return false
-		if row.job=="APPRAISER" and row.fee_paid!=0:return false
+		if effective!=&"RESTORE" and row.fee_paid!=0:return false
+		if effective==&"RESTORE" and row.status=="COMPLETED" and row.fee_paid<=0:return false
 		var task:=MuseumStaffTask.new()
 		task.work_kind=kind;task.target_level=target
 		task.task_id=int(row.task_id);task.staff_id=id;task.instance_id=StringName(row.instance_id);task.job=StringName(row.job);task.status=StringName(row.status)

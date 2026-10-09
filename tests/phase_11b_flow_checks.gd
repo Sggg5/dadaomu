@@ -58,6 +58,8 @@ func run()->void:
 			var state:=flow.museum_state
 			var local:OwnedAntique
 			for item in state.collection.all_items():
+				var archive:CollectionResearchRecord=state.collection.archives[item.instance_id]
+				test.check(archive.source.site_id==str(site_id) and archive.source.region_id==str(flow.site_registry.site(site_id).region_id) and archive.source.run_seed==seed_value,"11G actual regional pickup and return records confirmed expedition source")
 				var definition:=MuseumState.POOL.find_by_id(item.definition_id)
 				if definition.region_ids.size()==1 and definition.region_ids[0]==flow.site_registry.site(site_id).region_id:local=item;break
 			test.check(local!=null,"A local new prototype actually reaches museum")

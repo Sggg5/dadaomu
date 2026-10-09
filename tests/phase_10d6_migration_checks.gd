@@ -32,7 +32,7 @@ func run()->void:
  test.check(store.save_profile(loaded),"v5 save after backup succeeds")
  var backup:="%s.v4.%s.backup.json"%[path,checksum.substr(0,12)]
  test.check(FileAccess.file_exists(backup) and FileAccess.get_file_as_string(backup)==source,"v4 byte-exact backup retained")
- test.check(JSON.parse_string(FileAccess.get_file_as_string(path)).version==8,"new profile version8 with preserved old display")
+ test.check(JSON.parse_string(FileAccess.get_file_as_string(path)).version==9,"new profile version9 with preserved old display")
  test.check(store.encode(store.load_profile())==store.encode(original),"v5 disk roundtrip exact")
  test.check(store.load_profile().collection.find(waiting.instance_id).condition==44 and not store.load_profile().collection.find(waiting.instance_id).identified,"unidentified state preserved")
  var bad:=v4.duplicate(true)

@@ -165,6 +165,7 @@ func identify(instance_id: StringName) -> bool:
 	var item := collection.find(instance_id)
 	if not can_edit() or item == null or item.identified: return false
 	item.identified = true
+	MuseumStaffTasks.reconcile(self)
 	changed.emit()
 	return true
 
@@ -186,6 +187,7 @@ func repair(instance_id: StringName) -> bool:
 	var before:=collection.find(instance_id).condition
 	collection.find(instance_id).condition = 100
 	MuseumCollectionCare.restoration(self,instance_id,before,cost,"MANUAL")
+	MuseumStaffTasks.reconcile(self)
 	changed.emit()
 	return true
 
@@ -219,6 +221,7 @@ func sell_to_dealer(instance_id: StringName) -> bool:
 	cash += AntiqueMarketService.dealer_offer(value)
 	collection.archives[instance_id].record(day_number,"DISPOSED","DEALER")
 	collection.remove(instance_id)
+	MuseumStaffTasks.reconcile(self)
 	changed.emit() # 钱与身份都已提交后，唯一State通知才触发地面保存。
 	return true
 
@@ -251,6 +254,7 @@ func settle_auction(result: AuctionResult) -> bool:
 		cash += result.net_proceeds
 		collection.archives[result.instance_id].record(day_number,"DISPOSED","AUCTION")
 		collection.remove(result.instance_id)
+		MuseumStaffTasks.reconcile(self)
 	elif result.final_bid >= result.reserve_price or result.net_proceeds != 0 or result.commission != 0:
 		return false
 	auction_lot_instance_id = &""

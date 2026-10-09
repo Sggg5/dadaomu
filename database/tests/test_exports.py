@@ -111,7 +111,7 @@ class ExportTests(unittest.TestCase):
                 # Phase11F adds only the default-1.0 isolated-test staff work time scale.
                 'scripts/museum/museum_config.gd':'d8ff550e31a38d719d1570df6efa5094cb0598434f7d4c745dcd2233e8fdb9d1',
                 'scripts/bosses/encounters/twin_revenants.gd':'40b6f7aeb9719686db09bba60cd21e6c90b11d6767be657303737ebc299e3585',
-                'scripts/flow/game_flow.gd':'237a50e749a0b87a6df8cd27c828b46ac3302a9e0a675b679440daa60fdb243f',
+                'scripts/flow/game_flow.gd':'476dc26a18b4d8567b70a3667436810cb977b29b90966cebce55dd0905b00cde',
                 'scripts/dungeon/dungeon_session.gd':'cc1435fc9974ec9eae68c5398b776d9c59535d550a374a0cedf6ce8004eec155',
                 'scripts/rooms/room.gd':'6f6338a53e027d96f005f9f911d45f9ec2c80ee72acebb79b89ba321cf32e807',
                 'scripts/rooms/room_geometry_definition.gd':'3eda111fcfda93654e79fccd7389f6b12ee927dce86f7470155c442e351aa1eb',
