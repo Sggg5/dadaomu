@@ -183,7 +183,9 @@ func repair(instance_id: StringName) -> bool:
 	if not can_repair(instance_id) or cost <= 0 or cash < cost: return false
 	# 原子事务后通知存档/UI；满品相再次调用拒绝，不产生半完成状态。
 	cash -= cost
+	var before:=collection.find(instance_id).condition
 	collection.find(instance_id).condition = 100
+	MuseumCollectionCare.restoration(self,instance_id,before,cost,"MANUAL")
 	changed.emit()
 	return true
 
@@ -215,6 +217,7 @@ func sell_to_dealer(instance_id: StringName) -> bool:
 	var item := collection.find(instance_id)
 	var value := AntiqueMarketService.market_value(item,POOL.find_by_id(item.definition_id))
 	cash += AntiqueMarketService.dealer_offer(value)
+	collection.archives[instance_id].record(day_number,"DISPOSED","DEALER")
 	collection.remove(instance_id)
 	changed.emit() # 钱与身份都已提交后，唯一State通知才触发地面保存。
 	return true
@@ -246,6 +249,7 @@ func settle_auction(result: AuctionResult) -> bool:
 	if result.sold:
 		if result.final_bid < result.reserve_price or result.net_proceeds != AntiqueMarketService.net_proceeds(result.final_bid) or result.commission != AntiqueMarketService.commission(result.final_bid): return false
 		cash += result.net_proceeds
+		collection.archives[result.instance_id].record(day_number,"DISPOSED","AUCTION")
 		collection.remove(result.instance_id)
 	elif result.final_bid >= result.reserve_price or result.net_proceeds != 0 or result.commission != 0:
 		return false

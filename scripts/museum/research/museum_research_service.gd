@@ -30,7 +30,8 @@ static func eligible(state:MuseumState,id:StringName,target:int)->bool:
 static func complete(state:MuseumState,id:StringName,target:int,actor:String)->bool:
 	if not eligible(state,id,target):return false
 	var record:CollectionResearchRecord=state.collection.archives[id]
-	record.level=target;record.record(state.day_number,"TYPE_RESEARCH" if target==2 else "TOPIC_RESEARCH",actor,{"related_ids":related(state,id,true)})
+	record.references.assign(MuseumState.POOL.find_by_id(record.definition_id).reference_urls)
+	record.level=target;record.record(state.day_number,"TYPE_RESEARCH" if target==2 else "TOPIC_RESEARCH",actor,{"related_ids":related(state,id,true).slice(0,128)})
 	return true
 static func notes(state:MuseumState,id:StringName)->String:
 	var record:CollectionResearchRecord=state.collection.archives.get(id)

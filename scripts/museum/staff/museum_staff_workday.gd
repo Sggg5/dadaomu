@@ -75,7 +75,10 @@ func commit_tasks()->void:
 			task.fee_paid=cost
 			repair_fees_paid+=cost
 			state.staff.record(day,"STAFF_REPAIR",str(task.task_id),cost)
+			var before:=item.condition
 			item.condition=100
+			MuseumCollectionCare.restoration(state,task.instance_id,before,cost,str(task.staff_id))
+		elif task.action()==&"INSPECT":MuseumCollectionCare.inspect(state,task.instance_id,str(task.staff_id))
 		elif task.action()==&"RESEARCH":MuseumResearchService.complete(state,task.instance_id,task.target_level,str(task.staff_id))
 		else:item.identified=true
 		task.status=&"COMPLETED";task.completed_day=day;task.note="真实营业作业完成，闭馆统一提交"

@@ -12,6 +12,9 @@ static func enqueue(state:MuseumState,staff_id:StringName,instance_id:StringName
 	var action:=work_kind if work_kind!=&"" else &"APPRAISE" if job==&"APPRAISER" else &"RESTORE"
 	if action==&"RESEARCH":
 		if job!=&"APPRAISER" or not MuseumResearchService.eligible(state,instance_id,target_level):return null
+	elif action==&"INSPECT":
+		var item:=state.collection.find(instance_id)
+		if job!=&"CONSERVATOR" or target_level!=0 or item==null or not item.identified or state.is_auction_locked(instance_id):return null
 	elif action!=(&"APPRAISE" if job==&"APPRAISER" else &"RESTORE" if job==&"CONSERVATOR" else &"NONE") or target_level!=0 or not eligible(state,job,instance_id):return null
 	for task in state.staff.tasks:
 		if task.instance_id==instance_id and task.status in [&"PENDING",&"WAITING_FUNDS"]:return null
@@ -37,4 +40,7 @@ static func reconcile(state:MuseumState)->void:
 
 static func task_eligible(state:MuseumState,task:MuseumStaffTask)->bool:
 	if task.action()==&"RESEARCH":return task.job==&"APPRAISER" and MuseumResearchService.eligible(state,task.instance_id,task.target_level)
+	if task.action()==&"INSPECT":
+		var item:=state.collection.find(task.instance_id)
+		return task.job==&"CONSERVATOR" and item!=null and item.identified and not state.is_auction_locked(task.instance_id)
 	return eligible(state,task.job,task.instance_id)
