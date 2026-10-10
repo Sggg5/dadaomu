@@ -429,3 +429,6 @@ RoomState.antique_claimed跟随本层状态，未领可重访恢复同件，已�
 RunCarryState仅增加古董定义数组，新层加入新的Inventory、新UI；HP/Relic原规则不变。RunResult保存名称与总估值，只当前Run展示，绝不钱包/出售/保存。R/N新Run背包空。
 
 必跑Phase1～6.5及Phase7A；真实主流程使用Door/E两层领取、真实武器击败两Boss后结算，不用inventory.add替代正常获取。单位边界可直接调用Inventory。只实现本阶段，禁止撤离、黑市、鉴定、真伪、永久货币、战斗古董、保险箱、尸体回收、存档、第三层或新Boss。
+
+## Phase 12A.1 返修约定
+玩家新64×80图集61px有效高度、脚底76；身体按移动，武器按360瞄准，受击不覆盖步相。晋北96px连续石地宏图集取代32px随机明暗块，旧图与缺图回退保留。全部DRAFT；碰撞、核心方法、数据、随机流及Profile10冻结。报告docs/PHASE_12A1_VISUAL_REWORK.md，独立内存试玩第一COMBAT空格开始。只在当前美术分支commit/push，不合并main。

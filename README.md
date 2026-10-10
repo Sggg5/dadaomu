@@ -517,3 +517,5 @@ godot --fixed-fps 60 --path . --script tests/phase_11e_graphical.gd
 分支codex/phase-12a-hd2d-art。原创像素角色、晋北纹理/原生局部光影、博物馆家具与原8件古董图已接入；F6切换旧/贴图/光影。保留旧绘制和缺失资源回退，不改战斗/经营/Profile10。完整美术仍有缺口，所有素材DRAFT，等待用户验收。
 
 参见docs/PHASE_12_VISUAL_VERIFICATION.md与docs/PHASE_12_ASSET_GAPS.md。隔离试玩：Godot --path . --script tests/phase12_playtest.gd（内存新档，通过实际情报地图进入晋北，不读写正式档）。
+
+Phase12A.1美术返修：玩家体量约20%、身体行走与武器瞄准分离、晋北连续石地；F6保留三模式。实机对比、动作GIF及验收见[返修报告](docs/PHASE_12A1_VISUAL_REWORK.md)。仍为DRAFT，人工美术验收待完成。

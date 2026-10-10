@@ -1,7 +1,7 @@
 {
   "scripts/antiques/antique_pedestal.gd": "b70aaebdd7298f7500e44b6ec2b6e8eb4223b421a3e7b4a4eb5081a0af9587b1",
   "scripts/enemies/enemy.gd": "99d8894a987a8824fb2c17f247c8b16f9d7f6b39c9d8fc50269e275c124a8326",
-  "scripts/player/player.gd": "a83385e5050ecd74f72eb635b3a70e262575955655b1d6280b386db8bcbf1a4e",
+  "scripts/player/player.gd": "1cd34cbdcf2722ecbd2a83183e1e2e086ca7af5781d036a453ea25426e81f38e",
   "scripts/rooms/room.gd": "542c668350a2eaccfa9b2ff8b5d736362a474acc73f64a76391fe9f60bb76db4",
   "scripts/ui/antique_inventory_panel.gd": "e393b8043710529e9cd087bc0ae75e58286ba0a71c7cddfa854a01b4e5edafd4",
   "scripts/ui/museum_work_panel.gd": "da5a1a0b7c080f66df0827081adfe3d52fd7f8ac6fcff231fec308baa7554fa3"

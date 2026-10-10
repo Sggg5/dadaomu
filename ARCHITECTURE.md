@@ -548,3 +548,5 @@ RunCarryState增加antique_definitions，旧World/Panel释放、新Player加入�
 C：growth_properties_effect读取只读Definition参数，修改AttackRequest冷却/弹速/寿命及Runtime移动倍率，不写PlayerStats。Enemy.body_radius读取实例CircleShape；Boss出生/双生/召唤/卵的空间查询与视觉共享实际身体尺寸。
 
 Phase 10A：独立CollectionObject数据库分文化/自然专用扩展，Taxon/Occurrence/Specimen分离，历史/地质时间分离。GameCollectionDefinition是独立策划原型，OwnedAntique是原有实例身份。GlobalMuseumCatalog只读取本地审核JSON，不自动绑定掉落或修改存档。
+
+Phase12A.1：PlayerVisual只读velocity决定身体四向，独立读取aim绘制武器；脚底锚点+12。新玩家图集不替换敌人共享旧图集。RoomVisual将96px宏图集按3×3连续坐标铺入原32px TileMapLayer，无物理/随机流修改。源图、构建和回退见返修报告。

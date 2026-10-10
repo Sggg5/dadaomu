@@ -12,3 +12,5 @@ All artwork was generated with the built-in imagegen tool for this project. No t
 | furniture_original.png |4×2 transparent original director/construction/appraisal/restoration/research desks, intelligenceboard, ticketcounter, dealerdesk. |
 
 Runtime only loads derived PNGs in the parent directory. This sources directory is excluded from Godot import by.gdignore. Media/license review status remains AI_GENERATED_ORIGINAL_PENDING_REVIEW, not CC0 or expert approval. Missing dedicated Boss and regional-antique art is not silently filled with these images.
+
+Phase12A.1新增原画：player_rework_original.png（4×4身体姿态，侧向行装配纠正）；stone_rework_original.png（低对比石地）。OpenAI built-in imagegen原创生成，2026-10-10，DRAFT_PENDING_USER_REVIEW。派生脚本tools/build_phase12a1_assets.py只作图集裁切、原生尺寸/透明/脚底整理及地面调色与周期边缘处理。没有现实博物馆媒体或外部游戏素材。

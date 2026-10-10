@@ -84,7 +84,10 @@ func _on_died() -> void:
 
 func _draw() -> void:
 	if ArtRenderSettings.active() and ArtAssetCatalog.texture("actors") != null:
-		draw_line(aim_direction * 10.0, aim_direction * 30.0, Color("f0dfae"), 3.0)
+		# New adapter owns the weapon illustration. Keep the old aim line only
+		# for old-art/missing-body fallback, never duplicate it over the new gun.
+		if not health.is_dead and (art_visual.use_old_art or ArtAssetCatalog.texture("player_body_%d" % art_visual.size_variant) == null):
+			draw_line(aim_direction * 10.0, aim_direction * 30.0, Color("f0dfae"), 3.0)
 		return
 	var color := Color("69c9c3")
 	if is_instance_valid(health) and health.is_dead:
