@@ -17,10 +17,10 @@ func run() -> void:
 	var start := world.current_room
 	await driver.walk(start._door_position(start.doors.keys()[0])); await frames(6); driver.release()
 	check(world.current_room.room_type == RoomDefinition.Type.COMBAT,"Actual Door enters first Combat for manual review")
-	DisplayServer.window_set_title("大盗墓时代 · Phase12A.1返修 · Seed522269330 · 空格开始 · F6旧/基础/光影 · 隔离内存档")
+	DisplayServer.window_set_title("大盗墓时代 · Phase12A.2返修 · Seed522269330 · 空格开始 · F6旧/基础/光影 · 隔离内存档")
 	# Pause only the isolated handoff, so waiting for a human never kills the player.
 	var overlay := CanvasLayer.new(); overlay.process_mode = Node.PROCESS_MODE_ALWAYS
-	var button := Button.new(); button.text = "Phase12A.1：第一战斗房 · 点击或空格开始试玩"
+	var button := Button.new(); button.text = "Phase12A.2：第一战斗房 · 点击或空格开始试玩"
 	button.position = Vector2(390,610); button.size = Vector2(500,45)
 	var shortcut := Shortcut.new(); var event := InputEventKey.new(); event.keycode = KEY_SPACE
 	shortcut.events = [event]; button.shortcut = shortcut

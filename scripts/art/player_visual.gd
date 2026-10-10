@@ -67,6 +67,11 @@ func _process(delta: float) -> void:
 	queue_redraw()
 	actor.queue_redraw()
 func _draw() -> void:
+	# Thin grounding ellipse at the visual foot line; no physics or new child.
+	if visible and not use_old_art:
+		draw_set_transform(Vector2(0,13),0,Vector2(1,.23))
+		draw_circle(Vector2.ZERO,15,Color(.02,.035,.04,.28))
+		draw_set_transform(Vector2.ZERO)
 	if not visible or not actor is Player or actor.health.is_dead or use_old_art: return
 	if last_atlas == null or last_atlas == ArtAssetCatalog.texture("actors"): return
 	# Independent weapon illustration; gameplay muzzle remains actor origin.

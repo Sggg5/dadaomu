@@ -550,3 +550,5 @@ C：growth_properties_effect读取只读Definition参数，修改AttackRequest�
 Phase 10A：独立CollectionObject数据库分文化/自然专用扩展，Taxon/Occurrence/Specimen分离，历史/地质时间分离。GameCollectionDefinition是独立策划原型，OwnedAntique是原有实例身份。GlobalMuseumCatalog只读取本地审核JSON，不自动绑定掉落或修改存档。
 
 Phase12A.1：PlayerVisual只读velocity决定身体四向，独立读取aim绘制武器；脚底锚点+12。新玩家图集不替换敌人共享旧图集。RoomVisual将96px宏图集按3×3连续坐标铺入原32px TileMapLayer，无物理/随机流修改。源图、构建和回退见返修报告。
+
+Phase12A.2：RoomVisual继续读取原碰撞矩形，TombSpacePiece负责原位置的建筑/陈设，TombSpaceFloor负责低Z装饰；新增tomb_props六格DRAFT。只在晋北启用，洛阳/关中保持原地域视觉；不新增物理体、不消耗玩法随机。真实危险节点的Z优先级和HUD紧凑位置由视觉适配器调整并在legacy恢复，不修改时序/碰撞/输入。

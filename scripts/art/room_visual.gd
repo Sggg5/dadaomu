@@ -5,11 +5,29 @@ var room: Room
 var floor_layer: TileMapLayer
 var lamps: Array[PointLight2D] = []
 var clock: float = 0.0
+var use_old_space: bool = false # Isolated 12A.1/12A.2 comparison only.
+var old_surfaces: Array[Sprite2D] = []
+var space_surfaces: Array[Node2D] = []
+var warning_layers: Dictionary = {} # Weak references, original visual Z only.
+var region_space_enabled: bool = true
+var space_floor: TombSpaceFloor
+func jinbei_space() -> bool:
+	return region_space_enabled and (room.geometry == null or room.geometry.visual_motif not in [&"HAN_BRICK",&"TANG_MURAL"])
+func prop_kind(rect: Rect2, index: int) -> String:
+	if rect.size.x < 62 and rect.size.y < 100: return "pillar"
+	if rect.size.x > rect.size.y*1.8: return "altar"
+	var kinds := ["stone_coffin","wood_coffin","coffin_bed","altar"]
+	return kinds[(index+absi(str(room.definition.room_id).hash())%4)%4]
 var use_old_floor: bool = false # Isolated before/after comparison, not a save setting.
 func supported() -> bool:
 	return ArtAssetCatalog.texture("stone_0") != null and ArtAssetCatalog.texture("wall") != null and ArtAssetCatalog.texture("coffin") != null
 func _ready() -> void:
 	if not supported(): return
+	# Arena geometry has no regional motif: read the existing profile, not UI text.
+	var host = room.get_parent()
+	var controller = host.get_parent() if host != null and host.name == &"RoomHost" else null
+	var profile = controller.get("site_loot_profile") if controller != null else null
+	region_space_enabled = profile == null or profile.id == &"FORMAL_DEFAULT"
 	floor_layer = TileMapLayer.new()
 	floor_layer.position = Room.ROOM_RECT.position
 	floor_layer.z_index = -100
@@ -22,6 +40,9 @@ func _ready() -> void:
 	add_child(floor_layer)
 	for rect in room._wall_rects:
 		_build_wall(rect)
+	if jinbei_space():
+		space_floor = TombSpaceFloor.new(); space_floor.room = room; add_child(space_floor)
+		space_surfaces.append(space_floor)
 	for point in [Vector2(300,160),Vector2(980,160)]:
 		_build_lamp(point)
 
@@ -65,7 +86,14 @@ func _build_wall(rect: Rect2) -> void:
 		sprite.scale = rect.size / Vector2(128,128)
 		sprite.z_as_relative = false
 		sprite.z_index = int(rect.end.y)
-		add_child(sprite)
+		add_child(sprite); old_surfaces.append(sprite)
+		if jinbei_space():
+			var piece := TombSpacePiece.new()
+			piece.footprint = rect
+			piece.kind = prop_kind(rect,room.obstacles().find(rect)) if obstacle else "wall"
+			piece.z_as_relative = false
+			piece.z_index = int(rect.end.y) if obstacle else -70
+			add_child(piece); space_surfaces.append(piece)
 		var occluder := LightOccluder2D.new()
 		var polygon := OccluderPolygon2D.new()
 		polygon.polygon = PackedVector2Array([rect.position,Vector2(rect.end.x,rect.position.y),rect.end,Vector2(rect.position.x,rect.end.y)])
@@ -83,9 +111,31 @@ func _build_lamp(point: Vector2) -> void:
 		lamp.texture = glow; lamp.position = point; lamp.energy = .35
 		lamp.shadow_enabled = true
 		add_child(lamp); lamps.append(lamp)
+func _prioritize_warnings(node: Node) -> void:
+	if node is BossTelegraph or node is EncounterHazard:
+		var id := node.get_instance_id()
+		if not warning_layers.has(id): warning_layers[id] = [weakref(node),node.z_index]
+		node.z_index = 1100 if visible and jinbei_space() and not use_old_space else warning_layers[id][1]
+	for child in node.get_children():
+		if child != self: _prioritize_warnings(child)
 func _process(delta: float) -> void:
 	clock += delta
 	visible = ArtRenderSettings.active() and supported()
+	# Minimal visual-only header packing leaves north masonry below the text.
+	var controller = room.get_parent()
+	if controller != null and controller.name == &"RoomHost": controller = controller.get_parent()
+	if controller != null and controller.get("current_room") == room and is_instance_valid(controller.get("hud")):
+		var compact := visible and jinbei_space() and not use_old_space
+		var header = controller.get("hud").get_node("Root")
+		for path in ["Title","HP","RoomInfo","Enemies","Seed","Progress","EncounterDepth"]:
+			var label := header.get_node(path) as Control
+			var original: float = 20 if path=="Title" else 64 if path in ["HP","RoomInfo","Enemies"] else 108 if path=="EncounterDepth" else 106
+			label.position.y = (6 if path=="Title" else 44 if path in ["HP","RoomInfo","Enemies"] else 72) if compact else original
+	_prioritize_warnings(room)
+	for id in warning_layers.keys():
+		if warning_layers[id][0].get_ref() == null: warning_layers.erase(id)
+	for surface in old_surfaces: surface.visible = use_old_space or not jinbei_space()
+	for surface in space_surfaces: surface.visible = not use_old_space
 	for lamp in lamps:
 		lamp.enabled = visible and ArtRenderSettings.mode == ArtRenderSettings.Mode.ENHANCED
 		lamp.energy = .32 + sin(clock*3+lamp.position.x)*.035

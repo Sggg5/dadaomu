@@ -481,6 +481,23 @@
       "provenance": "Original generated explorer/stone draft, no external IP or museum media",
       "derivation": "4x4 S/W/E/N; largest alpha component bounds removes neighbor-row fragments; profile rows corrected; native64x80; aspect preserved; standing height63; binaryalpha128; fixedfeet76",
       "sha256": "8efa3c183315a5bb6f9fce4e1f7b7086291f7c3e9aaa0a4a54d8d02c829f633f"
+    },
+    {
+      "id": "tomb_props",
+      "path": "res://assets/art/tomb_props.png",
+      "source": "res://assets/art/sources/tomb_props_original.png",
+      "sha256": "66ecf8802126aa4880b117bde57428854564141ea1a12afe8c6a82e6bafd562b",
+      "status": "DRAFT",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original AI-generated fictional tomb props; no museum media",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "width": 384,
+      "height": 320,
+      "format": "PNG",
+      "filter": "NEAREST",
+      "anchor": "CELL_FEET154",
+      "derivation": "3x2 alpha bounds; nearest fit120x150 into128x160 cells; no repainting",
+      "description": "Original AI six-prop atlas; native128x160 cells; imagegen transparent output, normalized without repainting; not historical replica."
     }
   ]
 }
