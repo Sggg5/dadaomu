@@ -1,0 +1,99 @@
+{
+	"encounter_resource": "res://data/rooms/variety/encounter_03.tres",
+	"formal_first": [
+		{
+			"body_radius": 14.0,
+			"hp": 40.0,
+			"id": "corpse_dog",
+			"position": "(880.0, 240.0)",
+			"scene": "res://scenes/enemies/corpse_dog.tscn",
+			"script": "res://scripts/enemies/corpse_dog.gd",
+			"visual_supported": false
+		},
+		{
+			"body_radius": 14.0,
+			"hp": 40.0,
+			"id": "corpse_dog",
+			"position": "(952.0, 320.0)",
+			"scene": "res://scenes/enemies/corpse_dog.tscn",
+			"script": "res://scripts/enemies/corpse_dog.gd",
+			"visual_supported": false
+		},
+		{
+			"body_radius": 14.0,
+			"hp": 65.0,
+			"id": "scarab",
+			"position": "(328.0, 320.0)",
+			"scene": "res://scenes/enemies/scarab_enemy.tscn",
+			"script": "res://scripts/enemies/scarab_enemy.gd",
+			"visual_supported": true
+		},
+		{
+			"body_radius": 14.0,
+			"hp": 65.0,
+			"id": "scarab",
+			"position": "(400.0, 304.0)",
+			"scene": "res://scenes/enemies/scarab_enemy.tscn",
+			"script": "res://scripts/enemies/scarab_enemy.gd",
+			"visual_supported": true
+		},
+		{
+			"body_radius": 14.0,
+			"hp": 65.0,
+			"id": "scarab",
+			"position": "(480.0, 304.0)",
+			"scene": "res://scenes/enemies/scarab_enemy.tscn",
+			"script": "res://scripts/enemies/scarab_enemy.gd",
+			"visual_supported": true
+		}
+	],
+	"isolated_a": [
+		{
+			"body_radius": 14.0,
+			"hp": 40.0,
+			"id": "corpse_dog",
+			"position": "(832.0, 248.0)",
+			"scene": "res://scenes/enemies/corpse_dog.tscn",
+			"script": "res://scripts/enemies/corpse_dog.gd",
+			"visual_supported": false
+		},
+		{
+			"body_radius": 14.0,
+			"hp": 40.0,
+			"id": "corpse_dog",
+			"position": "(952.0, 320.0)",
+			"scene": "res://scenes/enemies/corpse_dog.tscn",
+			"script": "res://scripts/enemies/corpse_dog.gd",
+			"visual_supported": false
+		},
+		{
+			"body_radius": 14.0,
+			"hp": 65.0,
+			"id": "scarab",
+			"position": "(328.0, 248.0)",
+			"scene": "res://scenes/enemies/scarab_enemy.tscn",
+			"script": "res://scripts/enemies/scarab_enemy.gd",
+			"visual_supported": true
+		},
+		{
+			"body_radius": 14.0,
+			"hp": 65.0,
+			"id": "scarab",
+			"position": "(400.0, 320.0)",
+			"scene": "res://scenes/enemies/scarab_enemy.tscn",
+			"script": "res://scripts/enemies/scarab_enemy.gd",
+			"visual_supported": true
+		},
+		{
+			"body_radius": 14.0,
+			"hp": 65.0,
+			"id": "scarab",
+			"position": "(480.0, 304.0)",
+			"scene": "res://scenes/enemies/scarab_enemy.tscn",
+			"script": "res://scripts/enemies/scarab_enemy.gd",
+			"visual_supported": true
+		}
+	],
+	"room_id": "ROOM_001",
+	"seed": 522269330
+}
