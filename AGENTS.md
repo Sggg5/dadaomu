@@ -442,3 +442,7 @@ RunCarryState仅增加古董定义数组，新层加入新的Inventory、新UI�
 
 ## Phase12A.4 隔离布局实验V1
 三种RoomGeometryDefinition仅tests/fixtures/phase12a4/独立池；复用原Plan/Validation/Room/Spawner，不写生产池与GEOMETRY_VERSION2，Profile10不变。四布局选择器tests/phase12a4_playtest.gd只内存档；切布局新建夹具，R重开/N固定Seed。正式GameFlow视觉边界隔离调试按钮，不重构HUD核心或输入映射。DRAFT，报告docs/PHASE_12A4_LAYOUT_EXPERIMENT.md；只push当前美术分支，不合并main，人工待验，完成停止。
+
+## Phase12A.5 隔离主棺美术样板
+
+基线6f73f20，当前美术分支。新素材a5_principal/offering/gate/masonry仅由tests/phase12a5入口附加到原A几何；正式scripts/scenes/data、B/C及所有碰撞不改。内存档、固定Seed522269330、原生1280×720 VIEWPORT消除DPI采图变化，Legacy缺图回退保留。四件素材DRAFT，真实实机及性能/回归见docs/PHASE_12A5_PRINCIPAL_TOMB_SAMPLE.md。只push当前分支，不合并main，不进12A.6，等待人工验收。

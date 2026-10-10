@@ -1,0 +1,27 @@
+{
+  "tool": "built-in image_gen.imagegen",
+  "status": "DRAFT_PENDING_USER_REVIEW",
+  "historical_claim": "Original fictional northern Chinese burial-chamber game art; not an excavated object or expert-reviewed reconstruction.",
+  "prompts": [
+    {
+      "id": "a5_principal",
+      "transparent_background": true,
+      "prompt": "Create one ORIGINAL production game sprite, not a concept scene: an ancient northern Chinese stone burial sarcophagus on its stone coffin bed for a sober 1933 archaeological tomb exploration game. True overhead 2D pixel game camera (see lid top plus modest south-facing vertical front edge, north-south room axis), NOT isometric. Entire object fits a near square horizontal footprint: stone bed wider than inner upright coffin; lid centered on platform. Chinese burial architectural vocabulary: stepped stone coffin bed, tapered lid, restrained geometric cloud-scroll relief, worn carved seal seam; NO fantasy skulls, crosses, pseudo inscriptions, readable text, characters, humans or loose props. High quality crisp pixel art, tightly limited desaturated slate gray/olive stone palette, discrete pixel clusters and chiseled relief; upper left cool lighting with a subtle warm edge, dark contact underside. Clear silhouette. Bed viewed footprint width160 height128 in intended game, elevated lid may project20px north. Output on genuine transparent background, generous transparent margin, standalone complete centered object. Render as enlarged nearest-neighbor pixel art with an underlying roughly160x148 pixel grid so it can be deterministically downsampled to game dimensions without stretching. No surrounding floor, walls, borders, labels, glows, or cast shadow extending far from bed."
+    },
+    {
+      "id": "a5_masonry",
+      "transparent_background": false,
+      "prompt": "Original game texture asset, not concept art. Seamless horizontally repeating strip of ancient northern Chinese dressed grey stone tomb bricks, sober 2D overhead pixel game environmental material. Entire square canvas filled edge to edge with shallow chisel texture and staggered rectangular stone blocks; regular stone blocks roughly32px wide by12px high on an underlying96x96 crisp pixel grid. Desaturated blue grey/olive limestone, subdued luminance, upper left lit beveled edges, tight dark mortar lines, sparse eroded corners, low contrast mineral grain. No giant cracks, no inscriptions, no people, objects, ornaments, symbols, borders, gradients, shadows or lighting baked across whole sheet. Opposite edges must match for tiling. High quality handcrafted-looking limited palette pixel clusters, no photographic noise, no cartoon outlines. Intended to repeat in the stone wall facade/cap layers of a top-down Chinese burial chamber. Show texture only."
+    },
+    {
+      "id": "a5_offering",
+      "transparent_background": true,
+      "prompt": "Original standalone 2D pixel game sprite: a low rectangular ancient northern Chinese stone offering table, sober archaeological Chinese burial chamber. True top-down view, visible flat wide offering tabletop and shallow southern vertical face; not isometric. Horizontal aspect3:1. One small dark patinated bronze incense vessel centered, two subtle shallow offering cups arranged deliberately, eroded double stepped stone slab rim with restrained cloud-scroll corner relief. No inscriptions, text, fantasy symbols, skulls, humans, background floor, extra furniture or dramatic perspective. Cool gray olive stone, upper left cool light and tiny warm bronze edges, crisp limited palette handcrafted pixel clusters underlying about144x60 game pixels. Full object centered with genuine transparent background and margin. Appropriate real gaming prop with sober fine detail, not cartoon, not photoreal illustration; all pieces remain on the slab, modest vertical height."
+    },
+    {
+      "id": "a5_gate",
+      "transparent_background": true,
+      "prompt": "Standalone ORIGINAL game sprite, a closed pair of ancient Chinese tomb stone door leaves in frontal shallow top-down game projection, wider than tall at intended112x28 pixel game size. Gray worn stone cross slab door with two symmetrical stone leaves, black center seam and subtle recessed rectangular frame carvings, no writing, iron or brass patina hinge accents. Top-down overhead 2D pixel game, restrained visible south edge, NOT perspective vanishing/isometric. Crisp pixel art underlying112x28 grid, desaturated slate/olive masonry, upper left illumination. Whole complete pair centered, genuinely transparent background, no surrounding wall, posts, threshold, floor, shadows outside object, text, captions or fantasy monsters. This is a single tile prop blocking a112px door opening, design must read a low transverse doorway seal rather than upright furniture. Professional sober historical fictional tomb asset."
+    }
+  ]
+}

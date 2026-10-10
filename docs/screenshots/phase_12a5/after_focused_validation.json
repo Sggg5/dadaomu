@@ -1,0 +1,11 @@
+{
+	"connectivity_error": "",
+	"grid_walkable_ratio_24px": 0.804395604395604,
+	"id": "LAB_V1_PRINCIPAL_BURIAL",
+	"lab_version": 1,
+	"obstacle_collisions": 4,
+	"raw_floor_free_ratio": 0.921130952380952,
+	"renderer": "gl_compatibility",
+	"resolution": "1280x720",
+	"texture_bytes": 24543587.0
+}

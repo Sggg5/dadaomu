@@ -1,0 +1,16 @@
+{
+	"connectivity_error": "",
+	"draw_calls": 180.48021760633,
+	"fps": 673.46571719769,
+	"grid_walkable_ratio_24px": 0.804395604395604,
+	"id": "LAB_V1_PRINCIPAL_BURIAL",
+	"lab_version": 1,
+	"obstacle_collisions": 4,
+	"p95_ms": 2.708,
+	"raw_floor_free_ratio": 0.921130952380952,
+	"render_frame_samples": 2022,
+	"renderer": "gl_compatibility",
+	"resolution": "1280x720",
+	"sample_seconds": 3.00238,
+	"texture_bytes": 24543587.0
+}

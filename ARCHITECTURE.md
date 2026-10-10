@@ -556,3 +556,5 @@ Phase12A.2：RoomVisual继续读取原碰撞矩形，TombSpacePiece负责原位�
 Phase12A.3静态环境Canvas绘制命令按视觉状态变化缓存；新增危险节点通过node_added延后登记，不每帧遍历Room树。等比陈设保留原碰撞石座，仍为只读视觉适配。
 
 12A.4实验Geometry位于tests/fixtures独立池LAB_JINBEI_V1_DRAFT，现有RoomGeometryPlan/Validation复用；只覆盖测试内存assigned项，无新地图算法、正式版本或存档变更。测试装饰无碰撞，阻挡全部从原Geometry构建。正式GameFlow调试按钮隔离由视觉侧player_hud_boundary执行。
+
+12A.5视觉样板通过tests/support/phase12a5_*显式附加原A房。读取真实footprint/Door状态，仅CanvasItem绘制与原两盏灯的视觉位置；不修改Room、GeometryPlan或物理对象。专属原生像素资产缺失时保留原视觉，正式入口不引用样板。

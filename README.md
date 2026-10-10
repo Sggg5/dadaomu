@@ -525,3 +525,5 @@ Phase12A.2晋北空间DRAFT：墙体分层、石棺/木棺/棺床/柱/供案/陶
 Phase12A.3晋北精修：等比陈设、墓门层次与静态绘制缓存；DRAFT实机证据及人工待验见docs/PHASE_12A3_VISUAL_REFINEMENT.md。
 
 Phase12A.4隔离墓室实验：旧房/A主棺/B盗掘/C侧室，仅tests/phase12a4_playtest.gd入口，固定Seed522269330；未进入正式随机池。原生对比、碰撞/性能与人工待验见docs/PHASE_12A4_LAYOUT_EXPERIMENT.md。
+
+Phase 12A.5：`tests/phase12a5_playtest.gd` 只在隔离A主棺实验房启用专属石椁、祭台、墓门与墓砖。正式池/B/C不变，素材DRAFT，验收见 `docs/PHASE_12A5_PRINCIPAL_TOMB_SAMPLE.md`。
