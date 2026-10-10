@@ -554,3 +554,5 @@ Phase12A.1：PlayerVisual只读velocity决定身体四向，独立读取aim绘�
 Phase12A.2：RoomVisual继续读取原碰撞矩形，TombSpacePiece负责原位置的建筑/陈设，TombSpaceFloor负责低Z装饰；新增tomb_props六格DRAFT。只在晋北启用，洛阳/关中保持原地域视觉；不新增物理体、不消耗玩法随机。真实危险节点的Z优先级和HUD紧凑位置由视觉适配器调整并在legacy恢复，不修改时序/碰撞/输入。
 
 Phase12A.3静态环境Canvas绘制命令按视觉状态变化缓存；新增危险节点通过node_added延后登记，不每帧遍历Room树。等比陈设保留原碰撞石座，仍为只读视觉适配。
+
+12A.4实验Geometry位于tests/fixtures独立池LAB_JINBEI_V1_DRAFT，现有RoomGeometryPlan/Validation复用；只覆盖测试内存assigned项，无新地图算法、正式版本或存档变更。测试装饰无碰撞，阻挡全部从原Geometry构建。正式GameFlow调试按钮隔离由视觉侧player_hud_boundary执行。

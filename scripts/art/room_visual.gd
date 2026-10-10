@@ -24,12 +24,14 @@ var use_old_floor: bool = false # Isolated before/after comparison, not a save s
 func supported() -> bool:
 	return ArtAssetCatalog.texture("stone_0") != null and ArtAssetCatalog.texture("wall") != null and ArtAssetCatalog.texture("coffin") != null
 func _ready() -> void:
-	if not supported(): return
 	# Arena geometry has no regional motif: read the existing profile, not UI text.
 	var host = room.get_parent()
 	var controller = host.get_parent() if host != null and host.name == &"RoomHost" else null
 	var profile = controller.get("site_loot_profile") if controller != null else null
 	region_space_enabled = profile == null or profile.id == &"FORMAL_DEFAULT"
+	if controller!=null:
+		preload("res://scripts/art/player_hud_boundary.gd").apply.call_deferred(controller)
+	if not supported(): return
 	floor_layer = TileMapLayer.new()
 	floor_layer.position = Room.ROOM_RECT.position
 	floor_layer.z_index = -100

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RoomGeometryDefinition" load_steps=4 format=3]
+[ext_resource type="Script" path="res://scripts/rooms/room_geometry_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/rooms/encounter_hazard_definition.gd" id="2"]
+[sub_resource type="Resource" id="Warning"]
+script = ExtResource("2")
+position = Vector2(704,488)
+initial_delay = 1.2
+[resource]
+script = ExtResource("1")
+id = &"LAB_V1_SIDE_CHAMBER"
+tags = Array[StringName]([&"COFFIN",&"EXPERIMENT_ONLY",&"LAB_VERSION_1"])
+obstacles = Array[Rect2]([Rect2(176,224,168,56),Rect2(248,436,96,96),Rect2(960,260,72,168),Rect2(768,208,112,64)])
+environments = Array[Resource]([SubResource("Warning")])

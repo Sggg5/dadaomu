@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="RoomGeometryPool" load_steps=5 format=3]
+[ext_resource type="Script" path="res://scripts/rooms/room_geometry_pool.gd" id="1"]
+[ext_resource type="Resource" path="res://tests/fixtures/phase12a4/principal_burial.tres" id="2"]
+[ext_resource type="Resource" path="res://tests/fixtures/phase12a4/robbed_burial.tres" id="3"]
+[ext_resource type="Resource" path="res://tests/fixtures/phase12a4/side_chamber.tres" id="4"]
+[resource]
+script = ExtResource("1")
+id = &"LAB_JINBEI_V1_DRAFT"
+geometries = Array[Resource]([ExtResource("2"),ExtResource("3"),ExtResource("4")])

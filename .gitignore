@@ -5,6 +5,7 @@
 # Local builds and test logs.
 builds/
 logs/
+__pycache__/
 # Machine-specific editor files.
 .DS_Store
 Thumbs.db

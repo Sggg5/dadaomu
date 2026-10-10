@@ -439,3 +439,6 @@ RunCarryState仅增加古董定义数组，新层加入新的Inventory、新UI�
 
 ## Phase12A.3 晋北视觉精修
 原碰撞/玩法冻结；棺体等比适配、石座保持原足迹。静态环境仅状态变化重绘，预警node_added延后注册/原Z恢复。DRAFT，固定Seed522269330真实GameFlow和完整回归；报告docs/PHASE_12A3_VISUAL_REFINEMENT.md。只push当前美术分支，不合并main、不操作正式档，人工待验。
+
+## Phase12A.4 隔离布局实验V1
+三种RoomGeometryDefinition仅tests/fixtures/phase12a4/独立池；复用原Plan/Validation/Room/Spawner，不写生产池与GEOMETRY_VERSION2，Profile10不变。四布局选择器tests/phase12a4_playtest.gd只内存档；切布局新建夹具，R重开/N固定Seed。正式GameFlow视觉边界隔离调试按钮，不重构HUD核心或输入映射。DRAFT，报告docs/PHASE_12A4_LAYOUT_EXPERIMENT.md；只push当前美术分支，不合并main，人工待验，完成停止。

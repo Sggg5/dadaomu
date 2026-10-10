@@ -90,3 +90,6 @@ assets/art/manifest.json保存26个稳定ID、尺寸/锚点/过滤、来源、�
 
 ## Phase12A.3追加
 晋北同房精修、等比陈设、门框与侵蚀、蜘蛛中间色调及静态绘制缓存；原功能冻结。真实截图、动态录帧、同机旧新性能及回归见PHASE_12A3_VISUAL_REFINEMENT.md。全部DRAFT，人工待验。
+
+## Phase12A.4隔离实验
+三种新Geometry仅实验池V1，正式GEOMETRY_VERSION2与Profile10不变；真实移动/避让/射击/拾取/过门及四布局原生截图、活动战斗性能见PHASE_12A4_LAYOUT_EXPERIMENT.md。正式UI隔离调试按钮，顶部重排仅方案；全部DRAFT、人工待验。

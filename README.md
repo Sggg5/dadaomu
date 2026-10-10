@@ -523,3 +523,5 @@ Phase12A.1美术返修：玩家体量约20%、身体行走与武器瞄准分离�
 Phase12A.2晋北空间DRAFT：墙体分层、石棺/木棺/棺床/柱/供案/陶罐、轻地面层与接触影。原碰撞/玩法不变，真实截图与回归见[空间返修报告](docs/PHASE_12A2_TOMB_SPACE_REWORK.md)。`tests/phase12_playtest.gd`内存隔离、固定Seed522269330第一COMBAT，空格开始/F6切换，人工待验。
 
 Phase12A.3晋北精修：等比陈设、墓门层次与静态绘制缓存；DRAFT实机证据及人工待验见docs/PHASE_12A3_VISUAL_REFINEMENT.md。
+
+Phase12A.4隔离墓室实验：旧房/A主棺/B盗掘/C侧室，仅tests/phase12a4_playtest.gd入口，固定Seed522269330；未进入正式随机池。原生对比、碰撞/性能与人工待验见docs/PHASE_12A4_LAYOUT_EXPERIMENT.md。
