@@ -558,3 +558,5 @@ Phase12A.3静态环境Canvas绘制命令按视觉状态变化缓存；新增危�
 12A.4实验Geometry位于tests/fixtures独立池LAB_JINBEI_V1_DRAFT，现有RoomGeometryPlan/Validation复用；只覆盖测试内存assigned项，无新地图算法、正式版本或存档变更。测试装饰无碰撞，阻挡全部从原Geometry构建。正式GameFlow调试按钮隔离由视觉侧player_hud_boundary执行。
 
 12A.5视觉样板通过tests/support/phase12a5_*显式附加原A房。读取真实footprint/Door状态，仅CanvasItem绘制与原两盏灯的视觉位置；不修改Room、GeometryPlan或物理对象。专属原生像素资产缺失时保留原视觉，正式入口不引用样板。
+
+12A.6 Enemy视觉是Room下的兄弟Canvas节点，四方向AtlasTexture缓存读取Enemy实际AI/Health；与原Enemy死亡缩放解耦但不延长death_duration。Legacy/缺图恢复旧Canvas绘制，前摇单独高层、生命比例不变。CombatVisual读取真实武器/弹丸/受伤信号，最多48个短特效；切房释放自动断开信号。全部tests隔离，正式scripts/scenes/data及A5建筑未改。

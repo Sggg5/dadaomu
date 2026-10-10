@@ -1,0 +1,19 @@
+{
+  "status": "DRAFT",
+  "transparency": true,
+  "prompts": {
+    "dog": "Use case: illustration-story. Asset type: ORIGINAL DRAFT 2D top-down pixel game enemy animation sheet, transparent background. Subject: undead tomb hound from fictional northern Chinese tomb, lean gray-brown skeletal dog, ragged fur, pale ivory jaw, subtle desaturated copper collars, small warm edge highlight top-left. Mature gritty pixel miniature NOT cartoon. EXACT grid 8 columns x 8 rows, 64 equal transparent cells, no labels or grid lines. Each cell fully contains ONE dog, centered consistent feet anchor, no shadow baked. Rows 1-2 face SOUTH, rows3-4 WEST, rows5-6 EAST, rows7-8 NORTH. Each two-row group reads left to right 16 poses: idle breathing2, walking stride4 (different leg phases), windup crouch2, attacking lunging2, hit recoil2, death collapse4 (progressively falling). Every pose independently drawn; no rotated copies. Consistent anatomy, no extra limbs, full body visible including paws and tail, no clipping or overlap cells. Pixel art with clean deliberate pixels and limited earthy palette, visibly different poses, 3/4 overhead camera appropriate top-down 2D not isometric. Sprite will occupy about 44x36 native pixels per64x64cell. No scenery, words, watermark or frame borders.",
+    "scarab": "Use case: illustration-story. Asset type: ORIGINAL DRAFT top-down pixel game enemy animation sheet, transparent. Subject: Chinese tomb scarab crawling arthropod (corpse beetle), broad segmented olive bronze carapace, SIX articulated pale tan legs, ivory mandibles, dark outline light upper-left edge, sinister natural insect NOT cute cartoon. Exact grid8columns x8rows,64 equal cells ontransparent background. ONE complete separately drawn insect percell centered consistent grounding. Rows1-2 SOUTH,3-4 WEST,5-6 EAST,7-8 NORTH. Each two-rowgroup16poses: idle2, walking alternating6leg stride4, windup mandible opening/crouch2, bite thrust2, hit recoil2, death curl/collapse4. Independently drawn poses not merely rotated single sprite; preserve sixleg anatomy eachview. No scenery, shadows, words, gridlines, watermark. Consistent detailed miniature pixelart at about36x36nativepixels per64x64cell. Earthy low contrast shell with readable highlight edge for dark cold stone floors. Top-down overhead3/4 camera for2Dgame, no isometric ground."
+  },
+  "observed_grid": {
+    "corpse_dog": [
+      12,
+      8
+    ],
+    "scarab": [
+      11,
+      8
+    ]
+  },
+  "note": "Generated grid differed from request. Reviewed separate source cells are explicitly remapped by build script; no single-pose rotations."
+}

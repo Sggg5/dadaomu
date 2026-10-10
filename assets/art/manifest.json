@@ -562,6 +562,226 @@
       "filter": "NEAREST",
       "anchor": "FEET",
       "derivation": "central768square crop;BOX downsample96x96;32palette;opposite native boundary pixels averaged; no concept background"
+    },
+    {
+      "id": "a6_corpse_dog",
+      "path": "res://assets/art/a6_corpse_dog.png",
+      "source": "res://assets/art/sources/a6_corpse_dog_original.png",
+      "status": "DRAFT",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original fictional tomb enemy, not museum media",
+      "width": 512,
+      "height": 512,
+      "filter": "NEAREST",
+      "frame_size": [
+        64,
+        64
+      ],
+      "directions": [
+        "SOUTH",
+        "WEST",
+        "EAST",
+        "NORTH"
+      ],
+      "poses": [
+        "idle",
+        "idle",
+        "walk",
+        "walk",
+        "walk",
+        "walk",
+        "windup",
+        "windup",
+        "attack",
+        "attack",
+        "hurt",
+        "hurt",
+        "death",
+        "death",
+        "death",
+        "death"
+      ],
+      "source_columns": 12,
+      "source_rows": 8,
+      "selected_source_poses": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          8
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          0,
+          9
+        ],
+        [
+          0,
+          10
+        ],
+        [
+          0,
+          11
+        ],
+        [
+          1,
+          11
+        ]
+      ],
+      "derivation": "largest connected alpha48 silhouette removes gutter fragments; common uniform species scale; NEAREST; feet56; no rotations or nonuniform stretch",
+      "sha256": "7cf1a37b50520ff5b07957cbadc7200dbedea2bf2502982e55f2c4fd7d22d081"
+    },
+    {
+      "id": "a6_scarab",
+      "path": "res://assets/art/a6_scarab.png",
+      "source": "res://assets/art/sources/a6_scarab_original.png",
+      "status": "DRAFT",
+      "license": "AI_GENERATED_ORIGINAL_PENDING_REVIEW",
+      "author": "OpenAI imagegen / project direction",
+      "provenance": "Original fictional tomb enemy, not museum media",
+      "width": 512,
+      "height": 512,
+      "filter": "NEAREST",
+      "frame_size": [
+        64,
+        64
+      ],
+      "directions": [
+        "SOUTH",
+        "WEST",
+        "EAST",
+        "NORTH"
+      ],
+      "poses": [
+        "idle",
+        "idle",
+        "walk",
+        "walk",
+        "walk",
+        "walk",
+        "windup",
+        "windup",
+        "attack",
+        "attack",
+        "hurt",
+        "hurt",
+        "death",
+        "death",
+        "death",
+        "death"
+      ],
+      "source_columns": 11,
+      "source_rows": 8,
+      "selected_source_poses": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          8
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          0,
+          8
+        ],
+        [
+          0,
+          9
+        ],
+        [
+          0,
+          10
+        ],
+        [
+          1,
+          10
+        ]
+      ],
+      "derivation": "largest connected alpha48 silhouette removes gutter fragments; common uniform species scale; NEAREST; feet56; no rotations or nonuniform stretch",
+      "sha256": "fca4eee47912d55f44638895764c5230c78dcbf9e9d69aea5720e29b162e830d"
     }
   ]
 }

@@ -1,0 +1,67 @@
+[
+  {
+    "file": "new_full_combat.gif",
+    "source_frames": 53,
+    "frame_size": [
+      1280,
+      720
+    ],
+    "duration_ms": 5300
+  },
+  {
+    "file": "probe_full_combat.gif",
+    "source_frames": 66,
+    "frame_size": [
+      1280,
+      720
+    ],
+    "duration_ms": 6600
+  },
+  {
+    "file": "corpse_dog_actual_ai.gif",
+    "source_frames": 43,
+    "frame_size": [
+      96,
+      96
+    ],
+    "duration_ms": 4300
+  },
+  {
+    "file": "scarab_actual_ai.gif",
+    "source_frames": 65,
+    "frame_size": [
+      96,
+      96
+    ],
+    "duration_ms": 6500
+  },
+  {
+    "file": "real_walk_around_coffin.gif",
+    "source_frames": 32,
+    "frame_size": [
+      1280,
+      720
+    ],
+    "duration_ms": 6400
+  },
+  {
+    "dense_frame": {
+      "alive": 4,
+      "enemy_warnings": 1,
+      "environment_warnings": 0,
+      "frame": 9,
+      "projectiles": 1,
+      "source": "new"
+    }
+  },
+  {
+    "dense_frame": {
+      "alive": 4,
+      "enemy_warnings": 2,
+      "environment_warnings": 0,
+      "frame": 36,
+      "projectiles": 1,
+      "source": "probe"
+    }
+  }
+]

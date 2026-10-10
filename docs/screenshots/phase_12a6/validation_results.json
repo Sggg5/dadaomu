@@ -1,0 +1,100 @@
+{
+  "godot_suites": [
+    {
+      "suite": "历史完整经营/玩法",
+      "checks": 340404,
+      "failures": 0
+    },
+    {
+      "suite": "Phase12",
+      "checks": 152,
+      "failures": 0
+    },
+    {
+      "suite": "12A.1至12A.5基础专项",
+      "checks": 1059,
+      "failures": 0
+    },
+    {
+      "suite": "12A.1至12A.5补充图形专项",
+      "checks": 1421,
+      "failures": 0
+    },
+    {
+      "suite": "12A.6最终headless",
+      "checks": 199,
+      "failures": 0
+    },
+    {
+      "suite": "12A.6最终graphical",
+      "checks": 199,
+      "failures": 0
+    },
+    {
+      "suite": "旧敌人对照",
+      "checks": 42,
+      "failures": 0
+    },
+    {
+      "suite": "真实近身AI及死亡尾部",
+      "checks": 11,
+      "failures": 0
+    },
+    {
+      "suite": "旧版串行性能/流程",
+      "checks": 42,
+      "failures": 0
+    },
+    {
+      "suite": "新版串行性能/流程",
+      "checks": 63,
+      "failures": 0
+    },
+    {
+      "suite": "暂停原生预览",
+      "checks": 8,
+      "failures": 0
+    }
+  ],
+  "godot_total": 343600,
+  "python_tests": 129,
+  "python_failures": 0,
+  "manual_review": "PENDING",
+  "engine": "Godot 4.6.2",
+  "seed": 522269330,
+  "profile_version": 10,
+  "baseline": "c4b0625c0db6461fc026063d69833a35d1dc921d",
+  "old_performance": {
+    "connectivity_error": "",
+    "draw_calls": 180.44703196347,
+    "fps": 729.727325222809,
+    "grid_walkable_ratio_24px": 0.804395604395604,
+    "id": "LAB_V1_PRINCIPAL_BURIAL",
+    "lab_version": 1,
+    "obstacle_collisions": 4,
+    "p95_ms": 2.176,
+    "raw_floor_free_ratio": 0.921130952380952,
+    "render_frame_samples": 2190,
+    "renderer": "gl_compatibility",
+    "resolution": "1280x720",
+    "sample_seconds": 3.001121,
+    "texture_bytes": 24543587.0
+  },
+  "new_performance": {
+    "connectivity_error": "",
+    "draw_calls": 180.7548828125,
+    "fps": 682.869478901901,
+    "grid_walkable_ratio_24px": 0.804395604395604,
+    "id": "LAB_V1_PRINCIPAL_BURIAL",
+    "lab_version": 1,
+    "obstacle_collisions": 4,
+    "p95_ms": 2.221,
+    "raw_floor_free_ratio": 0.921130952380952,
+    "render_frame_samples": 2048,
+    "renderer": "gl_compatibility",
+    "resolution": "1280x720",
+    "sample_seconds": 2.999109,
+    "texture_bytes": 27339787.0
+  },
+  "excluded": "Superseded early runs and concurrent benchmark are retained in ignored logs; no suppressed script errors."
+}

@@ -1,0 +1,965 @@
+{
+  "11i_runner_results.json": [
+    {
+      "suite": "history_1",
+      "exit": 0,
+      "summary": [
+        "27",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_2",
+      "exit": 0,
+      "summary": [
+        "204",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_3",
+      "exit": 0,
+      "summary": [
+        "94",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_4",
+      "exit": 0,
+      "summary": [
+        "105",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_5a",
+      "exit": 0,
+      "summary": [
+        "61",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_5b",
+      "exit": 0,
+      "summary": [
+        "236",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_6",
+      "exit": 0,
+      "summary": [
+        "164",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_6_5",
+      "exit": 0,
+      "summary": [
+        "174",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_7a",
+      "exit": 0,
+      "summary": [
+        "306",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_7b",
+      "exit": 0,
+      "summary": [
+        "722",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_8a",
+      "exit": 0,
+      "summary": [
+        "486",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_8b",
+      "exit": 0,
+      "summary": [
+        "305",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_8c",
+      "exit": 0,
+      "summary": [
+        "297",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_8d",
+      "exit": 0,
+      "summary": [
+        "2153",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_9a",
+      "exit": 0,
+      "summary": [
+        "10513",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_9b",
+      "exit": 0,
+      "summary": [
+        "30758",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_9b2",
+      "exit": 0,
+      "summary": [
+        "4843",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_9b3",
+      "exit": 0,
+      "summary": [
+        "29133",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_9b32",
+      "exit": 0,
+      "summary": [
+        "1734",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_9b33",
+      "exit": 0,
+      "summary": [
+        "2702",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_geometry",
+      "exit": 0,
+      "summary": [
+        "206885",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_softlock",
+      "exit": 0,
+      "summary": [
+        "1030",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_baseline",
+      "exit": 0,
+      "summary": [
+        "728",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_10a",
+      "exit": 0,
+      "summary": [
+        "49",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_10d_bridge",
+      "exit": 0,
+      "summary": [
+        "9",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_10d_media",
+      "exit": 0,
+      "summary": [
+        "11",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_10d",
+      "exit": 0,
+      "summary": [
+        "40",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_10d6",
+      "exit": 0,
+      "summary": [
+        "92",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11a",
+      "exit": 0,
+      "summary": [
+        "717",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11b_tombs",
+      "exit": 0,
+      "summary": [
+        "1172",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11b_catalog",
+      "exit": 0,
+      "summary": [
+        "178",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11b",
+      "exit": 0,
+      "summary": [
+        "40984",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_twin_death_hotfix",
+      "exit": 0,
+      "summary": [
+        "47",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11d1",
+      "exit": 0,
+      "summary": [
+        "7",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11d2",
+      "exit": 0,
+      "summary": [
+        "20",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11d3",
+      "exit": 0,
+      "summary": [
+        "9",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11d4",
+      "exit": 0,
+      "summary": [
+        "169",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11d5",
+      "exit": 0,
+      "summary": [
+        "235",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11d_flow",
+      "exit": 0,
+      "summary": [
+        "108",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11e1",
+      "exit": 0,
+      "summary": [
+        "335",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11e2",
+      "exit": 0,
+      "summary": [
+        "19",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11e3",
+      "exit": 0,
+      "summary": [
+        "9",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11e4",
+      "exit": 0,
+      "summary": [
+        "131",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11e5",
+      "exit": 0,
+      "summary": [
+        "10",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11f1",
+      "exit": 0,
+      "summary": [
+        "23",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11f2",
+      "exit": 0,
+      "summary": [
+        "18",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11f3",
+      "exit": 0,
+      "summary": [
+        "14",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11f4",
+      "exit": 0,
+      "summary": [
+        "129",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11f5",
+      "exit": 0,
+      "summary": [
+        "27",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11g1",
+      "exit": 0,
+      "summary": [
+        "4",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11g2",
+      "exit": 0,
+      "summary": [
+        "9",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11g3",
+      "exit": 0,
+      "summary": [
+        "5",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11g4",
+      "exit": 0,
+      "summary": [
+        "18",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11g5",
+      "exit": 0,
+      "summary": [
+        "75",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11h1",
+      "exit": 0,
+      "summary": [
+        "5",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11h2",
+      "exit": 0,
+      "summary": [
+        "5",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11h3",
+      "exit": 0,
+      "summary": [
+        "24",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11h4",
+      "exit": 0,
+      "summary": [
+        "25",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11h5",
+      "exit": 0,
+      "summary": [
+        "82",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "clean_flow",
+      "exit": 0,
+      "summary": [
+        "834",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "economy_first_income",
+      "exit": 0,
+      "summary": [
+        "363",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "disk_first_income",
+      "exit": 0,
+      "summary": [
+        "69",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "economy_midgame",
+      "exit": 0,
+      "summary": [
+        "363",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "disk_midgame",
+      "exit": 0,
+      "summary": [
+        "69",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "graphics_clean_flow",
+      "exit": 0,
+      "summary": [
+        "30",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "graphics_empty_ui",
+      "exit": 0,
+      "summary": [
+        "101",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "graphics_midgame_ui",
+      "exit": 0,
+      "summary": [
+        "101",
+        "0"
+      ],
+      "failed": false
+    }
+  ],
+  "12_qa_results.json": [
+    {
+      "suite": "visual_smoke",
+      "exit": 0,
+      "summary": [
+        "50",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "flow_legacy",
+      "exit": 0,
+      "summary": [
+        "30",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "museum_legacy",
+      "exit": 0,
+      "summary": [
+        "1",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "flow_basic",
+      "exit": 0,
+      "summary": [
+        "30",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "museum_basic",
+      "exit": 0,
+      "summary": [
+        "2",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "flow_enhanced",
+      "exit": 0,
+      "summary": [
+        "30",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "museum_enhanced",
+      "exit": 0,
+      "summary": [
+        "2",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "events",
+      "exit": 0,
+      "summary": [
+        "7",
+        "0"
+      ],
+      "failed": false
+    }
+  ],
+  "12a6_qa_results.json": [
+    {
+      "suite": "regression_phase12a1_smoke",
+      "summary": [
+        "67",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "regression_phase12a2_space",
+      "summary": [
+        "43",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "regression_phase12a2_regional",
+      "summary": [
+        "18",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "regression_phase12a3_space",
+      "summary": [
+        "50",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "regression_phase12a3_proportions",
+      "summary": [
+        "6",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "regression_phase12a4_smoke",
+      "summary": [
+        "408",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "regression_phase12a5_smoke",
+      "summary": [
+        "421",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "regression_phase12a1_graphical",
+      "summary": [
+        "28",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "regression_phase12a2_benchmark",
+      "summary": [
+        "9",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "regression_phase12a3_benchmark",
+      "summary": [
+        "9",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "new_headless",
+      "summary": [
+        "194",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "new_graph",
+      "summary": [
+        "194",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "old_graph",
+      "summary": [
+        "42",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "actual_attack",
+      "summary": [
+        "10",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "old_benchmark",
+      "summary": [
+        "42",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "new_benchmark",
+      "summary": [
+        "58",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    }
+  ],
+  "12a6_extra_results.json": [
+    {
+      "suite": "a1_graph_headless",
+      "summary": [
+        "28",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "a2_space_graph",
+      "summary": [
+        "43",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "a2_region_graph",
+      "summary": [
+        "18",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "a3_space_graph",
+      "summary": [
+        "50",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "a3_prop_graph",
+      "summary": [
+        "6",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "a4_graph",
+      "summary": [
+        "408",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "a4_selector",
+      "summary": [
+        "32",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "a5_old_graph",
+      "summary": [
+        "408",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "a5_new_graph",
+      "summary": [
+        "421",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "original_render_bench",
+      "summary": [
+        "7",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "final_a6_graph",
+      "summary": [
+        "199",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    }
+  ],
+  "12a6_final_results.json": [
+    {
+      "suite": "final_probe",
+      "summary": [
+        "11",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "final_old_benchmark",
+      "summary": [
+        "42",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    },
+    {
+      "suite": "final_new_benchmark",
+      "summary": [
+        "63",
+        "0"
+      ],
+      "exit": 0,
+      "failed": false
+    }
+  ],
+  "final_logs": {
+    "12a6_final_headless.log": "[PASS] Walk animation exact pose range\n[PASS] Warning retained on replacement\n[PASS] Actual AI state maps attack pose\n[PASS] Damage flash independent of body direction\n[PASS] Independent native direction 2\n[PASS] Walk animation exact pose range\n[PASS] Warning retained on replacement\n[PASS] Actual AI state maps attack pose\n[PASS] Damage flash independent of body direction\n[PASS] Independent native direction 3\n[PASS] Walk animation exact pose range\n[PASS] Warning retained on replacement\n[PASS] Actual AI state maps attack pose\n[PASS] Damage flash independent of body direction\n[PASS] Four collapse frames within original lifetime\n[PASS] Four collapse frames within original lifetime\n[PASS] Four collapse frames within original lifetime\n[PASS] Four collapse frames within original lifetime\n[PASS] Legacy restores full real enemy fallback\n[PASS] Missing enemy atlas preserves body and warning fallback\n[PASS] Pose unit exercise changes neither HP nor collision\n[PASS] Independent native direction 0\n[PASS] Walk animation exact pose range\n[PASS] Warning retained on replacement\n[PASS] Actual AI state maps attack pose\n[PASS] Damage flash independent of body direction\n[PASS] Independent native direction 1\n[PASS] Walk animation exact pose range\n[PASS] Warning retained on replacement\n[PASS] Actual AI state maps attack pose\n[PASS] Damage flash independent of body direction\n[PASS] Independent native direction 2\n[PASS] Walk animation exact pose range\n[PASS] Warning retained on replacement\n[PASS] Actual AI state maps attack pose\n[PASS] Damage flash independent of body direction\n[PASS] Independent native direction 3\n[PASS] Walk animation exact pose range\n[PASS] Warning retained on replacement\n[PASS] Actual AI state maps attack pose\n[PASS] Damage flash independent of body direction\n[PASS] Four collapse frames within original lifetime\n[PASS] Four collapse frames within original lifetime\n[PASS] Four collapse frames within original lifetime\n[PASS] Four collapse frames within original lifetime\n[PASS] Legacy restores full real enemy fallback\n[PASS] Missing enemy atlas preserves body and warning fallback\n[PASS] Pose unit exercise changes neither HP nor collision\n[PASS] Readability effects have bounded buffer\n[PASS] Native render target1280x720 independent of desktop DPI\n[PASS] LEGACY hides dedicated visual\n[PASS] LEGACY restores original actual door drawing\n[PASS] Actual walk reaches entry 0\n[PASS] Actual walk reaches entry 1\n[PASS] Actual walk reaches entry 2\n[PASS] Actual walk reaches entry 3\n[PASS] Real walking around main coffin (640.0, 180.0)\n[PASS] Real walking around main coffin (530.0, 344.0)\n[PASS] Real walking around main coffin (640.0, 445.0)\n[PASS] Real walking around main coffin (750.0, 344.0)\n[PASS] Real walking around main coffin (640.0, 245.0)\n[PASS] Return to actual south entrance\n[PASS] Actual player weapon clears A room\n[PASS] Real warning/projectile/enemy activity\n[PASS] No enemy penetration during sample combat\n[PASS] All geometry and formal map signatures remain unchanged\n[PASS] Real clear unlocks both actual doors\n[PASS] Normal clear creates test-cache via existing service\n[PASS] Actual walk to drop\n[PASS] Real E pickup, no inventory injection\n[PASS] Actual open door traversal\n[PASS] Actual exit enters neighboring START\n[PASS] Actual Door returns to cleared A sample\n[PASS] A dedicated visual survives Room destruction/revisit via test-only binding\n[PASS] Revisit keeps CLEARED and does not respawn enemies\n[Phase12A5 focused] 199 checks, 0 failures\n",
+    "12a6_final_probe_tail.log": "Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org\nOpenGL API 3.3.0 NVIDIA 595.97 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 2070 SUPER\n\n[PASS] Actual WASD reaches museum point (940.0, 450.0)\n[PASS] Actual WASD reaches museum point (940.0, 210.0)\n[PASS] Actual WASD reaches museum point (1020.0, 190.0)\n[Map click] JINBEI rect=[P: (408.0, 228.0), S: (84.0, 70.0)] viewport=[P: (0.0, 0.0), S: (1280.0, 720.0)]\n[Expedition] Campaign=52 Day=1 Site=DEFAULT_TOMB Expedition=522269330\n[大盗墓时代] Dungeon ready: Seed 522269330, 12 rooms\n[PASS] Actual WASD approaches scarab without actor teleport\n[PASS] Actual scarab AI enters bite windup\n[PASS] Actual scarab bite recovery drives attack animation\n[PASS] Original80HP player survives brief bait, no invulnerability injection\n[PASS] Real weapon clears baited original five-enemy encounter\n[PASS] Natural clear opens real doors after all death nodes expire\n[PASS] Dead sibling bodies and warning nodes unload safely\n[PASS] No dead-enemy warning siblings remain after natural release\n[Phase12A6 actual attack] 11 checks, 0 failures\n",
+    "12a6_paused_preview.log": "Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org\nOpenGL API 3.3.0 NVIDIA 595.97 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 2070 SUPER\n\n[PASS] Actual WASD reaches museum point (940.0, 450.0)\n[PASS] Actual WASD reaches museum point (940.0, 210.0)\n[PASS] Actual WASD reaches museum point (1020.0, 190.0)\n[Map click] JINBEI rect=[P: (408.0, 228.0), S: (84.0, 70.0)] viewport=[P: (0.0, 0.0), S: (1280.0, 720.0)]\n[Expedition] Campaign=52 Day=1 Site=DEFAULT_TOMB Expedition=522269330\n[大盗墓时代] Dungeon ready: Seed 522269330, 12 rooms\n[PASS] Actual WASD reaches museum point (940.0, 450.0)\n[PASS] Actual WASD reaches museum point (940.0, 210.0)\n[PASS] Actual WASD reaches museum point (1020.0, 190.0)\n[Map click] JINBEI rect=[P: (408.0, 228.0), S: (84.0, 70.0)] viewport=[P: (0.0, 0.0), S: (1280.0, 720.0)]\n[Expedition] Campaign=52 Day=1 Site=DEFAULT_TOMB Expedition=522269330\n[大盗墓时代] Dungeon ready: Seed 522269330, 12 rooms\n[PASS] Paused A selector retains all five actual enemy visuals\n[PASS] Every paused preview body is immediately complete\n[Phase12A6 paused preview] 8 checks, 0 failures\n",
+    "12a6_python_all.log": ".................................................................................................................................\n----------------------------------------------------------------------\nRan 129 tests in 102.189s\n\nOK\n",
+    "12a6_final_import.log": "Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org\n\n[   0% ] first_scan_filesystem | Started 项目初始化 (5 steps)\n[   0% ] first_scan_filesystem | 正在扫描文件结构……\n[  16% ] first_scan_filesystem | 正在加载全局类名……\n[  33% ] first_scan_filesystem | 正在校验 GDExtension……\n[  50% ] first_scan_filesystem | 正在创建自动加载脚本……\n[  66% ] first_scan_filesystem | 正在初始化插件……\n[  83% ] first_scan_filesystem | 正在启动文件扫描……\n[ DONE ] first_scan_filesystem\n\n[   0% ] update_scripts_classes | Started 正在注册全局类…… (5 steps)\n[   0% ] update_scripts_classes | \n[  16% ] update_scripts_classes | \n[  33% ] update_scripts_classes | \n[  50% ] update_scripts_classes | \n[  66% ] update_scripts_classes | \n[ DONE ] update_scripts_classes\n\n[   0% ] loading_editor_layout | Started 正在加载编辑器 (5 steps)\n[   0% ] loading_editor_layout | 正在加载编辑器布局……\n[  16% ] loading_editor_layout | 正在加载停靠面板……\n[ DONE ] loading_editor_layout\n\n"
+  },
+  "note": "Early A6 194/10 and concurrent benchmark entries are superseded; canonical inclusion is validation_results.json. Logs show original errors in separate development evidence."
+}

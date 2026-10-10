@@ -1,0 +1,487 @@
+{
+	"checks": 11,
+	"failures": 0,
+	"frame_metrics": [
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 0,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 1,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 2,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 3,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 4,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 5,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 6,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 7,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 1,
+			"environment_warnings": 0,
+			"frame": 8,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 1,
+			"environment_warnings": 0,
+			"frame": 9,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 10,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 1,
+			"frame": 11,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 1,
+			"frame": 12,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 1,
+			"environment_warnings": 1,
+			"frame": 13,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 1,
+			"environment_warnings": 1,
+			"frame": 14,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 1,
+			"environment_warnings": 1,
+			"frame": 15,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 1,
+			"frame": 16,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 1,
+			"frame": 17,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 1,
+			"frame": 18,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 19,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 20,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 1,
+			"environment_warnings": 0,
+			"frame": 21,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 2,
+			"environment_warnings": 0,
+			"frame": 22,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 2,
+			"environment_warnings": 0,
+			"frame": 23,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 1,
+			"environment_warnings": 0,
+			"frame": 24,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 1,
+			"environment_warnings": 0,
+			"frame": 25,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 26,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 27,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 28,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 29,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 30,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 31,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 32,
+			"projectiles": 0
+		},
+		{
+			"alive": 5,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 33,
+			"projectiles": 1
+		},
+		{
+			"alive": 4,
+			"enemy_warnings": 1,
+			"environment_warnings": 0,
+			"frame": 34,
+			"projectiles": 0
+		},
+		{
+			"alive": 4,
+			"enemy_warnings": 1,
+			"environment_warnings": 0,
+			"frame": 35,
+			"projectiles": 0
+		},
+		{
+			"alive": 4,
+			"enemy_warnings": 2,
+			"environment_warnings": 0,
+			"frame": 36,
+			"projectiles": 1
+		},
+		{
+			"alive": 4,
+			"enemy_warnings": 1,
+			"environment_warnings": 0,
+			"frame": 37,
+			"projectiles": 1
+		},
+		{
+			"alive": 3,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 38,
+			"projectiles": 0
+		},
+		{
+			"alive": 3,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 39,
+			"projectiles": 1
+		},
+		{
+			"alive": 3,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 40,
+			"projectiles": 1
+		},
+		{
+			"alive": 3,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 41,
+			"projectiles": 1
+		},
+		{
+			"alive": 2,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 42,
+			"projectiles": 1
+		},
+		{
+			"alive": 2,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 43,
+			"projectiles": 1
+		},
+		{
+			"alive": 2,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 44,
+			"projectiles": 0
+		},
+		{
+			"alive": 2,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 45,
+			"projectiles": 1
+		},
+		{
+			"alive": 2,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 46,
+			"projectiles": 1
+		},
+		{
+			"alive": 2,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 47,
+			"projectiles": 0
+		},
+		{
+			"alive": 2,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 48,
+			"projectiles": 1
+		},
+		{
+			"alive": 2,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 49,
+			"projectiles": 0
+		},
+		{
+			"alive": 2,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 50,
+			"projectiles": 0
+		},
+		{
+			"alive": 2,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 51,
+			"projectiles": 1
+		},
+		{
+			"alive": 1,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 52,
+			"projectiles": 0
+		},
+		{
+			"alive": 1,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 53,
+			"projectiles": 0
+		},
+		{
+			"alive": 1,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 54,
+			"projectiles": 0
+		},
+		{
+			"alive": 1,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 55,
+			"projectiles": 0
+		},
+		{
+			"alive": 1,
+			"enemy_warnings": 1,
+			"environment_warnings": 0,
+			"frame": 56,
+			"projectiles": 0
+		},
+		{
+			"alive": 1,
+			"enemy_warnings": 1,
+			"environment_warnings": 0,
+			"frame": 57,
+			"projectiles": 0
+		},
+		{
+			"alive": 1,
+			"enemy_warnings": 1,
+			"environment_warnings": 0,
+			"frame": 58,
+			"projectiles": 0
+		},
+		{
+			"alive": 1,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 59,
+			"projectiles": 0
+		},
+		{
+			"alive": 1,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 60,
+			"projectiles": 0
+		},
+		{
+			"alive": 1,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 61,
+			"projectiles": 0
+		},
+		{
+			"alive": 1,
+			"enemy_warnings": 0,
+			"environment_warnings": 1,
+			"frame": 62,
+			"projectiles": 0
+		},
+		{
+			"alive": 0,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 63,
+			"projectiles": 0
+		},
+		{
+			"alive": 0,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 64,
+			"projectiles": 0
+		},
+		{
+			"alive": 0,
+			"enemy_warnings": 0,
+			"environment_warnings": 0,
+			"frame": 65,
+			"projectiles": 0
+		}
+	],
+	"hp": 40.0,
+	"states": {
+		"corpse_dog": {
+			"attack": true,
+			"death": true,
+			"hurt": true,
+			"idle": true,
+			"walk": true,
+			"windup": true
+		},
+		"scarab": {
+			"attack": true,
+			"death": true,
+			"hurt": true,
+			"idle": true,
+			"walk": true,
+			"windup": true
+		}
+	}
+}

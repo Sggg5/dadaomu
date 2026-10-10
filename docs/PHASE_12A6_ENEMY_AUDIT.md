@@ -9,7 +9,7 @@
 - 尸犬：scripts/enemies/corpse_dog.gd的_draw_body绘制36×20矩形。EnemyVisual.supported仅识别scarab/bandit_shooter，所以尸犬在Basic/Enhanced仍走矩形回退；粉褐色矩形是实际敌人身体，不能隐藏敌人解决。
 - 尸蟞：scripts/art/enemy_visual.gd读取actors图集第4行，6列仅待机、两步移动、单帧前摇、受击、死亡。无四方向图集，动作和立体细节不足，需要专属多帧方向素材。
 - 血条：Enemy._draw中40×4背景与生命比例填充，与身体不是同一对象。必须保留生命语义，不能当粉块删除。
-- 前摇：Enemy._draw半径23警示环，尸犬额外锁方向线，尸蟞由telegraphing暴露前摇。预警优先级保留，不随身体替换丢失。
+- 前摇：Enemy._draw半径23警示环，尸犬额外身体朝向短线（真正冲刺方向由dash_direction锁定），尸蟞由telegraphing暴露前摇。预警优先级保留，不随身体替换丢失。
 - 环境：A Geometry独立EncounterHazard节点的预警/激活范围，不是敌人；保留全部实际计时和危险判定。
 - 调试：碰撞overlay只在测试主动显示，正式GameFlow未开启；不删除真实碰撞。
 

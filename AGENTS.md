@@ -446,3 +446,7 @@ RunCarryState仅增加古董定义数组，新层加入新的Inventory、新UI�
 ## Phase12A.5 隔离主棺美术样板
 
 基线6f73f20，当前美术分支。新素材a5_principal/offering/gate/masonry仅由tests/phase12a5入口附加到原A几何；正式scripts/scenes/data、B/C及所有碰撞不改。内存档、固定Seed522269330、原生1280×720 VIEWPORT消除DPI采图变化，Legacy缺图回退保留。四件素材DRAFT，真实实机及性能/回归见docs/PHASE_12A5_PRINCIPAL_TOMB_SAMPLE.md。只push当前分支，不合并main，不进12A.6，等待人工验收。
+
+## Phase12A.6 隔离敌人与战斗视觉
+
+基线c4b0625，先提交敌人审计a7c6dbb：实际首战2尸犬/3尸蟞。a6两个独立四方向64帧DRAFT图集，只由tests/phase12a6入口附加原A主棺。兄弟视觉读取真实AI/Health，前摇警示保留；Legacy/缺图恢复原身体与反馈，死亡时序不延长。读真实武器/弹丸/HP信号的短特效最多48项，无新物理/随机流。正式scripts/scenes/data、A5建筑/B/C/Geometry池/Profile10冻结，纯内存档。真实近身AI与受控姿态测试分开报告；实机、回归、性能见docs/PHASE_12A6_COMBAT_VISUAL_SAMPLE.md。只push美术分支、不合并main，完成停止等待人工验收。

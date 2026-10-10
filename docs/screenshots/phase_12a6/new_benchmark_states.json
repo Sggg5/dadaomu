@@ -1,0 +1,78 @@
+{
+	"cells": {
+		"corpse_dog": {
+			"2": true,
+			"3": true,
+			"4": true,
+			"5": true,
+			"6": true,
+			"7": true,
+			"8": true,
+			"9": true,
+			"10": true,
+			"11": true,
+			"12": true,
+			"13": true,
+			"14": true,
+			"15": true,
+			"18": true,
+			"19": true,
+			"20": true,
+			"21": true,
+			"22": true,
+			"23": true,
+			"32": true,
+			"33": true,
+			"44": true,
+			"45": true,
+			"46": true,
+			"47": true
+		},
+		"scarab": {
+			"2": true,
+			"3": true,
+			"4": true,
+			"5": true,
+			"10": true,
+			"11": true,
+			"32": true,
+			"33": true,
+			"34": true,
+			"35": true,
+			"36": true,
+			"37": true,
+			"42": true,
+			"43": true,
+			"44": true,
+			"45": true,
+			"46": true,
+			"47": true,
+			"50": true,
+			"51": true,
+			"53": true,
+			"60": true,
+			"61": true,
+			"62": true,
+			"63": true
+		}
+	},
+	"checks": 63,
+	"failures": 0,
+	"frame_metrics": [],
+	"states": {
+		"corpse_dog": {
+			"attack": true,
+			"death": true,
+			"hurt": true,
+			"idle": true,
+			"walk": true,
+			"windup": true
+		},
+		"scarab": {
+			"death": true,
+			"hurt": true,
+			"idle": true,
+			"walk": true
+		}
+	}
+}
