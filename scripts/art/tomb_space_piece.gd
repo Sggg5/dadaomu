@@ -6,8 +6,16 @@ var footprint: Rect2
 var kind: String = "wall"
 var variant: int = 0
 var bounds := Room.ROOM_RECT
+var illustration_rect: Rect2
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+func fitted_illustration() -> Rect2:
+	# Uniform scale: the masonry footprint remains exact; the artifact never stretches.
+	var available := footprint.size + Vector2(0,18)
+	var source := Vector2(120,150)
+	var scale_factor := minf(available.x/source.x,available.y/source.y)
+	var size := source*scale_factor
+	return Rect2(Vector2(footprint.get_center().x-size.x*.5,footprint.end.y-size.y),size)
 func box(r: Rect2, fill: Color, edge: Color = Color.TRANSPARENT) -> void:
 	draw_rect(r,fill)
 	if edge.a > 0: draw_rect(r,edge,false,1)
@@ -40,8 +48,11 @@ func _draw() -> void:
 		var index: int = {"stone_coffin":0,"wood_coffin":1,"coffin_bed":2,"pillar":3,"altar":4}.get(kind,2)
 		# Flush base follows actual footprint; the raised illustration projects north.
 		masonry(footprint,Color("343a38"),Vector2(48,16))
-		var elevated := Rect2(footprint.position-Vector2(0,18),footprint.size+Vector2(0,18))
-		draw_texture_rect_region(atlas,elevated,Rect2((index%3)*128,floori(index/3.0)*160,128,160))
+		illustration_rect = fitted_illustration()
+		# Broad/narrow bases are ancient plinths, not a distorted coffin texture.
+		# Keep masonry grain visible; a flat opaque plate reads as a warehouse tile.
+		draw_rect(footprint.grow(-3),Color(.45,.48,.41,.38),false,1)
+		draw_texture_rect_region(atlas,illustration_rect,Rect2((index%3)*128,floori(index/3.0)*160,128,160))
 	else: prop()
 func wall() -> void:
 	var r := footprint
@@ -73,6 +84,11 @@ func wall() -> void:
 	for i in range(3):
 		var p := face.position+Vector2(minf(face.size.x-3,12+i*93),minf(face.size.y-3,5+i*3))
 		draw_line(p,p+Vector2(5,2),Color("898c79"),1)
+	# Broken mortar and erosion stay inside the actual masonry surface.
+	for i in range(maxi(1,int(face.size.x/110))):
+		var p := face.position + Vector2(25+i*107,7+(i%3)*3)
+		draw_line(p,p+Vector2(12,2),Color(.15,.18,.18,.45),2)
+		draw_line(p+Vector2(12,2),p+Vector2(18,5),Color(.59,.60,.51,.3),1)
 func prop() -> void:
 	var r := footprint
 	# Exact footprint is always solid/readable; lid projects toward screen north.

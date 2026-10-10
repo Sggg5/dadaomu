@@ -11,6 +11,8 @@ var space_surfaces: Array[Node2D] = []
 var warning_layers: Dictionary = {} # Weak references, original visual Z only.
 var region_space_enabled: bool = true
 var space_floor: TombSpaceFloor
+var last_visual_state: Array = []
+var warning_visits: int = 0 # Diagnostic: registration work, not a per-frame tree scan.
 func jinbei_space() -> bool:
 	return region_space_enabled and (room.geometry == null or room.geometry.visual_motif not in [&"HAN_BRICK",&"TANG_MURAL"])
 func prop_kind(rect: Rect2, index: int) -> String:
@@ -45,6 +47,18 @@ func _ready() -> void:
 		space_surfaces.append(space_floor)
 	for point in [Vector2(300,160),Vector2(980,160)]:
 		_build_lamp(point)
+	_prioritize_warnings(room)
+	get_tree().node_added.connect(_warning_added)
+
+func _warning_added(node: Node) -> void:
+	if node is BossTelegraph or node is EncounterHazard:
+		_register_warning.call_deferred(node)
+
+func _register_warning(node: Node) -> void:
+	if not is_instance_valid(node) or not room.is_ancestor_of(node): return
+	var id := node.get_instance_id()
+	if not warning_layers.has(id): warning_layers[id] = [weakref(node),node.z_index]
+	node.z_index = 1100 if visible and jinbei_space() and not use_old_space else warning_layers[id][1]
 
 func _build_floor() -> void:
 	var tiles := TileSet.new()
@@ -112,35 +126,39 @@ func _build_lamp(point: Vector2) -> void:
 		lamp.shadow_enabled = true
 		add_child(lamp); lamps.append(lamp)
 func _prioritize_warnings(node: Node) -> void:
+	warning_visits += 1
 	if node is BossTelegraph or node is EncounterHazard:
-		var id := node.get_instance_id()
-		if not warning_layers.has(id): warning_layers[id] = [weakref(node),node.z_index]
-		node.z_index = 1100 if visible and jinbei_space() and not use_old_space else warning_layers[id][1]
+		_register_warning(node)
 	for child in node.get_children():
 		if child != self: _prioritize_warnings(child)
 func _process(delta: float) -> void:
 	clock += delta
 	visible = ArtRenderSettings.active() and supported()
+	var state := [visible,ArtRenderSettings.mode,use_old_space,use_old_floor,region_space_enabled]
+	var changed := state != last_visual_state
 	# Minimal visual-only header packing leaves north masonry below the text.
 	var controller = room.get_parent()
 	if controller != null and controller.name == &"RoomHost": controller = controller.get_parent()
-	if controller != null and controller.get("current_room") == room and is_instance_valid(controller.get("hud")):
+	if changed and controller != null and controller.get("current_room") == room and is_instance_valid(controller.get("hud")):
 		var compact := visible and jinbei_space() and not use_old_space
 		var header = controller.get("hud").get_node("Root")
 		for path in ["Title","HP","RoomInfo","Enemies","Seed","Progress","EncounterDepth"]:
 			var label := header.get_node(path) as Control
 			var original: float = 20 if path=="Title" else 64 if path in ["HP","RoomInfo","Enemies"] else 108 if path=="EncounterDepth" else 106
 			label.position.y = (6 if path=="Title" else 44 if path in ["HP","RoomInfo","Enemies"] else 72) if compact else original
-	_prioritize_warnings(room)
 	for id in warning_layers.keys():
-		if warning_layers[id][0].get_ref() == null: warning_layers.erase(id)
-	for surface in old_surfaces: surface.visible = use_old_space or not jinbei_space()
-	for surface in space_surfaces: surface.visible = not use_old_space
+		var warning = warning_layers[id][0].get_ref()
+		if warning == null: warning_layers.erase(id)
+		elif changed: warning.z_index = 1100 if visible and jinbei_space() and not use_old_space else warning_layers[id][1]
+	if changed:
+		for surface in old_surfaces: surface.visible = use_old_space or not jinbei_space()
+		for surface in space_surfaces: surface.visible = not use_old_space
+		room.queue_redraw()
+		queue_redraw()
+		last_visual_state = state
 	for lamp in lamps:
 		lamp.enabled = visible and ArtRenderSettings.mode == ArtRenderSettings.Mode.ENHANCED
 		lamp.energy = .32 + sin(clock*3+lamp.position.x)*.035
-	room.queue_redraw()
-	queue_redraw()
 
 func _draw() -> void:
 	if use_old_floor or not visible: return

@@ -40,6 +40,18 @@ func _draw() -> void:
 		for i in range(4):
 			var p := Vector2(r.position.x+7+i*13,r.end.y+5)
 			draw_line(p,p+Vector2(5,1),Color(.55,.51,.4,.17),2)
+	# Functional composition: primary northern burial plinth gets a flush processional
+	# paving trace; southern attendants stay understated. These are floor stains only.
+	var obstacles := room.obstacles()
+	if not obstacles.is_empty():
+		var primary: Rect2 = obstacles[0]
+		for r in obstacles:
+			if r.position.y < primary.position.y: primary = r
+		var c := primary.get_center()
+		draw_rect(primary.grow(12),Color(.58,.51,.34,.045))
+		var end_y := minf(510,primary.end.y+66)
+		for x in [-16,16]:
+			draw_line(Vector2(c.x+x,primary.end.y+12),Vector2(c.x+x,end_y),Color(.61,.57,.43,.09),2)
 	if room.room_type == RoomDefinition.Type.BOSS:
 		# Flush incised dais, never a false raised obstacle or a danger telegraph.
 		var c := b.get_center()
@@ -54,3 +66,12 @@ func _draw() -> void:
 		var horizontal := side==Door.Direction.NORTH or side==Door.Direction.SOUTH
 		var extent := Vector2(68,5) if horizontal else Vector2(5,68)
 		draw_rect(Rect2(p-extent*.5,extent),Color(.55,.53,.42,.18))
+		# Recess and jambs use only the wall side of the true Door opening.
+		var outward := Vector2.UP.rotated(side*PI*.5)
+		var axis := Vector2.RIGHT if horizontal else Vector2.DOWN
+		for sign_value in [-1,1]:
+			var jamb: Vector2 = p+axis*sign_value*(Door.WIDTH*.5+5)+outward*8
+			var size := Vector2(10,26) if horizontal else Vector2(26,10)
+			draw_rect(Rect2(jamb-size*.5,size),Color("697064"))
+			draw_rect(Rect2(jamb-size*.5,size),Color("989b80"),false,1)
+		draw_line(p-axis*(Door.WIDTH*.5-3)+outward*8,p+axis*(Door.WIDTH*.5-3)+outward*8,Color(.08,.12,.14,.65),5)

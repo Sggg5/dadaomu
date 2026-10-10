@@ -436,3 +436,6 @@ RunCarryState仅增加古董定义数组，新层加入新的Inventory、新UI�
 ## Phase 12A.2 晋北空间草稿
 
 墙顶/立面/墙根采用独立TombSpacePiece，原Room碰撞矩形只读；六种陈设图集按原障碍角色选择，不改变几何或RNG。TombSpaceFloor只添加低密度边缘灰尘、接触影及Boss地面刻痕，中央保持可读。危险提示仅提升视觉Z并在legacy恢复；顶部HUD仅压缩位置。61px玩家和96px无缝底图保持；全部DRAFT，报告docs/PHASE_12A2_TOMB_SPACE_REWORK.md。内存试玩Seed522269330第一COMBAT，不合并main、不读写正式档，本轮完成停止。
+
+## Phase12A.3 晋北视觉精修
+原碰撞/玩法冻结；棺体等比适配、石座保持原足迹。静态环境仅状态变化重绘，预警node_added延后注册/原Z恢复。DRAFT，固定Seed522269330真实GameFlow和完整回归；报告docs/PHASE_12A3_VISUAL_REFINEMENT.md。只push当前美术分支，不合并main、不操作正式档，人工待验。

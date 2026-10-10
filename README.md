@@ -521,3 +521,5 @@ godot --fixed-fps 60 --path . --script tests/phase_11e_graphical.gd
 Phase12A.1美术返修：玩家体量约20%、身体行走与武器瞄准分离、晋北连续石地；F6保留三模式。实机对比、动作GIF及验收见[返修报告](docs/PHASE_12A1_VISUAL_REWORK.md)。仍为DRAFT，人工美术验收待完成。
 
 Phase12A.2晋北空间DRAFT：墙体分层、石棺/木棺/棺床/柱/供案/陶罐、轻地面层与接触影。原碰撞/玩法不变，真实截图与回归见[空间返修报告](docs/PHASE_12A2_TOMB_SPACE_REWORK.md)。`tests/phase12_playtest.gd`内存隔离、固定Seed522269330第一COMBAT，空格开始/F6切换，人工待验。
+
+Phase12A.3晋北精修：等比陈设、墓门层次与静态绘制缓存；DRAFT实机证据及人工待验见docs/PHASE_12A3_VISUAL_REFINEMENT.md。

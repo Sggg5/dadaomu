@@ -28,4 +28,7 @@ func _process(delta: float) -> void:
 		sprite.texture = ArtAssetCatalog.frame("actors",column,4 if actor.definition.id == &"scarab" else 5)
 		last_column = column
 	sprite.modulate = Color("ff8277") if actor._flash_remaining > 0 else Color.WHITE
+	# Lift dark scarab midtones only in textured modes; HP/AI/hit radius unchanged.
+	if actor.definition.id == &"scarab" and actor._flash_remaining <= 0:
+		sprite.modulate = Color(1.22,1.16,1.06)
 	actor.queue_redraw()

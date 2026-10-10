@@ -1,0 +1,47 @@
+[
+	{
+		"draw_calls_mean": 175.0,
+		"fps": 771.881644814462,
+		"frames": 2316,
+		"mode": 0,
+		"nodes": 182.0,
+		"p95_frame_ms": 2.6,
+		"process_ms_mean": 7.63338860103606,
+		"resolution": "1280x720",
+		"scene": "same frozen real first Combat",
+		"seconds": 3.00046,
+		"seed": 522269330,
+		"texture_bytes": 19511861.0,
+		"vsync": "disabled"
+	},
+	{
+		"draw_calls_mean": 241.0,
+		"fps": 670.431121865851,
+		"frames": 2012,
+		"mode": 1,
+		"nodes": 182.0,
+		"p95_frame_ms": 2.669,
+		"process_ms_mean": 11.0018096421472,
+		"resolution": "1280x720",
+		"scene": "same frozen real first Combat",
+		"seconds": 3.001054,
+		"seed": 522269330,
+		"texture_bytes": 19511861.0,
+		"vsync": "disabled"
+	},
+	{
+		"draw_calls_mean": 242.0,
+		"fps": 653.414666410321,
+		"frames": 1961,
+		"mode": 2,
+		"nodes": 182.0,
+		"p95_frame_ms": 2.539,
+		"process_ms_mean": 22.2949933707299,
+		"resolution": "1280x720",
+		"scene": "same frozen real first Combat",
+		"seconds": 3.001157,
+		"seed": 522269330,
+		"texture_bytes": 23706165.0,
+		"vsync": "disabled"
+	}
+]
