@@ -1,3 +1,7 @@
+## 正常游戏美术接入（用户追加授权）
+
+用户明确要求将最高品质样板接入正常游戏，并要求日常启动使用正常GameFlow而非实验窗口。晋北墙体/墓门/可匹配障碍使用a5 DRAFT资产；正式corpse_dog/scarab自动使用a6四方向动画及真实反馈。只有RoomVisual及新scripts/art纯视觉模块改变；正式Geometry池、碰撞、Seed、数值、Profile10不变。LAB_历史对比入口保留独立显式绑定，不作为默认试玩。日常运行使用正常存档；自动测试可继续隔离数据。旧全脚本冻结测试仅按normal_art_authorized_hashes.json精确授权RoomVisual新哈希，其他原断言保持。
+
 ## Phase 12 美术草稿与隔离验收
 
 基线a4ea1fc，codex/phase-12a-hd2d-art。视觉适配器只读游戏状态，F6三模式，旧绘制/缺图回退必须保留。素材全部DRAFT/PENDING_USER_REVIEW，来源与派生见assets/art/manifest.json。Boss、其它敌人和42件地区古董仍有专属美术缺口，不冒称全游戏正式美术完成。

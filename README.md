@@ -529,3 +529,7 @@ Phase12A.4隔离墓室实验：旧房/A主棺/B盗掘/C侧室，仅tests/phase12
 Phase 12A.5：`tests/phase12a5_playtest.gd` 只在隔离A主棺实验房启用专属石椁、祭台、墓门与墓砖。正式池/B/C不变，素材DRAFT，验收见 `docs/PHASE_12A5_PRINCIPAL_TOMB_SAMPLE.md`。
 
 Phase12A.6：`tests/phase12a6_playtest.gd` 在同一隔离A房加入2尸犬/3尸蟞的四方向动画、原警示和轻量战斗反馈。Space开始、F6三模式、R重开，固定Seed522269330、纯内存档。原建筑/碰撞/玩法不改，全部DRAFT；实机GIF与回归见 `docs/PHASE_12A6_COMBAT_VISUAL_SAMPLE.md`，等待人工验收。
+
+## 正常入口已接入高品质美术
+
+直接运行project.godot的game_flow.tscn即可：晋北墓室使用新版墙体、墓门、按真实障碍等比适配的主棺/祭台；正常尸犬与尸蟞使用四方向64帧DRAFT动画，枪口/弹丸/命中反馈自动接入。F6回退仍保留；地图和碰撞不改，主棺构图随已有Geometry变化，不保证每房都是实验A布局。日常试玩打开正常游戏，不需要选择实验入口。详见docs/NORMAL_GAME_ART_INTEGRATION.md。

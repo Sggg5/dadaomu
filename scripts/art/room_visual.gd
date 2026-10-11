@@ -13,6 +13,37 @@ var region_space_enabled: bool = true
 var space_floor: TombSpaceFloor
 var last_visual_state: Array = []
 var warning_visits: int = 0 # Diagnostic: registration work, not a per-frame tree scan.
+var quality_visual: Node2D
+const QUALITY = preload("res://scripts/art/tomb_quality_visual.gd")
+const DETAIL_BODY = preload("res://scripts/art/detailed_enemy_visual.gd")
+const FEEDBACK = preload("res://scripts/art/combat_feedback_visual.gd")
+func normal_art_enabled() -> bool:
+	# Historical comparison labs retain their explicitly installed before/after art.
+	return room.geometry == null or not str(room.geometry.id).begins_with("LAB_")
+func _install_normal_art() -> void:
+	if not is_instance_valid(room) or not normal_art_enabled(): return
+	if jinbei_space() and supported() and ["a5_principal", "a5_offering", "a5_gate", "a5_masonry"].all(func(id: String) -> bool: return ArtAssetCatalog.texture(id) != null):
+		quality_visual = QUALITY.new()
+		quality_visual.room = room
+		quality_visual.name = "TombQualityVisual"
+		room.add_child(quality_visual)
+	if is_instance_valid(room.combat_target):
+		var feedback = FEEDBACK.new()
+		feedback.room = room
+		feedback.name = "CombatFeedbackVisual"
+		room.add_child(feedback)
+	for actor in room.damage_targets():
+		_install_enemy_art(actor)
+func _install_enemy_art(node: Node) -> void:
+	if not is_instance_valid(node) or not normal_art_enabled() or not node is Enemy or not room.is_ancestor_of(node): return
+	if node.definition == null or node.definition.id not in [&"corpse_dog", &"scarab"]: return
+	if ArtAssetCatalog.texture("a6_" + str(node.definition.id)) == null: return
+	var name := "EnemyArt_" + str(node.get_instance_id())
+	if room.has_node(name): return
+	var body = DETAIL_BODY.new()
+	body.actor = node
+	body.name = name
+	room.add_child(body)
 func jinbei_space() -> bool:
 	return region_space_enabled and (room.geometry == null or room.geometry.visual_motif not in [&"HAN_BRICK",&"TANG_MURAL"])
 func prop_kind(rect: Rect2, index: int) -> String:
@@ -51,8 +82,11 @@ func _ready() -> void:
 		_build_lamp(point)
 	_prioritize_warnings(room)
 	get_tree().node_added.connect(_warning_added)
+	_install_normal_art.call_deferred()
 
 func _warning_added(node: Node) -> void:
+	if node is Enemy and room.is_ancestor_of(node):
+		_install_enemy_art.call_deferred(node)
 	if node is BossTelegraph or node is EncounterHazard:
 		_register_warning.call_deferred(node)
 

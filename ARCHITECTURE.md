@@ -560,3 +560,7 @@ Phase12A.3静态环境Canvas绘制命令按视觉状态变化缓存；新增危�
 12A.5视觉样板通过tests/support/phase12a5_*显式附加原A房。读取真实footprint/Door状态，仅CanvasItem绘制与原两盏灯的视觉位置；不修改Room、GeometryPlan或物理对象。专属原生像素资产缺失时保留原视觉，正式入口不引用样板。
 
 12A.6 Enemy视觉是Room下的兄弟Canvas节点，四方向AtlasTexture缓存读取Enemy实际AI/Health；与原Enemy死亡缩放解耦但不延长death_duration。Legacy/缺图恢复旧Canvas绘制，前摇单独高层、生命比例不变。CombatVisual读取真实武器/弹丸/受伤信号，最多48个短特效；切房释放自动断开信号。全部tests隔离，正式scripts/scenes/data及A5建筑未改。
+
+## 高品质视觉正常入口接入
+
+RoomVisual在装配完成后安装TombQualityVisual（晋北）与CombatFeedbackVisual；现有node_added信号延迟给正式尸犬/尸蟞安装DetailedEnemyVisual。身体、预警均为Room兄弟节点，不继承Enemy死亡缩放，不改变AI/碰撞/Health。新出生召唤物同样接入，按节点名幂等，Room释放后清理；Legacy/缺图保留回退。主棺与祭台按现有footprint等比缩小，真实底座范围明确，门框使用原墙段与Door位置。LAB_几何继续走原对比绑定；生产代码不引用tests。

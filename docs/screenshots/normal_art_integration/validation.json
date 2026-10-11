@@ -1,0 +1,722 @@
+{
+  "suites": [
+    {
+      "suite": "历史玩法/经营/30日/存档/图形",
+      "checks": 340404,
+      "failures": 0
+    },
+    {
+      "suite": "Phase12三模式与事件图形",
+      "checks": 152,
+      "failures": 0
+    },
+    {
+      "suite": "接入headless",
+      "checks": 78,
+      "failures": 0
+    },
+    {
+      "suite": "接入graphical",
+      "checks": 78,
+      "failures": 0
+    },
+    {
+      "suite": "原A6四方向/生命周期",
+      "checks": 199,
+      "failures": 0
+    },
+    {
+      "suite": "原5B遗物/燃烧复验",
+      "checks": 236,
+      "failures": 0
+    }
+  ],
+  "total_checks": 341147,
+  "python": {
+    "tests": 129,
+    "failures": 0
+  },
+  "history_receipts": [
+    {
+      "suite": "history_1",
+      "exit": 0,
+      "summary": [
+        "27",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_2",
+      "exit": 0,
+      "summary": [
+        "204",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_3",
+      "exit": 0,
+      "summary": [
+        "94",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_4",
+      "exit": 0,
+      "summary": [
+        "105",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_5a",
+      "exit": 0,
+      "summary": [
+        "61",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_5b",
+      "exit": 0,
+      "summary": [
+        "236",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_6",
+      "exit": 0,
+      "summary": [
+        "164",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_6_5",
+      "exit": 0,
+      "summary": [
+        "174",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_7a",
+      "exit": 0,
+      "summary": [
+        "306",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_7b",
+      "exit": 0,
+      "summary": [
+        "722",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_8a",
+      "exit": 0,
+      "summary": [
+        "486",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_8b",
+      "exit": 0,
+      "summary": [
+        "305",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_8c",
+      "exit": 0,
+      "summary": [
+        "297",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_8d",
+      "exit": 0,
+      "summary": [
+        "2153",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_9a",
+      "exit": 0,
+      "summary": [
+        "10513",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_9b",
+      "exit": 0,
+      "summary": [
+        "30758",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_9b2",
+      "exit": 0,
+      "summary": [
+        "4843",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_9b3",
+      "exit": 0,
+      "summary": [
+        "29133",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_9b32",
+      "exit": 0,
+      "summary": [
+        "1734",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_9b33",
+      "exit": 0,
+      "summary": [
+        "2702",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_geometry",
+      "exit": 0,
+      "summary": [
+        "206885",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_softlock",
+      "exit": 0,
+      "summary": [
+        "1030",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_baseline",
+      "exit": 0,
+      "summary": [
+        "728",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_10a",
+      "exit": 0,
+      "summary": [
+        "49",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_10d_bridge",
+      "exit": 0,
+      "summary": [
+        "9",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_10d_media",
+      "exit": 0,
+      "summary": [
+        "11",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_10d",
+      "exit": 0,
+      "summary": [
+        "40",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_10d6",
+      "exit": 0,
+      "summary": [
+        "92",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11a",
+      "exit": 0,
+      "summary": [
+        "717",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11b_tombs",
+      "exit": 0,
+      "summary": [
+        "1172",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11b_catalog",
+      "exit": 0,
+      "summary": [
+        "178",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11b",
+      "exit": 0,
+      "summary": [
+        "40984",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_twin_death_hotfix",
+      "exit": 0,
+      "summary": [
+        "47",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11d1",
+      "exit": 0,
+      "summary": [
+        "7",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11d2",
+      "exit": 0,
+      "summary": [
+        "20",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11d3",
+      "exit": 0,
+      "summary": [
+        "9",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11d4",
+      "exit": 0,
+      "summary": [
+        "169",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11d5",
+      "exit": 0,
+      "summary": [
+        "235",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11d_flow",
+      "exit": 0,
+      "summary": [
+        "108",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11e1",
+      "exit": 0,
+      "summary": [
+        "335",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11e2",
+      "exit": 0,
+      "summary": [
+        "19",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11e3",
+      "exit": 0,
+      "summary": [
+        "9",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11e4",
+      "exit": 0,
+      "summary": [
+        "131",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11e5",
+      "exit": 0,
+      "summary": [
+        "10",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11f1",
+      "exit": 0,
+      "summary": [
+        "23",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11f2",
+      "exit": 0,
+      "summary": [
+        "18",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11f3",
+      "exit": 0,
+      "summary": [
+        "14",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11f4",
+      "exit": 0,
+      "summary": [
+        "129",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11f5",
+      "exit": 0,
+      "summary": [
+        "27",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11g1",
+      "exit": 0,
+      "summary": [
+        "4",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11g2",
+      "exit": 0,
+      "summary": [
+        "9",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11g3",
+      "exit": 0,
+      "summary": [
+        "5",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11g4",
+      "exit": 0,
+      "summary": [
+        "18",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11g5",
+      "exit": 0,
+      "summary": [
+        "75",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11h1",
+      "exit": 0,
+      "summary": [
+        "5",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11h2",
+      "exit": 0,
+      "summary": [
+        "5",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11h3",
+      "exit": 0,
+      "summary": [
+        "24",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11h4",
+      "exit": 0,
+      "summary": [
+        "25",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "history_11h5",
+      "exit": 0,
+      "summary": [
+        "82",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "clean_flow",
+      "exit": 0,
+      "summary": [
+        "834",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "economy_first_income",
+      "exit": 0,
+      "summary": [
+        "363",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "disk_first_income",
+      "exit": 0,
+      "summary": [
+        "69",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "economy_midgame",
+      "exit": 0,
+      "summary": [
+        "363",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "disk_midgame",
+      "exit": 0,
+      "summary": [
+        "69",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "graphics_clean_flow",
+      "exit": 0,
+      "summary": [
+        "30",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "graphics_empty_ui",
+      "exit": 0,
+      "summary": [
+        "101",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "graphics_midgame_ui",
+      "exit": 0,
+      "summary": [
+        "101",
+        "0"
+      ],
+      "failed": false
+    }
+  ],
+  "art_receipts": [
+    {
+      "suite": "visual_smoke",
+      "exit": 0,
+      "summary": [
+        "50",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "flow_legacy",
+      "exit": 0,
+      "summary": [
+        "30",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "museum_legacy",
+      "exit": 0,
+      "summary": [
+        "1",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "flow_basic",
+      "exit": 0,
+      "summary": [
+        "30",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "museum_basic",
+      "exit": 0,
+      "summary": [
+        "2",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "flow_enhanced",
+      "exit": 0,
+      "summary": [
+        "30",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "museum_enhanced",
+      "exit": 0,
+      "summary": [
+        "2",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "events",
+      "exit": 0,
+      "summary": [
+        "7",
+        "0"
+      ],
+      "failed": false
+    }
+  ],
+  "manual_review": "PENDING",
+  "profile_version": 10,
+  "seed": 522269330,
+  "baseline": "defda4f19be930f8d2b7cd3161946cc7b209e16a"
+}

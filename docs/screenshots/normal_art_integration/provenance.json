@@ -1,0 +1,11 @@
+{
+  "source": "Native Godot game_flow.tscn, actual map UI and Door; no LAB geometry",
+  "seed": 522269330,
+  "resolution": [
+    1280,
+    720
+  ],
+  "frames": 50,
+  "frame_duration_ms": 100,
+  "mode_and_burn_screenshots": "Real Burn renderer visual unit fixture with DOT disabled; combat GIF and normal_first_combat.png have no injected status"
+}

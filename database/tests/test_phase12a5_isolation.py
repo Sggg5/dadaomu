@@ -13,7 +13,13 @@ class PrincipalSampleTests(unittest.TestCase):
             current=(ROOT/name).read_bytes()
             if Path(name).suffix in ['.gd','.tscn','.tres','.json','.uid']:
                 current=current.replace(b'\r\n',b'\n');expected=expected.replace(b'\r\n',b'\n')
-            self.assertEqual(hashlib.sha256(expected).digest(),hashlib.sha256(current).digest(),name)
+            # User explicitly promoted existing quality art into normal rooms.
+            authorized=json.loads((ROOT/'database/samples/normal_art_authorized_hashes.json').read_text())
+            if name in authorized:
+                self.assertEqual({'scripts/art/room_visual.gd'},set(authorized))
+                self.assertEqual(authorized[name],hashlib.sha256(current).hexdigest(),name)
+            else:
+                self.assertEqual(hashlib.sha256(expected).digest(),hashlib.sha256(current).digest(),name)
 
     def test_native_draft_assets_and_source_alpha(self):
         manifest=json.loads((ROOT/'assets/art/manifest.json').read_text())
