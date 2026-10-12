@@ -9,7 +9,8 @@ func track_player(player: Player) -> void:
 
 func _apply_hit(target: Object) -> void:
 	if target is Player:
-		target.take_damage(damage)
+		if &"arrow" in tags: target.take_environment_damage(damage)
+		else: target.take_damage(damage)
 
 
 func _draw() -> void:

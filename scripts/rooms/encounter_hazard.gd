@@ -60,7 +60,7 @@ func _hurt()->bool:
 	if not player.controls_enabled or player.health.is_dead or not contains_point(player.position):return false
 	var ray:=PhysicsRayQueryParameters2D.create(global_position,player.global_position,1)
 	if not get_world_2d().direct_space_state.intersect_ray(ray).is_empty():return false
-	return player.take_damage(data.damage)
+	return player.take_environment_damage(data.damage) if owner_guard == null else player.take_damage(data.damage)
 func _bullet(direction:Vector2)->void:
 	if room.combat_target.health.is_dead or not room.combat_target.controls_enabled or room.projectiles.get_child_count()>=256:return
 	var request:=AttackRequest.new()

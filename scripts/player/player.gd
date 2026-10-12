@@ -17,6 +17,16 @@ var invulnerability_remaining: float = 0.0
 var mouse_viewport_position: Vector2 = Vector2.ZERO
 var controls_enabled: bool = true
 var antiques: AntiqueInventory = AntiqueInventory.new()
+var profession_runtime: Node
+var profession_wall_multiplier: float = 1.0
+func take_environment_damage(amount: float) -> bool:
+	if invulnerability_remaining > 0 or health.is_dead: return false
+	var adjusted: float = profession_runtime.environment_damage(amount) if is_instance_valid(profession_runtime) else amount
+	if amount > 0 and adjusted <= 0:
+		invulnerability_remaining = stats.hurt_invulnerability
+		queue_redraw()
+		return true
+	return take_damage(adjusted)
 
 
 var art_visual: PlayerVisual

@@ -1,3 +1,4 @@
+from phase13_authorization import profession_hash
 from pathlib import Path
 import hashlib,json,subprocess,unittest
 from PIL import Image
@@ -16,7 +17,7 @@ class CombatArtTests(unittest.TestCase):
                 self.assertEqual({'scripts/art/room_visual.gd'},set(authorized))
                 self.assertEqual(authorized[name],hashlib.sha256(current).hexdigest(),name)
             else:
-                self.assertEqual(hashlib.sha256(old).digest(),hashlib.sha256(current).digest(),name)
+                self.assertEqual(bytes.fromhex(profession_hash(name,hashlib.sha256(old).hexdigest())),hashlib.sha256(current).digest(),name)
     def test_all_native_direction_poses_draft_and_nonempty(self):
         manifest=json.loads((ROOT/'assets/art/manifest.json').read_text(encoding='utf-8'))
         for kind in ['corpse_dog','scarab']:

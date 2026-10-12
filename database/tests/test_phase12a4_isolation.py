@@ -1,3 +1,4 @@
+from phase13_authorization import profession_hash
 from pathlib import Path
 import hashlib,re,subprocess,unittest
 
@@ -16,7 +17,7 @@ class GeometryIsolationTests(unittest.TestCase):
             baseline=subprocess.check_output(['git','show',BASE+':'+path],cwd=ROOT)
             # Git stores LF; this Windows checkout may legitimately contain CRLF.
             current=(ROOT/path).read_bytes().replace(b'\r\n',b'\n')
-            self.assertEqual(hashlib.sha256(baseline.replace(b'\r\n',b'\n')).digest(),hashlib.sha256(current).digest(),path)
+            self.assertEqual(bytes.fromhex(profession_hash(path,hashlib.sha256(baseline.replace(b'\r\n',b'\n')).hexdigest())),hashlib.sha256(current).digest(),path)
 
     def test_experimental_resources_never_referenced_by_production(self):
         for folder in ['scripts','scenes','data']:

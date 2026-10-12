@@ -1,3 +1,4 @@
+from phase13_authorization import profession_hash
 import hashlib
 import json
 import sqlite3
@@ -126,4 +127,4 @@ class ExportTests(unittest.TestCase):
             }
             # Phase12 authorizes exact rendering hooks, with separate gameplay-function/data freeze tests.
             visual_updates=json.loads((ROOT/'samples/phase12_visual_authorized_hashes.json').read_text())
-            self.assertEqual(visual_updates.get(path,authorized_updates.get(path,expected)),hashlib.sha256(text.encode()).hexdigest(),path)
+            self.assertEqual(profession_hash(path,visual_updates.get(path,authorized_updates.get(path,expected))),hashlib.sha256(text.encode()).hexdigest(),path)

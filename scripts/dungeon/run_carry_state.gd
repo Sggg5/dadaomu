@@ -17,5 +17,5 @@ static func capture(player: Player) -> RunCarryState:
 
 func apply(player: Player) -> void:
 	player.health.restore(current_hp)
-	for data in antique_definitions: player.antiques.add(data)
+	assert(player.antiques.restore_carry(antique_definitions), "Cross-floor antique carry must be valid")
 	for data in relic_definitions: player.relics.inventory.add(data)

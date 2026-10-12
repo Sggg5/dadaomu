@@ -55,3 +55,10 @@ func clear() -> void:
 
 
 func items() -> Array[AntiqueDefinition]: return _items.duplicate()
+func restore_carry(definitions: Array[AntiqueDefinition]) -> bool:
+	# Existing run items may exceed new capacity after changing out of Xieling.
+	# This transfer never authorizes a new pickup; can_add still enforces capacity.
+	if definitions.any(func(item: AntiqueDefinition) -> bool: return item == null or not item.is_valid()): return false
+	_items.assign(definitions)
+	changed.emit()
+	return true

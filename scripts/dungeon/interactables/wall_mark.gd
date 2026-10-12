@@ -26,7 +26,7 @@ func _ready() -> void:
 	add_child(label)
 
 func in_range() -> bool:
-	return player.controls_enabled and not player.health.is_dead and can_inspect.call() and player.global_position.distance_to(global_position) <= INTERACTION_DISTANCE
+	return player.controls_enabled and not player.health.is_dead and can_inspect.call() and player.global_position.distance_to(global_position) <= INTERACTION_DISTANCE * player.profession_wall_multiplier
 
 func prompt_text() -> String:
 	if not plan.checked_wall_marks.has(definition.id): return INITIAL_PROMPT

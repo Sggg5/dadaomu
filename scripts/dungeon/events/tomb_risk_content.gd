@@ -6,6 +6,7 @@ var room_id: StringName
 var service: TombRiskService
 var events: Array = []
 var confirming: bool = false
+var resolving: bool = false
 var ambush: EnemySpawner
 var active_event: TombRiskEvent
 var message: Label
@@ -55,10 +56,14 @@ func resolve(event: TombRiskEvent, point: Vector2) -> bool:
 	if not available(): return false
 	var result := service.resolve(room_id, event)
 	if result == null: return false
+	resolving = true
 	# 祭台为支付生命的主动代价，走Health正式伤害信号，不能用短暂无敌免单。
 	if event.kind == TombRiskEvent.Kind.ALTAR or result.outcome == TombRiskResult.Outcome.TRAP:
 		var before := room.combat_target.health.current_hp
-		room.combat_target.health.take_damage(event.hp_cost)
+		var cost: float = event.hp_cost
+		if event.kind != TombRiskEvent.Kind.ALTAR and is_instance_valid(room.combat_target.profession_runtime):
+			cost = room.combat_target.profession_runtime.environment_damage(cost)
+		room.combat_target.health.take_damage(cost)
 		result.damage_taken = before - room.combat_target.health.current_hp
 		room.combat_target.invulnerability_remaining = room.combat_target.stats.hurt_invulnerability
 		room.combat_target.queue_redraw()
@@ -67,6 +72,7 @@ func resolve(event: TombRiskEvent, point: Vector2) -> bool:
 		TombRiskResult.Outcome.AMBUSH: _start_ambush(event)
 		TombRiskResult.Outcome.EMPTY: message.text = "空棺 · 什么也没有"
 	_reward(event, point)
+	resolving = false
 	return true
 
 func _reward(event: TombRiskEvent, point: Vector2) -> void:

@@ -50,6 +50,30 @@ var current_room: Room
 var current_id: StringName
 var transitioning: bool = false
 var _restarting: bool = false
+var profession_state: ProfessionRunState
+var profession_session_guard: Callable
+var profession_runtime: ProfessionRuntime
+var profession_panel: CanvasLayer
+var profession_corpses: ProfessionCorpsePlan
+func _attach_profession_corpse(_id: StringName) -> void:
+	if profession_corpses == null or not profession_corpses.assigned.has(current_id): return
+	var corpse = preload("res://scripts/professions/profession_corpse.gd").new()
+	corpse.runtime = profession_runtime
+	corpse.faction_id = profession_corpses.assigned[current_id]
+	corpse.source_key = StringName("F%d:%s:%s" % [floor_number,current_id,corpse.faction_id])
+	corpse.name = "ProfessionCorpse"
+	corpse.offer_equipment = profession_panel.open_offer
+	var found: bool = false
+	for y in range(220,530,64):
+		for x in range(160,1150,96):
+			var point := Vector2(x,y)
+			if current_room.obstacles().any(func(rect: Rect2) -> bool: return rect.grow(38).has_point(point)): continue
+			if point.distance_to(RelicPedestal.safe_position(current_room)) < 140 or point.distance_to(AntiqueCache.safe_position(current_room)) < 140: continue
+			if current_room.get_children().any(func(n: Node) -> bool: return n is Node2D and (n is AntiquePedestal or n is TombRiskInteractable or n is RelicPedestal) and n.position.distance_to(point) < 135): continue
+			corpse.position = point; found = true; break
+		if found: break
+	assert(found,"Profession corpse requires an accessible nonoverlapping placement")
+	current_room.add_child(corpse)
 
 
 func _ready() -> void:
@@ -66,6 +90,11 @@ func _ready() -> void:
 	for room_id in layout.rooms:
 		assert(layout.rooms[room_id].definition != null)
 		states[room_id] = RoomState.new()
+	if profession_state != null:
+		profession_runtime = ProfessionRuntime.new(); profession_runtime.state = profession_state; profession_runtime.world = self; profession_runtime.can_session_act = profession_session_guard; add_child(profession_runtime)
+		profession_panel = preload("res://scripts/ui/profession_panel.gd").new(); profession_panel.runtime = profession_runtime; add_child(profession_panel)
+		profession_corpses = ProfessionCorpsePlan.build(run_seed,floor_number,layout)
+		room_changed.connect(_attach_profession_corpse)
 	player.weapon.attack_requested.connect(_spawn_projectile)
 	player.health.changed.connect(hud.show_hp)
 	player.antiques.changed.connect(func() -> void: hud.show_antiques(player.antiques))

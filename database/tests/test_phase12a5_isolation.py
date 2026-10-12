@@ -1,3 +1,4 @@
+from phase13_authorization import profession_hash
 from pathlib import Path
 import hashlib,json,subprocess,unittest
 from PIL import Image
@@ -19,7 +20,7 @@ class PrincipalSampleTests(unittest.TestCase):
                 self.assertEqual({'scripts/art/room_visual.gd'},set(authorized))
                 self.assertEqual(authorized[name],hashlib.sha256(current).hexdigest(),name)
             else:
-                self.assertEqual(hashlib.sha256(expected).digest(),hashlib.sha256(current).digest(),name)
+                self.assertEqual(bytes.fromhex(profession_hash(name,hashlib.sha256(expected).hexdigest())),hashlib.sha256(current).digest(),name)
 
     def test_native_draft_assets_and_source_alpha(self):
         manifest=json.loads((ROOT/'assets/art/manifest.json').read_text())

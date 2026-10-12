@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "status": "DRAFT",
+  "definitions": [
+    {"id":"MOJIN","name":"摸金校尉","token":"摸金符","ability":"MOJIN:SCAN","uses":1,"wall_multiplier":1.5,"extra_slots":0,"description":"墙纹交互距离提升；Q观气一次，查验本房最近的未检查墙纹。"},
+    {"id":"FAQIU","name":"发丘天官","token":"发丘印","ability":"FAQIU:CATALOG","uses":1,"wall_multiplier":1.0,"extra_slots":0,"description":"Q抄录一次，为当前携货建立本局货目；不改变价值与鉴定状态。"},
+    {"id":"BANSHAN","name":"搬山道人","token":"搬山令","ability":"BANSHAN:GUARD","uses":1,"wall_multiplier":1.0,"extra_slots":0,"description":"Q准备一次护符，装备搬山时抵免一次非祭台机关伤害；切走暂停保护。"},
+    {"id":"XIELING","name":"卸岭力士","token":"卸岭牌","ability":"","uses":0,"wall_multiplier":1.0,"extra_slots":2,"description":"背包增加2格。切走不丢货；超载停止拾取，移速为80%，减载后恢复。"}
+  ]
+}

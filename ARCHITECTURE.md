@@ -564,3 +564,16 @@ Phase12A.3静态环境Canvas绘制命令按视觉状态变化缓存；新增危�
 ## 高品质视觉正常入口接入
 
 RoomVisual在装配完成后安装TombQualityVisual（晋北）与CombatFeedbackVisual；现有node_added信号延迟给正式尸犬/尸蟞安装DetailedEnemyVisual。身体、预警均为Room兄弟节点，不继承Enemy死亡缩放，不改变AI/碰撞/Health。新出生召唤物同样接入，按节点名幂等，Room释放后清理；Legacy/缺图保留回退。主棺与祭台按现有footprint等比缩小，真实底座范围明确，门框使用原墙段与Door位置。LAB_几何继续走原对比绑定；生产代码不引用tests。
+
+
+## Phase 13A 独立门派状态
+
+ExpeditionSelection.initial_profession_id是只读字段，copy_for_departure保留而非重新capture。GameFlow只在保存安全地面成功后生成出发快照，Session持有单个ProfessionRunState值对象。每层RoomController装配ProfessionRuntime和信物UI，旧Player/Room/Weapon保持原职责。
+
+ProfessionRunState仅保存信物、初始与激活ID、遗体搜索键、虚构身份、能力使用次数和已准备的护符/货目，无UI节点。ProfessionRuntime是唯一能力效果所有者；同步事务在发布changed之前一次性更新容量、墙纹距离和超载移动因子，不进入RelicInventory、不修改共享资源。危险结算/ACTIVE/剩余敌人/切场/死亡都阻止操作。
+
+ProfessionCorpsePlan VERSION1使用独立stable_score与RNG；第一层四派各一，后续每层最多一，不改原地图或奖励。遗体视觉为原创非碰撞DRAFT；RoomController按合法空间避让交互物。已搜索信息保存在RunState，重访不重复获得。RunCarryState.restore_carry只用于转移现有合法物品，允许保留超额；普通add仍严格容量检查。
+
+机关箭/无敌人属主的环境和非祭台风险机关使用Player.take_environment_damage；搬山备好抵免只在本派激活时生效。普通攻击、Boss、祭台主动支付不走职业抵免。职业与账本不进入Profile10；切换不补次数、跨层不重置，R/N和最终结束清除。
+
+Phase12冻结测试保留原断言，通过phase13_authorized_hashes.json逐文件/原函数精确授权12个接入脚本；原数据、所有其它脚本和Profile仍保护。无笼统战斗豁免。

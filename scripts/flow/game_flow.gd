@@ -74,7 +74,8 @@ func _show_museum(notice: String, phase: MuseumState.Phase = MuseumState.Phase.M
 
 func confirm_expedition(site_id:StringName)->bool:
 	if not site_registry.can_depart(site_id):return false
-	var choice:=ExpeditionSelection.capture(site_registry.site(site_id),museum_state.campaign_seed,current_day,forced_night_seed)
+	var initial: StringName = museum.expedition_map.profession_choice.selected_id if is_instance_valid(museum) else &"NONE"
+	var choice:=ExpeditionSelection.capture(site_registry.site(site_id),museum_state.campaign_seed,current_day,forced_night_seed,initial)
 	if choice==null:return false
 	if not start_night(choice):
 		if is_instance_valid(museum):museum.expedition_map.reject("远征未开始：保存失败或当前行动状态不可用。")
@@ -86,7 +87,7 @@ func start_night(choice:ExpeditionSelection=null) -> bool:
 	if not site_registry.can_depart(choice.site_id) or choice.tomb_definition!=site.tomb_definition:return false
 	if not _prepare_night(): return false
 	# Snapshot is owned by GameFlow after successful save, not by the map UI.
-	active_expedition=ExpeditionSelection.capture(site,museum_state.campaign_seed,current_day,forced_night_seed)
+	active_expedition=choice.copy_for_departure()
 	_enter_night.call_deferred()
 	return true
 
@@ -161,6 +162,8 @@ func _enter_night() -> void:
 	current_auction_result = null
 	dungeon = DUNGEON_SCENE.instantiate() as DungeonSession
 	dungeon.hub_mode = true
+	dungeon.profession_system_enabled = true
+	dungeon.initial_profession_id = active_expedition.initial_profession_id
 	dungeon.progressive_relics = progressive_relics
 	dungeon.profiled_relic_rewards = profiled_relic_rewards
 	dungeon.tomb = active_expedition.tomb_definition

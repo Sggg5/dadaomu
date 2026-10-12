@@ -1,0 +1,91 @@
+{
+  "baseline_commit": "c3bd02bb1c9fee6a90e9f031a34e04364fa44571",
+  "scope": "Explicit user Phase13A profession implementation. All other prior assertions retained.",
+  "files": {
+    "scripts/antiques/antique_inventory.gd": {
+      "baseline": "f2634797f862d403ec2d3c8d2447a37ee79ae81d45b536cb97ece6949f5969da",
+      "current": "030b4cb66bc5bb1bd171445fd41d66241380867481973e4de01103ff24156033",
+      "functions": {}
+    },
+    "scripts/combat/enemy_projectile.gd": {
+      "baseline": "f7895a01b1f7cc77eff7df3ac342200140ff46d720b428a661ec65dcd3fdfda8",
+      "current": "772076c7805c7522d595a65d7ec02cb4d0471cc387aa1a07434cbadb6ba7c777",
+      "functions": {
+        "_apply_hit(target: Object) -> void:": "3413fbadfe65215259ddbfbb8d32924afa44dde5fb9cfb363abe69e0bb9f968f"
+      }
+    },
+    "scripts/dungeon/dungeon_session.gd": {
+      "baseline": "cc1435fc9974ec9eae68c5398b776d9c59535d550a374a0cedf6ce8004eec155",
+      "current": "416404565ec562ecdd3943ae1276c0b21e5aec972175784639f111a380b50837",
+      "functions": {
+        "_start_new_run(layout: DungeonLayout) -> void:": "81fcfe1dc854f0159ecda0c67c8f684348b7f8afa29ae74026cd9cce83275591",
+        "_assemble_world(layout: DungeonLayout) -> void:": "15ed9a4704c6606536801023570e5c23976f521e4108357e7c31e0d8b40f5edc",
+        "_finish_run(outcome: RunResult.Outcome) -> bool:": "5321dac4e5d21e0b29f2cc572d600fab6a04193c0f2d3965a3306c1b4b80d715"
+      }
+    },
+    "scripts/dungeon/events/tomb_risk_content.gd": {
+      "baseline": "a7529c17ca2f597f5313742c4f72e4611e3780724c05dd5ffb4119112a329037",
+      "current": "ac24d37b9366624e4631050546cc5b17f5b81fe65718ea4bec71f127c2af6866",
+      "functions": {
+        "resolve(event: TombRiskEvent, point: Vector2) -> bool:": "f9c248fd48baaf37fe3d71828c8feb6fe4ce549f28f61f0a13884b7de8c716d6"
+      }
+    },
+    "scripts/dungeon/interactables/wall_mark.gd": {
+      "baseline": "9daeae2bac94f3de6791378a8bfa66fd6afd641848797688302e87fea5672ea4",
+      "current": "5cb3d06168291007345161ac0c980fb5c9007abd94f07d6497603b683252181c",
+      "functions": {
+        "in_range() -> bool:": "fd5261a7cf1d65f2c63210cf75d16b149b95be0162ee1fa55b3847188f3a58f5"
+      }
+    },
+    "scripts/dungeon/run_carry_state.gd": {
+      "baseline": "50944d4a1701fea09b93c1c95be3e482e977c811a536b8e1887896fb593e1d44",
+      "current": "5869cf8a2b9856b06b3efc52e9bb4d7b3b55fd4018579228216a81e69dd63be7",
+      "functions": {
+        "apply(player: Player) -> void:": "373f36742d63e3e1f52944ad1327d5438f439d774ad15c104a514fa91845bc50"
+      }
+    },
+    "scripts/expedition/expedition_selection.gd": {
+      "baseline": "900db0fbc8204895017f1215bca0b8b36df46daae9ad90f01227a7f1aa04d897",
+      "current": "36587db11445b71389db0a9fbe4e2a4d56be23619c8460b5b6c070f4f605b325",
+      "functions": {}
+    },
+    "scripts/flow/game_flow.gd": {
+      "baseline": "f9bee511fee9d783699a34ba40db3bfb3925e98523058003e21101ddeb4ae9ba",
+      "current": "1f656b8ef0eedd7c7f2da8e777cd72b9eddf8064ae4027097a55c7b6eb0c8c83",
+      "functions": {
+        "confirm_expedition(site_id:StringName)->bool:": "7903cb83be3f548d04883d38745e491c79b653da5af4e6c58f8b6e727237f159",
+        "start_night(choice:ExpeditionSelection=null) -> bool:": "763e114c58151dc4aff0d7e6613419d7e38d0d88f87404560d6403a6c45ad49c",
+        "_enter_night() -> void:": "2296c90f6da5519fdef6e73ddad2537d20cfd34c72520c25771512ba4a2fbe20"
+      }
+    },
+    "scripts/player/player.gd": {
+      "baseline": "1cd34cbdcf2722ecbd2a83183e1e2e086ca7af5781d036a453ea25426e81f38e",
+      "current": "838e3d586ebe0a4b62e0992da63e42b8312e05a7691e71038f51c517a37e3244",
+      "functions": {}
+    },
+    "scripts/rooms/encounter_hazard.gd": {
+      "baseline": "c6f1c56e49ed36757880c195bd337d55419c0001d2d42742bda7a56c15d6cc47",
+      "current": "e4f6b536295fb659f7389a6a853b032eaa9853c9e2545426ff27749f1519de65",
+      "functions": {
+        "_hurt()->bool:": "58faf5e411db8330ab50ce5abc22f9b15032ce2632b81bd12b8c7652bba03121"
+      }
+    },
+    "scripts/rooms/room_controller.gd": {
+      "baseline": "76a5dba387b98372765c9d3208c1a00e50c9c6c883684256b702bd20a1dd3253",
+      "current": "cf9eb208157fb3ab253ade14d6901535144260315867191c3a4e7cf5a7550580",
+      "functions": {
+        "_ready() -> void:": "337a2bc8c9a2cb7f1869b0dca69e806b71aed28ff9a4160ba00d10307e9c58c7"
+      }
+    },
+    "scripts/ui/expedition_map_panel.gd": {
+      "baseline": "e979917151e30b1e9f57cbb45a98bdfbe6e156c1e670aed3783eddb55ebc2146",
+      "current": "04313747ab45a44c670d1c3c26a4cf7317deefb6bdad8a823a5a6bc1c54a1958",
+      "functions": {
+        "_ready()->void:": "76ec738f24f5feaa76f3a6b0522d6a35c8ffe3d5c6dfb45c9f0d6eb6e1c0f469",
+        "open()->bool:": "5a7c09837de73cb13b1689b3bd82e67733bc1383d84966529981ea5a1003872d",
+        "confirm()->bool:": "40752d9f55f96180ace38244ecfedd364374f02734c1da769488566f8c77a33b",
+        "reject(reason:String)->void:": "fa16ab2e58e0049346f801a124187309902682e8e9c2cf8636a0c1eba0db41d6"
+      }
+    }
+  }
+}

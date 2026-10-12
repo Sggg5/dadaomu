@@ -35,6 +35,9 @@ var complete_screen: RunCompleteScreen
 var _boss_defeated_floors: Dictionary[int, bool] = {}
 var cleared_floors: Dictionary[int, bool] = {}
 var _changing: bool = false
+var profession_system_enabled: bool = false
+var initial_profession_id: StringName = &"NONE"
+var profession_state := ProfessionRunState.new()
 var _seed_rng := RandomNumberGenerator.new()
 
 
@@ -93,6 +96,7 @@ func _start_new_run(layout: DungeonLayout) -> void:
 	_boss_defeated_floors.clear()
 	cleared_floors.clear()
 	_drop_world()
+	profession_state.begin(initial_profession_id)
 	if is_instance_valid(rewards):
 		remove_child(rewards)
 		rewards.queue_free()
@@ -115,6 +119,9 @@ func _start_new_run(layout: DungeonLayout) -> void:
 
 func _assemble_world(layout: DungeonLayout) -> void:
 	world = WORLD_SCENE.instantiate() as RoomController
+	if profession_system_enabled:
+		world.profession_state = profession_state
+		world.profession_session_guard = func() -> bool: return not run_ended and not _changing and not _returning
 	world.layout = layout
 	world.exploration_enabled = exploration_enabled
 	world.run_seed = run_seed
@@ -235,6 +242,7 @@ func _finish_run(outcome: RunResult.Outcome) -> bool:
 	world.antique_panel.panel.hide()
 	world.get_node("RelicDebugPanel").process_mode = Node.PROCESS_MODE_DISABLED
 	if outcome == RunResult.Outcome.DEAD: world.player.antiques.clear()
+	profession_state.end()
 	complete_screen = RunCompleteScreen.new()
 	complete_screen.result = result
 	complete_screen.hub_mode = hub_mode

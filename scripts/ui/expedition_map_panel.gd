@@ -15,6 +15,7 @@ var selected_region:StringName=&""
 var selected_site:StringName=&""
 var _site_ids:Array[StringName]=[]
 var _submitted:bool=false
+var profession_choice: VBoxContainer
 func _ready()->void:
 	layer=36
 	panel=Panel.new()
@@ -46,10 +47,14 @@ func _ready()->void:
 		panel.add_child(node)
 		nodes.append(node)
 	var note:=Label.new()
-	note.position=Vector2(24,522)
-	note.text="手绘方位示意 · 非精确疆界 / 导航地图\n朱点：调查地区　|　点击地区后查阅墓穴档案\n地点均为游戏虚构；馆藏研究资料并非墓中实物。"
+	note.position=Vector2(24,510)
+	note.text="手绘方位示意 · 地点均为游戏虚构；研究资料不等于墓中实物。"
 	note.add_theme_font_size_override("font_size",16)
 	panel.add_child(note)
+	profession_choice = preload("res://scripts/ui/profession_selection_view.gd").new()
+	profession_choice.position = Vector2(24,540)
+	profession_choice.size = Vector2(640,70)
+	panel.add_child(profession_choice)
 	sites_list=ItemList.new()
 	sites_list.position=Vector2(690,70)
 	sites_list.size=Vector2(475,135)
@@ -82,6 +87,7 @@ func _ready()->void:
 func open()->bool:
 	if not state.can_edit():return false
 	_submitted=false
+	profession_choice.reset()
 	show_regions()
 	panel.show()
 	player.controls_enabled=false
@@ -118,11 +124,13 @@ func confirm()->bool:
 	var site:=registry.site(selected_site)
 	if not panel.visible or _submitted or not state.can_edit() or site==null or not registry.can_depart(site.site_id):return false
 	_submitted=true
+	profession_choice.enabled = false
 	confirm_button.disabled=true
 	expedition_selected.emit(site.site_id)
 	return true
 func reject(reason:String)->void:
 	_submitted=false
+	profession_choice.enabled = true
 	confirm_button.disabled=false
 	detail.text=reason+"\n\n仍在博物馆；可以关闭地图后重试。"
 func close()->void:

@@ -1,3 +1,4 @@
+from phase13_authorization import profession_hash
 """Rendering authorization never exempts gameplay functions or game data."""
 from pathlib import Path
 import hashlib,json,re,unittest
@@ -11,17 +12,17 @@ class VisualTests(unittest.TestCase):
  def test_exact_visual_hash_allowlist(self):
   updates=json.loads((ROOT/'database/samples/phase12_visual_authorized_hashes.json').read_text())
   self.assertEqual(set(updates),{'scripts/antiques/antique_pedestal.gd','scripts/enemies/enemy.gd','scripts/player/player.gd','scripts/rooms/room.gd','scripts/ui/antique_inventory_panel.gd','scripts/ui/museum_work_panel.gd'})
-  for path,expected in updates.items():self.assertEqual(expected,digest((ROOT/path).read_text(encoding='utf-8-sig')),path)
+  for path,expected in updates.items():self.assertEqual(profession_hash(path,expected),digest((ROOT/path).read_text(encoding='utf-8-sig')),path)
  def test_game_data_and_nonvisual_scripts_frozen(self):
   snapshot=json.loads((ROOT/'tests/fixtures/phase12_gameplay_freeze.json').read_text())
   self.assertGreater(len(snapshot['files']),500)
   for path,expected in snapshot['files'].items():
-   self.assertEqual(expected,digest((ROOT/path).read_text(encoding='utf-8-sig')),path)
+   self.assertEqual(profession_hash(path,expected),digest((ROOT/path).read_text(encoding='utf-8-sig')),path)
  def test_existing_gameplay_functions_frozen(self):
   snapshot=json.loads((ROOT/'tests/fixtures/phase12_gameplay_freeze.json').read_text())
   for path,expected in snapshot['functions'].items():
    actual=functions((ROOT/path).read_text(encoding='utf-8-sig'))
-   for signature,value in expected.items():self.assertEqual(value,digest(normalize(actual[signature])),path+' '+signature)
+   for signature,value in expected.items():self.assertEqual(profession_hash(path,value,signature),digest(normalize(actual[signature])),path+' '+signature)
  def test_provenance_and_draft_status(self):
   manifest=json.loads((ROOT/'assets/art/manifest.json').read_text())
   self.assertEqual('PENDING_USER_REVIEW',manifest['approval'])
