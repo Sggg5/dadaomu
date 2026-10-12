@@ -19,14 +19,9 @@ var controls_enabled: bool = true
 var antiques: AntiqueInventory = AntiqueInventory.new()
 var profession_runtime: Node
 var profession_wall_multiplier: float = 1.0
+var profession_movement_multiplier: float = 1.0
 func take_environment_damage(amount: float) -> bool:
-	if invulnerability_remaining > 0 or health.is_dead: return false
-	var adjusted: float = profession_runtime.environment_damage(amount) if is_instance_valid(profession_runtime) else amount
-	if amount > 0 and adjusted <= 0:
-		invulnerability_remaining = stats.hurt_invulnerability
-		queue_redraw()
-		return true
-	return take_damage(adjusted)
+	return take_damage(amount)
 
 
 var art_visual: PlayerVisual
@@ -55,7 +50,7 @@ func _physics_process(delta: float) -> void:
 	var encounter_factor:=1.0
 	for value in encounter_movement_modifiers.values():encounter_factor=minf(encounter_factor,value)
 	var change_rate := stats.deceleration if input_direction.is_zero_approx() else stats.acceleration
-	velocity = velocity.move_toward(input_direction * stats.move_speed * encounter_factor * environment_speed_multiplier * relics.movement_multiplier(), change_rate * delta)
+	velocity = velocity.move_toward(input_direction * stats.move_speed * encounter_factor * environment_speed_multiplier * relics.movement_multiplier() * profession_movement_multiplier, change_rate * delta)
 	move_and_slide()
 	# 输入采样与物理步分离；每帧转为世界坐标，移动中仍瞄准同一鼠标位置。
 	var mouse_world_position := get_canvas_transform().affine_inverse() * mouse_viewport_position
@@ -71,7 +66,9 @@ func _physics_process(delta: float) -> void:
 func take_damage(amount: float) -> bool:
 	if invulnerability_remaining > 0.0 or health.is_dead:
 		return false
-	if not health.take_damage(relics.received_damage(amount)):
+	var adjusted := relics.received_damage(amount)
+	if is_instance_valid(profession_runtime): adjusted = profession_runtime.received_damage(adjusted)
+	if not health.take_damage(adjusted):
 		return false
 	invulnerability_remaining = stats.hurt_invulnerability
 	queue_redraw()

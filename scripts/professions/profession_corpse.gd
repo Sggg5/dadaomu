@@ -19,7 +19,7 @@ func in_range() -> bool:
 	return is_instance_valid(runtime) and runtime.world.player.global_position.distance_to(global_position) <= 64
 func search() -> bool:
 	if not in_range() or not runtime.available() or runtime.state.searched(source_key): return false
-	var identity := {"faction_id":str(faction_id),"name":"佩%s的无名前辈" % ProfessionRegistry.token_name(faction_id),"fiction":"DRAFT游戏身份记录，非真实历史人物","floor":runtime.world.floor_number,"room_id":str(runtime.world.current_id)}
+	var identity := {"faction_id":str(faction_id),"name":("执%s的无名前辈" if faction_id==&"XIELING" else "佩%s的无名前辈") % ProfessionRegistry.token_name(faction_id),"fiction":"DRAFT游戏身份记录，非真实历史人物","floor":runtime.world.floor_number,"room_id":str(runtime.world.current_id)}
 	var duplicate := runtime.state.has_token(faction_id)
 	if not runtime.state.search(source_key,faction_id,identity): return false
 	runtime.notice = "已记录前辈身份 · " + ("重复信物不叠加" if duplicate else "获得" + ProfessionRegistry.token_name(faction_id))

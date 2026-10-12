@@ -26,3 +26,22 @@ class ProfessionTests(unittest.TestCase):
   self.assertIn('DRAFT',str(data))
   self.assertEqual({row['id'] for row in data['definitions']},{'MOJIN','FAQIU','BANSHAN','XIELING'})
   for row in data['definitions']:self.assertLessEqual(row['uses'],1)
+
+ def test_aligned_rules_and_separate_corpse_config(self):
+  data=json.loads((ROOT/'data/professions/draft_professions.json').read_text(encoding='utf-8-sig'))
+  rows={r['id']:r for r in data['definitions']}
+  self.assertEqual(rows['MOJIN']['ability'],'MOJIN:CLUE')
+  self.assertEqual(rows['FAQIU']['first_damage_multiplier'],.7)
+  self.assertEqual(rows['BANSHAN']['movement_multiplier'],1.08)
+  self.assertEqual(rows['BANSHAN']['hits_required'],4)
+  self.assertEqual(rows['BANSHAN']['empower_multiplier'],1.25)
+  self.assertEqual(rows['XIELING']['token'],'卸岭旗')
+  self.assertEqual(rows['XIELING']['extra_slots'],2)
+  self.assertEqual(rows['XIELING']['loaded_multiplier'],.95)
+  self.assertEqual(rows['XIELING']['overload_multiplier'],.8)
+  corpse=json.loads((ROOT/'data/professions/corpse_distribution.json').read_text())
+  self.assertEqual(corpse['max_per_floor'],1)
+  self.assertEqual(corpse['later_floor_chance'],.5)
+  code=(ROOT/'scripts/professions/profession_runtime.gd').read_text(encoding='utf-8-sig')
+  self.assertIn('request.set_meta(ATTACK_KEY,id)',code)
+  self.assertNotIn('request.tags.append',code)

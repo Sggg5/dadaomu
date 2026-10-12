@@ -68,6 +68,7 @@ func _attach_profession_corpse(_id: StringName) -> void:
 		for x in range(160,1150,96):
 			var point := Vector2(x,y)
 			if current_room.obstacles().any(func(rect: Rect2) -> bool: return rect.grow(38).has_point(point)): continue
+			if current_room.hazards.get_children().any(func(n: Node) -> bool: return n is EncounterHazard and n.contains_point(point,72)): continue
 			if point.distance_to(RelicPedestal.safe_position(current_room)) < 140 or point.distance_to(AntiqueCache.safe_position(current_room)) < 140: continue
 			if current_room.get_children().any(func(n: Node) -> bool: return n is Node2D and (n is AntiquePedestal or n is TombRiskInteractable or n is RelicPedestal) and n.position.distance_to(point) < 135): continue
 			corpse.position = point; found = true; break
@@ -272,6 +273,7 @@ func _spawn_projectile(request: AttackRequest) -> void:
 	var projectile := PROJECTILE_SCENE.instantiate() as Projectile
 	current_room.projectiles.add_child(projectile)
 	projectile.setup(request)
+	if is_instance_valid(profession_runtime): profession_runtime.bind_projectile(projectile,request)
 	player.relics.bind_projectile(projectile)
 
 

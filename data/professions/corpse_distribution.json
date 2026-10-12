@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "status": "DRAFT",
+  "first_floor_guaranteed": true,
+  "later_floor_chance": 0.5,
+  "max_per_floor": 1
+}

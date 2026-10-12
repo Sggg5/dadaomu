@@ -1,6 +1,6 @@
 {
   "baseline_commit": "c3bd02bb1c9fee6a90e9f031a34e04364fa44571",
-  "scope": "Explicit user Phase13A profession implementation. All other prior assertions retained.",
+  "scope": "Explicit Phase13A + Phase13A.1 faction rules; exact existing script/method hashes only, no original gameplay data exemption.",
   "files": {
     "scripts/antiques/antique_inventory.gd": {
       "baseline": "f2634797f862d403ec2d3c8d2447a37ee79ae81d45b536cb97ece6949f5969da",
@@ -25,9 +25,9 @@
     },
     "scripts/dungeon/events/tomb_risk_content.gd": {
       "baseline": "a7529c17ca2f597f5313742c4f72e4611e3780724c05dd5ffb4119112a329037",
-      "current": "ac24d37b9366624e4631050546cc5b17f5b81fe65718ea4bec71f127c2af6866",
+      "current": "164f3793c81974ef246ba9963ebea2861109e493b7efa221fe99532897d9bfc6",
       "functions": {
-        "resolve(event: TombRiskEvent, point: Vector2) -> bool:": "f9c248fd48baaf37fe3d71828c8feb6fe4ce549f28f61f0a13884b7de8c716d6"
+        "resolve(event: TombRiskEvent, point: Vector2) -> bool:": "39690ea07a363aa68863e37fefc7709d239332038303652b8f7371a0953588be"
       }
     },
     "scripts/dungeon/interactables/wall_mark.gd": {
@@ -60,8 +60,11 @@
     },
     "scripts/player/player.gd": {
       "baseline": "1cd34cbdcf2722ecbd2a83183e1e2e086ca7af5781d036a453ea25426e81f38e",
-      "current": "838e3d586ebe0a4b62e0992da63e42b8312e05a7691e71038f51c517a37e3244",
-      "functions": {}
+      "current": "71cc8e15d5ccd5d57bc7b7c907de4d3181727c2b4317d0b3db956233545bca67",
+      "functions": {
+        "_physics_process(delta: float) -> void:": "080458b37014aa06d8939e4491941ebacadd534135c55cbb77fc1f6204c735bc",
+        "take_damage(amount: float) -> bool:": "e85a392e2233726fb4b756072185d8bef69483bce0075ce033317100a8af135a"
+      }
     },
     "scripts/rooms/encounter_hazard.gd": {
       "baseline": "c6f1c56e49ed36757880c195bd337d55419c0001d2d42742bda7a56c15d6cc47",
@@ -72,9 +75,10 @@
     },
     "scripts/rooms/room_controller.gd": {
       "baseline": "76a5dba387b98372765c9d3208c1a00e50c9c6c883684256b702bd20a1dd3253",
-      "current": "cf9eb208157fb3ab253ade14d6901535144260315867191c3a4e7cf5a7550580",
+      "current": "8ed703ce514cd29de852e0305c65100a5e59e7852969a591cba3b2c1840833cd",
       "functions": {
-        "_ready() -> void:": "337a2bc8c9a2cb7f1869b0dca69e806b71aed28ff9a4160ba00d10307e9c58c7"
+        "_ready() -> void:": "337a2bc8c9a2cb7f1869b0dca69e806b71aed28ff9a4160ba00d10307e9c58c7",
+        "_spawn_projectile(request: AttackRequest) -> void:": "2f6e47c12783a95199b3c938cac3263c08c912ed43d58f01270380aa8816b6ac"
       }
     },
     "scripts/ui/expedition_map_panel.gd": {

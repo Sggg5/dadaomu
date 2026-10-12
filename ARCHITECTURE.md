@@ -565,15 +565,14 @@ Phase12A.3静态环境Canvas绘制命令按视觉状态变化缓存；新增危�
 
 RoomVisual在装配完成后安装TombQualityVisual（晋北）与CombatFeedbackVisual；现有node_added信号延迟给正式尸犬/尸蟞安装DetailedEnemyVisual。身体、预警均为Room兄弟节点，不继承Enemy死亡缩放，不改变AI/碰撞/Health。新出生召唤物同样接入，按节点名幂等，Room释放后清理；Legacy/缺图保留回退。主棺与祭台按现有footprint等比缩小，真实底座范围明确，门框使用原墙段与Door位置。LAB_几何继续走原对比绑定；生产代码不引用tests。
 
+## Phase 13A.1 独立职业效果
 
-## Phase 13A 独立门派状态
+ExpeditionSelection只读初始职业快照与GameFlow/DungeonSession原流程保持。ProfessionRunState值对象保存独立信物、身份、搜索键、分层线索/消耗账本、实际房间访问/首伤记录、搬山命中进度与准备状态，跨层不复用UI/效果节点、不写Profile10。
 
-ExpeditionSelection.initial_profession_id是只读字段，copy_for_departure保留而非重新capture。GameFlow只在保存安全地面成功后生成出发快照，Session持有单个ProfessionRunState值对象。每层RoomController装配ProfessionRuntime和信物UI，旧Player/Room/Weapon保持原职责。
+ProfessionRuntime为唯一职业效果装配者：重算Player实例移动倍率和容量，同步提交后发布状态。防御过滤在原Relic减伤之后、Health之前；Health.damaged正数成功通知才记录首伤消费。地图读入实际访问状态，重复进入不刷新。主动祭台支付显式与受伤区分；普通机关仍使用原真实Health流程。
 
-ProfessionRunState仅保存信物、初始与激活ID、遗体搜索键、虚构身份、能力使用次数和已准备的护符/货目，无UI节点。ProfessionRuntime是唯一能力效果所有者；同步事务在发布changed之前一次性更新容量、墙纹距离和超载移动因子，不进入RelicInventory、不修改共享资源。危险结算/ACTIVE/剩余敌人/切场/死亡都阻止操作。
+搬山监听现有attack_prepared最终批次，给每个请求赋Object元数据攻击ID，RoomController创建真实弹丸时传递到绑定回调。无需新增RelicEffect/奖励项，普通tags完全保持，避免破坏遗物标签或旧美术空标签回退。一个攻击批次只信用一次；Health未接受的命中、持续伤害和未经过该批次的派生弹无信用。准备的25%伤害应用于下个批次，实际弹丸spawn后才消费；预算拒绝不会丢失准备。
 
-ProfessionCorpsePlan VERSION1使用独立stable_score与RNG；第一层四派各一，后续每层最多一，不改原地图或奖励。遗体视觉为原创非碰撞DRAFT；RoomController按合法空间避让交互物。已搜索信息保存在RunState，重访不重复获得。RunCarryState.restore_carry只用于转移现有合法物品，允许保留超额；普通add仍严格容量检查。
+摸金只读既有TombExplorationPlan/DungeonLayout：真实暗道parent+side，或未访问ANTIQUE/RELIC节点；没有有效目标不消耗，不揭门、不改拓扑。每层键MOJIN:CLUE:F#跨房和切派保留。尸体生成使用独立VERSION2 RNG和显式后层概率配置，首层固定一个、后层0或1；不参与地图、Boss、古董、Relic随机流。
 
-机关箭/无敌人属主的环境和非祭台风险机关使用Player.take_environment_damage；搬山备好抵免只在本派激活时生效。普通攻击、Boss、祭台主动支付不走职业抵免。职业与账本不进入Profile10；切换不补次数、跨层不重置，R/N和最终结束清除。
-
-Phase12冻结测试保留原断言，通过phase13_authorized_hashes.json逐文件/原函数精确授权12个接入脚本；原数据、所有其它脚本和Profile仍保护。无笼统战斗豁免。
+卸岭9～10格正常满载因子0.95，退派超载因子0.8且禁拾；同一负重键重算不累乘，保留现有环境与遗物倍率组合。RunCarryState.restore_carry仍只转移已有合法古董，允许超额保存，普通add仍严格容量拒绝。旧冻结断言逐文件/原函数精确授权，所有原资源和Profile继续保护。

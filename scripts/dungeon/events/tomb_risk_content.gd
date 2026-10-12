@@ -63,7 +63,10 @@ func resolve(event: TombRiskEvent, point: Vector2) -> bool:
 		var cost: float = event.hp_cost
 		if event.kind != TombRiskEvent.Kind.ALTAR and is_instance_valid(room.combat_target.profession_runtime):
 			cost = room.combat_target.profession_runtime.environment_damage(cost)
+		var profession: Node = room.combat_target.profession_runtime
+		if is_instance_valid(profession): profession.paying_cost = event.kind == TombRiskEvent.Kind.ALTAR
 		room.combat_target.health.take_damage(cost)
+		if is_instance_valid(profession): profession.paying_cost = false
 		result.damage_taken = before - room.combat_target.health.current_hp
 		room.combat_target.invulnerability_remaining = room.combat_target.stats.hurt_invulnerability
 		room.combat_target.queue_redraw()

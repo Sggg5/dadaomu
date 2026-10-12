@@ -29,12 +29,16 @@ func _process(_delta: float) -> void:
 	var id := runtime.state.active_id
 	var definition := ProfessionRegistry.definition(id)
 	var ability: StringName = StringName(definition.get("ability", ""))
-	var left: int = maxi(0,int(definition.get("uses",0))-runtime.state.used(ability))
-	hud_line.text = "%s · G信物 / Q能力 · 余%d%s" % [ProfessionRegistry.display_name(id),left," · 超载减速" if runtime.world.player.antiques.used_slots() > runtime.world.player.antiques.capacity else ""]
+	var left: int = 1-runtime.state.used(runtime.clue_key()) if id==&"MOJIN" else 0
+	var detail := "线索余%d"%left if id==&"MOJIN" else ("命中%d/4·强%d%s"%[runtime.state.banshan_hits,runtime.state.used(&"BANSHAN:EMPOWER"),"·待用" if runtime.state.banshan_ready else ""] if id==&"BANSHAN" else ("安全房" if not runtime.is_combat_room() else "重访无减免" if not runtime.first_visit else "首伤已用" if runtime.state.damaged_rooms.has(runtime.current_key) else "首伤待用") if id==&"FAQIU" else "容量10格" if id==&"XIELING" else "无能力")
+	var keys := "G信物 Q线索" if id==&"MOJIN" else "G信物·自动"
+	hud_line.text = "%s · %s · %s%s" % [ProfessionRegistry.display_name(id),keys,detail," · 超载80%禁拾" if runtime.world.player.antiques.used_slots() > runtime.world.player.antiques.capacity else (" · 满载95%" if id==&"XIELING" and runtime.world.player.antiques.used_slots()>8 else "")]
 	info.text = "本局信物簿 · DRAFT\n当前：%s\n%s\n\n%s\n身份记录：%d · 已消耗次数不会因切换重置" % [ProfessionRegistry.display_name(id),definition.get("description","未装备任何信物"),runtime.notice,runtime.state.identities().size()]
 	for identity in runtime.state.identities().values():
 		info.text += "\n%s · F%s · %s（游戏虚构身份）" % [identity.get("name","未记录"),identity.get("floor","?"),identity.get("room_id","?")]
-	if not runtime.catalog_note.is_empty(): info.text += "\n本局抄录货目：\n" + runtime.catalog_note
+	for floor_id in runtime.state.clues: info.text += "\nF%s已用线索：%s" % [floor_id,runtime.state.clues[floor_id].text]
+	if id==&"BANSHAN": info.text += "\n有效武器命中：%d/4 · %s · 已用强化%d次" % [runtime.state.banshan_hits,"下次强化25%" if runtime.state.banshan_ready else "积蓄中",runtime.state.used(&"BANSHAN:EMPOWER")]
+	if id==&"FAQIU": info.text += "\n本房首伤：" + ("可减免30%" if runtime.first_visit and runtime.is_combat_room() and not runtime.state.damaged_rooms.has(runtime.current_key) else "已结算/重访/非战斗房")
 	if panel.visible and not runtime.available(): panel.hide()
 func _unhandled_input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo: return

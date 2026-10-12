@@ -1,10 +1,48 @@
 {
-  "version": 1,
+  "version": 2,
   "status": "DRAFT",
   "definitions": [
-    {"id":"MOJIN","name":"摸金校尉","token":"摸金符","ability":"MOJIN:SCAN","uses":1,"wall_multiplier":1.5,"extra_slots":0,"description":"墙纹交互距离提升；Q观气一次，查验本房最近的未检查墙纹。"},
-    {"id":"FAQIU","name":"发丘天官","token":"发丘印","ability":"FAQIU:CATALOG","uses":1,"wall_multiplier":1.0,"extra_slots":0,"description":"Q抄录一次，为当前携货建立本局货目；不改变价值与鉴定状态。"},
-    {"id":"BANSHAN","name":"搬山道人","token":"搬山令","ability":"BANSHAN:GUARD","uses":1,"wall_multiplier":1.0,"extra_slots":0,"description":"Q准备一次护符，装备搬山时抵免一次非祭台机关伤害；切走暂停保护。"},
-    {"id":"XIELING","name":"卸岭力士","token":"卸岭牌","ability":"","uses":0,"wall_multiplier":1.0,"extra_slots":2,"description":"背包增加2格。切走不丢货；超载停止拾取，移速为80%，减载后恢复。"}
+    {
+      "id": "MOJIN",
+      "name": "摸金校尉",
+      "token": "摸金符",
+      "ability": "MOJIN:CLUE",
+      "uses": 1,
+      "extra_slots": 0,
+      "description": "Q每层一次有效暗道或未访问特殊房线索；跨房与切派不补次数。"
+    },
+    {
+      "id": "FAQIU",
+      "name": "发丘天官",
+      "token": "发丘印",
+      "ability": "",
+      "uses": 0,
+      "extra_slots": 0,
+      "first_damage_multiplier": 0.7,
+      "description": "首次进入战斗房，第一笔实际正数伤害减免30%；重访不再触发。"
+    },
+    {
+      "id": "BANSHAN",
+      "name": "搬山道人",
+      "token": "搬山令",
+      "ability": "",
+      "uses": 0,
+      "extra_slots": 0,
+      "movement_multiplier": 1.08,
+      "hits_required": 4,
+      "empower_multiplier": 1.25,
+      "description": "移速+8%；4次有效武器发射命中后，下次攻击+25%。多弹/穿透同次至多计1，持续伤害不计。"
+    },
+    {
+      "id": "XIELING",
+      "name": "卸岭力士",
+      "token": "卸岭旗",
+      "ability": "",
+      "uses": 0,
+      "extra_slots": 2,
+      "loaded_multiplier": 0.95,
+      "overload_multiplier": 0.8,
+      "description": "容量10格；携9～10格为正常满载，移速95%。卸下后超载保留物品、移速80%，禁止再拾取。"
+    }
   ]
 }

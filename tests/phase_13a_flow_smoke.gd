@@ -32,19 +32,20 @@ func run() -> void:
 	await depart(&"MOJIN")
 	check(flow.active_expedition.initial_profession_id==&"MOJIN" and session.initial_profession_id==&"MOJIN","Class survives GameFlow copied snapshot and Session")
 	var state := session.profession_state
-	check(state.tokens()==[&"MOJIN"] and state.active_id==&"MOJIN" and session.world.player.profession_wall_multiplier==1.5,"Initial Mojin token genuinely active in normal tomb")
+	check(state.tokens()==[&"MOJIN"] and state.active_id==&"MOJIN" and session.world.player.profession_wall_multiplier==1.0,"Initial Mojin token genuinely active in normal tomb")
 	check(not state.tokens().has(&"BANSHAN") and session.world.player.antiques.items().is_empty(),"No discovered token or free antiques initially")
 	var world := session.world
 	var signature: String = world.layout.signature()
-	var corpse_room: StringName = world.profession_corpses.assigned.find_key(&"BANSHAN")
-	check(corpse_room!=&"","Normal floor contains reachable Banshan predecessor")
+	var corpse_room: StringName = world.profession_corpses.assigned.keys()[0]
+	var found_faction: StringName = world.profession_corpses.assigned[corpse_room]
+	check(corpse_room!=&"","Normal floor contains one reachable second-faction predecessor")
 	var driver=preload("res://tests/integration_input_driver.gd").new(self,world)
 	driver.collect_rewards = true
 	check(await driver.visit(corpse_room),"Real weapon/Door reaches and clears predecessor room")
 	var corpse=world.current_room.get_node("ProfessionCorpse")
 	check(await driver.walk(corpse.position+Vector2(30,0)),"Real walk reaches corpse interaction range")
 	capture("before_search"); key(KEY_E); await frames(3)
-	check(state.has_token(&"BANSHAN") and state.active_id==&"MOJIN" and state.identities().size()==1,"Actual E searches identity and token without automatic equip")
+	check(state.has_token(found_faction) and state.active_id==&"MOJIN" and state.identities().size()==1,"Actual E searches identity and token without automatic equip")
 	capture("after_search")
 	world.profession_panel.panel.hide()
 	# Use a real existing wall-mark room to exercise the Mojin consumption ledger.
@@ -53,23 +54,23 @@ func run() -> void:
 		if not world.exploration.wall_marks[id].is_empty(): marked_room=id; break
 	check(marked_room!=&"" and await driver.visit(marked_room),"Actual normal exploration reaches a wall-mark room")
 	key(KEY_Q); await frames(3)
-	check(state.used(&"MOJIN:SCAN")==1,"Real Q spends Mojin ability once")
+	check(state.used(&"MOJIN:CLUE:F1")==1,"Real Q spends this floor effective Mojin clue once")
 	key(KEY_G); await frames(2)
 	var choice: Button
 	for button in world.profession_panel.choices.get_children():
-		if button.text.contains("搬山道人"): choice=button
-	check(choice!=null,"Collected Banshan appears in independent token UI")
+		if button.text.contains(ProfessionRegistry.display_name(found_faction)): choice=button
+	check(choice!=null,"Collected second faction appears in independent token UI")
 	await click(choice.get_global_rect().get_center()); await frames(2)
-	check(state.active_id==&"BANSHAN" and world.player.profession_wall_multiplier==1.0,"Real UI switch removes Mojin passive and activates Banshan")
+	check(state.active_id==found_faction and world.player.antiques.capacity==10,"Real UI switch disables Mojin Q and installs collected Xieling capacity")
 	key(KEY_Q); await frames(2)
-	check(state.used(&"BANSHAN:GUARD")==1 and state.guard_ready,"Real Q prepares Banshan guard")
-	capture("banshan_active")
+	check(state.active_id==found_faction and state.used(&"MOJIN:CLUE:F1")==1,"Passive new faction cannot consume or reset Mojin clue")
+	capture("second_faction_active")
 	key(KEY_G); await frames(2)
 	for button in world.profession_panel.choices.get_children():
 		if button.text.contains("摸金校尉"): choice=button
 	await click(choice.get_global_rect().get_center()); await frames(2)
-	check(state.active_id==&"MOJIN" and state.used(&"MOJIN:SCAN")==1 and world.player.profession_wall_multiplier==1.5,"Switch back restores passive but not consumed use")
-	key(KEY_Q); await frames(2); check(state.used(&"MOJIN:SCAN")==1,"Repeated ability after re-equip cannot replenish ledger")
+	check(state.active_id==&"MOJIN" and state.used(&"MOJIN:CLUE:F1")==1 and world.player.profession_wall_multiplier==1.0,"Switch back restores Mojin ability but not this-floor consumed use")
+	key(KEY_Q); await frames(2); check(state.used(&"MOJIN:CLUE:F1")==1,"Repeated ability after re-equip cannot replenish ledger")
 	capture("mojin_used_preserved")
 	check(world.layout.signature()==signature,"Profession exploration leaves normal topology signature unchanged")
 	check(await driver.visit(world.layout.relic_id),"Actual item room builds earned relics before deeper combat")
@@ -80,8 +81,10 @@ func run() -> void:
 	var exit=world.current_room.get_node("ExpeditionExit")
 	check(await driver.walk(exit.position+Vector2(24,0)),"Actual walk to floor exit")
 	key(KEY_E); await frames(7)
-	check(session.floor_number==2 and session.profession_state==state and state.has_token(&"BANSHAN") and state.used(&"MOJIN:SCAN")==1 and state.guard_ready,"Real floor transition preserves tokens, class, ledger and armed guard")
+	check(session.floor_number==2 and session.profession_state==state and state.has_token(found_faction) and state.used(&"MOJIN:CLUE:F1")==1 and state.clues.has(1),"Real floor transition preserves tokens, class, first-floor ledger and clue")
 	capture("floor2_preserved")
+	key(KEY_Q); await frames(3)
+	check(state.used(&"MOJIN:CLUE:F2")==1 and state.used(&"MOJIN:CLUE:F1")==1,"Actual second floor has separate clue allowance and retains spent first-floor use")
 	driver=preload("res://tests/integration_input_driver.gd").new(self,session.world)
 	driver.collect_rewards = true
 	check(await driver.visit(session.world.layout.relic_id),"Actual Floor2 item room improves earned Build")
