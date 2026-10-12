@@ -73,5 +73,3 @@ func run() -> void:
 	check(session.world.layout.signature()!=topology and state.active_id==&"MOJIN" and state.tokens()==[&"MOJIN"] and state.consumption_ledger().is_empty(),"New Seed retains chosen initial faction but never old discovered tokens/uses")
 	flow.queue_free(); await frames(3)
 	print("[Phase13A runtime] %d checks, %d failures"%[checks,failures]); quit(0 if failures==0 else 1)
-
-
