@@ -1,0 +1,781 @@
+{
+  "baseline": "c7f0711394d88daa6933c6cf098cf4cb15f1ce03",
+  "code_commit": "acd73cc0cf275e8a0caa5460b99a8da2d7c55b57",
+  "profile_version": 10,
+  "human_acceptance": "PENDING",
+  "specific": [
+    {
+      "suite": "model",
+      "checks": 325,
+      "failures": 0,
+      "log": "13a1_model.log"
+    },
+    {
+      "suite": "runtime",
+      "checks": 49,
+      "failures": 0,
+      "log": "13a1_runtime_meta.log"
+    },
+    {
+      "suite": "distribution",
+      "checks": 2415,
+      "failures": 0,
+      "log": "13a1_distribution_latest.log"
+    },
+    {
+      "suite": "mojin",
+      "checks": 40,
+      "failures": 0,
+      "log": "13a1_real_flow.log"
+    },
+    {
+      "suite": "faqiu",
+      "checks": 11,
+      "failures": 0,
+      "log": "13a1_actual_faqiu.log"
+    },
+    {
+      "suite": "banshan",
+      "checks": 11,
+      "failures": 0,
+      "log": "13a1_actual_banshan.log"
+    },
+    {
+      "suite": "xieling",
+      "checks": 25,
+      "failures": 0,
+      "log": "13a1_actual_xieling142_final.log"
+    },
+    {
+      "suite": "xieling_death",
+      "checks": 27,
+      "failures": 0,
+      "log": "13a1_actual_xieling_death.log"
+    },
+    {
+      "suite": "graphical_mojin",
+      "checks": 40,
+      "failures": 0,
+      "log": "13a1_graphical_mojin.log"
+    },
+    {
+      "suite": "graphical_faqiu",
+      "checks": 11,
+      "failures": 0,
+      "log": "13a1_graphical_faqiu_final.log"
+    },
+    {
+      "suite": "graphical_banshan",
+      "checks": 11,
+      "failures": 0,
+      "log": "13a1_graphical_banshan_final.log"
+    },
+    {
+      "suite": "graphical_xieling",
+      "checks": 25,
+      "failures": 0,
+      "log": "13a1_graphical_xieling.log"
+    },
+    {
+      "suite": "graphical_xieling_death",
+      "checks": 27,
+      "failures": 0,
+      "log": "13a1_graphical_xieling_death.log"
+    }
+  ],
+  "history": [
+    {
+      "phase": "1",
+      "exit": 0,
+      "summary": [
+        "27",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "2",
+      "exit": 0,
+      "summary": [
+        "204",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "3",
+      "exit": 0,
+      "summary": [
+        "94",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "4",
+      "exit": 0,
+      "summary": [
+        "105",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "5a",
+      "exit": 0,
+      "summary": [
+        "61",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "5b",
+      "exit": 0,
+      "summary": [
+        "236",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "6",
+      "exit": 0,
+      "summary": [
+        "164",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "6_5",
+      "exit": 0,
+      "summary": [
+        "174",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "7a",
+      "exit": 0,
+      "summary": [
+        "306",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "7b",
+      "exit": 0,
+      "summary": [
+        "722",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "8a",
+      "exit": 0,
+      "summary": [
+        "486",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "8b",
+      "exit": 0,
+      "summary": [
+        "305",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "8c",
+      "exit": 0,
+      "summary": [
+        "297",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "8d",
+      "exit": 0,
+      "summary": [
+        "2153",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "9a",
+      "exit": 0,
+      "summary": [
+        "10513",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "9b",
+      "exit": 0,
+      "summary": [
+        "30758",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "9b2",
+      "exit": 0,
+      "summary": [
+        "4843",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "9b3",
+      "exit": 0,
+      "summary": [
+        "29133",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "9b32",
+      "exit": 0,
+      "summary": [
+        "1734",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "9b33",
+      "exit": 0,
+      "summary": [
+        "2702",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "geometry",
+      "exit": 0,
+      "summary": [
+        "206885",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "softlock",
+      "exit": 0,
+      "summary": [
+        "1030",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "baseline",
+      "exit": 0,
+      "summary": [
+        "728",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "10a",
+      "exit": 0,
+      "summary": [
+        "49",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "10d_bridge",
+      "exit": 0,
+      "summary": [
+        "9",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "10d_media",
+      "exit": 0,
+      "summary": [
+        "11",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "10d",
+      "exit": 0,
+      "summary": [
+        "40",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "10d6",
+      "exit": 0,
+      "summary": [
+        "92",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11a",
+      "exit": 0,
+      "summary": [
+        "717",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11b_tombs",
+      "exit": 0,
+      "summary": [
+        "1172",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11b_catalog",
+      "exit": 0,
+      "summary": [
+        "178",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11b",
+      "exit": 0,
+      "summary": [
+        "40984",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "twin_death_hotfix",
+      "exit": 0,
+      "summary": [
+        "47",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11d1",
+      "exit": 0,
+      "summary": [
+        "7",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11d2",
+      "exit": 0,
+      "summary": [
+        "20",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11d3",
+      "exit": 0,
+      "summary": [
+        "9",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11d4",
+      "exit": 0,
+      "summary": [
+        "169",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11d5",
+      "exit": 0,
+      "summary": [
+        "235",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11d_flow",
+      "exit": 0,
+      "summary": [
+        "108",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11e1",
+      "exit": 0,
+      "summary": [
+        "335",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11e2",
+      "exit": 0,
+      "summary": [
+        "19",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11e3",
+      "exit": 0,
+      "summary": [
+        "9",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11e4",
+      "exit": 0,
+      "summary": [
+        "131",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11e5",
+      "exit": 0,
+      "summary": [
+        "10",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11f1",
+      "exit": 0,
+      "summary": [
+        "23",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11f2",
+      "exit": 0,
+      "summary": [
+        "18",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11f3",
+      "exit": 0,
+      "summary": [
+        "14",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11f4",
+      "exit": 0,
+      "summary": [
+        "129",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11f5",
+      "exit": 0,
+      "summary": [
+        "27",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11g1",
+      "exit": 0,
+      "summary": [
+        "4",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11g2",
+      "exit": 0,
+      "summary": [
+        "9",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11g3",
+      "exit": 0,
+      "summary": [
+        "5",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11g4",
+      "exit": 0,
+      "summary": [
+        "18",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11g5",
+      "exit": 0,
+      "summary": [
+        "75",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11h1",
+      "exit": 0,
+      "summary": [
+        "5",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11h2",
+      "exit": 0,
+      "summary": [
+        "5",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11h3",
+      "exit": 0,
+      "summary": [
+        "24",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11h4",
+      "exit": 0,
+      "summary": [
+        "25",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "11h5",
+      "exit": 0,
+      "summary": [
+        "82",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "12",
+      "exit": 0,
+      "summary": [
+        "50",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "12a1",
+      "exit": 0,
+      "summary": [
+        "67",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "12a4",
+      "exit": 0,
+      "summary": [
+        "408",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "12a5",
+      "exit": 0,
+      "summary": [
+        "421",
+        "0"
+      ],
+      "errors": false
+    },
+    {
+      "phase": "12a6_visual",
+      "exit": 0,
+      "summary": [
+        "199",
+        "0"
+      ],
+      "errors": false
+    }
+  ],
+  "11i": [
+    {
+      "suite": "clean_flow",
+      "exit": 0,
+      "summary": [
+        "834",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "economy_first_income",
+      "exit": 0,
+      "summary": [
+        "363",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "disk_first_income",
+      "exit": 0,
+      "summary": [
+        "69",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "economy_midgame",
+      "exit": 0,
+      "summary": [
+        "363",
+        "0"
+      ],
+      "failed": false
+    },
+    {
+      "suite": "disk_midgame",
+      "exit": 0,
+      "summary": [
+        "69",
+        "0"
+      ],
+      "failed": false
+    }
+  ],
+  "godot_checks": 344334,
+  "python_tests": 134,
+  "failures": 0,
+  "corpse_distribution": {
+    "seeds": 100,
+    "floors": 500,
+    "first_floor_count": 100,
+    "later_count": 210,
+    "first_factions": {
+      "MOJIN": 29,
+      "FAQIU": 25,
+      "BANSHAN": 24,
+      "XIELING": 22
+    },
+    "run_counts": {
+      "1": 4,
+      "2": 25,
+      "3": 34,
+      "4": 31,
+      "5": 6
+    },
+    "runs_missing_full_four": 93
+  },
+  "media_sha256": {
+    "13a1_BANSHAN_ability_description.png": "7b336630047f71d6424b85e196ce0be8923a398bff17af5c163d1cb9c2eeef9e",
+    "13a1_BANSHAN_choose_BANSHAN.png": "b844bd4e72b182b7030c8a3160a3a06957fc8b4c017669df67da119e391f0d24",
+    "13a1_BANSHAN_combat_complete.png": "3e90cd961014e174b83cf37e3c0a042b5bcd55a9c0cf638d4c59f29fdc6fcb88",
+    "13a1_BANSHAN_enhanced_attack.png": "dfcfd8f6bee41285cbc6ffa6f56015226814a1d097ee65d825277e9f8baede71",
+    "13a1_BANSHAN_four_hits_ready.png": "516cd80820a622af458f8e0f75120d36276b9853b93102670415729c68b96611",
+    "13a1_BANSHAN_initial.png": "cf130c72eeb1fe960728ae4d29238369444dd726bcb09f3f1a87f494afe70254",
+    "13a1_BANSHAN_input_combat.png": "3e12ed7969725748e85e3646ed72244e815e9cfee6459b469e21263385d4dd11",
+    "13a1_FAQIU_ability_description.png": "d2efe1bf9a3d7ae7f1c669234a1875880da73944721f13691ccae77ac4053fa9",
+    "13a1_FAQIU_choose_FAQIU.png": "0cd56a5c293d0febf6e057dfc76330cf36f49cd9ce2467bf09ce5c7a78e8460a",
+    "13a1_FAQIU_first_damage.png": "e12b958d1e0d4768ae81e3be998503adffae32ba824d5ffea0179853971606c0",
+    "13a1_FAQIU_initial.png": "5eb29abd8b68cf3d27c0e82ec389cf460c0607f118d8141e471089e9f62ab091",
+    "13a1_FAQIU_input_combat.png": "edf866c26a8ee512254e96f9735f7b89a244b0b29644101237eb22a90ad30c8d",
+    "13a1_FAQIU_revisited.png": "439b92d57063b8da522609d436c09f4718356aa581449e7963d3f8ab67583ad5",
+    "13a1_MOJIN_actual_combat_death.png": "f8e9e23ecdcc41691fbe9fd87011b10803fa746efb029b1b586363a4c5f67204",
+    "13a1_MOJIN_after_search.png": "73fccf7a7b54ec0b8d4df72c906dbc639ae48ed2c828fa2a7f9882d7174d7289",
+    "13a1_MOJIN_before_search.png": "2a418ececfbf71338e098af555fd0c1ec27caecc2f3e84f868a9ac4a6e15f30c",
+    "13a1_MOJIN_choose_MOJIN.png": "597fbe4c2321f2b0fe2a3f165371c20cfc5bb3ef47ec498525f6c74a44ad55cc",
+    "13a1_MOJIN_choose_NONE.png": "02a9dc4d4b36f7cc2e88030c1e03689bc63643d2f77661de1061b36e24f32df1",
+    "13a1_MOJIN_floor2_preserved.png": "e8e4571bc6e49158939e71f65c39a6110c9551593b55868ac4a39c9eb1223e80",
+    "13a1_MOJIN_input_combat.png": "b76d72fa7ca9f4499f80f94c3f2c5b088fc70caa4173aee026e29876733d581a",
+    "13a1_MOJIN_mojin_used_preserved.png": "4e594a84d3d37f3bfdad6d8285cdebdbc5c21d0c84ee33d335bd45a7762e3d34",
+    "13a1_MOJIN_second_faction_active.png": "6dbac2a802176c6259f4dd4ebeeb942621048afb68fda1799b55dd2b021398f5",
+    "13a1_XIELING_choose_NONE.png": "5260c011aecd39a1806edf04e298abbe8068604650bcd3b8ce9aac9cc20d1657",
+    "13a1_XIELING_choose_XIELING.png": "8a14f49f42148943a866090e20aad5295843c99acc8c5c46a2e21d586f922884",
+    "13a1_XIELING_DEATH_actual_death.png": "d42842f88c47b313497caed1bcae68c4c1253ed92cb86b819ef100087c398032",
+    "13a1_XIELING_DEATH_choose_NONE.png": "5260c011aecd39a1806edf04e298abbe8068604650bcd3b8ce9aac9cc20d1657",
+    "13a1_XIELING_DEATH_choose_XIELING.png": "f18892d9f15205d46e7d917eed8675594b0e0e0ba0c26c081069fa79304de6f1",
+    "13a1_XIELING_DEATH_initial.png": "3df3a6c6fb8ea14a605d3db1fc2987a792fb4076e53902af0a8ba814a4856019",
+    "13a1_XIELING_DEATH_overload.png": "7d281bc5a20f8dcb4dcadf3dda8424c2147c6b25176e88e7fc68f82415273af8",
+    "13a1_XIELING_DEATH_overloaded_floor3.png": "29dc3679eaa17fda4da6b236bb62a379905105bb254be1ef42f639ab101d8f72",
+    "13a1_XIELING_DEATH_ten_slots.png": "55853e43ce019eb5e5da175339df5e4c531315380e72692d50b13190aa211bd4",
+    "13a1_XIELING_initial.png": "3df3a6c6fb8ea14a605d3db1fc2987a792fb4076e53902af0a8ba814a4856019",
+    "13a1_XIELING_overload.png": "7d281bc5a20f8dcb4dcadf3dda8424c2147c6b25176e88e7fc68f82415273af8",
+    "13a1_XIELING_returned_collection.png": "e2a2f6d0a7302f4cf066787448570c87ab52d219abdb1719e29b5877b9aec697",
+    "13a1_XIELING_ten_slots.png": "55853e43ce019eb5e5da175339df5e4c531315380e72692d50b13190aa211bd4",
+    "banshan.gif": "456a3d2637424c566b067e34f2c5e42b2cef08bf266dec3e478c1ec5c57d3f77",
+    "banshan.mp4": "c69105a8197d56d9dd1c08526432687f8ab099c500824a2f6c9b7aaa300b95a8",
+    "faqiu.gif": "c681959a21e503b5cda3bf549707edcb6fdc1a6c4483c418c4eb3b8236b76227",
+    "faqiu.mp4": "20b7a3a01beef07c77bc39e6f8f8af208283aa3754b9fe964af03924f25816b4",
+    "mojin.gif": "644b766cf7f1c61270508d7d2d0e77cba0a4ba6775e1135249145023582748da",
+    "mojin.mp4": "346b0c849380f0473cd47c701e6252f618e753edd43892f3ee01810c1ec620f5",
+    "xieling.gif": "47c52d8458a8416b27d442a8d6ab011be36f020ab34f677de067fcecea9c667e",
+    "xieling.mp4": "d35f7d3fb288c55df1fc88d40bf7f7bdcc9a33c7debcafa17d58452949a30a6e",
+    "xieling_death.gif": "0a70d50f164db4c202564dcd993177ed5e5fed2d51da507b0a8cf98d936351ad",
+    "xieling_death.mp4": "047256fe6512e8aced9bc29b10c598f849fd36be5bae574d734bd67115ecf36e"
+  }
+}

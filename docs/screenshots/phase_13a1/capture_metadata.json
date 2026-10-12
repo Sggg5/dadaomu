@@ -1,0 +1,15 @@
+{
+  "source": "Godot4.6.2 native1280x720 GameFlow",
+  "sampling_fps": 7.5,
+  "gif_fps_short": 7.5,
+  "gif_fps_long": 2.5,
+  "final_native_screenshot_hold_seconds": 2,
+  "frame_counts": {
+    "MOJIN": 1121,
+    "FAQIU": 273,
+    "BANSHAN": 149,
+    "XIELING": 1580,
+    "XIELING_DEATH": 1621
+  },
+  "human_acceptance": "PENDING"
+}
